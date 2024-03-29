@@ -1,0 +1,173 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
+import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
+import 'package:savdo_admin/src/route/app_route.dart';
+import 'package:savdo_admin/src/theme/colors/app_colors.dart';
+import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/main/client/tab_bar_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
+
+
+class DrawerScreen extends StatefulWidget {
+  const DrawerScreen({super.key});
+
+  @override
+  State<DrawerScreen> createState() => _DrawerScreenState();
+}
+
+class _DrawerScreenState extends State<DrawerScreen> {
+  @override
+  void initState() {
+    agentsBloc.getAllAgents();
+    clientBloc.getAllClient('');
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: AppColors.background,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 16.w,bottom: 8),
+              width: MediaQuery.of(context).size.width,
+              height: 150.h,
+              decoration:  BoxDecoration(
+                  color: AppColors.green,
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                      right: -40.w,
+                      top: -40,
+                      child: Opacity(
+                        opacity: 0.4,
+                        child: SvgPicture.asset("assets/icons/logo.svg",width: 170.r,),
+                      ),
+                  ),
+                  Positioned(
+                    top: 65.h,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(child: Text(CacheService.getName().toUpperCase()[0],style: AppStyle.mediumBold(Colors.black)),),
+                        SizedBox(width: 8.w,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(CacheService.getName(),style: AppStyle.large(Colors.white),),
+                            Text("Admin",style: AppStyle.small(Colors.white),),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            /// Warehouse Bloc
+
+            ExpansionTile(title:  Text("Омбор бўлими",style: AppStyle.mediumBold(Colors.black),),
+              shape: Border.all(color: Colors.transparent),
+              children: [
+              /// Warehouse
+              ListTile(
+                leading: const Icon(Icons.warehouse_outlined),
+                onTap: (){
+                  Navigator.pushNamed(context, AppRouteName.wearHouse);
+                },
+                title: const Text("Омборлар"),
+              ),
+              /// Warehouse movement
+              ListTile(
+                leading: const Icon(Icons.published_with_changes_sharp),
+                onTap: (){
+                  Navigator.pushNamed(context, AppRouteName.wearHouseTransfer);
+                },
+                title: const Text("Омбор ҳаракати"),
+              ),
+              /// Products
+              ListTile(
+                  leading: const Icon(Icons.apps_outlined),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/product');
+                  },
+                  title: const Text("Картотека"),
+                ),
+              /// Product Income
+              ListTile(
+                  leading: const Icon(Icons.add_business_outlined),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/income');
+                  },
+                  title: const Text("Киримлар"),
+                ),
+              /// Product Outcome
+              ListTile(
+                  leading: const Icon(Icons.request_page_outlined),
+                  onTap: (){
+                    Navigator.pushNamed(context, AppRouteName.outcome);
+                  },
+                  title: const Text("Савдо-сотиқ"),
+                ),
+              /// Product Returned
+              ListTile(
+                  leading: const Icon(Icons.event_repeat_outlined),
+                  onTap: (){
+                  },
+                  title: const Text("Қайтарилди"),
+                ),
+            ],),
+
+            /// Buyers Bloc
+            ExpansionTile(title:  Text("Харидорлар",style: AppStyle.mediumBold(Colors.black),),
+              shape: Border.all(color: Colors.transparent),
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.people_alt),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return TabBarScreen();
+                    }));
+                  },
+                  title: const Text("Харидорлар"),
+                ),
+              ],),
+            /// Income Outcome and Cost Bloc
+            ExpansionTile(title:  Text("Кирим-чиқим",style: AppStyle.mediumBold(Colors.black),),
+              shape: Border.all(color: Colors.transparent),
+              children: [
+                /// Income
+                ListTile(
+                  leading: const Icon(Icons.monetization_on),
+                  onTap: ()=>Navigator.pushNamed(context, AppRouteName.incomeTabBar),
+                  title: const Text("Киримлар"),
+                ),
+                /// Outcome
+                ListTile(
+                  leading: const Icon(Icons.outbound),
+                  onTap: ()=>Navigator.pushNamed(context, AppRouteName.outComePay),
+                  title: const Text("Чиқимлар"),
+                ),
+                /// Cost
+                ListTile(
+                  leading: const Icon(Icons.money),
+                  onTap: (){
+                    Navigator.pushNamed(context, AppRouteName.costList);
+                  },
+                  title: const Text("Харажат"),
+                ),
+              ],),
+          ],
+        ),
+      ),
+    );
+  }
+}
