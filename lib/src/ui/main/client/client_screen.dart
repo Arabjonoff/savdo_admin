@@ -123,7 +123,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                   children: [
                                     CircleAvatar(
                                       backgroundColor: Colors.green.shade100,
-                                      child: Text(data[index].name[0]),
+                                      child: data[index].name.isEmpty?const Text(""):Text(data[index].name[0]),
                                     ),
                                     SizedBox(width: 8.w,),
                                     Expanded(child: Column(

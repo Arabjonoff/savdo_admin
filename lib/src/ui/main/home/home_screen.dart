@@ -27,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text("N-Savdo "),
-        actions: [
-          IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_active))
-        ],
+        // actions: [
+        //   IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_active))
+        // ],
       ),
       drawer: const DrawerScreen(),
       body: Column(

@@ -61,15 +61,24 @@ class _LoginScreenState extends State<LoginScreen> {
           ButtonWidget(onTap: ()async{
             CenterDialog.showLoadingDialog(context, "Бироз кутинг");
             HttpResult res = await _repository.login(_controllerName.text, _controllerPassword.text, _controllerBase.text);
-            if(res.isSuccess){
-              CacheService.saveToken(res.result['jwt']);
-              CacheService.savePassword(_controllerPassword.text);
-              CacheService.saveName(_controllerName.text);
-              CacheService.tip(res.result['tip']);
-              CacheService.saveIdAgent(res.result['id']);
-              CacheService.saveDb(_controllerBase.text);
-              if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
-              if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
+            try{
+              if(res.isSuccess){
+                CacheService.saveToken(res.result['jwt']);
+                CacheService.savePassword(_controllerPassword.text);
+                CacheService.saveName(_controllerName.text);
+                CacheService.tip(res.result['tip']);
+                CacheService.saveIdAgent(res.result['id']);
+                CacheService.saveDb(_controllerBase.text);
+                if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
+                if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
+              }
+              else{
+                if(context.mounted)Navigator.pop(context);
+                if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+              }
+            }catch(e){
+              if(context.mounted)Navigator.pop(context);
+              if(context.mounted)CenterDialog.showErrorDialog(context, e.toString());
             }
           }, color: AppColors.green, text: "Кириш"),
           SizedBox(height: 24.h,)

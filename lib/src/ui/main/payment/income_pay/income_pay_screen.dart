@@ -201,7 +201,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(data[0].tl1[index].name,style: AppStyle.mediumBold(Colors.black),),
-                                      data[0].tl1[index].idSklRs>0?const Text("📝",style: TextStyle(fontSize: 18),):const SizedBox()
+                                      data[0].tl1[index].idSklRs>0?const Text("📝",style: TextStyle(fontSize: 18),):const Text("👤",style: TextStyle(fontSize: 18))
                                     ],
                                   ),
                                   Row(
@@ -282,7 +282,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(data[0].tl1[index].name,style: AppStyle.mediumBold(Colors.black),),
-                                      data[0].tl1[index].idSklRs>0?const Text("📝",style: TextStyle(fontSize: 18),):const SizedBox()
+                                      data[0].tl1[index].idSklRs>0?const Text("📝",style: TextStyle(fontSize: 18),):const Text("👤",style: TextStyle(fontSize: 18))
                                     ],
                                   ),
                                   Row(
