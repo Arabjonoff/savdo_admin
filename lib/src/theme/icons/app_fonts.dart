@@ -20,7 +20,7 @@ class AppStyle{
   }
   static TextStyle smallBold(Color color){
     return TextStyle(
-        fontSize: 13.h,
+        fontSize: 14.h,
         fontWeight: FontWeight.w600,
         color: color,
         letterSpacing: 0.9

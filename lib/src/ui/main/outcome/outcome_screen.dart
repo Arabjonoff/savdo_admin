@@ -45,7 +45,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
         title: Column(
           children: [
             const Text("Савдо-сотиқ"),
-             Text(_controllerDate.text,style: AppStyle.smallBold(Colors.black),),
+             Text(_controllerDate.text,style: AppStyle.smallBold(Colors.grey),),
           ],
         ),
         actions: [

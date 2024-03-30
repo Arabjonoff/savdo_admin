@@ -96,7 +96,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                           priceUsd = 1;
                         }
                       }
-                      BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId,));
+                      BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: outcomeBase[j].idEdizName,));
                     }
                   }
                 }
@@ -111,7 +111,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
               filterProduct = await _repository.getProductTypeBase();
               setState(() {});
               scaffoldKey.currentState!.openEndDrawer();
-            }, icon: const Icon(Icons.filter_list))
+            }, icon: const Icon(Icons.filter_list_alt))
           ],
           backgroundColor: AppColors.background,
         ),
@@ -229,7 +229,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                       priceUsd = 1;
                                     }
                                   }
-                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId,));
+                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                 }
                               },
                               child: SizedBox(
@@ -284,7 +284,9 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                               Row(
                                                 children: [
                                                   Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
-                                                  Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black54),),
+                                                  const Spacer(),
+                                                  Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                                  Text(data[index].idEdizName,style: AppStyle.medium(Colors.black),),
                                                 ],
                                               ),
                                             ],
@@ -341,7 +343,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                       priceUsd = 1;
                                     }
                                   }
-                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId,));
+                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                 }
                               },
                               child: SizedBox(
@@ -396,7 +398,10 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                               Row(
                                                 children: [
                                                   Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
-                                                  Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black54),),
+                                                  const Spacer(),
+                                                  Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                                  SizedBox(width: 4.w,),
+                                                  Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
                                                 ],
                                               ),
                                             ],

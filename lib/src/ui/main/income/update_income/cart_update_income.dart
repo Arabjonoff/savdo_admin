@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -51,7 +52,7 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                                   if(res.result["status"] == true){
                                     _repository.deleteSklPrTovBase(data[index].id);
                                     await sklPrTovBloc.getAllSklPrTovAll();
-                                    await incomeBloc.getAllIncome();
+                                    await incomeBloc.getAllIncome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                                     if(context.mounted)Navigator.pop(context);
                                   }
                                   else{
@@ -85,14 +86,14 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Миқдори:',style: AppStyle.small(Colors.grey),),
-                              Text(data[index].soni.toString(),style: AppStyle.small(Colors.black),),
+                              Text(data[index].soni.toString(),style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Нархи:',style: AppStyle.small(Colors.grey),),
-                              Text(priceFormat.format(data[index].narhi),style: AppStyle.small(Colors.black),),
+                              data[index].narhi!=0?Text("${priceFormat.format(data[index].narhi)} сўм",style: AppStyle.smallBold(Colors.black),):Text("${priceFormat.format(data[index].narhiS)} \$",style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
                           Container(

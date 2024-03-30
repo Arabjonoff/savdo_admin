@@ -75,7 +75,7 @@ class _UpdateIncomeScreenState extends State<UpdateIncomeScreen> {
             grabbingContentOffset: GrabbingContentOffset.bottom,
           ),
         ],
-        grabbingHeight: 55.h,
+        grabbingHeight: 75.h,
         // TODO: Add your grabbing widget here,
         grabbing: Container(
           alignment: Alignment.center,

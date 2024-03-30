@@ -18,7 +18,8 @@ class AddOutcomeWidgetDialog extends StatefulWidget {
   final num price;
   final int priceUsd;
   final dynamic data,ndocId;
-  const AddOutcomeWidgetDialog({super.key, required this.data, required this.price, required this.priceUsd, this.ndocId});
+  final String typeName;
+  const AddOutcomeWidgetDialog({super.key, required this.data, required this.price, required this.priceUsd, this.ndocId, required this.typeName});
 
   @override
   State<AddOutcomeWidgetDialog> createState() => _AddOutcomeWidgetDialogState();
@@ -106,6 +107,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                       Expanded(child: TextFieldWidget(
                         controller: _controllerCount,
                         hintText: "1",
+                        suffixText: widget.typeName.toLowerCase(),
                         keyboardType: true,
                         onChanged: (i){
                           try{

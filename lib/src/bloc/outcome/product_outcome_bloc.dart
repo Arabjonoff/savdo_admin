@@ -19,6 +19,9 @@ class ProductOutComeBloc{
       for(int j =0;j<productBase.length;j++){
         if(outcomeBase[i].idSkl2 == productBase[j].id){
           outcomeBase[i].photo = productBase[j].photo;
+          outcomeBase[i].idFirmaName = productBase[j].firmName;
+          outcomeBase[i].idEdizName = productBase[j].edizName;
+          outcomeBase[i].idTipName = productBase[j].tipName;
         }
       }
     }
@@ -31,6 +34,9 @@ class ProductOutComeBloc{
           for(int j =0;j<productBase.length;j++){
             if(data.data[i].idSkl2 == productBase[j].id){
               data.data[i].photo = productBase[j].photo;
+              data.data[i].idFirmaName = productBase[j].firmName;
+              data.data[i].idEdizName = productBase[j].edizName;
+              data.data[i].idTipName = productBase[j].tipName;
             }
           }
           _repository.saveOutcomeBase(data.data[i]);
@@ -47,6 +53,9 @@ class ProductOutComeBloc{
       for(int j =0;j<productBase.length;j++){
         if(outcomeBase[i].idSkl2 == productBase[j].id){
           outcomeBase[i].photo = productBase[j].photo;
+          outcomeBase[i].idFirmaName = productBase[j].firmName;
+          outcomeBase[i].idEdizName = productBase[j].edizName;
+          outcomeBase[i].idTipName = productBase[j].tipName;
         }
       }
     }
