@@ -26,8 +26,11 @@ class SkladResult {
   String name;
   int idSkl2;
   int idTip;
+  String idTipName;
   int idFirma;
+  String idFirmaName;
   int idEdiz;
+  String idEdizName;
   num narhi;
   num narhiS;
   num snarhi;
@@ -130,6 +133,9 @@ class SkladResult {
     required this.soni,
     required this.vz,
     required this.photo,
+    this.idTipName = '',
+    this.idEdizName = '',
+    this.idFirmaName = '',
   });
 
   factory SkladResult.fromJson(Map<String, dynamic> json) => SkladResult(

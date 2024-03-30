@@ -15,7 +15,8 @@ import '../../../bloc/sklad/sklad_bloc.dart';
 import '../../../theme/icons/app_fonts.dart';
 
 class WareHouseSearch extends StatefulWidget {
-  const WareHouseSearch({super.key});
+  final int idPrice;
+  const WareHouseSearch({super.key, required this.idPrice});
 
   @override
   State<WareHouseSearch> createState() => _WareHouseSearchState();
@@ -118,17 +119,30 @@ class _WareHouseSearchState extends State<WareHouseSearch> {
                                   ),
                                   SizedBox(width: 8.w,),
                                   Expanded(child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
-                                      const Spacer(),
+                                      Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
-                                          Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                          Text("нархи: ",style: AppStyle.smallBold(Colors.black38),),
+                                          priceCheck(widget.idPrice,data[index]),
                                         ],
-                                      )
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("қолдиқ: ",style: AppStyle.smallBold(Colors.black38),),
+                                          Row(
+                                            children: [
+                                              Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                              SizedBox(width: 4.w,),
+                                              Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ))
                                 ],
@@ -168,6 +182,19 @@ class _WareHouseSearchState extends State<WareHouseSearch> {
         _controllerDate.text = DateFormat('yyyy-MM-dd').format(selectedDateTime);
       }
     });
+  }
+  Widget priceCheck(idPrice,data){
+    switch(idPrice){
+      case 0:
+        return data.snarhi != 0?Text("${priceFormat.format(data.snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhiS)} \$",style: AppStyle.medium(Colors.black),);
+      case 1:
+        return data.snarhi1 != 0?Text("${priceFormat.format(data.snarhi1)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhi1S)} \$",style: AppStyle.medium(Colors.black),);
+      case 2:
+        return data.snarhi2 != 0?Text("${priceFormat.format(data.snarhi2)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhi2S)} \$",style: AppStyle.medium(Colors.black),);
+      case 3:
+        return data.narhi != 0?Text("${priceFormat.format(data.narhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.narhiS)} \$",style: AppStyle.medium(Colors.black),);
+    }
+    return data.narhi != 0?Text("${priceFormat.format(data.narhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.narhiS)} \$",style: AppStyle.medium(Colors.black),);
   }
 }
 void handleReadOnlyInputClick(context) {

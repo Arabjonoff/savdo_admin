@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -20,6 +21,8 @@ import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/ui/main/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouser_search.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
+import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
+import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class WareHouseScreen extends StatefulWidget {
   const WareHouseScreen({super.key});
@@ -30,7 +33,7 @@ class WareHouseScreen extends StatefulWidget {
 
 class _WareHouseScreenState extends State<WareHouseScreen> {
   final Repository _repository = Repository();
-  int wareHouseId = 1,filterId = -1;
+  int wareHouseId = 1,filterId = -1,idPrice=3;
   String wareHouseName = 'Асосий омбор';
   double percent = 0;
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
@@ -56,6 +59,7 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
             List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
             showDialog(context: context, builder: (ctx){
               return Dialog(
+                insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: SizedBox(
                   width: width,
                   height: 250.h,
@@ -64,7 +68,7 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 16.w,top: 16.w),
-                        child: Text("Омборлар рўйхати",style: AppStyle.medium(Colors.black),),
+                        child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
                       ),
                       Expanded(child: ListView.builder(
                         itemCount: wareHouse.length,
@@ -78,7 +82,8 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                             setState(() {});
                             Navigator.pop(context);
                           },
-                          title: Text(wareHouse[index].name),
+                          title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                          trailing: Icon(Icons.radio_button_checked,color: wareHouseId == wareHouse[index].id?AppColors.green:Colors.grey,),
                         );
                       }))
                     ],
@@ -103,7 +108,7 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                 setState(() {
                 });
                 scaffoldKey.currentState!.openEndDrawer();
-              }, icon: const Icon(Icons.filter_list)),
+              }, icon: const Icon(Icons.filter_list_alt)),
           PopupMenuButton(
             color: AppColors.background,
             onSelected: (select) async{
@@ -228,7 +233,7 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
               onTap: (){
                 Navigator.push(
                     context, PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>  const WareHouseSearch(),
+                    pageBuilder: (_, __, ___) =>   WareHouseSearch(idPrice: idPrice,),
                     transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c)
                 ));
               },
@@ -258,24 +263,158 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
           _repository.clearSkladBase();
           skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
         },
-        child: StreamBuilder<List<SkladResult>>(
-          stream: skladBloc.getSkladStream,
-          builder: (context, snapshot) {
-            if(snapshot.hasData){
-              int productCount = 0;
-              var data = snapshot.data!;
-              for(int i =0; i<data.length;i++){
-                if(data[i].idTip==filterId){
-                  productCount++;
-                }
-                else{
-                  productCount++;
-                }
+        child: SnappingSheet(
+          snappingPositions:  [
+            const SnappingPosition.factor(
+              positionFactor: 0.0,
+              snappingCurve: Curves.easeOutExpo,
+              snappingDuration: Duration(seconds: 1),
+              grabbingContentOffset: GrabbingContentOffset.top,
+            ),
+            SnappingPosition.pixels(
+              positionPixels: 250.h,
+              snappingCurve: Curves.elasticOut,
+              snappingDuration: const Duration(milliseconds: 1750),
+            ),
+          ],
+          grabbingHeight: 75,
+          grabbing: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            width: width,
+            decoration: BoxDecoration(
+                color: AppColors.green,
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Юқорига суринг",style: AppStyle.mediumBold(AppColors.white),),
+                SizedBox(width: 8.w,),
+                const Icon(Icons.swipe_up_sharp,color: Colors.white,)
+              ],
+            ),),
+          sheetBelow: SnappingSheetContent(
+            draggable: (details) => true,
+            // TODO: Add your sheet content here
+            child:StreamBuilder<List<SkladResult>>(
+              stream: skladBloc.getSkladStream,
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  int productCountType = 0;
+                  double productCount = 0;
+                  num productUzs = 0,productUsd = 0;
+                  var data = snapshot.data!;
+                  for(int i =0; i<data.length;i++){
+                    if(idPrice==3){
+                      if(data[i].idTip==filterId){
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].narhi;
+                        productUsd+=data[i].osoni*data[i].narhiS;
+                      }
+                      else{
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].narhi;
+                        productUsd+=data[i].osoni*data[i].narhiS;
+                      }
+                    }
+                    else if(idPrice==0){
+                      if(data[i].idTip==filterId){
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi;
+                        productUsd+=data[i].osoni*data[i].snarhiS;
+                      }
+                      else{
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi;
+                        productUsd+=data[i].osoni*data[i].snarhiS;
+                      }
+                    }
+                    else if(idPrice==1){
+                      if(data[i].idTip==filterId){
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi1;
+                        productUsd+=data[i].osoni*data[i].snarhi1S;
+                      }
+                      else{
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi1;
+                        productUsd+=data[i].osoni*data[i].snarhi1S;
+                      }
+                    }
+                    else if(idPrice==2){
+                      if(data[i].idTip==filterId){
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi2;
+                        productUsd+=data[i].osoni*data[i].snarhi2S;
+                      }
+                      else{
+                        productCountType++;
+                        productCount+=data[i].osoni;
+                        productUzs+=data[i].osoni*data[i].snarhi2;
+                        productUsd+=data[i].osoni*data[i].snarhi2S;
+                      }
+                    }
+                  }
+                  return Container(
+                      width: width,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      color: AppColors.white,
+                      child: Column(
+                        children: [
+                          SizedBox(height: 16.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Tовар тури:",style: AppStyle.medium(AppColors.black),),
+                              Text("$productCountType Хил",style: AppStyle.mediumBold(AppColors.black),),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Tовар миқдори:",style: AppStyle.medium(AppColors.black),),
+                              Text(priceFormatUsd.format(productCount),style: AppStyle.mediumBold(AppColors.black),),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Товар сўм:",style: AppStyle.medium(Colors.black),),
+                              Text("${priceFormat.format(productUzs)} сўм",style: AppStyle.mediumBold(Colors.black),),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Товар валюта:",style: AppStyle.medium(Colors.black),),
+                              Text("${priceFormat.format(productUsd)} \$",style: AppStyle.mediumBold(Colors.black),),
+                            ],
+                          ),
+                        ],
+                      ));
+                }return Container(color: AppColors.white,width: width,);
               }
-              return data.isEmpty?const EmptyWidgetScreen():
-              Column(
-                children: [
-                  Expanded(child: ListView.builder(
+            ),
+          ),
+          child: StreamBuilder<List<SkladResult>>(
+            stream: skladBloc.getSkladStream,
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                var data = snapshot.data!;
+                if (data.isEmpty) {
+                  return const EmptyWidgetScreen();
+                } else {
+                  return ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (ctx,index){
                         if(data[index].idTip==filterId){
@@ -329,17 +468,26 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                                     ),
                                     SizedBox(width: 8.w,),
                                     Expanded(child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
-                                        const Spacer(),
+                                        Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
-                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                            Text("нархи: ",style: AppStyle.smallBold(Colors.black38),),
+                                            priceCheck(idPrice,data[index]),
                                           ],
-                                        )
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text("қолдиқ: ",style: AppStyle.smallBold(Colors.black38),),
+                                            const Spacer(),
+                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                            SizedBox(width: 4.w,),
+                                            Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
+                                          ],
+                                        ),
                                       ],
                                     ))
                                   ],
@@ -398,17 +546,26 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                                     ),
                                     SizedBox(width: 8.w,),
                                     Expanded(child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
-                                        const Spacer(),
+                                        Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
-                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                            Text("нархи: ",style: AppStyle.smallBold(Colors.black38),),
+                                            priceCheck(idPrice,data[index]),
                                           ],
-                                        )
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text("қолдиқ: ",style: AppStyle.smallBold(Colors.black38),),
+                                            const Spacer(),
+                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                            SizedBox(width: 4.w,),
+                                            Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
+                                          ],
+                                        ),
                                       ],
                                     ))
                                   ],
@@ -420,95 +577,124 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                         else{
                           return const SizedBox();
                         }
-                      })),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    width: width,
-                    height: 60.h,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                        ),
-                        boxShadow: [
-                        BoxShadow(
-                          blurRadius: 15,
-                          color: Colors.grey
-                        )
-                      ]
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Жами товар:",style: AppStyle.medium(Colors.black),),
-                        Text("$productCount дона",style: AppStyle.medium(Colors.black),)
-                      ],
-                    ),
-                  )
-                ],
-              );
+                      });
+                }
+              }
+              return const Center(child: CircularProgressIndicator());
             }
-            return const Center(child: CircularProgressIndicator());
-          }
+          ),
         ),
       ),
       endDrawer: Drawer(
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
-                child: Text("Филтрлаш",style: AppStyle.large(Colors.grey),),
+                child: Text("Сана бўйича",style: AppStyle.mediumBold(Colors.black),),
               ),
-              Expanded(child: ListView.builder(
-                itemCount: filterProduct!.length,
-                  itemBuilder: (ctx,index){
-                return ListTile(
-                  selected: filterProduct![index].id==filterId?true:false,
-                  selectedColor: AppColors.white,
-                  selectedTileColor: Colors.green.shade500,
-                  title: Text(filterProduct![index].name),
-                  onTap: (){
-                    filterId=filterProduct![index].id;
-                    setState(() {});
-                  },
-                );
-              })),
-              TextButton(onPressed: (){
-                filterId = -1;
-                setState(() {});
-              }, child: Text("Фильтрни тозалаш",style: AppStyle.medium(Colors.red),))
+              TextFieldWidget(controller: TextEditingController(text: DateFormat('yyyy-MMM').format(dateTime)), hintText: "",suffixIcon: IconButton( onPressed: (){
+                showMonthPicker(
+                    roundedCornersRadius: 25,
+                    headerColor: AppColors.green,
+                    selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
+                    context: context,
+                    initialDate: dateTime,
+                    lastDate: DateTime.now()
+                ).then((date) {
+                  if (date != null) {
+                    setState(() {
+                      dateTime = date;
+                    });
+                    _repository.clearSkladBase();
+                    skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+                  }
+                });
+              },icon:  Icon(Icons.calendar_month,color: AppColors.green,),),),
+              Container(
+                padding: EdgeInsets.only(left: 16.w,bottom: 8.r,top: 8.r),
+                width: width,
+                color: Colors.white,
+                child: Text("Нархи бўйича",style: AppStyle.mediumBold(Colors.black),),
+              ),
+              ListTile(
+                onTap: (){
+                  setState(() => idPrice = 3);
+                },
+                title: Text("Кирим нархи",style: AppStyle.medium(Colors.black),),
+                trailing: Icon(Icons.radio_button_checked,color: idPrice ==3?AppColors.green:Colors.grey,),
+              ),
+              ListTile(
+                onTap: (){
+                  setState(() => idPrice = 0);
+                },
+                title: Text("Сотиш нархи -1",style: AppStyle.medium(Colors.black),),
+                trailing: Icon(Icons.radio_button_checked,color: idPrice ==0?AppColors.green:Colors.grey,),
+              ),
+              ListTile(
+                onTap: (){
+                  setState(() => idPrice = 1);
+                },
+                title: Text("Сотиш нархи -2",style: AppStyle.medium(Colors.black),),
+                trailing: Icon(Icons.radio_button_checked,color: idPrice ==1?AppColors.green:Colors.grey,),
+              ),
+              ListTile(
+                onTap: (){
+                  setState(() => idPrice = 2);
+                },
+                title: Text("Сотиш нархи -3",style: AppStyle.medium(Colors.black),),
+                trailing: Icon(Icons.radio_button_checked,color: idPrice ==2?AppColors.green:Colors.grey,),
+              ),
+              Container(
+                width: width,
+                padding: EdgeInsets.only(left: 16.w,bottom: 8.r,top: 8.r),
+                color: Colors.white,
+                child: Text("Маҳсулот тури бўйича",style: AppStyle.mediumBold(Colors.black),),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filterProduct!.length,
+                    itemBuilder: (ctx,index){
+                  return ListTile(
+                    selectedColor: AppColors.white,
+                    selectedTileColor: Colors.green.shade500,
+                    title: Text(filterProduct![index].name),
+                    onTap: (){
+                      filterId=filterProduct![index].id;
+                      setState(() {});
+                    },
+                    trailing: Icon(Icons.radio_button_checked,color: filterProduct![index].id==filterId?AppColors.green:Colors.grey,),
+                  );
+                }),
+              ),
+              Center(
+                child: TextButton(onPressed: (){
+                  filterId = -1;
+                  setState(() {});
+                }, child: Text("Tозалаш",style: AppStyle.medium(Colors.red),)),
+              )
             ],
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin),
-        child: FloatingActionButton(
-          onPressed: (){
-            showMonthPicker(
-              roundedCornersRadius: 25,
-                headerColor: AppColors.green,
-                selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
-                context: context,
-                initialDate: dateTime,
-                lastDate: DateTime.now()
-            ).then((date) {
-              if (date != null) {
-                setState(() {
-                  dateTime = date;
-                });
-                _repository.clearSkladBase();
-                skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
-              }
-            });
-          },
-          backgroundColor: AppColors.green,
-          child: const Icon(Icons.calendar_month,color: Colors.white,),
-        ),
-      ),
     );
   }
+  Widget priceCheck(idPrice,data){
+    switch(idPrice){
+      case 0:
+        return data.snarhi != 0?Text("${priceFormat.format(data.snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhiS)} \$",style: AppStyle.medium(Colors.black),);
+      case 1:
+        return data.snarhi1 != 0?Text("${priceFormat.format(data.snarhi1)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhi1S)} \$",style: AppStyle.medium(Colors.black),);
+      case 2:
+        return data.snarhi2 != 0?Text("${priceFormat.format(data.snarhi2)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.snarhi2S)} \$",style: AppStyle.medium(Colors.black),);
+      case 3:
+        return data.narhi != 0?Text("${priceFormat.format(data.narhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.narhiS)} \$",style: AppStyle.medium(Colors.black),);
+      default:
+        return data.narhi != 0?Text("${priceFormat.format(data.narhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.narhiS)} \$",style: AppStyle.medium(Colors.black),);
+    }
+  }
+
 }
 

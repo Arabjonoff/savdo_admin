@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/skl2/skl2_model.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 
@@ -18,6 +19,9 @@ class SkladBloc{
       for(int j =0; j<productBase.length;j++){
         if(skladBase[i].idSkl2 == productBase[j].id){
           skladBase[i].photo = productBase[j].photo;
+          skladBase[i].idFirmaName = productBase[j].firmName;
+          skladBase[i].idEdizName = productBase[j].edizName;
+          skladBase[i].idTipName = productBase[j].tipName;
         }
       }
     }
@@ -30,6 +34,9 @@ class SkladBloc{
           for(int j =0;j<productBase.length;j++){
             if(data.data[i].idSkl2 == productBase[j].id){
               data.data[i].photo = productBase[j].photo;
+              data.data[i].idFirmaName = productBase[j].firmName;
+              data.data[i].idEdizName = productBase[j].edizName;
+              data.data[i].idTipName = productBase[j].tipName;
             }
           }
           await _repository.saveSkladBase(data.data[i]);
@@ -46,6 +53,9 @@ class SkladBloc{
       for(int j =0; j<productBase.length;j++){
         if(skladBase[i].idSkl2 == productBase[j].id){
           skladBase[i].photo = productBase[j].photo;
+          skladBase[i].idFirmaName = productBase[j].firmName;
+          skladBase[i].idEdizName = productBase[j].edizName;
+          skladBase[i].idTipName = productBase[j].tipName;
         }
       }
     }

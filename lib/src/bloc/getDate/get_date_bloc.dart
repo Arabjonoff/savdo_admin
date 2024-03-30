@@ -7,7 +7,12 @@ class GetDateBloc{
   getDateId()async{
     HttpResult result = await _repository.getDatePayment();
     if(result.result['status']==true){
-      CacheService.saveDateId(result.result['ID']);
+      if(result.result['ID'].runtimeType == String){
+        CacheService.saveDateId(int.parse(result.result['ID']));
+      }
+      else{
+        CacheService.saveDateId(result.result['ID']);
+      }
     }
   }
 }
