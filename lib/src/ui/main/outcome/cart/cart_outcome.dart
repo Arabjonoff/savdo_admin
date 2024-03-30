@@ -158,6 +158,7 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                     children: [
                       Expanded(child: ButtonWidget(onTap: ()  async{
                         await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                        repository.lockOutcome(widget.data,1);
                         if(context.mounted)Navigator.pop(context);
                         if(context.mounted)Navigator.pop(context);
                         repository.clearOutcomeCart();

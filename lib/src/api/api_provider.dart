@@ -323,8 +323,8 @@ class ApiProvider {
     String url = "${_baseUrl}image?DB=$db";
     return  await _postRequestImage(url,image,idSkl2);
   }
-  Future<HttpResult> getIncome(date)async{
-    String url = "${_baseUrl}kirim?DB=$db&ID_SKL=1&YIL=$year&OY=$month&SANA=$date";
+  Future<HttpResult> getIncome(year,month)async{
+    String url = "${_baseUrl}kirim?DB=$db&ID_SKL=1&YIL=$year&OY=$month";
     return await _getRequest(url);
   }
   Future<HttpResult> addIncome(name,idT,doc,date,comment,idHodim,idSkl,)async{

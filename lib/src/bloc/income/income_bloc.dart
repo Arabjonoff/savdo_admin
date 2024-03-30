@@ -7,8 +7,8 @@ class IncomeBloc{
   final Repository _repository = Repository();
   final _fetchIncomeInfo = PublishSubject<IncomeModel>();
   Stream<IncomeModel> get getIncomeStream => _fetchIncomeInfo.stream;
-  getAllIncome(date)async{
-    HttpResult res = await _repository.getIncome(date);
+  getAllIncome(year,month)async{
+    HttpResult res = await _repository.getIncome(year,month);
     if(res.isSuccess){
       var data = IncomeModel.fromJson(res.result);
       _fetchIncomeInfo.sink.add(data);

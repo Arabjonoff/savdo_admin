@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/income_bloc.dart';
 import 'package:savdo_admin/src/bloc/income/skl_pr_tov_bloc.dart';
@@ -28,12 +29,13 @@ class IncomeScreen extends StatefulWidget {
 
 class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderStateMixin{
   final Repository _repository = Repository();
-   TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
+  DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
+  TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   final _controller = ScrollController();
 bool scrollTop = false;
   @override
   void initState() {
-    incomeBloc.getAllIncome(_controllerDate.text);
+    incomeBloc.getAllIncome(dateTime.year,dateTime.month);
     super.initState();
   }
   @override
@@ -50,16 +52,33 @@ bool scrollTop = false;
         title: Column(
           children: [
             const Text("Киримлар"),
-            Text(_controllerDate.text,style: AppStyle.smallBold(Colors.grey),),
+            Text(DateFormat('yyyy-MMM').format(dateTime),style: AppStyle.smallBold(Colors.grey),),
           ],
         ),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,))
+          IconButton(onPressed: (){
+            showMonthPicker(
+                roundedCornersRadius: 25,
+                headerColor: AppColors.green,
+                selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
+                context: context,
+                initialDate: dateTime,
+                lastDate: DateTime.now()
+            ).then((date) {
+              if (date != null) {
+                setState(() {
+                  dateTime = date;
+                });
+                _repository.clearSkladBase();
+                incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+              }
+            });
+          }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,))
         ],
       ),
       body: RefreshIndicator(
         onRefresh: ()async{
-          await incomeBloc.getAllIncome(_controllerDate.text);
+          await incomeBloc.getAllIncome(dateTime.year,dateTime.month);
         },
         child: StreamBuilder<IncomeModel>(
           stream: incomeBloc.getIncomeStream,
@@ -90,7 +109,7 @@ bool scrollTop = false;
                                             onPressed: (i) async {
                                               HttpResult res = await _repository.lockIncome(data[index].id,1);
                                               if(res.result['status'] == true){
-                                                incomeBloc.getAllIncome(_controllerDate.text);
+                                                incomeBloc.getAllIncome(dateTime.year,dateTime.month);
                                                 ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(content: Text(res.result['message']),backgroundColor: Colors.green,)
                                                 );
@@ -107,7 +126,7 @@ bool scrollTop = false;
                                           onPressed: (i) async {
                                             HttpResult res = await _repository.lockIncome(data[index].id,0);
                                             if(res.result['status'] == true){
-                                              incomeBloc.getAllIncome(_controllerDate.text);
+                                              incomeBloc.getAllIncome(dateTime.year,dateTime.month);
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                   SnackBar(content: Text(res.result['message']),backgroundColor: Colors.green,)
                                               );
@@ -148,7 +167,7 @@ bool scrollTop = false;
                                             CenterDialog.showDeleteDialog(context, ()async{
                                               HttpResult res = await _repository.deleteIncome(data[index].id);
                                               if(res.result['status'] == true){
-                                                incomeBloc.getAllIncome(_controllerDate.text);
+                                                incomeBloc.getAllIncome(dateTime.year,dateTime.month);
                                                 Navigator.pop(context);
                                               }
                                               else{

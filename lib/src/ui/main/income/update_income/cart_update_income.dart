@@ -52,7 +52,7 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                                   if(res.result["status"] == true){
                                     _repository.deleteSklPrTovBase(data[index].id);
                                     await sklPrTovBloc.getAllSklPrTovAll();
-                                    await incomeBloc.getAllIncome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                                    await incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
                                     if(context.mounted)Navigator.pop(context);
                                   }
                                   else{

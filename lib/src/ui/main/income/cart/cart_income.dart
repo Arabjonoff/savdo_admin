@@ -230,7 +230,7 @@ class _CartIncomeScreenState extends State<CartIncomeScreen> {
                           }
                           HttpResult res = await _repository.updateIncome2SklPr(body);
                           if(res.result['status'] == true){
-                            await incomeBloc.getAllIncome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                            await incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
                             _repository.clearIncomeProductBase();
                             if(context.mounted)Navigator.pop(context);
                             if(context.mounted)Navigator.pop(context);

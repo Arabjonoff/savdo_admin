@@ -176,7 +176,7 @@ class Repository{
   Future<HttpResult> postImage(image, idSkl2) => _apiProvider.postImage(image, idSkl2);
 
   /// Api Income
-  Future<HttpResult> getIncome(date) => _apiProvider.getIncome(date);
+  Future<HttpResult> getIncome(year,month) => _apiProvider.getIncome(year,month);
   Future<HttpResult> addIncome(name,idT,doc,date,comment,idHodim,idSkl,)=>_apiProvider.addIncome(name, idT, doc, date, comment, idHodim, idSkl);
   Future<HttpResult> updateIncome(id,name,idT,doc,date,comment,idHodim,idSkl,)=>_apiProvider.updateIncome(id,name, idT, doc, date, comment, idHodim, idSkl);
   Future<HttpResult> deleteIncome(id)=>_apiProvider.deleteIncome(id);
