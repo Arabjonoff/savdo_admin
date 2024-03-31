@@ -35,6 +35,7 @@ class _UpdateOutcomeWidgetDialogState extends State<UpdateOutcomeWidgetDialog> {
   int currency = 12450;
   @override
   void initState() {
+    priceType = widget.priceUsd;
     _controllerCount = TextEditingController(text: '1');
     _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency) : priceFormat.format(widget.price));
     // _controllerPrice = TextEditingController(text: widget.price.toString());
@@ -160,71 +161,71 @@ class _UpdateOutcomeWidgetDialogState extends State<UpdateOutcomeWidgetDialog> {
                     padding: EdgeInsets.only(right: MediaQuery.of(context).size.width/2),
                     child: TextFieldWidget(controller: _controllerCurrency, hintText: "",keyboardType: true,readOnly: true,suffixText: "Сўм",),
                   ),
-                  // SizedBox(height: 8.w,),
-                  // Row(
-                  //   children: [
-                  //     SizedBox(width: 16.w,),
-                  //     GestureDetector(
-                  //       onTap: (){
-                  //         onTap = 0;
-                  //         if (widget.priceUsd == 0) {
-                  //           _controllerPrice.text = priceFormat.format(widget.price);
-                  //           _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
-                  //         } else {
-                  //           _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text) * currency);
-                  //           _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
-                  //         }
-                  //         setState(() => priceType = 0);
-                  //       },
-                  //       child: Container(
-                  //         padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                  //         decoration: BoxDecoration(
-                  //             boxShadow: const [
-                  //               BoxShadow(
-                  //                   color: Colors.grey,
-                  //                   blurRadius: 2
-                  //               )
-                  //             ],
-                  //             borderRadius: BorderRadius.circular(10),
-                  //             color: priceType==0?AppColors.green:Colors.white
-                  //         ),
-                  //         child: Text("Сўм",style: AppStyle.mediumBold(priceType==0?AppColors.white:Colors.black),),
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 8.w,),
-                  //     GestureDetector(
-                  //       onTap: (){
-                  //         onTap+=1;
-                  //         priceType = 1;
-                  //         if (widget.priceUsd == 0) {
-                  //           if(onTap ==1){
-                  //             _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
-                  //             _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
-                  //           }
-                  //         } else {
-                  //           _controllerPrice.text = priceFormatUsd.format(widget.price);
-                  //           _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
-                  //         }
-                  //         // controllerPrice.text = (num.parse(controllerPrice.text.replaceAll(" ", "")) / CacheService.getCurrency()).toString();
-                  //         setState(() {});
-                  //       },
-                  //       child: Container(
-                  //         padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                  //         decoration: BoxDecoration(
-                  //             boxShadow: const [
-                  //               BoxShadow(
-                  //                   color: Colors.grey,
-                  //                   blurRadius: 2
-                  //               )
-                  //             ],
-                  //             borderRadius: BorderRadius.circular(10),
-                  //             color: priceType==1?AppColors.green:Colors.white
-                  //         ),
-                  //         child: Text("Валюта",style: AppStyle.mediumBold(priceType==1?AppColors.white:Colors.black),),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  SizedBox(height: 8.w,),
+                  Row(
+                    children: [
+                      SizedBox(width: 16.w,),
+                      GestureDetector(
+                        onTap: (){
+                          onTap = 0;
+                          if (widget.priceUsd == 0) {
+                            _controllerPrice.text = priceFormat.format(widget.price);
+                            _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+                          } else {
+                            _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text) * currency);
+                            _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+                          }
+                          setState(() => priceType = 0);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
+                          decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 2
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10),
+                              color: priceType==0?AppColors.green:Colors.white
+                          ),
+                          child: Text("Сўм",style: AppStyle.mediumBold(priceType==0?AppColors.white:Colors.black),),
+                        ),
+                      ),
+                      SizedBox(width: 8.w,),
+                      GestureDetector(
+                        onTap: (){
+                          onTap+=1;
+                          priceType = 1;
+                          if (widget.priceUsd == 0) {
+                            if(onTap ==1){
+                              _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
+                              _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
+                            }
+                          } else {
+                            _controllerPrice.text = priceFormatUsd.format(widget.price);
+                            _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
+                          }
+                          // controllerPrice.text = (num.parse(controllerPrice.text.replaceAll(" ", "")) / CacheService.getCurrency()).toString();
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
+                          decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 2
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10),
+                              color: priceType==1?AppColors.green:Colors.white
+                          ),
+                          child: Text("Валюта",style: AppStyle.mediumBold(priceType==1?AppColors.white:Colors.black),),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 8.w,),
                   Padding(
                     padding: EdgeInsets.only(left: 16.0.w),

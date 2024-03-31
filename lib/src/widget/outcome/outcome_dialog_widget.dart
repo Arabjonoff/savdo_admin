@@ -16,7 +16,7 @@ import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class AddOutcomeWidgetDialog extends StatefulWidget {
   final num price;
-  final int priceUsd;
+  final  int priceUsd;
   final dynamic data,ndocId;
   final String typeName;
   const AddOutcomeWidgetDialog({super.key, required this.data, required this.price, required this.priceUsd, this.ndocId, required this.typeName});
@@ -244,6 +244,19 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
               ),
             ),
             ButtonWidget(onTap: ()async{
+              int pay=1;
+              if(widget.priceUsd==0 && priceType==0){
+                pay=0;
+              }
+              else if(widget.priceUsd==1 && priceType==0){
+                pay=0;
+              }
+              else if(widget.priceUsd==0 && priceType==1){
+                pay=0;
+              }
+              else if(widget.priceUsd==1 && priceType==1){
+                pay=1;
+              }
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
                 Map data = {
                   "ID_SKL_RS": widget.ndocId,
@@ -267,38 +280,42 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                   "SHTR": '',
                 };
                 HttpResult res = await _repository.addOutcomeSklRs(data);
-                if(res.result['status'] == true){
-                  SklRsTov sklRsTov = SklRsTov(
-                      id: int.parse(res.result['id']),
-                      name: widget.data.name,
-                      idSkl2: widget.data.idSkl2,
-                      soni: num.parse(_controllerCount.text),
-                      narhi: widget.data.narhi,
-                      narhiS: widget.data.narhiS,
-                      sm: num.parse(_controllerCount.text) * widget.data.narhi,
-                      smS: num.parse(_controllerCount.text) * widget.data.narhiS,
-                      idTip: widget.data.idTip,
-                      idFirma: widget.data.idFirma,
-                      idEdiz: widget.data.idEdiz,
-                      snarhi: priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
-                      snarhiS: priceType == 1?num.parse(_controllerPrice.text):0,
-                      ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
-                      ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
-                      fr: 0,
-                      frS: widget.priceUsd,
-                      vz: widget.data.idEdizName,
-                      shtr: widget.data.photo
-                  );
-                  await _repository.saveOutcomeCart(sklRsTov);
-                  skladBloc.updateSklad(widget.data, res.result['osoni']);
-                  cartOutcomeBloc.getAllCartOutcome();
-                  if(context.mounted)Navigator.pop(context);
-                  if(context.mounted)Navigator.pop(context);
-                }
-                else{
-                  if(context.mounted)Navigator.pop(context);
-                  if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
-                }
+               try{
+                 if(res.result['status'] == true){
+                   SklRsTov sklRsTov = SklRsTov(
+                       id: int.parse(res.result['id']),
+                       name: widget.data.name,
+                       idSkl2: widget.data.idSkl2,
+                       soni: num.parse(_controllerCount.text),
+                       narhi: widget.data.narhi,
+                       narhiS: widget.data.narhiS,
+                       sm: num.parse(_controllerCount.text) * widget.data.narhi,
+                       smS: num.parse(_controllerCount.text) * widget.data.narhiS,
+                       idTip: widget.data.idTip,
+                       idFirma: widget.data.idFirma,
+                       idEdiz: widget.data.idEdiz,
+                       snarhi: priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
+                       snarhiS: priceType == 1?num.parse(_controllerPrice.text):0,
+                       ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
+                       ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
+                       fr: 0,
+                       frS: priceType,
+                       vz: widget.data.idEdizName,
+                       shtr: widget.data.photo
+                   );
+                   await _repository.saveOutcomeCart(sklRsTov);
+                   skladBloc.updateSklad(widget.data, res.result['osoni']);
+                   cartOutcomeBloc.getAllCartOutcome();
+                   if(context.mounted)Navigator.pop(context);
+                   if(context.mounted)Navigator.pop(context);
+                 }
+                 else{
+                   if(context.mounted)Navigator.pop(context);
+                   if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+                 }
+               }catch(e){
+                 CenterDialog.showErrorDialog(context, e.toString());
+               }
             }, color: AppColors.green, text: "Саватга қўшиш"),
             SizedBox(height: 32.h,)
           ],
