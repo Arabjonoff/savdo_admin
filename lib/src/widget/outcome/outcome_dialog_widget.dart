@@ -262,7 +262,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                   "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
                   "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
                   "FR": '0',
-                  "FR_S": '0',
+                  "FR_S": priceType,
                   "VZ": widget.data.vz,
                   "SHTR": '',
                 };
@@ -285,7 +285,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                       ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
                       ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
                       fr: 0,
-                      frS: 0,
+                      frS: widget.priceUsd,
                       vz: widget.data.idEdizName,
                       shtr: widget.data.photo
                   );

@@ -6,6 +6,7 @@ import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/cart/cart_outcome_bloc.dart';
 import 'package:savdo_admin/src/bloc/outcome/product_outcome_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
@@ -43,7 +44,8 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    productOutComeBloc.getAllProductOutcomeSearch('');
+     skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+     skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
     super.initState();
   }
   @override
@@ -138,12 +140,12 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
           ),
           child: RefreshIndicator(
             onRefresh: ()async{
-              await _repository.clearOutcomeBase();
-              await productOutComeBloc.getAllProductOutcome();
-              await productOutComeBloc.getAllProductOutcomeSearch('');
+              await _repository.clearSkladBase();
+              await skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+              await skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
             },
             child: StreamBuilder<List<SkladResult>>(
-                stream: productOutComeBloc.getProductOutcomeSearchStream,
+                stream: skladBloc.getSkladSearchStream,
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     int productCount = 0;
@@ -242,9 +244,14 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
-                                                SizedBox(height: 8.h,),
-                                                priceCheck(idPrice, data[index]),
                                                 const Spacer(),
+                                                Row(
+                                                  children: [
+                                                    Text("Нархи: ",style: AppStyle.small(Colors.black54),),
+                                                    const Spacer(),
+                                                    priceCheck(idPrice, data[index]),
+                                                  ],
+                                                ),
                                                 Row(
                                                   children: [
                                                     Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
@@ -354,13 +361,21 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
-                                                SizedBox(height: 8.h,),
-                                                priceCheck(idPrice, data[index]),
                                                 const Spacer(),
                                                 Row(
                                                   children: [
+                                                    Text("Нархи: ",style: AppStyle.small(Colors.black54),),
+                                                    const Spacer(),
+                                                    priceCheck(idPrice, data[index]),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
                                                     Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
-                                                    Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black54),),
+                                                    const Spacer(),
+                                                    Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                                    SizedBox(width: 4.w,),
+                                                    Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
                                                   ],
                                                 ),
                                               ],

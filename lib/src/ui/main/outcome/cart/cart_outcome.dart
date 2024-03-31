@@ -7,6 +7,7 @@ import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/cart/cart_outcome_bloc.dart';
 import 'package:savdo_admin/src/bloc/outcome/outcome_bloc.dart';
+import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -16,6 +17,7 @@ import 'package:savdo_admin/src/ui/main/outcome/payment/outcome_payment_screen.d
 import 'package:savdo_admin/src/ui/main/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
+import 'package:savdo_admin/src/widget/outcome/outcome_update_dialog.dart';
 
 class CartOutcomeScreen extends StatefulWidget {
   final dynamic data;
@@ -69,77 +71,81 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                                 )
                               ],
                             ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
-                              height: 100.h,
-                              width: width,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300
-                                      )
-                                  )
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap:(){
-                                      CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].shtr,));
-                                    },
-                                    child: Container(
-                                      width: 80.r,
-                                      height: 80.r,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: Colors.white
-                                      ),
-                                      child: Hero(
-                                        tag: data[index].id.toString(),
-                                        child: CachedNetworkImage(
-                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
-                                          imageUrl: 'https://naqshsoft.site/images/$db/${data[index].shtr}',
+                            child: GestureDetector(
+                              onTap: (){
+                                BottomDialog.showAddOutComeDialog(context,UpdateOutcomeWidgetDialog(data: data[index], price: data[index].snarhi!=0?data[index].snarhi:data[index].snarhiS, priceUsd: data[index].frS.toInt(), typeName: data[index].vz,ndocId: widget.data, id: data[index].id,));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
+                                height: 100.h,
+                                width: width,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade300
+                                        )
+                                    )
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap:(){
+                                        CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].shtr,));
+                                      },
+                                      child: Container(
+                                        width: 80.r,
+                                        height: 80.r,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: Hero(
+                                          tag: data[index].id.toString(),
+                                          child: CachedNetworkImage(
+                                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                            errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
+                                            imageUrl: 'https://naqshsoft.site/images/$db/${data[index].shtr}',
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: 8.w,),
-                                  Expanded(child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(data[index].name,maxLines:1,style: AppStyle.smallBold(Colors.black),),
-                                      const Spacer(),
-                                      Row(
-                                        children: [
-                                          Text("миқдори:",style: AppStyle.smallBold(Colors.grey),),
-                                          const Spacer(),
-                                          Text(priceFormatUsd.format(data[index].soni),style: AppStyle.smallBold(Colors.black),),
-                                          SizedBox(width: 4.w,),
-                                          Text(data[index].vz,style: AppStyle.smallBold(Colors.black),),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("нархи:",style: AppStyle.smallBold(Colors.grey),),
-                                          data[index].snarhi!=0?
-                                          Text("${priceFormatUsd.format(data[index].snarhi)} сўм",style: AppStyle.smallBold(Colors.black),):
-                                          Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.smallBold(Colors.black),),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("жами:",style: AppStyle.smallBold(Colors.grey),),
-                                          data[index].ssm != 0?Text("${priceFormatUsd.format(data[index].ssm)} сўм",style: AppStyle.smallBold(Colors.black),):
-                                          Text("${priceFormatUsd.format(data[index].ssmS)} \$",style: AppStyle.smallBold(Colors.black),),
-                                        ],
-                                      ),
-                                    ],
-                                  ))
-                                ],
+                                    SizedBox(width: 8.w,),
+                                    Expanded(child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(data[index].name,maxLines:1,style: AppStyle.smallBold(Colors.black),),
+                                        const Spacer(),
+                                        Row(
+                                          children: [
+                                            Text("миқдори:",style: AppStyle.smallBold(Colors.grey),),
+                                            const Spacer(),
+                                            Text(priceFormatUsd.format(data[index].soni),style: AppStyle.smallBold(Colors.black),),
+                                            SizedBox(width: 4.w,),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("нархи:",style: AppStyle.smallBold(Colors.grey),),
+                                            data[index].snarhi!=0?
+                                            Text("${priceFormatUsd.format(data[index].snarhi)} сўм",style: AppStyle.smallBold(Colors.black),):
+                                            Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.smallBold(Colors.black),),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("жами:",style: AppStyle.smallBold(Colors.grey),),
+                                            data[index].ssm != 0?Text("${priceFormatUsd.format(data[index].ssm)} сўм",style: AppStyle.smallBold(Colors.black),):
+                                            Text("${priceFormatUsd.format(data[index].ssmS)} \$",style: AppStyle.smallBold(Colors.black),),
+                                          ],
+                                        ),
+                                      ],
+                                    ))
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -159,10 +165,10 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                   Row(
                     children: [
                       Expanded(child: ButtonWidget(onTap: ()  async{
+                        await repository.lockOutcome(widget.data,1);
+                        if(context.mounted)Navigator.pop(context);
+                        if(context.mounted)Navigator.pop(context);
                         await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
-                        repository.lockOutcome(widget.data,1);
-                        if(context.mounted)Navigator.pop(context);
-                        if(context.mounted)Navigator.pop(context);
                         repository.clearOutcomeCart();
                         CenterDialog.showSuccessDialog(context,);
                       }, color: AppColors.green, text: "Сақлаш")),

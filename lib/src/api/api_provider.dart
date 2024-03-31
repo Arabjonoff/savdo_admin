@@ -495,7 +495,7 @@ class ApiProvider {
   }
   Future<HttpResult> updateOutcomeSklRs(data)async{
     String url = "${_baseUrl}chikim1_upd?DB=$db&JWT=$token";
-    return await _postRequest(url,json.encode(data));
+    return await _patchRequest(url,json.encode(data));
   }
   Future<HttpResult> deleteOutcomeSklRs(id,idSklRs,idSkl2)async{
     String url = "${_baseUrl}chikim1_del?ID=$id&ID_SKL_RS=$idSklRs&ID_SKL2=$idSkl2&DB=$db&JWT=$token";
