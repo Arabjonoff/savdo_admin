@@ -136,7 +136,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
           ),
           sheetBelow: SnappingSheetContent(
             draggable: (details) => true,
-            child: CartOutcomeScreen(data: widget.ndocId,),
+            child: CartOutcomeScreen(data: widget.ndocId,isNavigate: false,),
           ),
           child: RefreshIndicator(
             onRefresh: ()async{

@@ -20,8 +20,9 @@ import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/outcome/outcome_update_dialog.dart';
 
 class CartOutcomeScreen extends StatefulWidget {
+   final bool isNavigate;
   final dynamic data;
-  const CartOutcomeScreen({super.key, this.data});
+  const CartOutcomeScreen({super.key, this.data,this.isNavigate=true});
 
   @override
   State<CartOutcomeScreen> createState() => _CartOutcomeScreenState();
@@ -166,8 +167,13 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                     children: [
                       Expanded(child: ButtonWidget(onTap: ()  async{
                         await repository.lockOutcome(widget.data,1);
-                        if(context.mounted)Navigator.pop(context);
-                        if(context.mounted)Navigator.pop(context);
+                        if(widget.isNavigate){
+                          if(context.mounted)Navigator.pop(context);
+                          if(context.mounted)Navigator.pop(context);
+                        }
+                        else{
+                          if(context.mounted)Navigator.pop(context);
+                        }
                         await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                         repository.clearOutcomeCart();
                         CenterDialog.showSuccessDialog(context,);
