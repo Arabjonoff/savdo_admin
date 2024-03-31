@@ -45,6 +45,11 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
     super.initState();
   }
   @override
+  void dispose() {
+    dateTime = DateTime(DateTime.now().year,DateTime.now().month);
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -693,6 +698,5 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
         return data.narhi != 0?Text("${priceFormat.format(data.narhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data.narhiS)} \$",style: AppStyle.medium(Colors.black),);
     }
   }
-
 }
 

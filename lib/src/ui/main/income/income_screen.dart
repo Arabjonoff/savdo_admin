@@ -228,6 +228,14 @@ bool scrollTop = false;
                                       Text("${priceFormat.format(data[index].har)} сўм | ${priceFormat.format(data[index].harS)} \$",style: AppStyle.smallBold(Colors.red),),
                                       ],
                                     ),
+                                    SizedBox(height: 4.h,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                      Text("Вақти:",style: AppStyle.small(Colors.black),),
+                                      Text(data[index].vaqt.toString().substring(0,19),style: AppStyle.small(Colors.black),),
+                                      ],
+                                    ),
                                     // SizedBox(
                                     //   height: 1,
                                     //   width: MediaQuery.of(context).size.width,

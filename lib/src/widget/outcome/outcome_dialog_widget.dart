@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/cart/cart_outcome_bloc.dart';
-import 'package:savdo_admin/src/bloc/outcome/product_outcome_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
@@ -286,11 +286,11 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                       ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
                       fr: 0,
                       frS: 0,
-                      vz: widget.data.vz,
+                      vz: widget.data.idEdizName,
                       shtr: widget.data.photo
                   );
                   await _repository.saveOutcomeCart(sklRsTov);
-                  productOutComeBloc.getOutcomeProduct(widget.data, res.result['osoni']);
+                  skladBloc.updateSklad(widget.data, res.result['osoni']);
                   cartOutcomeBloc.getAllCartOutcome();
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)Navigator.pop(context);

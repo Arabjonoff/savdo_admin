@@ -112,10 +112,12 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                                       Text(data[index].name,maxLines:1,style: AppStyle.smallBold(Colors.black),),
                                       const Spacer(),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text("миқдори:",style: AppStyle.smallBold(Colors.grey),),
+                                          const Spacer(),
                                           Text(priceFormatUsd.format(data[index].soni),style: AppStyle.smallBold(Colors.black),),
+                                          SizedBox(width: 4.w,),
+                                          Text(data[index].vz,style: AppStyle.smallBold(Colors.black),),
                                         ],
                                       ),
                                       Row(

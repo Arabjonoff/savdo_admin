@@ -13,6 +13,9 @@ class SkladBloc{
   Stream<List<SkladResult>> get getSkladSearchStream => _fetchSkladSearchInfo.stream;
 
   getAllSklad(year, month,idSkl)async{
+    if(DateTime.now().day == 1){
+      await _repository.clearSkladBase();
+    }
     List<Skl2Result> productBase = await _repository.getProductBase();
     List<SkladResult> skladBase = await _repository.getSkladBase();
     for(int i =0; i<skladBase.length;i++){
@@ -60,6 +63,66 @@ class SkladBloc{
       }
     }
     _fetchSkladSearchInfo.sink.add(skladBase);
+  }
+  updateSklad(data,count)async{
+    var updateData = {
+      "ID": data.id,
+      "NAME": data.name,
+      "ID_SKL2": data.idSkl2,
+      "ID_TIP": data.idTip,
+      "ID_FIRMA": data.idFirma,
+      "ID_EDIZ": data.idEdiz,
+      "NARHI": data.narhi,
+      "NARHI_S": data.narhiS,
+      "SNARHI": data.snarhi,
+      "SNARHI_S": data.snarhiS,
+      "SNARHI1": data.snarhi1,
+      "SNARHI1_S": data.snarhi1S,
+      "SNARHI2": data.snarhi2,
+      "SNARHI2_S": data.snarhi2S,
+      "KSONI": data.ksoni,
+      "KSM": data.ksm,
+      "KSM_S": data.ksmS,
+      "PSONI": data.psoni,
+      "PSM": data.psm,
+      "PSM_S": data.psmS,
+      "RSONI": data.rsoni,
+      "RSM": data.rsm,
+      "RSM_S": data.rsmS,
+      "HSONI": data.hsoni,
+      "HSM": data.hsm,
+      "HSM_S": data.hsmS,
+      "VSONI": data.vsoni,
+      "VSM": data.vsm,
+      "VSM_S": data.vsmS,
+      "VZSONI": data.vzsoni,
+      "VZSM": data.vzsm,
+      "VZSM_S": data.vzsmS,
+      "PSKSONI": data.psksoni,
+      "PSKSM": data.psksm,
+      "PSKSM_S": data.psksmS,
+      "RSKSONI": data.rsksoni,
+      "RSKSM": data.rsksm,
+      "RSKSM_S": data.rsksmS,
+      "OSONI": count,
+      "OSM": data.osm,
+      "OSM_S": data.osmS,
+      "OSM_T": data.osmT,
+      "OSM_T_S": data.osmTS,
+      "KSM_T": data.ksmT,
+      "KSM_T_S": data.ksmTS,
+      "YIL": data.yil,
+      "OY": data.oy,
+      "ID_SKL0": data.idSkl0,
+      "FOYDA": data.foyda,
+      "FOYDA_S": data.foydaS,
+      "SONI": data.soni,
+      "VZ": data.vz,
+      "PHOTO": data.photo,
+    };
+    await _repository.updateSkladBase(SkladResult.fromJson(updateData));
+    await getAllSklad(DateTime.now().year, DateTime.now().month,1);
+    await getAllSkladSearch(DateTime.now().year, DateTime.now().month,1,'');
   }
 
 }

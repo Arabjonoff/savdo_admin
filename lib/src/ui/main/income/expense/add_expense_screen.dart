@@ -60,20 +60,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Кимга:",style: AppStyle.small(Colors.black),),
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentClientScreen());
-                      },
-                        child: TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: false,)),
+                    TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: false,suffixIcon: IconButton(onPressed: ()=> CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentClientScreen()),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Нима учун:",style: AppStyle.small(Colors.black),),
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        CenterDialog.showProductTypeDialog(context, 'Харажат тури', ExpenseTypeChoseScreen(idSklPr: widget.idSklPr,));
-                      },
-                        child: TextFieldWidget(controller: _controllerExpense, hintText: 'Нима учун',readOnly: false,)),
+                    TextFieldWidget(controller: _controllerExpense, hintText: 'Нима учун',readOnly: false,suffixIcon: IconButton(onPressed: ()=>CenterDialog.showProductTypeDialog(context, 'Харажат тури', ExpenseTypeChoseScreen(idSklPr: widget.idSklPr,)),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Сумма:",style: AppStyle.small(Colors.black),),
@@ -149,7 +141,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                               child: Text("Пластик",style: AppStyle.medium(expenseId==3?Colors.white:Colors.black),),
                             ),
                           ),
-
                         ],
                       ),
                     )

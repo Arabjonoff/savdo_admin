@@ -7,6 +7,7 @@ import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/cart/cart_outcome_bloc.dart';
 import 'package:savdo_admin/src/bloc/outcome/product_outcome_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
@@ -45,7 +46,8 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    productOutComeBloc.getAllProductOutcomeSearch('');
+    skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+    skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
     super.initState();
   }
   @override
@@ -102,8 +104,8 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                 }
               }
             },
-            onChanged: (i){
-              productOutComeBloc.getAllProductOutcomeSearch(i);
+            onChanged: (i)async{
+              await skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,i);
             },
           ),
           actions: [
@@ -175,11 +177,11 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
           child: RefreshIndicator(
             onRefresh: ()async{
               await _repository.clearOutcomeBase();
-              await productOutComeBloc.getAllProductOutcome();
-              await productOutComeBloc.getAllProductOutcomeSearch('');
+              await skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+              await skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
             },
             child: StreamBuilder<List<SkladResult>>(
-                stream: productOutComeBloc.getProductOutcomeSearchStream,
+                stream: skladBloc.getSkladSearchStream,
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     int productCount = 0;
@@ -278,9 +280,14 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(data[index].osoni.toString(),maxLines:1,style: AppStyle.mediumBold(Colors.black),),
-                                              SizedBox(height: 8.h,),
-                                              priceCheck(idPrice, data[index]),
                                               const Spacer(),
+                                              Row(
+                                                children: [
+                                                  Text("Нархи: ",style: AppStyle.small(Colors.black54),),
+                                                  const Spacer(),
+                                                  priceCheck(idPrice, data[index]),
+                                                ],
+                                              ),
                                               Row(
                                                 children: [
                                                   Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
@@ -392,9 +399,14 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(data[index].name.toString(),maxLines:1,style: AppStyle.mediumBold(Colors.black),),
-                                              SizedBox(height: 8.h,),
-                                              priceCheck(idPrice, data[index]),
                                               const Spacer(),
+                                              Row(
+                                                children: [
+                                                  Text("Нархи: ",style: AppStyle.small(Colors.black54),),
+                                                  const Spacer(),
+                                                  priceCheck(idPrice, data[index]),
+                                                ],
+                                              ),
                                               Row(
                                                 children: [
                                                   Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
