@@ -295,7 +295,7 @@ class THar {
   int idAgent;
   int idNima;
   String idNimaName;
-  int sm;
+  num sm;
   String yil;
   String oy;
   DateTime sana;

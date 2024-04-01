@@ -25,7 +25,7 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ходимлар"),
+        title: const Text("Харидорлар"),
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: TabBar(
@@ -34,10 +34,10 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
               controller: _controller,
               tabs: const [
                 Tab(
-                  text: "Ходимлар",
+                  text: "Харидорлар",
                 ),
                 Tab(
-                  text: "Ходим қўшиш",
+                  text: "Харидор қўшиш",
                 ),
               ],
             )

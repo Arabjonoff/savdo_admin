@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/bloc/getDate/get_date_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_barcode.dart';
+import 'package:savdo_admin/src/bloc/product/product_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_firma_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_quantity_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_type_bloc.dart';
@@ -19,6 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
+    productBloc.getAllProduct();
     getDateBloc.getDateId();
     barcodeProductBloc.getBarcodeAll();
     clientBloc.getAllClient('');

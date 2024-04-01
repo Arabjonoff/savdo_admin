@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           title: 'Naqsh Savdo',
           theme: ThemeData(
+            textTheme: GoogleFonts.notoSansTextTheme(),
             platform: TargetPlatform.iOS,
             useMaterial3: true,
           ),
