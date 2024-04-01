@@ -44,7 +44,6 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-     skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
      skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
     super.initState();
   }
@@ -69,7 +68,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
             suffixIcon:const Icon(Icons.qr_code_scanner, size: 25,),
             suffixMode: OverlayVisibilityMode.always,
             onChanged: (i){
-              productOutComeBloc.getAllProductOutcomeSearch(i);
+              skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,i);
             },
           ),
           actions: [

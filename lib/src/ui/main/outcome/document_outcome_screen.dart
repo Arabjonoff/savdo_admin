@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -36,6 +37,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   bool disable = true;
   @override
   void initState() {
+    skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,1);
     _initBus();
     super.initState();
   }

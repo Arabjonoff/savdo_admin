@@ -46,7 +46,6 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
     skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
     super.initState();
   }
