@@ -480,7 +480,7 @@ class ApiProvider {
     return await _patchRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteIncomeSklPr(id,idSklPr,idSkl2)async{
-    String url = "${_baseUrl}kirim1_del?ID=$id&ID_SKL_PR=$idSklPr&ID_SKL2=$idSkl2&DB=$db";
+    String url = "${_baseUrl}kirim1_del?ID=$id&ID_SKL_PR=$idSklPr&ID_SKL2=$idSkl2&DB=$db&SANA=2024-04-01";
     return await _deleteRequest(url,{});
   }
 

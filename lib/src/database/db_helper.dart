@@ -304,66 +304,6 @@ class DatabaseHelper{
             ST INTEGER
           )
           ''');
-
-    /// Outcome Sklad List
-    await db.execute('''
-      CREATE TABLE outcome_sklad (
-        ID INTEGER,
-        NAME TEXT,
-        ID_SKL2 INTEGER,
-        ID_TIP INTEGER,
-        ID_FIRMA INTEGER,
-        ID_EDIZ INTEGER,
-        NARHI REAL,
-        NARHI_S REAL,
-        SNARHI REAL,
-        SNARHI_S REAL,
-        SNARHI1 REAL,
-        SNARHI1_S REAL,
-        SNARHI2 REAL,
-        SNARHI2_S REAL,
-        KSONI REAL,
-        KSM REAL,
-        KSM_S REAL,
-        PSONI REAL,
-        PSM REAL,
-        PSM_S REAL,
-        RSONI REAL,
-        RSM REAL,
-        RSM_S REAL,
-        HSONI REAL,
-        HSM REAL,
-        HSM_S REAL,
-        VSONI REAL,
-        VSM REAL,
-        VSM_S REAL,
-        VZSONI REAL,
-        VZSM REAL,
-        VZSM_S REAL,
-        PSKSONI REAL,
-        PSKSM REAL,
-        PSKSM_S REAL,
-        RSKSONI REAL,
-        RSKSM REAL,
-        RSKSM_S REAL,
-        OSONI REAL,
-        OSM REAL,
-        OSM_S REAL,
-        OSM_T REAL,
-        OSM_T_S REAL,
-        KSM_T REAL,
-        KSM_T_S REAL,
-        YIL TEXT,
-        OY TEXT,
-        ID_SKL0 INTEGER,
-        FOYDA REAL,
-        FOYDA_S REAL,
-        SONI REAL,
-        VZ REAL,
-        PHOTO TEXT
-      )
-    ''');
-
     /// Outcome Product
     await db.execute('''
       CREATE TABLE outcomeProduct(

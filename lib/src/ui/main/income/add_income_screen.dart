@@ -30,6 +30,19 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   final Repository _repository = Repository();
   String db = CacheService.getDb();
   bool lastStatus = true;
+  final TextEditingController _controllerCount = TextEditingController();
+  final TextEditingController _controllerIncomePriceUzs = TextEditingController(text: '0');
+  final TextEditingController _controllerIncomePriceUsd = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUzs1 = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUsd1 = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUsd2 = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUzs2 = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUzs3 = TextEditingController(text: '0');
+  final TextEditingController _controllerSalePriceUsd3 = TextEditingController(text: '0');
+  final TextEditingController _controllerIncomePriceTotal = TextEditingController(text: '0');
+  final TextEditingController _controllerIncomePrice1Total = TextEditingController(text: '0');
+  final TextEditingController _controllerIncomePrice2Total = TextEditingController(text: '0');
+  final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
   @override
   void initState() {
       db = CacheService.getDb();
@@ -43,19 +56,6 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
     _scrollController!.removeListener(_scrollListener);
     super.dispose();
   }
-  final TextEditingController _controllerCount = TextEditingController();
-  final TextEditingController _controllerIncomePriceUzs = TextEditingController(text: '0');
-  final TextEditingController _controllerIncomePriceUsd = TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUzs1 = TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUsd1= TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUsd2= TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUzs2= TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUzs3= TextEditingController(text: '0');
-  final TextEditingController _controllerSalePriceUsd3= TextEditingController(text: '0');
-  final TextEditingController _controllerIncomePriceTotal = TextEditingController(text: '0');
-  final TextEditingController _controllerIncomePrice1Total = TextEditingController(text: '0');
-  final TextEditingController _controllerIncomePrice2Total = TextEditingController(text: '0');
-  final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +64,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        key: Keys.myWidgetStateKey,
         backgroundColor: AppColors.background,
         body: NestedScrollView(
           controller: _scrollController,
@@ -84,7 +85,24 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                   expandedHeight: 200.h,
                   flexibleSpace:  FlexibleSpaceBar(
                     centerTitle: false,
-                    title: isShrink ?Text(widget.data.name,textAlign: TextAlign.left,style: AppStyle.medium(Colors.black),):const SizedBox(),
+                    title: isShrink ?Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(child: Text(widget.data.name,textAlign: TextAlign.left,style: AppStyle.mediumBold(Colors.black),)),
+                        Container(
+                          margin: EdgeInsets.only(right: 16.w),
+                          alignment: Alignment.bottomRight,
+                          width: 50.r,
+                          height: 50.r,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: 'https://naqshsoft.site/images/$db/${widget.data.photo}',
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>  const Icon(Icons.image_not_supported_outlined,),),
+                        )
+                      ],
+                    ):const SizedBox(),
                     background: Hero(tag: widget.data.name,
                       child: CachedNetworkImage(
                         imageUrl: 'https://naqshsoft.site/images/$db/${widget.data.photo}',
@@ -132,7 +150,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Кирим сони:",style: AppStyle.medium(Colors.black),),
+                      Text("Кирим миқдори:",style: AppStyle.medium(Colors.black),),
                       Container(
                         padding: EdgeInsets.only(left: 8.w),
                         width: 120.w,
@@ -242,7 +260,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Жами сумма:",style: AppStyle.mediumBold(Colors.black),),
-                      Text(priceFormat.format(num.parse(_controllerIncomePriceTotal.text)),style: AppStyle.medium(Colors.black),),
+                      Text(priceFormat.format(num.parse(_controllerIncomePriceTotal.text)),style: AppStyle.mediumBold(AppColors.green),),
                     ],
                   ),
                   SizedBox(height: 12.h,),
@@ -336,7 +354,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Жами сумма:",style: AppStyle.mediumBold(Colors.black),),
-                      Text(priceFormat.format(num.parse(_controllerIncomePrice1Total.text)),style: AppStyle.medium(Colors.black),),
+                      Text(priceFormat.format(num.parse(_controllerIncomePrice1Total.text)),style: AppStyle.mediumBold(AppColors.green),),
                     ],
                   ),
                   /// Sales Price 2  Widget UI
@@ -429,7 +447,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Жами сумма:",style: AppStyle.mediumBold(Colors.black),),
-                      Text(priceFormat.format(num.parse(_controllerIncomePrice2Total.text)),style: AppStyle.medium(Colors.black),),
+                      Text(priceFormat.format(num.parse(_controllerIncomePrice2Total.text)),style: AppStyle.mediumBold(AppColors.green),),
                     ],
                   ),
                   /// Sales Price 3  Widget UI
@@ -522,7 +540,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Жами сумма:",style: AppStyle.mediumBold(Colors.black),),
-                      Text(priceFormat.format(num.parse(_controllerIncomePrice3Total.text)),style: AppStyle.medium(Colors.black),),
+                      Text(priceFormat.format(num.parse(_controllerIncomePrice3Total.text)),style: AppStyle.mediumBold(AppColors.green),),
                     ],
                   ),
                   SizedBox(height: 12.h,),

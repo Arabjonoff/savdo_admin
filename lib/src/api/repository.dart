@@ -108,12 +108,6 @@ class Repository{
   Future<int> deleteIncomeProduct(item) => _incomeProductBase.deleteIncomeProduct(item);
   Future<void>clearIncomeProductBase() => _incomeProductBase.clearIncomeProduct();
 
-  /// Outcome list base
-  Future<int> saveOutcomeBase(item) => _outcomeSkladBaseHelper.saveOutcome(item);
-  Future<List<SkladResult>> getOutcomeBase() => _outcomeSkladBaseHelper.getOutcome();
-  Future<List<SkladResult>> getOutcomeSearchBase(obj) => _outcomeSkladBaseHelper.getOutcomeSearch(obj);
-  Future<int> updateOutcomeBase(item) => _outcomeSkladBaseHelper.updateOutcome(item);
-  Future<void>clearOutcomeBase() => _outcomeSkladBaseHelper.clearOutcome();
 
   /// Outcome cart base
   Future<int> saveOutcomeCart(item) => _outcomeSkladBaseHelper.saveOutcomeCart(item);

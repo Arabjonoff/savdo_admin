@@ -66,7 +66,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
             suffixMode: OverlayVisibilityMode.always,
             onSuffixTap: ()async{
               List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
-              List<SkladResult> outcomeBase = await _repository.getOutcomeBase();
+              List<SkladResult> outcomeBase = await _repository.getSkladBase();
               var result = await BarcodeScanner.scan();
               result.rawContent;
               for(int i = 0; i<barcodeBase.length;i++){
@@ -175,7 +175,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
           ),
           child: RefreshIndicator(
             onRefresh: ()async{
-              await _repository.clearOutcomeBase();
+              await _repository.clearSkladBase();
               await skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
               await skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
             },

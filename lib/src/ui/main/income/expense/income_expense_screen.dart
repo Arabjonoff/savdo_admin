@@ -20,8 +20,14 @@ class IncomeExpenseScreen extends StatefulWidget {
   State<IncomeExpenseScreen> createState() => _IncomeExpenseScreenState();
 }
 class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
+  int sklPr = 0;
   @override
   void initState() {
+    if(widget.idSklPr.runtimeType == String){
+      sklPr = int.parse(widget.idSklPr);
+    }else{
+      sklPr = widget.idSklPr;
+    }
     getExpenseBloc.getAllExpense(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     super.initState();
   }
@@ -45,7 +51,7 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
                     double allPriceUsd = 0;
                     var data = snapshot.data!.data[0].tHar;
                     for(int i =0;i<data.length;i++){
-                      if(widget.idSklPr == data[i].idSklPr){
+                      if(sklPr == data[i].idSklPr){
                         if(data[i].idValuta ==1){
                           allPriceUsd += data[i].sm;
                         }else{
@@ -64,7 +70,7 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
                             child: ListView.builder(
                               itemCount: data.length,
                               itemBuilder: (context, index) {
-                               if(widget.idSklPr == data[index].idSklPr){
+                               if(data[index].idSklPr == sklPr){
                                  return Slidable(
                                    endActionPane: ActionPane(
                                      motion: const ScrollMotion(),
@@ -131,7 +137,7 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
           ),
           ButtonWidget(onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (ctx){
-              return AddExpenseScreen(idSklPr: widget.idSklPr);
+              return AddExpenseScreen(idSklPr: sklPr);
             }));
           }, color: AppColors.green, text: "Харажат қўшиш"),
           SizedBox(height: 24.h,),

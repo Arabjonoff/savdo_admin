@@ -28,6 +28,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final Repository _repository = Repository();
   final TextEditingController _controllerClient = TextEditingController();
   final TextEditingController _controllerClientId = TextEditingController();
+  final TextEditingController _controllerHodimId = TextEditingController();
+  final TextEditingController _controllerAgentId = TextEditingController();
   final TextEditingController _controllerExpense = TextEditingController();
   final TextEditingController _controllerExpenseId = TextEditingController();
   final TextEditingController _controllerSumma = TextEditingController();
@@ -159,7 +161,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   idSana: CacheService.getDateId(),
                   yil: DateTime.now().year.toString(),
                   oy: DateTime.now().month.toString(),
-                  idHodimlar: CacheService.getIdAgent().toString(),
+                  idHodimlar: _controllerHodimId.text,
                   izoh: _controllerComment.text,
                   idChet: 0,
                   idSklPr: widget.idSklPr,
@@ -189,6 +191,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     });
     RxBus.register(tag: 'clientName').listen((event) {
       _controllerClient.text = event;
+    });
+    RxBus.register(tag: 'idHodimlar').listen((event) {
+      _controllerHodimId.text = event;
+    });
+    RxBus.register(tag: 'idAgent').listen((event) {
+      _controllerAgentId.text = event;
     });
   }
 }
