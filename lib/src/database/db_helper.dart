@@ -203,39 +203,12 @@ class DatabaseHelper{
         TSM REAL,
         TSM_S REAL,
         price REAL,
+        SSM REAL,
+        SSM_S REAL,
         SHTR TEXT
       )
     ''');
 
-    /// SklPrTov
-    await db.execute('''
-      CREATE TABLE skl_pr_tov (
-        ID INTEGER,
-        NAME TEXT,
-        ID_SKL2 INTEGER,
-        SONI INTEGER,
-        NARHI REAL,
-        NARHI_S REAL,
-        SM REAL,
-        SM_S REAL,
-        ID_TIP INTEGER,
-        ID_FIRMA INTEGER,
-        ID_EDIZ INTEGER,
-        SNARHI REAL,
-        SNARHI_S REAL,
-        SSM REAL,
-        SSM_S REAL,
-        SNARHI1 REAL,
-        SNARHI1_S REAL,
-        SNARHI2 REAL,
-        SNARHI2_S REAL,
-        TNARHI REAL,
-        TNARHI_S REAL,
-        TSM REAL,
-        TSM_S REAL,
-        SHTR TEXT
-      )
-    ''');
 
     /// Sklad
     await db.execute('''

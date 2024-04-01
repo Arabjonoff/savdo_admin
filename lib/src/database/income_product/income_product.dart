@@ -7,18 +7,18 @@ class IncomeProductBase {
   DatabaseHelper dbProvider = DatabaseHelper.instance;
 
 
-  Future<int> saveIncomeProduct(IncomeAddModel item) async {
+  Future<int> saveIncomeProduct(Map<String,dynamic> item) async {
     var dbClient = await dbProvider.db;
-    var res = dbClient.insert('incomeProduct', item.toJsonIns());
+    var res = dbClient.insert('incomeProduct', item);
     return res;
   }
-  Future<int> updateIncomeProduct(IncomeAddModel item) async {
+  Future<int> updateIncomeProduct(Map<String,dynamic> item) async {
     var dbClient = await dbProvider.db;
     var res = await dbClient.update(
       'incomeProduct',
-      item.toJsonIns(),
+      item,
       where: 'id = ?',
-      whereArgs: [item.id]
+      whereArgs: [item]
     );
     return res;
   }
@@ -38,7 +38,7 @@ class IncomeProductBase {
     for (int i = 0; i < list.length; i++) {
       IncomeAddModel incomeAddModel = IncomeAddModel(
           id: list[i]['ID'],
-          price: list[i]['price'],
+          price: list[i]['price']??0,
           idSklPr: list[i]['ID_SKL_PR'],
           idSkl2: list[i]['ID_SKL2'],
           name: list[i]['NAME'],

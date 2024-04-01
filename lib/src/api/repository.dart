@@ -26,7 +26,6 @@ class Repository{
   final DbProductType _productType = DbProductType();
   final DbProduct _product = DbProduct();
   final DbClient _dbClient = DbClient();
-  final SklPrTovBase _sklPrTovBase = SklPrTovBase();
   final IncomeProductBase _incomeProductBase = IncomeProductBase();
   final SkladBaseHelper _skladBaseHelper = SkladBaseHelper();
   final WareHouseBaseHelper _wareHouseBaseHelper = WareHouseBaseHelper();
@@ -115,13 +114,6 @@ class Repository{
   Future<int> updateOutcomeCart(item) => _outcomeSkladBaseHelper.updateOutcomeCart(item);
   Future<int> deleteOutcomeCart(item) => _outcomeSkladBaseHelper.deleteOutcomeCart(item);
   Future<void>clearOutcomeCart() => _outcomeSkladBaseHelper.clearOutcomeCart();
-
-  /// Income SklPrTov base
-  Future<int> sklPrTovBase(item) => _sklPrTovBase.saveSklPrTov(item);
-  Future<List<SklPrTovResult>> getSklPrTovBase() => _sklPrTovBase.getSklPrTov();
-  Future<int> updateSklPrTovBase(item) => _sklPrTovBase.updateSklPrTov(item);
-  Future<int> deleteSklPrTovBase(item) => _sklPrTovBase.deleteSklPrTov(item);
-  Future<void>clearSklPrTovBase() => _sklPrTovBase.clearSklPrTov();
 
 
   /// Sklad base

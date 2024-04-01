@@ -110,6 +110,7 @@ class IncomeAddModel {
   Map<String, dynamic> toJsonUpd() =>
       {
     "ID_SKL_PR": idSklPr,
+    "ID": id,
     "ID_SKL2": idSkl2,
     "NAME": name,
     "ID_TIP": idTip,

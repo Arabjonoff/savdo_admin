@@ -156,7 +156,8 @@ bool scrollTop = false;
                                                 if(data[index].pr ==1){
                                                   CenterDialog.showErrorDialog(context, "Ҳужжат қулфланган");
                                                 }else{
-                                                  sklPrTovBloc.getAllSklPrTov(data[index].sklPrTov);
+                                                  // ignore: avoid_function_literals_in_foreach_calls
+                                                  data[index].sklPrTov.forEach((element)async => await _repository.saveIncomeProductBase(element.toJson()));
                                                   Navigator.push(context, MaterialPageRoute(builder: (ctx){
                                                     return UpdateIncomeScreen(data: data[index],);
                                                   }));

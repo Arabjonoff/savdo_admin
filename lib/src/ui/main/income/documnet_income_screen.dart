@@ -148,7 +148,7 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                       child: ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (ctx,index){
-                            if(CacheService.getIdAgent() == data[index].idAgent){
+                            if(CacheService.getIdAgent() == data[index].idAgent&&data[index].tp ==1){
                               return ListTile(
                                 onTap: (){
                                   CacheService.saveClientIdT(data[index].idT);

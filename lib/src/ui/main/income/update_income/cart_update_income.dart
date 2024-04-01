@@ -1,15 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
 import 'package:savdo_admin/src/bloc/income/income_bloc.dart';
-import 'package:savdo_admin/src/bloc/income/skl_pr_tov_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
+import 'package:savdo_admin/src/model/income/income_add_model.dart';
 import 'package:savdo_admin/src/model/income/income_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/main/income/update_income/updateIncome_item.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/utils.dart';
 
@@ -22,12 +23,17 @@ class CartUpdateIncomeScreen extends StatefulWidget {
 }
 
 class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
+  @override
+  void initState() {
+    incomeProductBloc.getAllIncomeProduct();
+    super.initState();
+  }
   final Repository _repository = Repository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<List<SklPrTovResult>>(
-        stream: sklPrTovBloc.getSklPrTov,
+      body: StreamBuilder<List<IncomeAddModel>>(
+        stream: incomeProductBloc.getIncomeProductStream,
         builder: (context, snapshot) {
           if(snapshot.hasData){
             var data = snapshot.data!;
@@ -40,18 +46,22 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                       children: [
                         Expanded(child: Column(
                           children: [
-                            SlidableAction(
-                              onPressed: (i){},
-                              icon: Icons.edit,
-                              label: "Таҳрирлаш",
-                            ),
+                            // SlidableAction(
+                            //   onPressed: (i){
+                            //     Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                            //       return UpdateIncomeItem(data: data[index],id: widget.data,);
+                            //     }));
+                            //   },
+                            //   icon: Icons.edit,
+                            //   label: "Таҳрирлаш",
+                            // ),
                             SlidableAction(
                               onPressed: (i){
                                 CenterDialog.showDeleteDialog(context, () async{
                                   HttpResult res = await _repository.deleteIncomeSklPr(data[index].id, widget.data.id, data[index].idSkl2);
                                   if(res.result["status"] == true){
-                                    _repository.deleteSklPrTovBase(data[index].id);
-                                    await sklPrTovBloc.getAllSklPrTovAll();
+                                    await _repository.deleteIncomeProduct(data[index]);
+                                    await incomeProductBloc.getAllIncomeProduct();
                                     await incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
                                     if(context.mounted)Navigator.pop(context);
                                   }

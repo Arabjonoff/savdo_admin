@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
-import 'package:savdo_admin/src/bloc/income/skl_pr_tov_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
@@ -15,17 +14,16 @@ import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/utils.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
-class AddIncomeScreen extends StatefulWidget {
+class UpdateIncomeItem extends StatefulWidget {
   final dynamic id;
-  final bool isUpdate;
-  final Skl2Result data;
-  const AddIncomeScreen({super.key, required this.data, required this.id, required this.isUpdate});
+  final IncomeAddModel data;
+  const UpdateIncomeItem({super.key, required this.id, required this.data});
 
   @override
-  State<AddIncomeScreen> createState() => _AddIncomeScreenState();
+  State<UpdateIncomeItem> createState() => _UpdateIncomeItemState();
 }
 
-class _AddIncomeScreenState extends State<AddIncomeScreen> {
+class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
   ScrollController? _scrollController;
   final Repository _repository = Repository();
   String db = CacheService.getDb();
@@ -45,7 +43,16 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
   @override
   void initState() {
-      db = CacheService.getDb();
+    _controllerCount.text = widget.data.soni.toString();
+    _controllerIncomePriceUzs.text = widget.data.narhi.toString();
+    _controllerIncomePriceUsd.text = widget.data.narhiS.toString();
+    _controllerSalePriceUzs1.text = widget.data.snarhi.toString();
+    _controllerSalePriceUsd1.text = widget.data.snarhiS.toString();
+    _controllerSalePriceUsd2.text = widget.data.snarhi1S.toString();
+    _controllerSalePriceUzs2.text = widget.data.snarhi1.toString();
+    _controllerSalePriceUzs3.text = widget.data.snarhi2.toString();
+    _controllerSalePriceUsd3.text = widget.data.snarhi2S.toString();
+    db = CacheService.getDb();
     _scrollController = ScrollController();
     _scrollController!.addListener(_scrollListener);
     super.initState();
@@ -64,113 +71,46 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        key: Keys.myWidgetStateKey,
-        backgroundColor: AppColors.background,
-        body: NestedScrollView(
-          controller: _scrollController,
-          physics: const BouncingScrollPhysics(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            SliverOverlapAbsorber(handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context));
-            return [
-              SliverAppBar(
-                backgroundColor: Colors.white,
-                stretch: true,
-                stretchTriggerOffset: 150.0,
-                floating: true,
-                pinned: true,
-                elevation: 0,
-                shadowColor: Colors.white,
-                surfaceTintColor: Colors.white,
-                forceElevated: innerBoxIsScrolled,
-                  expandedHeight: 200.h,
-                  flexibleSpace:  FlexibleSpaceBar(
-                    centerTitle: false,
-                    title: isShrink ?Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: Text(widget.data.name,textAlign: TextAlign.left,style: AppStyle.mediumBold(Colors.black),)),
-                        Container(
-                          margin: EdgeInsets.only(right: 16.w),
-                          alignment: Alignment.bottomRight,
-                          width: 50.r,
-                          height: 50.r,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: 'https://naqshsoft.site/images/$db/${widget.data.photo}',
-                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>  const Icon(Icons.image_not_supported_outlined,),),
-                        )
-                      ],
-                    ):const SizedBox(),
-                    background: Hero(tag: widget.data.name,
-                      child: CachedNetworkImage(
-                        imageUrl: 'https://naqshsoft.site/images/$db/${widget.data.photo}',
-                        fit: BoxFit.fitHeight,
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>  const Icon(Icons.image_not_supported_outlined,),)),
-                  stretchModes: const <StretchMode>[
-                    StretchMode.zoomBackground,
-                    StretchMode.fadeTitle
-                  ],)
-              )
-            ];
-          },
+        appBar: AppBar(
+          title: Text(widget.data.name,style: AppStyle.large(Colors.black),),
+        ),
+          backgroundColor: AppColors.background,
           body: Padding(
             padding: EdgeInsets.only(left: 12.w,right: 12.w),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 8.h,),
-                  Text(widget.data.name,style: AppStyle.large(Colors.black),),
-                  SizedBox(height: 8.h,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Ўлчов бирлиги:",style: AppStyle.small(Colors.black),),
-                      Text(widget.data.edizName,style: AppStyle.small(Colors.black),),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Маҳсулот тури:",style: AppStyle.small(Colors.black),),
-                      Text(widget.data.tipName,style: AppStyle.small(Colors.black),),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Фирмаси:",style: AppStyle.small(Colors.black),),
-                      Text(widget.data.firmName,style: AppStyle.small(Colors.black),),
-                    ],
-                  ),
-                  SizedBox(height: 8.h,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Кирим миқдори:",style: AppStyle.medium(Colors.black),),
-                      Container(
-                        padding: EdgeInsets.only(left: 8.w),
-                        width: 120.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade400),
-                        ),
-                        child: TextField(
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          style: AppStyle.medium(Colors.black),
-                          controller: _controllerCount,
-                          decoration:  InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 5.h),
-                            isDense: true,
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      )
-                    ],
+                  Text("Кирим миқдори:",style: AppStyle.medium(Colors.black),),
+                  Container(
+                    margin: EdgeInsets.only(top: 8.h),
+                    padding: EdgeInsets.only(left: 8.w),
+                    width: MediaQuery.of(context).size.width,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade400),
+                    ),
+                    child: TextField(
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      style: AppStyle.medium(Colors.black),
+                      controller: _controllerCount,
+                      onChanged: (i){
+                          _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUzs.text)).toString();
+                          // _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUsd.text)).toString();
+                          _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd1.text)).toString();
+                          // _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs1.text)).toString();
+                          _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd2.text)).toString();
+                          // _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs2.text)).toString();
+                          // _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd3.text)).toString();
+                          _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs3.text)).toString();
+                      },
+                      decoration:  InputDecoration(
+                        contentPadding: EdgeInsets.only(top: 5.h),
+                        isDense: true,
+                        border: InputBorder.none,
+                      ),
+                    ),
                   ),
                   /// Income Price Widget UI
                   Padding(
@@ -303,10 +243,10 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                             controller: _controllerSalePriceUzs1,
                             onChanged: (i){
                               _controllerSalePriceUsd1.text='0';
-                             try{
-                               _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUzs1.text) * num.parse(_controllerCount.text)).toString();
-                               setState(() {});
-                             }catch(_){}
+                              try{
+                                _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUzs1.text) * num.parse(_controllerCount.text)).toString();
+                                setState(() {});
+                              }catch(_){}
                             },
                             decoration:  InputDecoration(
                               suffixText: "сум",
@@ -547,9 +487,10 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                   ButtonWidget(onTap: () async {
                     CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
                     IncomeAddModel addIncome = IncomeAddModel(
+                      id: widget.data.id,
                       price: num.parse(_controllerIncomePriceUzs.text) ,
-                      idSklPr: widget.id,
-                      idSkl2: widget.data.id,
+                      idSklPr: widget.id.id,
+                      idSkl2: widget.data.idSkl2,
                       name: widget.data.name,
                       idTip: widget.data.idTip,
                       idFirma: widget.data.idFirma,
@@ -571,12 +512,12 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                       tsmS: 0,
                       shtr: '',
                     );
-                    HttpResult res = await _repository.addIncomeSklPr(addIncome);
+                    HttpResult res = await _repository.updateIncomeSklPr(addIncome);
                     if(res.result['status'] == true){
                       IncomeAddModel addIncomeBase = IncomeAddModel(
-                        id: int.parse(res.result['id']),
+                        id: widget.data.id,
                         price: num.parse(_controllerIncomePriceUzs.text) ,
-                        idSklPr: widget.id,
+                        idSklPr: widget.id.id,
                         idSkl2: widget.data.id,
                         name: widget.data.name,
                         idTip: widget.data.idTip,
@@ -599,18 +540,17 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                         tsmS: 0,
                         shtr: '',
                       );
-                      _repository.saveIncomeProductBase(addIncomeBase.toJsonIns());
+                      _repository.updateIncomeProductBase(addIncomeBase.toJsonIns());
                       incomeProductBloc.getAllIncomeProduct();
                       if(context.mounted)Navigator.pop(context);
                       if(context.mounted)Navigator.pop(context);
                     }
-                  }, color: AppColors.green, text: "Сақлаш"),
+                  }, color: AppColors.green, text: "Янгилаш"),
                   SizedBox(height: 24.h,),
                 ],
               ),
             ),
           ),
-        )
       ),
     );
   }

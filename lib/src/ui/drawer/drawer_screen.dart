@@ -19,6 +19,7 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  int selected = 0;
   @override
   void initState() {
     agentsBloc.getAllAgents();
@@ -79,48 +80,90 @@ class _DrawerScreenState extends State<DrawerScreen> {
               children: [
               /// Warehouse
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==1?true:false,
+                selectedColor: selected ==1?AppColors.white:AppColors.black,
                 leading: const Icon(Icons.warehouse_outlined),
                 onTap: (){
+                  setState(() =>selected =1);
                   Navigator.pushNamed(context, AppRouteName.wearHouse);
                 },
                 title: const Text("Омборлар"),
               ),
               /// Warehouse movement
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==2?true:false,
+                selectedColor: selected ==2?AppColors.white:AppColors.black,
                 leading: const Icon(Icons.published_with_changes_sharp),
                 onTap: (){
+                  setState(() =>selected =2);
                   Navigator.pushNamed(context, AppRouteName.wearHouseTransfer);
                 },
                 title: const Text("Омбор ҳаракати"),
               ),
               /// Products
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==3?true:false,
+                selectedColor: selected ==3?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.apps_outlined),
                   onTap: (){
+                    setState(() =>selected =3);
                     Navigator.pushNamed(context, '/product');
                   },
                   title: const Text("Картотека"),
                 ),
               /// Product Income
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==4?true:false,
+                selectedColor: selected ==4?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.add_business_outlined),
                   onTap: (){
+                    setState(() =>selected =4);
                     Navigator.pushNamed(context, '/income');
                   },
                   title: const Text("Киримлар"),
                 ),
               /// Product Outcome
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==5?true:false,
+                selectedColor: selected ==5?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.request_page_outlined),
                   onTap: (){
+                    setState(() =>selected =5);
                     Navigator.pushNamed(context, AppRouteName.outcome);
                   },
                   title: const Text("Савдо-сотиқ"),
                 ),
               /// Product Returned
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==6?true:false,
+                selectedColor: selected ==6?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.event_repeat_outlined),
                   onTap: (){
+                    setState(() =>selected =6);
                   },
                   title: const Text("Қайтарилди"),
                 ),
@@ -131,8 +174,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
               shape: Border.all(color: Colors.transparent),
               children: [
                 ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==7?true:false,
+                  selectedColor: selected ==7?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.people_alt),
                   onTap: (){
+                    setState(() =>selected =7);
                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
                       return TabBarScreen();
                     }));
@@ -146,20 +196,44 @@ class _DrawerScreenState extends State<DrawerScreen> {
               children: [
                 /// Income
                 ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==8?true:false,
+                  selectedColor: selected ==8?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.monetization_on),
-                  onTap: ()=>Navigator.pushNamed(context, AppRouteName.incomeTabBar),
+                  onTap: (){
+                    setState(() =>selected =8);
+                    Navigator.pushNamed(context, AppRouteName.incomeTabBar);
+                  },
                   title: const Text("Киримлар"),
                 ),
                 /// Outcome
                 ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==9?true:false,
+                  selectedColor: selected ==9?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.outbound),
-                  onTap: ()=>Navigator.pushNamed(context, AppRouteName.outComePay),
+                  onTap: (){
+                    setState(() =>selected =9);
+                    Navigator.pushNamed(context, AppRouteName.outComePay);},
                   title: const Text("Чиқимлар"),
                 ),
                 /// Cost
                 ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==10?true:false,
+                  selectedColor: selected ==10?AppColors.white:AppColors.black,
                   leading: const Icon(Icons.money),
                   onTap: (){
+                    setState(() =>selected =10);
                     Navigator.pushNamed(context, AppRouteName.costList);
                   },
                   title: const Text("Харажат"),

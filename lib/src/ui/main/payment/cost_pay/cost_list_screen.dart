@@ -137,19 +137,20 @@ class _CostListScreenState extends State<CostListScreen> {
                                 children: [
                                   Row(
                                     children: [
+                                      data[index].idSklPr>0?Text("📝 ",style: TextStyle(fontSize: 18.h),):SizedBox(),
                                       Text(
                                         data[index].idNimaName.toString(),
                                         maxLines: 1,
                                         textAlign: TextAlign.start,
-                                        style: AppStyle.medium(AppColors.black),
+                                        style: AppStyle.mediumBold(AppColors.black),
                                       ),
                                       const Spacer(),
                                       Text(
                                         priceFormat.format(data[index].sm),
                                         textAlign: TextAlign.start,
-                                        style: AppStyle.medium(AppColors.black),
+                                        style: AppStyle.mediumBold(AppColors.red),
                                       ),
-                                      Text(data[index].idValuta == 0?" ${("сўм")}":data[index].idValuta==1?" \$":data[index].idValuta ==2?" ${("пластик")}":" ${("банк")}",   style: AppStyle.medium(AppColors.black),)
+                                      Text(data[index].idValuta == 0?" ${("сўм")}":data[index].idValuta==1?" \$":data[index].idValuta ==2?" ${("банк")}":" ${("пластик")}",   style: AppStyle.mediumBold(AppColors.red),)
                                     ],
                                   ),
                                   SizedBox(

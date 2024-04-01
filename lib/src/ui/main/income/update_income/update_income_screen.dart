@@ -28,13 +28,12 @@ class _UpdateIncomeScreenState extends State<UpdateIncomeScreen> {
   final Repository _repository = Repository();
   @override
   void initState() {
-    sklPrTovBloc.getAllSklPrTov(widget.data.sklPrTov);
     productBloc.getAllProduct();
     super.initState();
   }
   @override
   void dispose() {
-    _repository.clearSklPrTovBase();
+    _repository.clearIncomeProductBase();
     super.dispose();
   }
   @override
@@ -97,7 +96,7 @@ class _UpdateIncomeScreenState extends State<UpdateIncomeScreen> {
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
           // TODO: Add your sheet content here
-          child: CartUpdateIncomeScreen(data: widget.data,),
+          child: CartUpdateIncomeScreen(data: widget.data),
         ),
         child: StreamBuilder<List<Skl2Result>>(
             stream: productBloc.getProductStream,

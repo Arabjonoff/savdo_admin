@@ -162,7 +162,7 @@ class _UpdateCostScreenState extends State<UpdateCostScreen> {
               "ID_HODIMLAR": CacheService.getIdAgent().toString(),
               "IZOH": _controllerComment.text,
               "ID_CHET": 1,
-              "ID_SKL_PR": 0,
+              "ID_SKL_PR": widget.data.idSklPr,
               "ID_SKL_PER": 0,
               "ID": widget.data.id,
             };
