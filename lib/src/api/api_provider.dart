@@ -600,31 +600,7 @@ class ApiProvider {
     return await _postRequest(url,json.encode(data));
   }
   Future<HttpResult> warehouseTransferItem(Map data)async{
-  //   {
-  //     "ID_SKL_PER":"",
-  //   "ID_SKL2":"",
-  //   "NAME": "",
-  //   "ID_TIP": "",
-  //   "ID_EDIZ": "",
-  //   "SONI":"",
-  //   "NARHI":"",
-  //   "NARHI_S":"",
-  //   "TNARHI":"",
-  //   "TNARHI_S":"",
-  //   "SM":"",
-  //   "SM_S":"",
-  //   "SNARHI":"",
-  //   "SNARHI_S":"",
-  //   "SSM":"",
-  //   "SSM_S":"",
-  //   "TSM":"",
-  //   "TSM_S":"",
-  //   "SNARHI1":0,
-  //   "SNARHI1_S":0,
-  //   "SNARHI2":0,
-  //   "SNARHI2_S":0,
-  //   "SHTR":"0"
-  // }
+
     String url = "${_baseUrl}per1_ins?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(data));
   }
@@ -654,7 +630,7 @@ class ApiProvider {
   //   "SNARHI2_S":0,
   //   "SHTR":"0"
   // }
-    String url = "${_baseUrl}per1_ins?DB=$db&JWT=$token";
+    String url = "${_baseUrl}per1_upd?DB=$db&JWT=$token";
     return await _patchRequest(url,json.encode(data));
   }
   Future<HttpResult> warehouseTransferItemDelete(Map data)async{

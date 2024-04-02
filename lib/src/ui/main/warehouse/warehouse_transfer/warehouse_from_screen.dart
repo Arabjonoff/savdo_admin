@@ -95,7 +95,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: AppColors.green,
-              borderRadius:  BorderRadius.circular(50)
+              borderRadius:  const BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15))
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,7 +109,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
           // TODO: Add your sheet content here
-          child: WareHouseToScreen(data: {},),
+          child: WareHouseToScreen(),
         ),
         child: StreamBuilder<List<SkladResult>>(
             stream: skladBloc.getSkladSearchStream,
@@ -132,12 +132,8 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                         itemCount: data.length,
                         itemBuilder: (ctx,index){
                           if(data[index].idTip==filterId){
-                            return GestureDetector(
+                            return data[index].osoni<=0?const SizedBox():GestureDetector(
                               onTap: (){
-                                if(data[index].osoni<=0){
-
-                                }
-                                else{
                                   price = 0;
                                   priceUsd = 0;
                                   if (idPrice == 0) {
@@ -172,9 +168,8 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                                       builder: (ctx){
                                         return ClipRRect(
                                             borderRadius: BorderRadius.circular(20),
-                                            child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd,));
+                                            child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data, priceType:data[index].snarhi != 0?0:1,));
                                       });
-                                }
                               },
                               child: Slidable(
                                 endActionPane: ActionPane(
@@ -240,8 +235,9 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                                 ),
                               ),
                             );
-                          }else if(filterId == -1){
-                            return GestureDetector(
+                          }
+                          else if(filterId == -1){
+                            return data[index].osoni<=0?const SizedBox():GestureDetector(
                               onTap: (){
                                 if(data[index].osoni<=0){
 
@@ -281,7 +277,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                                       builder: (ctx){
                                         return ClipRRect(
                                             borderRadius: BorderRadius.circular(20),
-                                            child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd,));
+                                            child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data,priceType:data[index].snarhi != 0?0:1));
                                       });
                                 }
                               },

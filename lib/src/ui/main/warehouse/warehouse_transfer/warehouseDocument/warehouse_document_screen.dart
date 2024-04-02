@@ -115,6 +115,7 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
                   if(context.mounted)Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (ctx){
                     return WareHouseFromScreen(data: {
+                      "NDOC":res.result["id"],
                       "warehouseFromName":_controllerWarehouseFrom.text,
                       "warehouseFromId":_controllerWarehouseFromId.text,
                       "warehouseToName":_controllerWarehouseTo.text,

@@ -75,7 +75,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
             /// Warehouse Bloc
 
-            ExpansionTile(title:  Text("Омбор бўлими",style: AppStyle.mediumBold(Colors.black),),
+            ExpansionTile(title:  Text("Омбор ҳаракати",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
               children: [
               /// Warehouse

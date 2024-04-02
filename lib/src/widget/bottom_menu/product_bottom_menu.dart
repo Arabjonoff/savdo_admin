@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
+import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
+import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -11,9 +14,11 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class ProductBottomMenuDialog extends StatefulWidget {
+  final Map doc;
   final SkladResult data;
   final num price,priceUsd;
-  const ProductBottomMenuDialog({super.key, required this.data, required this.price, required this.priceUsd});
+  final int priceType;
+  const ProductBottomMenuDialog({super.key, required this.data, required this.price, required this.priceUsd, required this.doc, required this.priceType});
 
   @override
   State<ProductBottomMenuDialog> createState() => _ProductBottomMenuDialogState();
@@ -21,203 +26,293 @@ class ProductBottomMenuDialog extends StatefulWidget {
 
 class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
    TextEditingController _controllerOldCount = TextEditingController();
-   final TextEditingController _controllerCount = TextEditingController(text: '1');
+    TextEditingController _controllerCount = TextEditingController(text: '1');
    final TextEditingController _controllerAllPrice = TextEditingController();
-   TextEditingController _controllerSales = TextEditingController();
-  int paymentType = 0;
-  int currency = 12450;
-  @override
-  void initState() {
-    _controllerOldCount = TextEditingController(text: priceFormatUsd.format(widget.data.osoni));
-    _controllerSales = TextEditingController(text: widget.priceUsd==0?priceFormat.format(widget.price):priceFormatUsd.format(widget.price));
-    if(paymentType == 0 && widget.priceUsd==0){
-      _controllerAllPrice.text = priceFormat.format(num.parse(_controllerCount.text)*num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), "")));
-    }
-    else if(paymentType == 1 && widget.priceUsd==1){
-      _controllerAllPrice.text = priceFormatUsd.format(num.parse(_controllerCount.text)*num.parse(_controllerSales.text));
-    }
-    else if(paymentType == 0 && widget.priceUsd==1){
-      _controllerAllPrice.text = priceFormat.format((num.parse(_controllerSales.text)*currency)*num.parse(_controllerCount.text));
-    }
-    else if(paymentType == 1 && widget.priceUsd==0){
-      _controllerAllPrice.text = priceFormatUsd.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))/currency)*num.parse(_controllerCount.text));
-    }
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 12.h,),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 300.h,
-                child: Stack(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300.h,
-                      child: CachedNetworkImage(
-                        progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                        imageUrl: "https://naqshsoft.site/images/$db/${widget.data.photo}",fit: BoxFit.fitHeight,),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 20.h,
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.green.withOpacity(0.4),
-                          radius: 25,
-                          child: IconButton(onPressed: (){
-                            Navigator.pop(context);
-                          }, icon: const Icon(Icons.clear)),
-                        )),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 16.0.w),
-                child: Text(widget.data.name,style: AppStyle.large(Colors.black),),
-              ),
-              SizedBox(height: 12.h,),
-              Padding(
-                padding: EdgeInsets.only(left: 16.0.w),
-                child: Row(
-                  children: [
-                    Expanded(child: Text("Қолдиқ сони",style: AppStyle.small(Colors.black),)),
-                    Expanded(child: Text("Ўтказма сони",style: AppStyle.small(Colors.black),))
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(child: TextFieldWidget(controller: _controllerOldCount,readOnly: false, hintText: "Қолдиқ сони")),
-                  Expanded(child: TextFieldWidget(
-                    keyboardType: true,
-                    onChanged: (i){
-                      if(num.parse(_controllerOldCount.text)<=num.parse(_controllerCount.text)){
-                        _controllerCount.text =_controllerOldCount.text;
-                        CenterDialog.showErrorDialog(context, "Маҳсулот сони хато киритилди");
-                      }
-                      else if(paymentType == 0 && widget.priceUsd==0){
-                        _controllerAllPrice.text = priceFormat.format(num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))*num.parse(i));
-                      }
-                      else if(paymentType == 1 && widget.priceUsd==0){
-                        _controllerAllPrice.text = priceFormatUsd.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))/currency)*num.parse(i));
-                      }
-                      else if(paymentType == 1 && widget.priceUsd==1){
-                        _controllerAllPrice.text = priceFormatUsd.format(num.parse(i)*num.parse(_controllerSales.text));
-                      }
-                      else if(paymentType == 0 && widget.priceUsd==1){
-                        _controllerAllPrice.text = priceFormat.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))*currency)*num.parse(i));
-                      }
-                    },
-                      controller: _controllerCount, hintText: "Ўтказма сони"))
-                ],
-              ),
-              Padding(
-                padding:  EdgeInsets.only(left:16.0.w),
-                child: Text("Сотиш нархи",style: AppStyle.small(Colors.black),),
-              ),
-              TextFieldWidget(
-                keyboardType: true,
-                onChanged: (i){
-                  try{
-                    if(_controllerSales.text.isEmpty){
-                      _controllerAllPrice.text = '0';
-                    }
-                    if(paymentType==0&&widget.priceUsd==0){
-                      _controllerAllPrice.text = priceFormat.format(num.parse(_controllerCount.text)*num.parse(i.replaceAll(RegExp('[^0-9]'), '')));
-                    }
-                    else if(paymentType==1&&widget.priceUsd==0){
-                      _controllerAllPrice.text = priceFormatUsd.format((num.parse(i)/currency)*num.parse(_controllerCount.text));
-                    }
-                    else if(paymentType==0&&widget.priceUsd==1){
-                      _controllerAllPrice.text = priceFormat.format((num.parse(i)*currency)*num.parse(_controllerCount.text));
-                    }
-                    else if(paymentType==1&&widget.priceUsd==1){
-                      _controllerAllPrice.text = priceFormatUsd.format(num.parse(_controllerCount.text)*num.parse(i));
-                    }
-                  }catch(_){}
-                },
-                  controller: _controllerSales, hintText: "Сотиш нархи"),
-              Padding(
-                padding:  EdgeInsets.only(left:16.0.w,bottom: 8.h),
-                child: Text("Валюта тури",style: AppStyle.small(Colors.black),),
-              ),
-              Row(
-                children: [
-                  SizedBox(width: 16.w,),
-                  GestureDetector(
-                    onTap: (){
-                      paymentType = 0;
-                      if(paymentType == 0 && widget.priceUsd==0){
-                        _controllerSales.text = priceFormat.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), '')))*num.parse(_controllerCount.text));
-                        _controllerAllPrice.text = priceFormat.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), '')))*num.parse(_controllerCount.text));
-                      }
-                      else if(paymentType == 0 && widget.priceUsd==1){
-                        _controllerSales.text = priceFormat.format((num.parse(_controllerSales.text)*currency)*num.parse(_controllerCount.text));
-                        _controllerAllPrice.text = priceFormat.format((num.parse(_controllerSales.text)*currency)*num.parse(_controllerCount.text));
-                      }
-                      setState(() {});
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: paymentType==0?AppColors.green:Colors.grey
-                      ),
-                      child: Text("Сўм",style: AppStyle.medium(Colors.white),),
-                    ),
-                  ),
-                  SizedBox(width: 12.w,),
-                  GestureDetector(
-                    onTap: (){
-                      paymentType = 1;
-                      if(paymentType == 1 && widget.priceUsd==0){
-                        _controllerSales.text = priceFormatUsd.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))/currency)*num.parse(_controllerCount.text));
-                        _controllerAllPrice.text = priceFormatUsd.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))/currency)*num.parse(_controllerCount.text));
-                      }
-                      else if(paymentType == 1 && widget.priceUsd==1){
-                        _controllerSales.text = priceFormatUsd.format((num.parse(_controllerSales.text.replaceAll(RegExp('[^0-9]'), ''))*num.parse(_controllerCount.text)));
-                        _controllerAllPrice.text = priceFormatUsd.format((num.parse(_controllerSales.text)*num.parse(_controllerCount.text)));
-                      }
-                      setState(() {});
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: paymentType==1?AppColors.green:Colors.grey
-                      ),
-                      child: Text("Валюта",style: AppStyle.medium(Colors.white),),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding:  EdgeInsets.only(left:16.0.w,top: 8.h),
-                child: Text("Жами сумма",style: AppStyle.small(Colors.black),),
-              ),
-              TextFieldWidget(controller: _controllerAllPrice, hintText: "Жами сумма",readOnly: true,),
-              SizedBox(height: 42.h,),
-              ButtonWidget(onTap: (){}, color: AppColors.green, text: "Сақлаш"),
-              SizedBox(height: 24.h,),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+   TextEditingController _controllerPrice = TextEditingController();
+   final TextEditingController _controllerTotal = TextEditingController();
+   final Repository _repository = Repository();
+   final TextEditingController _controllerCurrency = TextEditingController(text: "12 450");
+   int priceType = 0,onTap=0;
+   int currency = 12450;
+   @override
+   void initState() {
+     priceType = widget.priceType;
+     _controllerOldCount = TextEditingController(text: widget.data.osoni.toString());
+     _controllerCount = TextEditingController(text: '1');
+     _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency) : priceFormat.format(widget.price));
+     // _controllerPrice = TextEditingController(text: widget.price.toString());
+     if(priceType==1){
+       if (widget.priceUsd == 0) {
+         _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
+         _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
+       } else {
+         _controllerPrice.text = priceFormatUsd.format(widget.price);
+         _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
+       }
+     }
+     else{
+       if (widget.priceUsd == 0) {
+         _controllerPrice.text = priceFormat.format(widget.price);
+         _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+       } else {
+         _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+       }
+     }
+
+     super.initState();
+   }
+   @override
+   Widget build(BuildContext context) {
+     return GestureDetector(
+       onTap: (){
+         FocusScope.of(context).unfocus();
+       },
+       child: Scaffold(
+         resizeToAvoidBottomInset: false,
+         backgroundColor: AppColors.background,
+         body: Column(
+           children: [
+             Expanded(
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Container(
+                     width: MediaQuery.of(context).size.width,
+                     height: 250.h,
+                     color: Colors.white,
+                     child: Hero(
+                       tag: widget.data.id.toString(),
+                       child: CachedNetworkImage(
+                         imageUrl: 'https://naqshsoft.site/images/$db/${widget.data.photo}',
+                         fit: BoxFit.fitHeight,
+                         placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                         errorWidget: (context, url, error) =>  const Icon(Icons.image_not_supported_outlined,),
+                       ),
+                     ),
+                   ),
+                   Padding(
+                     padding: EdgeInsets.only(left: 16.0.w,top: 16.w),
+                     child: Text(widget.data.name,style: AppStyle.mediumBold(Colors.black),),
+                   ),
+                   SizedBox(height: 12.h,),
+                   Padding(
+                     padding: EdgeInsets.only(left: 16.0.w),
+                     child: Row(
+                       children: [
+                         Expanded(child: Text("Қолдиқ",style: AppStyle.smallBold(Colors.black),)),
+                         Expanded(child: Text("Ўтказма миқдори",style: AppStyle.smallBold(Colors.black),)),
+                       ],
+                     ),
+                   ),
+                   Row(
+                     children: [
+                       /// count the number
+                       Expanded(child: TextFieldWidget(
+                         controller: _controllerOldCount,
+                         hintText: widget.data.osoni.toString(),
+                         readOnly: true,
+                       )),
+                       Expanded(child: TextFieldWidget(
+                         controller: _controllerCount,
+                         hintText: "1",
+                         keyboardType: true,
+                         onChanged: (i){
+                           try{
+                             if(widget.data.osoni < num.parse(_controllerCount.text)){
+                               Navigator.pop(context);
+                               // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Siz kiritgan son maxsulot sonidan ko'p !",style: AppStyle.medium(AppColor.black),),backgroundColor: AppColor.red,));
+                             }
+                             else if(i == '0'){
+                               Navigator.pop(context);
+                               // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Maxsulot sonini 0 qilib kiritish mumkin emas!",textAlign:TextAlign.center,style: AppStyle.medium(AppColor.black),),backgroundColor: AppColor.red,));
+                             }
+                             else{
+                               try {
+                                 if (priceType == 0 && widget.priceUsd == 0) {
+                                   _controllerTotal.text = priceFormat.format(
+                                       num.parse(i) * num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')));
+                                 } else if (priceType == 0 && widget.priceUsd == 1) {
+                                   _controllerTotal.text = priceFormat.format(
+                                       num.parse(i) * num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')));
+                                 } else if (priceType == 1 && widget.priceUsd == 1) {
+                                   _controllerTotal.text = priceFormatUsd.format(
+                                       num.parse(i) * num.parse(_controllerPrice.text));
+                                 } else if (priceType == 1 && widget.priceUsd == 0) {
+                                   _controllerTotal.text = priceFormatUsd.format(
+                                       num.parse(i) * num.parse(_controllerPrice.text));
+                                 }
+                               } catch (_) {}
+                             }
+                           }catch(_){}
+                         },
+                       )),
+                     ],
+                   ),
+                   /// price calculation
+                   Padding(
+                     padding: EdgeInsets.only(left: 16.0.w,right: 16.w),
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         Text("Нархи",style: AppStyle.smallBold(Colors.black),),
+                         const Tooltip(
+                             message: 'Валюта курси 12450 сўм',
+                             child: Icon(Icons.more_horiz_rounded))
+                       ],
+                     ),
+                   ),
+                   TextFieldWidget(
+                     controller: _controllerPrice,
+                     hintText: "",
+                     suffixText: priceType==1?"\$":"Сўм",
+                     keyboardType: true,
+                     onChanged: (i){
+                       try{
+                         if(widget.priceUsd == 1){
+                           priceType == 0?_controllerTotal.text = priceFormat.format(num.parse(i.replaceAll(",", "")) * num.parse(_controllerCount.text)):
+                           _controllerTotal.text = priceFormatUsd.format(num.parse(i.replaceAll(",", "")) * num.parse(_controllerCount.text));
+                         }
+                         else{
+                           priceType == 0?_controllerTotal.text = priceFormat.format(num.parse(i.replaceAll(",", "")) * num.parse(_controllerCount.text)):
+                           _controllerTotal.text = priceFormatUsd.format(num.parse(i) * num.parse(_controllerCount.text));
+                         }
+                       }catch(_){
+                       }
+                     },
+                   ),
+                   SizedBox(height: 8.w,),
+                   Row(
+                     children: [
+                       SizedBox(width: 16.w,),
+                       GestureDetector(
+                         onTap: (){
+                           onTap = 0;
+                           if (widget.priceUsd == 0) {
+                             _controllerPrice.text = priceFormat.format(widget.price);
+                             _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+                           } else {
+                             _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text) * currency);
+                             _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
+                           }
+                           setState(() => priceType = 0);
+                         },
+                         child: Container(
+                           padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
+                           decoration: BoxDecoration(
+                               boxShadow: const [
+                                 BoxShadow(
+                                     color: Colors.grey,
+                                     blurRadius: 2
+                                 )
+                               ],
+                               borderRadius: BorderRadius.circular(10),
+                               color: priceType==0?AppColors.green:Colors.white
+                           ),
+                           child: Text("Сўм",style: AppStyle.mediumBold(priceType==0?AppColors.white:Colors.black),),
+                         ),
+                       ),
+                       SizedBox(width: 8.w,),
+                       GestureDetector(
+                         onTap: (){
+                           onTap+=1;
+                           priceType = 1;
+                           if (widget.priceUsd == 0) {
+                             if(onTap ==1){
+                               _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
+                               _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
+                             }
+                           } else {
+                             _controllerPrice.text = priceFormatUsd.format(widget.price);
+                             _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
+                           }
+                           // controllerPrice.text = (num.parse(controllerPrice.text.replaceAll(" ", "")) / CacheService.getCurrency()).toString();
+                           setState(() {});
+                         },
+                         child: Container(
+                           padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
+                           decoration: BoxDecoration(
+                               boxShadow: const [
+                                 BoxShadow(
+                                     color: Colors.grey,
+                                     blurRadius: 2
+                                 )
+                               ],
+                               borderRadius: BorderRadius.circular(10),
+                               color: priceType==1?AppColors.green:Colors.white
+                           ),
+                           child: Text("Валюта",style: AppStyle.mediumBold(priceType==1?AppColors.white:Colors.black),),
+                         ),
+                       ),
+                     ],
+                   ),
+                   SizedBox(height: 8.w,),
+                   Padding(
+                     padding: EdgeInsets.only(left: 16.0.w),
+                     child: Text("Жами",style: AppStyle.smallBold(Colors.black),),
+                   ),
+                   TextFieldWidget(controller: _controllerTotal, hintText: "",keyboardType: true,readOnly: true,suffixText: priceType==1?"\$":"Сўм",),
+                 ],
+               ),
+             ),
+             ButtonWidget(onTap: ()async{
+               int pay=1;
+               if(widget.priceUsd==0 && priceType==0){
+                 pay=0;
+               }
+               else if(widget.priceUsd==1 && priceType==0){
+                 pay=0;
+               }
+               else if(widget.priceUsd==0 && priceType==1){
+                 pay=0;
+               }
+               else if(widget.priceUsd==1 && priceType==1){
+                 pay=1;
+               }
+               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
+                Map data =  {
+                 "ID_SKL_PER":widget.doc['NDOC'],
+                 "ID_SKL2":widget.data.idSkl2,
+                 "NAME": widget.data.name,
+                 "ID_TIP": widget.data.idTip,
+                 "ID_EDIZ": widget.data.idEdiz,
+                 "SONI":_controllerCount.text,
+                 "NARHI":widget.data.narhi,
+                 "NARHI_S":widget.data.narhiS,
+                 "TNARHI":0,
+                 "TNARHI_S":0,
+                 "SM":widget.data.idSkl2,
+                 "SM_S":widget.data.idSkl2,
+                 "SNARHI":widget.data.idSkl2,
+                 "SNARHI_S":widget.data.idSkl2,
+                 "SSM":widget.data.idSkl2,
+                 "SSM_S":widget.data.idSkl2,
+                 "TSM":widget.data.idSkl2,
+                 "TSM_S":widget.data.idSkl2,
+                 "SNARHI1":widget.data.idSkl2,
+                 "SNARHI1_S":widget.data.idSkl2,
+                 "SNARHI2":widget.data.idSkl2,
+                 "SNARHI2_S":widget.data.idSkl2,
+                 "SHTR":widget.data.idSkl2
+               };
+               HttpResult res = await _repository.addOutcomeSklRs(data);
+               try{
+                 if(res.result['status'] == true){
+                   skladBloc.updateSklad(widget.data, res.result['osoni']);
+                   if(context.mounted)Navigator.pop(context);
+                   if(context.mounted)Navigator.pop(context);
+                 }
+                 else{
+                   if(context.mounted)Navigator.pop(context);
+                   if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+                 }
+               }catch(e){
+                 CenterDialog.showErrorDialog(context, e.toString());
+               }
+             }, color: AppColors.green, text: "Саватга қўшиш"),
+             SizedBox(height: 32.h,)
+           ],
+         ),
+       ),
+     );
+   }
 }

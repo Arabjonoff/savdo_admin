@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WareHouseToScreen extends StatefulWidget {
-  final Map<String,dynamic> data;
-  const WareHouseToScreen({super.key, required this.data});
+  const WareHouseToScreen({super.key,});
 
   @override
   State<WareHouseToScreen> createState() => _WareHouseToScreenState();
