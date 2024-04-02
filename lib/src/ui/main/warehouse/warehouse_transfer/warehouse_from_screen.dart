@@ -15,10 +15,12 @@ import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/ui/main/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouse_to_screen.dart';
 import 'package:savdo_admin/src/widget/bottom_menu/product_bottom_menu.dart';
+import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class WareHouseFromScreen extends StatefulWidget {
-  const WareHouseFromScreen({super.key});
+  final Map<String,dynamic> data;
+  const WareHouseFromScreen({super.key, required this.data});
 
   @override
   State<WareHouseFromScreen> createState() => _WareHouseFromScreenState();
@@ -36,7 +38,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    skladBloc.getAllSkladSearch(2024, 3, 1, '');
+    Future.delayed(const Duration(seconds: 1)).then((value) =>skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,1,''));
     super.initState();
   }
   @override
@@ -53,7 +55,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                 scaffoldKey.currentState!.openEndDrawer();
               }, icon: const Icon(Icons.filter_list)),
         ],
-        title: Text("Асосий омбор"),
+        title: Text(widget.data['warehouseFromName']),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kTextTabBarHeight),
           child: Padding(
@@ -89,61 +91,25 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
         ],
         grabbingHeight: 60.h,
         // TODO: Add your grabbing widget here,
-        grabbing: GestureDetector(
-          onTap: ()async{
-            List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
-            // ignore: use_build_context_synchronously
-            showDialog(context: context, builder: (ctx){
-              return Dialog(
-                child: SizedBox(
-                  width: width,
-                  height: 250.h,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.w,top: 16.w),
-                        child: Text("Омборлар рўйхати",style: AppStyle.medium(Colors.black),),
-                      ),
-                      Expanded(child: ListView.builder(
-                          itemCount: wareHouse.length,
-                          itemBuilder: (ctx,index){
-                            return ListTile(
-                              onTap: (){
-                                wareHouseId = wareHouse[index].id;
-                                wareHouseName = wareHouse[index].name;
-                                setState(() {});
-                                Navigator.pop(context);
-                              },
-                              title: Text(wareHouse[index].name),
-                            );
-                          }))
-                    ],
-                  ),
-                ),
-              );
-            });
-          },
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: AppColors.green,
-                borderRadius:  BorderRadius.circular(50)
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text("Асосий омбор".toUpperCase(),style: AppStyle.smallBold(Colors.white),),
-                const Icon(Icons.repeat_sharp,color: Colors.white,),
-                Text(wareHouseName.toUpperCase(),style: AppStyle.smallBold(Colors.white),),
-              ],
-            ),
+        grabbing: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: AppColors.green,
+              borderRadius:  BorderRadius.circular(50)
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(widget.data['warehouseFromName'].toUpperCase(),style: AppStyle.smallBold(Colors.white),),
+              const Icon(Icons.repeat_sharp,color: Colors.white,),
+              Text(widget.data['warehouseToName'].toUpperCase(),style: AppStyle.smallBold(Colors.white),),
+            ],
           ),
         ),
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
           // TODO: Add your sheet content here
-          child: WareHouseToScreen(),
+          child: WareHouseToScreen(data: {},),
         ),
         child: StreamBuilder<List<SkladResult>>(
             stream: skladBloc.getSkladSearchStream,
@@ -159,7 +125,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                     productCount++;
                   }
                 }
-                return data.isEmpty?const Center(child: CircularProgressIndicator()):
+                return data.isEmpty?const Center(child: EmptyWidgetScreen()):
                 Column(
                   children: [
                     Expanded(child: ListView.builder(
@@ -385,7 +351,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                             );
                           }
                           else{
-                            return const SizedBox();
+                            return const EmptyWidgetScreen();
                           }
                         })),
                   ],

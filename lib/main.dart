@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           title: 'Naqsh Savdo',
           theme: ThemeData(
-            textTheme: GoogleFonts.notoSansTextTheme(),
             platform: TargetPlatform.iOS,
             useMaterial3: true,
           ),

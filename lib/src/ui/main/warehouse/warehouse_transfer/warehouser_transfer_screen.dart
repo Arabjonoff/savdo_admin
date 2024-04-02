@@ -21,9 +21,9 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
-        title: Text("Омбор ҳаракатлари"),
+        title: const Text("Омбор ҳаракатлари"),
         actions: [
-          IconButton(onPressed: (){}, icon: const Icon(Icons.calendar_month))
+          IconButton(onPressed: (){}, icon:Icon(Icons.calendar_month,color: AppColors.green,))
         ],
       ),
       body: Column(
@@ -31,7 +31,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
           Expanded(
             child: ListView.builder(itemBuilder: (ctx,index){
               return Slidable(
-                endActionPane: ActionPane(
+                startActionPane: ActionPane(
                   motion: const ScrollMotion(),
                   children: [
                     Expanded(child: Column(
@@ -47,7 +47,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                     ))
                   ],
                 ),
-                startActionPane: ActionPane(
+                endActionPane: ActionPane(
                   motion: const ScrollMotion(),
                   children: [
                     SlidableAction(onPressed: (i){},

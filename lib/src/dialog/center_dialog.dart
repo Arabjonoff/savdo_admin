@@ -276,6 +276,11 @@ class CenterDialog{
                           RxBus.post(wareHouse[index].name.toString(),tag: 'warehouseToName');
                           Navigator.pop(context);
                         }
+                        if(selectWarehouse == 1){
+                          RxBus.post(wareHouse[index].id.toString(),tag: 'warehouseFromId');
+                          RxBus.post(wareHouse[index].name.toString(),tag: 'warehouseFromName');
+                          Navigator.pop(context);
+                        }
                       },
                       title: Text(wareHouse[index].name),
                     );

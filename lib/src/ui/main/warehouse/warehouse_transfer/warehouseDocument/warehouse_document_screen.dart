@@ -2,11 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/warehouse_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/income/documnet_income_screen.dart';
+import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouse_from_screen.dart';
 import 'package:savdo_admin/src/utils/rx_bus.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
@@ -74,7 +77,7 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
                       padding: EdgeInsets.only(left: 14.w),
                       child: Text("Қайси омбордан:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerWarehouseFrom, hintText: 'Қайси омбордан',readOnly: true,),
+                    TextFieldWidget(controller: _controllerWarehouseFrom, hintText: 'Қайси омбордан',readOnly: true,suffixIcon: IconButton(onPressed: () =>CenterDialog.showWarehouseDialog(context, 1), icon: const Icon(Icons.arrow_drop_down_circle_outlined),)),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
                       child: Text("Қайси омборга:",style: AppStyle.small(Colors.black),),
@@ -90,22 +93,35 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
               ),
             ),
             ButtonWidget(onTap: () async {
-              CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
-              HttpResult setDoc = await _repository.setDoc(5);
-              Map data = {
-                "NDOC":setDoc.result['ndoc'],
-                "SANA":DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                "IZOH": _controllerComment.text,
-                "ID_HODIM":_controllerClientIdT.text,
-                "ID_SKL": "",
-                "ID_SKL_TO":"",
-                "YIL": DateTime.now().year,
-                "OY":DateTime.now().month
-              };
-              HttpResult res = await _repository.warehouseTransfer(data);
-              if(res.result["status"] == true && setDoc.result["status"] == true){
-                if(context.mounted)Navigator.pop(context);
-                // if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
+              if(_controllerWarehouseFromId.text == _controllerWarehouseToId.text){
+                CenterDialog.showErrorDialog(context, "Омборлар номи бир-хил бўлиши мумкин эмас");
+              }
+              else{
+                skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,int.parse(_controllerWarehouseFromId.text));
+                CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
+                HttpResult setDoc = await _repository.setDoc(5);
+                Map data = {
+                  "NDOC":setDoc.result['ndoc'],
+                  "SANA":DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                  "IZOH": _controllerComment.text,
+                  "ID_HODIM":_controllerClientIdT.text,
+                  "ID_SKL": _controllerWarehouseFromId.text,
+                  "ID_SKL_TO":_controllerWarehouseToId.text,
+                  "YIL": DateTime.now().year,
+                  "OY":DateTime.now().month
+                };
+                HttpResult res = await _repository.warehouseTransfer(data);
+                if(res.result["status"] == true && setDoc.result["status"] == true){
+                  if(context.mounted)Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                    return WareHouseFromScreen(data: {
+                      "warehouseFromName":_controllerWarehouseFrom.text,
+                      "warehouseFromId":_controllerWarehouseFromId.text,
+                      "warehouseToName":_controllerWarehouseTo.text,
+                      "warehouseToId":_controllerWarehouseToId.text
+                    },);
+                  }));
+                }
               }
             }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
           ],
@@ -123,7 +139,8 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
     RxBus.register(tag: 'warehouseFromName').listen((event) {
       _controllerWarehouseFrom.text = event;
     });
-    RxBus.register(tag: 'warehouseFromId').listen((event) {
+    RxBus.register(tag: 'warehouseFromId').listen((event) async{
+      await _repository.clearSkladBase();
       _controllerWarehouseFromId.text = event;
     });
     RxBus.register(tag: 'warehouseToName').listen((event) {

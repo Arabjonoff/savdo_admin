@@ -1,8 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class WareHouseToScreen extends StatefulWidget {
-  const WareHouseToScreen({super.key});
+  final Map<String,dynamic> data;
+  const WareHouseToScreen({super.key, required this.data});
 
   @override
   State<WareHouseToScreen> createState() => _WareHouseToScreenState();
@@ -14,17 +14,17 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton(onPressed: (){}, child: const Text("Харажат")),
-              TextButton(onPressed: (){}, child: const Text("Таннархи сони")),
-              TextButton(onPressed: (){}, child: const Text("Таннархи суммаси")),
-            ],
-          ),
-        ),
+        // bottom: PreferredSize(
+        //   preferredSize: const Size.fromHeight(0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //     children: [
+        //       TextButton(onPressed: (){}, child: const Text("Харажат")),
+        //       TextButton(onPressed: (){}, child: const Text("Таннархи сони")),
+        //       TextButton(onPressed: (){}, child: const Text("Таннархи суммаси")),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
