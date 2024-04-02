@@ -37,7 +37,7 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
    @override
    void initState() {
      priceType = widget.priceType;
-     _controllerOldCount = TextEditingController(text: widget.data.osoni.toString());
+     _controllerOldCount = TextEditingController(text: priceFormatUsd.format(widget.data.osoni));
      _controllerCount = TextEditingController(text: '1');
      _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency) : priceFormat.format(widget.price));
      // _controllerPrice = TextEditingController(text: widget.price.toString());
@@ -288,11 +288,11 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                  "SSM_S":widget.data.idSkl2,
                  "TSM":widget.data.idSkl2,
                  "TSM_S":widget.data.idSkl2,
-                 "SNARHI1":widget.data.idSkl2,
-                 "SNARHI1_S":widget.data.idSkl2,
-                 "SNARHI2":widget.data.idSkl2,
-                 "SNARHI2_S":widget.data.idSkl2,
-                 "SHTR":widget.data.idSkl2
+                 "SNARHI1":widget.data.snarhi1,
+                 "SNARHI1_S":widget.data.snarhi1S,
+                 "SNARHI2":widget.data.snarhi2,
+                 "SNARHI2_S":widget.data.snarhi2S,
+                 "SHTR":""
                };
                HttpResult res = await _repository.addOutcomeSklRs(data);
                try{

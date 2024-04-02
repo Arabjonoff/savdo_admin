@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             }catch(e){
               if(context.mounted)Navigator.pop(context);
-              if(context.mounted)CenterDialog.showErrorDialog(context, e.toString());
+              if(context.mounted)CenterDialog.showErrorDialog(context, "Маълумотда хатолик бор текшириб қайта киритинг");
             }
           }, color: AppColors.green, text: "Кириш"),
           SizedBox(height: 24.h,)
