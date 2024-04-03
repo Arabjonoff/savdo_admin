@@ -270,34 +270,36 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                }
                CenterDialog.showLoadingDialog(context, "Бироз кутинг");
                 Map data =  {
-                 "ID_SKL_PER":widget.doc['NDOC'],
-                 "ID_SKL2":widget.data.idSkl2,
-                 "NAME": widget.data.name,
-                 "ID_TIP": widget.data.idTip,
-                 "ID_EDIZ": widget.data.idEdiz,
-                 "SONI":_controllerCount.text,
-                 "NARHI":widget.data.narhi,
-                 "NARHI_S":widget.data.narhiS,
-                 "TNARHI":0,
-                 "TNARHI_S":0,
-                 "SM":widget.data.idSkl2,
-                 "SM_S":widget.data.idSkl2,
-                 "SNARHI":widget.data.idSkl2,
-                 "SNARHI_S":widget.data.idSkl2,
-                 "SSM":widget.data.idSkl2,
-                 "SSM_S":widget.data.idSkl2,
-                 "TSM":widget.data.idSkl2,
-                 "TSM_S":widget.data.idSkl2,
-                 "SNARHI1":widget.data.snarhi1,
-                 "SNARHI1_S":widget.data.snarhi1S,
-                 "SNARHI2":widget.data.snarhi2,
-                 "SNARHI2_S":widget.data.snarhi2S,
-                 "SHTR":""
+                  "ID_SKL_PER":widget.doc['NDOC'],
+                  "ID_SKL2":widget.data.idSkl2,
+                  "NAME": widget.data.name,
+                  "ID_TIP": widget.data.idTip,
+                  "ID_EDIZ": widget.data.idEdiz,
+                  "SONI":_controllerCount.text,
+                  "NARHI":widget.data.narhi,
+                  "NARHI_S":widget.data.narhiS,
+                  "TNARHI":0,
+                  "TNARHI_S":0,
+                  "SM": num.parse(_controllerCount.text) * widget.data.narhi,
+                  "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
+                  "SNARHI":widget.data.idSkl2,
+                  "SNARHI_S":widget.data.idSkl2,
+                  "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
+                  "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
+                  "TSM":widget.data.idSkl2,
+                  "TSM_S":widget.data.idSkl2,
+                  "SNARHI1":widget.data.snarhi1,
+                  "SNARHI1_S":widget.data.snarhi1S,
+                  "SNARHI2":widget.data.snarhi2,
+                  "SNARHI2_S":widget.data.snarhi2S,
+                  "SHTR":""
                };
-               HttpResult res = await _repository.addOutcomeSklRs(data);
+               HttpResult res = await _repository.warehouseTransferItem(data);
                try{
                  if(res.result['status'] == true){
                    skladBloc.updateSklad(widget.data, res.result['osoni']);
+                   await skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,widget.doc['warehouseFromId']);
+                   await skladBloc.getAllSkladSearch(DateTime.now().year, DateTime.now().month,widget.doc['warehouseFromId'],'');
                    if(context.mounted)Navigator.pop(context);
                    if(context.mounted)Navigator.pop(context);
                  }

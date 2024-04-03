@@ -34,11 +34,11 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
   int priceUsd = 0;
   String wareHouseName = 'Асосий омбор';
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
-  List<ProductTypeAllResult>? filterProduct=[ProductTypeAllResult(id: 0, name: '', st: 0)];
+  List<ProductTypeAllResult> filterProduct=[ProductTypeAllResult(id: 0, name: '', st: 0)];
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1)).then((value) =>skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,1,''));
+    Future.delayed(const Duration(seconds: 1)).then((value) =>skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,widget.data['warehouseFromId'],''));
     super.initState();
   }
   @override
@@ -51,8 +51,8 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
           IconButton(
               onPressed: ()async{
                 filterProduct = await _repository.getProductTypeBase();
-                setState(() {});
                 scaffoldKey.currentState!.openEndDrawer();
+                setState(() {});
               }, icon: const Icon(Icons.filter_list)),
         ],
         title: Text(widget.data['warehouseFromName']),
@@ -63,7 +63,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
             child: CupertinoSearchTextField(
               placeholder: "Излаш",
               onChanged: (i){
-                skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,i);
+                skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,widget.data['warehouseFromId'],i);
               },
             ),
           ),
@@ -111,249 +111,247 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
           // TODO: Add your sheet content here
           child: WareHouseToScreen(),
         ),
-        child: StreamBuilder<List<SkladResult>>(
-            stream: skladBloc.getSkladSearchStream,
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
-                int productCount = 0;
-                var data = snapshot.data!;
-                for(int i =0; i<data.length;i++){
-                  if(data[i].idTip==filterId){
-                    productCount++;
+        child: RefreshIndicator(
+          onRefresh: ()async{
+            _repository.clearSkladBase();
+            skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,widget.data['warehouseFromId'],'');
+          },
+          child: StreamBuilder<List<SkladResult>>(
+              stream: skladBloc.getSkladSearchStream,
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  var data = snapshot.data!;
+                  if (data.isEmpty) {
+                    return const Center(child: EmptyWidgetScreen());
                   }
-                  else{
-                    productCount++;
-                  }
-                }
-                if (data.isEmpty) {
-                  return const Center(child: EmptyWidgetScreen());
-                } else {
-                  return ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (ctx,index){
-                      if(data[index].idTip==filterId){
-                        return data[index].osoni<=0?const SizedBox():GestureDetector(
-                          onTap: (){
-                              price = 0;
-                              priceUsd = 0;
-                              if (idPrice == 0) {
-                                if (data[index].snarhi != 0) {
-                                  price = data[index].snarhi;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhiS;
-                                  priceUsd = 1;
+                  else {
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (ctx,index){
+                        if(data[index].idTip==filterId){
+                          return data[index].osoni<=0?const SizedBox():GestureDetector(
+                            onTap: (){
+                                price = 0;
+                                priceUsd = 0;
+                                if (idPrice == 0) {
+                                  if (data[index].snarhi != 0) {
+                                    price = data[index].snarhi;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhiS;
+                                    priceUsd = 1;
+                                  }
+                                } else if (idPrice == 1) {
+                                  if (data[index].snarhi1 != 0) {
+                                    price = data[index].snarhi1;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhi1S;
+                                    priceUsd = 1;
+                                  }
+                                } else if (idPrice == 2) {
+                                  if (data[index].snarhi2 != 0) {
+                                    price = data[index].snarhi2;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhi2S;
+                                    priceUsd = 1;
+                                  }
                                 }
-                              } else if (idPrice == 1) {
-                                if (data[index].snarhi1 != 0) {
-                                  price = data[index].snarhi1;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhi1S;
-                                  priceUsd = 1;
-                                }
-                              } else if (idPrice == 2) {
-                                if (data[index].snarhi2 != 0) {
-                                  price = data[index].snarhi2;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhi2S;
-                                  priceUsd = 1;
-                                }
-                              }
-                              showModalBottomSheet(
-                                  useRootNavigator: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (ctx){
-                                    return ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data, priceType:data[index].snarhi != 0?0:1,));
-                                  });
-                          },
-                          child: Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (i){},
-                                  backgroundColor: Colors.red,
-                                  label: "Ўчириш",
-                                  icon: Icons.delete,)
-                              ],
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
-                              height: 100.h,
-                              width: width,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300
-                                      )
-                                  )
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                showModalBottomSheet(
+                                    useRootNavigator: true,
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (ctx){
+                                      return ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data, priceType:data[index].snarhi != 0?0:1,));
+                                    });
+                            },
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
                                 children: [
-                                  GestureDetector(
-                                    onTap:(){
-                                      CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
-                                    },
-                                    child: Container(
-                                      width: 80.r,
-                                      height: 80.r,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: Colors.white
-                                      ),
-                                      child: CachedNetworkImage(
-                                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
-                                        imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.w,),
-                                  Expanded(child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
-                                      const Spacer(),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
-                                          Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
-                                        ],
-                                      )
-                                    ],
-                                  ))
+                                  SlidableAction(
+                                    onPressed: (i){},
+                                    backgroundColor: Colors.red,
+                                    label: "Ўчириш",
+                                    icon: Icons.delete,)
                                 ],
                               ),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
+                                height: 100.h,
+                                width: width,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade300
+                                        )
+                                    )
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap:(){
+                                        CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
+                                      },
+                                      child: Container(
+                                        width: 80.r,
+                                        height: 80.r,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: CachedNetworkImage(
+                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
+                                          imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w,),
+                                    Expanded(child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
+                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                          ],
+                                        )
+                                      ],
+                                    ))
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                      else if(filterId == -1){
-                        return data[index].osoni<=0?const SizedBox():GestureDetector(
-                          onTap: (){
-                            if(data[index].osoni<=0){
+                          );
+                        }
+                        else if(filterId == -1){
+                          return data[index].osoni<=0?const SizedBox():GestureDetector(
+                            onTap: (){
+                              if(data[index].osoni<=0){
 
-                            }
-                            else{
-                              price = 0;
-                              priceUsd = 0;
-                              if (idPrice == 0) {
-                                if (data[index].snarhi != 0) {
-                                  price = data[index].snarhi;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhiS;
-                                  priceUsd = 1;
-                                }
-                              } else if (idPrice == 1) {
-                                if (data[index].snarhi1 != 0) {
-                                  price = data[index].snarhi1;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhi1S;
-                                  priceUsd = 1;
-                                }
-                              } else if (idPrice == 2) {
-                                if (data[index].snarhi2 != 0) {
-                                  price = data[index].snarhi2;
-                                  priceUsd = 0;
-                                } else {
-                                  price = data[index].snarhi2S;
-                                  priceUsd = 1;
-                                }
                               }
-                              showModalBottomSheet(
-                                  useRootNavigator: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (ctx){
-                                    return ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data,priceType:data[index].snarhi != 0?0:1));
-                                  });
-                            }
-                          },
-                          child: Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (i){},
-                                  backgroundColor: Colors.red,
-                                  label: "Ўчириш",
-                                  icon: Icons.delete,)
-                              ],
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
-                              height: 100.h,
-                              width: width,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300
-                                      )
-                                  )
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              else{
+                                price = 0;
+                                priceUsd = 0;
+                                if (idPrice == 0) {
+                                  if (data[index].snarhi != 0) {
+                                    price = data[index].snarhi;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhiS;
+                                    priceUsd = 1;
+                                  }
+                                } else if (idPrice == 1) {
+                                  if (data[index].snarhi1 != 0) {
+                                    price = data[index].snarhi1;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhi1S;
+                                    priceUsd = 1;
+                                  }
+                                } else if (idPrice == 2) {
+                                  if (data[index].snarhi2 != 0) {
+                                    price = data[index].snarhi2;
+                                    priceUsd = 0;
+                                  } else {
+                                    price = data[index].snarhi2S;
+                                    priceUsd = 1;
+                                  }
+                                }
+                                showModalBottomSheet(
+                                    useRootNavigator: true,
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (ctx){
+                                      return ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: ProductBottomMenuDialog(data: data[index], price: price, priceUsd: priceUsd, doc: widget.data,priceType:data[index].snarhi != 0?0:1));
+                                    });
+                              }
+                            },
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
                                 children: [
-                                  GestureDetector(
-                                    onTap:(){
-                                      CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
-                                    },
-                                    child: Container(
-                                      width: 80.r,
-                                      height: 80.r,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: Colors.white
-                                      ),
-                                      child: CachedNetworkImage(
-                                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
-                                        imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.w,),
-                                  Expanded(child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
-                                      const Spacer(),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
-                                          Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
-                                        ],
-                                      )
-                                    ],
-                                  ))
+                                  SlidableAction(
+                                    onPressed: (i){},
+                                    backgroundColor: Colors.red,
+                                    label: "Ўчириш",
+                                    icon: Icons.delete,)
                                 ],
                               ),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
+                                height: 100.h,
+                                width: width,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade300
+                                        )
+                                    )
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap:(){
+                                        CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
+                                      },
+                                      child: Container(
+                                        width: 80.r,
+                                        height: 80.r,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: CachedNetworkImage(
+                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
+                                          imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w,),
+                                    Expanded(child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(data[index].name,maxLines:2,style: AppStyle.mediumBold(Colors.black),),
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            data[index].snarhi != 0?Text("${priceFormat.format(data[index].snarhi)} сўм",style: AppStyle.medium(Colors.black),):Text("${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.medium(Colors.black),),
+                                            Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                          ],
+                                        )
+                                      ],
+                                    ))
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                      else{
-                        return const EmptyWidgetScreen();
-                      }
-                    });
+                          );
+                        }
+                        else{
+                          return const EmptyWidgetScreen();
+                        }
+                      });
+                  }
                 }
+                return const Center(child: CircularProgressIndicator());
               }
-              return const Center(child: CircularProgressIndicator());
-            }
+          ),
         ),
       ),
       endDrawer: Drawer(
@@ -368,12 +366,12 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                   itemCount: filterProduct!.length,
                   itemBuilder: (ctx,index){
                     return ListTile(
-                      selected: filterProduct![index].id==filterId?true:false,
+                      selected: filterProduct[index].id==filterId?true:false,
                       selectedColor: AppColors.white,
                       selectedTileColor: Colors.green.shade500,
-                      title: Text(filterProduct![index].name),
+                      title: Text(filterProduct[index].name),
                       onTap: (){
-                        filterId=filterProduct![index].id;
+                        filterId=filterProduct[index].id;
                         setState(() {});
                       },
                     );
