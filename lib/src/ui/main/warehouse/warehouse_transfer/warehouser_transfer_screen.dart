@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:savdo_admin/src/bloc/warehousetransfer/warehouse_transfer_bloc.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouseDocument/warehouse_document_screen.dart';
@@ -14,6 +15,11 @@ class WareHouseTransferScreen extends StatefulWidget {
 }
 
 class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
+  @override
+  void initState() {
+    wareHouseTransferBloc.getAllWareHouseTransfer(2024, 4);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
