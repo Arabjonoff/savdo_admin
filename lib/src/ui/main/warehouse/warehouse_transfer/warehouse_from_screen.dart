@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
@@ -103,11 +104,12 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
               borderRadius:  const BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15))
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(width: 16.w,),
               Text(widget.data['warehouseFromName'].toUpperCase(),style: AppStyle.smallBold(Colors.white),),
-              const Icon(Icons.repeat_sharp,color: Colors.white,),
+              const Expanded(child: Icon(Icons.repeat_sharp,color: Colors.white,)),
               Text(widget.data['warehouseToName'].toUpperCase(),style: AppStyle.smallBold(Colors.white),),
+              SizedBox(width: 16.w,),
             ],
           ),
         ),

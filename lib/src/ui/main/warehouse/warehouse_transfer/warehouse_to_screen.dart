@@ -38,7 +38,13 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
         stream: incomeProductBloc.getIncomeProductStream,
         builder: (context, snapshot) {
           if(snapshot.hasData){
+            double allPriceUzs = 0;
+            double allPriceUsd = 0;
             var data = snapshot.data!;
+            for(int i=0; i<data.length;i++){
+              allPriceUzs += data[i].ssm;
+              allPriceUsd += data[i].ssmS;
+            }
             return Column(
               children: [
                 Expanded(child: ListView.builder(
@@ -114,6 +120,8 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
                     ),
                   );
                 })),
+                Text("${priceFormat.format(allPriceUzs)} сўм | ${priceFormatUsd.format(allPriceUsd)} \$",style: AppStyle.large(AppColors.green),),
+                SizedBox(height: 10.h,),
                 ButtonWidget(onTap: (){}, color: AppColors.green, text: "Сақлаш"),
                 SizedBox(height: 34.h,)
               ],

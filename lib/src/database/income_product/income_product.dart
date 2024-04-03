@@ -60,6 +60,8 @@ class IncomeProductBase {
           tnarhiS: list[i]['TNARHI_S']??0,
           tsm: list[i]['TSM']??0,
           tsmS: list[i]['TSM_S']??0,
+          ssmS: list[i]['SSM_S']??0,
+          ssm: list[i]['SSM']??0,
           shtr: list[i]['SHTR']);
       data.add(incomeAddModel);
     }

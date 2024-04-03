@@ -17,6 +17,8 @@ class IncomeAddModel {
   num narhiS;
   num sm;
   num smS;
+  num ssm;
+  num ssmS;
   num snarhi;
   num snarhiS;
   num snarhi1;
@@ -54,6 +56,8 @@ class IncomeAddModel {
     required this.shtr,
     this.price = 0,
     this.id = 0,
+    this.ssm = 0,
+    this.ssmS = 0,
   });
 
   factory IncomeAddModel.fromJson(Map<String, dynamic> json) => IncomeAddModel(
@@ -94,6 +98,8 @@ class IncomeAddModel {
     "NARHI_S": narhiS,
     "SM": sm,
     "SM_S": smS,
+    "SSM_S":ssmS,
+    "SSM":ssm,
     "SNARHI": snarhi,
     "SNARHI_S": snarhiS,
     "SNARHI1": snarhi1,
@@ -132,6 +138,9 @@ class IncomeAddModel {
     "TSM": tsm,
     "TSM_S": tsmS,
     "SHTR": shtr,
+    "SSM_S":ssmS,
+    "SSM":ssm,
     "price": price,
+
   };
 }
