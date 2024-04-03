@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
 import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -39,15 +40,15 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
      priceType = widget.priceType;
      _controllerOldCount = TextEditingController(text: priceFormatUsd.format(widget.data.osoni));
      _controllerCount = TextEditingController(text: '1');
-     _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency) : priceFormat.format(widget.price));
+     _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency).replaceAll(',', '.') : priceFormat.format(widget.price).replaceAll(',', '.'));
      // _controllerPrice = TextEditingController(text: widget.price.toString());
      if(priceType==1){
        if (widget.priceUsd == 0) {
          _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
          _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
        } else {
-         _controllerPrice.text = priceFormatUsd.format(widget.price);
-         _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
+         _controllerPrice.text = priceFormatUsd.format(widget.price).replaceAll(",", ".");
+         _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price).replaceAll(",", ".");
        }
      }
      else{
@@ -222,8 +223,8 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                                _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
                              }
                            } else {
-                             _controllerPrice.text = priceFormatUsd.format(widget.price);
-                             _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
+                             _controllerPrice.text = priceFormatUsd.format(widget.price).replaceAll(",", ".");
+                             _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price).replaceAll(",", ".");
                            }
                            // controllerPrice.text = (num.parse(controllerPrice.text.replaceAll(" ", "")) / CacheService.getCurrency()).toString();
                            setState(() {});
@@ -269,7 +270,7 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                  pay=1;
                }
                CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-                Map data =  {
+                Map<String,dynamic> data = {
                   "ID_SKL_PER":widget.doc['NDOC'],
                   "ID_SKL2":widget.data.idSkl2,
                   "NAME": widget.data.name,
@@ -292,14 +293,40 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                   "SNARHI1_S":widget.data.snarhi1S,
                   "SNARHI2":widget.data.snarhi2,
                   "SNARHI2_S":widget.data.snarhi2S,
-                  "SHTR":""
+                  "SHTR":widget.data.photo
                };
                HttpResult res = await _repository.warehouseTransferItem(data);
                try{
                  if(res.result['status'] == true){
-                   skladBloc.updateSklad(widget.data, res.result['osoni']);
-                   await skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,widget.doc['warehouseFromId']);
-                   await skladBloc.getAllSkladSearch(DateTime.now().year, DateTime.now().month,widget.doc['warehouseFromId'],'');
+                   Map<String,dynamic> dataIncome = {
+                     "ID_SKL_PER":widget.doc['NDOC'],
+                     "ID":res.result['id'],
+                     "ID_SKL2":widget.data.idSkl2,
+                     "NAME": widget.data.name,
+                     "ID_TIP": widget.data.idTip,
+                     "ID_EDIZ": widget.data.idEdiz,
+                     "SONI":_controllerCount.text,
+                     "NARHI":widget.data.narhi,
+                     "NARHI_S":widget.data.narhiS,
+                     "TNARHI":0,
+                     "TNARHI_S":0,
+                     "SM": num.parse(_controllerCount.text) * widget.data.narhi,
+                     "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
+                     "SNARHI":widget.data.idSkl2,
+                     "SNARHI_S":widget.data.idSkl2,
+                     "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
+                     "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
+                     "TSM":widget.data.idSkl2,
+                     "TSM_S":widget.data.idSkl2,
+                     "SNARHI1":widget.data.snarhi1,
+                     "SNARHI1_S":widget.data.snarhi1S,
+                     "SNARHI2":widget.data.snarhi2,
+                     "SNARHI2_S":widget.data.snarhi2S,
+                     "SHTR":widget.data.photo
+                   };
+                   _repository.saveIncomeProductBase(dataIncome);
+                   // skladBloc.updateSklad(widget.data, res.result['osoni']);
+                   incomeProductBloc.getAllIncomeProduct();
                    if(context.mounted)Navigator.pop(context);
                    if(context.mounted)Navigator.pop(context);
                  }
@@ -308,6 +335,7 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                    if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
                  }
                }catch(e){
+                 if(context.mounted)Navigator.pop(context);
                  CenterDialog.showErrorDialog(context, e.toString());
                }
              }, color: AppColors.green, text: "Саватга қўшиш"),

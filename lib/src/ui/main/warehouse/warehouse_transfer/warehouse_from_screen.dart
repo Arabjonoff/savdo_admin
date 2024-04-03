@@ -42,6 +42,11 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
     super.initState();
   }
   @override
+  void dispose() {
+    _repository.clearIncomeProductBase();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(

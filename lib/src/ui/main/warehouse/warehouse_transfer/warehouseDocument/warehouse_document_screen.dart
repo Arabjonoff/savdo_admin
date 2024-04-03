@@ -112,6 +112,7 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
                 };
                 HttpResult res = await _repository.warehouseTransfer(data);
                 if(res.result["status"] == true && setDoc.result["status"] == true){
+                  _repository.clearIncomeProductBase();
                   if(context.mounted)Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (ctx){
                     return WareHouseFromScreen(data: {

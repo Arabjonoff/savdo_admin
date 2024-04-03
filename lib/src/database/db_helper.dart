@@ -182,6 +182,7 @@ class DatabaseHelper{
       CREATE TABLE incomeProduct (
         ID INTEGER,
         ID_SKL_PR INTEGER,
+        ID_SKL_PER INTEGER,
         ID_SKL2 INTEGER,
         NAME TEXT,
         ID_TIP INTEGER,
