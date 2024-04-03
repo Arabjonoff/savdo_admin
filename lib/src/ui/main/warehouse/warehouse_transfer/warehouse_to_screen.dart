@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
+import 'package:savdo_admin/src/bloc/warehousetransfer/warehouse_transfer_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
@@ -122,7 +123,11 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
                 })),
                 Text("${priceFormat.format(allPriceUzs)} сўм | ${priceFormatUsd.format(allPriceUsd)} \$",style: AppStyle.large(AppColors.green),),
                 SizedBox(height: 10.h,),
-                ButtonWidget(onTap: (){}, color: AppColors.green, text: "Сақлаш"),
+                ButtonWidget(onTap: ()async{
+                  wareHouseTransferBloc.getAllWareHouseTransfer(DateTime.now().year, DateTime.now().month);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }, color: AppColors.green, text: "Сақлаш"),
                 SizedBox(height: 34.h,)
               ],
             );

@@ -641,4 +641,13 @@ class ApiProvider {
     String url = "${_baseUrl}per?DB=$db&ID_SKL=$idSkl&YIL=$year&OY=$month";
     return await _getRequest(url);
   }
+  Future<HttpResult> lockWarehouse(id,prov)async{
+    String url = "${_baseUrl}per0_prov?DB=$db&JWT=$token";
+    var data = {
+      "ID":id,
+      "PROV":prov
+    };
+    return await _postRequest(url,json.encode(data));
+  }
+
 }
