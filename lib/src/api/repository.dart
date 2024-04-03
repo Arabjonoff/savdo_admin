@@ -223,4 +223,6 @@ class Repository{
   Future<HttpResult> deleteOutcomeDoc(id) => _apiProvider.deleteOutcomeDoc(id);
   Future<HttpResult> warehouseTransfer(Map data) => _apiProvider.warehouseTransfer(data);
   Future<HttpResult> warehouseTransferItem(Map data) => _apiProvider.warehouseTransferItem(data);
+  Future<HttpResult> warehouseTransferItemDelete(id,id_skl_per,id_skl2) => _apiProvider.warehouseTransferItemDelete(id,id_skl_per,id_skl2);
+  Future<HttpResult> warehouseTransferItemUpdate(Map data) => _apiProvider.warehouseTransferItemUpdate(data);
 }

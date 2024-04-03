@@ -16,7 +16,8 @@ import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import '../../../../theme/icons/app_fonts.dart';
 
 class WareHouseToScreen extends StatefulWidget {
-  const WareHouseToScreen({super.key,});
+  final Map data;
+  const WareHouseToScreen({super.key, required this.data,});
 
   @override
   State<WareHouseToScreen> createState() => _WareHouseToScreenState();
@@ -50,9 +51,9 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
                       children: [
                         SlidableAction(
                             onPressed: (i)async{
-                              HttpResult res = await repository.deleteIncome(data[index].id);
+                              HttpResult res = await repository.warehouseTransferItemDelete(data[index].id,widget.data["NDOC"],data[index].idSkl2);
                               if(res.result['status'] == true){
-                                 await repository.deleteIncomeProduct(data[index]);
+                                await repository.deleteIncomeProduct(data[index]);
                                 await incomeProductBloc.getAllIncomeProduct();
                               }
                               else{

@@ -114,7 +114,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
           // TODO: Add your sheet content here
-          child: WareHouseToScreen(),
+          child: WareHouseToScreen(data: widget.data,),
         ),
         child: RefreshIndicator(
           onRefresh: ()async{

@@ -633,7 +633,7 @@ class ApiProvider {
     String url = "${_baseUrl}per1_upd?DB=$db&JWT=$token";
     return await _patchRequest(url,json.encode(data));
   }
-  Future<HttpResult> warehouseTransferItemDelete(Map data)async{
+  Future<HttpResult> warehouseTransferItemDelete(id,id_skl_per,id_skl2)async{
   //   {
   //     "ID_SKL_PER":"",
   //   "ID_SKL2":"",
@@ -659,7 +659,7 @@ class ApiProvider {
   //   "SNARHI2_S":0,
   //   "SHTR":"0"
   // }
-    String url = "${_baseUrl}per1_del?DB=$db&JWT=$token";
-    return await _deleteRequest(url,json.encode(data));
+    String url = "${_baseUrl}per1_del?DB=$db&ID=$id&ID_SKL_PER=$id_skl_per&ID_SKL2=$id_skl2&JWT=$token";
+    return await _deleteRequest(url,{});
   }
 }
