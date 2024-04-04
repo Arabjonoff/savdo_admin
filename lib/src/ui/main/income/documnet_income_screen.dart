@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
+import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -28,6 +29,7 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
   final TextEditingController _controllerClient = TextEditingController();
   final TextEditingController _controllerClientIdT = TextEditingController();
   final TextEditingController _controllerComment = TextEditingController();
+  final TextEditingController _controllerHodimID = TextEditingController();
   @override
   void initState() {
     _initBus();
@@ -87,9 +89,10 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
                     await setDoc.result['ndoc']??"999",
                   _controllerDate.text,
                   _controllerComment.text,
-                  1,
+                  _controllerHodimID.text,
                   1);
               if(res.result["status"] == true && setDoc.result["status"] == true){
+                incomeProductBloc.getAllIncomeProduct();
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
               }
@@ -106,6 +109,9 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
     });
     RxBus.register(tag: 'clientId').listen((event) {
       _controllerClientIdT.text = event;
+    });
+    RxBus.register(tag: 'idHodimlar').listen((event) {
+      _controllerHodimID.text = event;
     });
   }
 }

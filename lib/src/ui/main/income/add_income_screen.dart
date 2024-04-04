@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
-import 'package:savdo_admin/src/bloc/income/skl_pr_tov_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
@@ -45,6 +44,14 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
   @override
   void initState() {
+    _controllerIncomePriceUzs.text = priceFormat.format(widget.data.narhi);
+    _controllerIncomePriceUsd.text = priceFormatUsd.format(widget.data.narhiS);
+    _controllerSalePriceUzs1.text = priceFormat.format(widget.data.snarhi);
+    _controllerSalePriceUsd1.text = priceFormatUsd.format(widget.data.snarhiS);
+    _controllerSalePriceUzs2.text = priceFormat.format(widget.data.snarhi1);
+    _controllerSalePriceUsd2.text = priceFormatUsd.format(widget.data.snarhiS1);
+    _controllerSalePriceUzs3.text = priceFormat.format(widget.data.snarhi2);
+    _controllerSalePriceUsd3.text = priceFormatUsd.format(widget.data.snarhiS2);
       db = CacheService.getDb();
     _scrollController = ScrollController();
     _scrollController!.addListener(_scrollListener);
@@ -163,6 +170,21 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           style: AppStyle.medium(Colors.black),
                           controller: _controllerCount,
+                          onChanged: (i){
+                            if(_controllerIncomePriceUzs.text !='0'){
+                              _controllerIncomePriceTotal.text = (int.parse(i)*int.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice1Total.text = (int.parse(i)*int.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice2Total.text = (int.parse(i)*int.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice3Total.text = (int.parse(i)*int.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                            }
+                            else{
+                              _controllerIncomePriceTotal.text = (int.parse(i)*int.parse(_controllerIncomePriceUsd.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice1Total.text = (int.parse(i)*int.parse(_controllerSalePriceUsd1.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice2Total.text = (int.parse(i)*int.parse(_controllerSalePriceUsd2.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                              _controllerIncomePrice3Total.text = (int.parse(i)*int.parse(_controllerSalePriceUsd3.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
+                            }
+                            setState(() {});
+                          },
                           decoration:  InputDecoration(
                             contentPadding: EdgeInsets.only(top: 5.h),
                             isDense: true,
@@ -546,36 +568,9 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                   SizedBox(height: 12.h,),
                   ButtonWidget(onTap: () async {
                     CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
-                    IncomeAddModel addIncome = IncomeAddModel(
-                      price: num.parse(_controllerIncomePriceUzs.text) ,
-                      idSklPr: widget.id,
-                      idSkl2: widget.data.id,
-                      name: widget.data.name,
-                      idTip: widget.data.idTip,
-                      idFirma: widget.data.idFirma,
-                      idEdiz: widget.data.idEdiz,
-                      soni: num.parse(_controllerCount.text),
-                      narhi: num.parse(_controllerIncomePriceUzs.text),
-                      narhiS: num.parse(_controllerIncomePriceUsd.text),
-                      sm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
-                      smS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
-                      snarhi: num.parse(_controllerSalePriceUzs1.text),
-                      snarhiS: num.parse(_controllerSalePriceUsd1.text),
-                      snarhi1: num.parse(_controllerSalePriceUzs2.text),
-                      snarhi1S: num.parse(_controllerSalePriceUsd2.text),
-                      snarhi2: num.parse(_controllerSalePriceUzs3.text),
-                      snarhi2S: num.parse(_controllerSalePriceUsd3.text),
-                      tnarhi: 0,
-                      tnarhiS: 0,
-                      tsm: 0,
-                      tsmS: 0,
-                      shtr: '',
-                    );
-                    HttpResult res = await _repository.addIncomeSklPr(addIncome);
-                    if(res.result['status'] == true){
-                      IncomeAddModel addIncomeBase = IncomeAddModel(
-                        id: int.parse(res.result['id']),
-                        price: num.parse(_controllerIncomePriceUzs.text) ,
+                    try{
+                      IncomeAddModel addIncome = IncomeAddModel(
+                        price: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')) ,
                         idSklPr: widget.id,
                         idSkl2: widget.data.id,
                         name: widget.data.name,
@@ -583,15 +578,15 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                         idFirma: widget.data.idFirma,
                         idEdiz: widget.data.idEdiz,
                         soni: num.parse(_controllerCount.text),
-                        narhi: num.parse(_controllerIncomePriceUzs.text),
+                        narhi: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
                         narhiS: num.parse(_controllerIncomePriceUsd.text),
                         sm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
                         smS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
-                        snarhi: num.parse(_controllerSalePriceUzs1.text),
+                        snarhi: num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), '')),
                         snarhiS: num.parse(_controllerSalePriceUsd1.text),
-                        snarhi1: num.parse(_controllerSalePriceUzs2.text),
+                        snarhi1: num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), '')),
                         snarhi1S: num.parse(_controllerSalePriceUsd2.text),
-                        snarhi2: num.parse(_controllerSalePriceUzs3.text),
+                        snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
                         snarhi2S: num.parse(_controllerSalePriceUsd3.text),
                         tnarhi: 0,
                         tnarhiS: 0,
@@ -599,10 +594,42 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                         tsmS: 0,
                         shtr: '',
                       );
-                      _repository.saveIncomeProductBase(addIncomeBase.toJsonIns());
-                      incomeProductBloc.getAllIncomeProduct();
+                      HttpResult res = await _repository.addIncomeSklPr(addIncome);
+                      if(res.result['status'] == true){
+                        IncomeAddModel addIncomeBase = IncomeAddModel(
+                          id: int.parse(res.result['id']),
+                          price: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')) ,
+                          idSklPr: widget.id,
+                          idSkl2: widget.data.id,
+                          name: widget.data.name,
+                          idTip: widget.data.idTip,
+                          idFirma: widget.data.idFirma,
+                          idEdiz: widget.data.idEdiz,
+                          soni: num.parse(_controllerCount.text),
+                          narhi: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                          narhiS: num.parse(_controllerIncomePriceUsd.text),
+                          sm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
+                          smS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
+                          snarhi: num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), '')),
+                          snarhiS: num.parse(_controllerSalePriceUsd1.text),
+                          snarhi1: num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), '')),
+                          snarhi1S: num.parse(_controllerSalePriceUsd2.text),
+                          snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
+                          snarhi2S: num.parse(_controllerSalePriceUsd3.text),
+                          tnarhi: 0,
+                          tnarhiS: 0,
+                          tsm: 0,
+                          tsmS: 0,
+                          shtr: '',
+                        );
+                        _repository.saveIncomeProductBase(addIncomeBase.toJsonIns());
+                        incomeProductBloc.getAllIncomeProduct();
+                        if(context.mounted)Navigator.pop(context);
+                        if(context.mounted)Navigator.pop(context);
+                      }
+                    }catch(e){
                       if(context.mounted)Navigator.pop(context);
-                      if(context.mounted)Navigator.pop(context);
+                      if(context.mounted)CenterDialog.showErrorDialog(context, e.toString());
                     }
                   }, color: AppColors.green, text: "Сақлаш"),
                   SizedBox(height: 24.h,),

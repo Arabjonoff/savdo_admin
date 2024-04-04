@@ -88,6 +88,7 @@ class IncomeAddModel {
   Map<String, dynamic> toJsonIns() => {
     "ID": id,
     "ID_SKL_PR": idSklPr,
+    "ID_SKL_PER": 0,
     "ID_SKL2": idSkl2,
     "NAME": name,
     "ID_TIP": idTip,
@@ -141,6 +142,5 @@ class IncomeAddModel {
     "SSM_S":ssmS,
     "SSM":ssm,
     "price": price,
-
   };
 }

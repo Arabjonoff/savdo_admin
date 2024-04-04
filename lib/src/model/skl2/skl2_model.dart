@@ -41,6 +41,14 @@ class Skl2Result {
   num vz;
   num msoni;
   int st;
+  num narhi;
+  num narhiS;
+  num snarhi;
+  num snarhiS;
+  num snarhi1;
+  num snarhiS1;
+  num snarhi2;
+  num snarhiS2;
   Skl2Result({
     required this.id,
     required this.name,
@@ -54,6 +62,14 @@ class Skl2Result {
     required this.tipName,
     required this.firmName,
     required this.edizName,
+    this.narhi = 0,
+    this.narhiS= 0,
+    this.snarhi= 0,
+    this.snarhiS = 0,
+    this.snarhi1 = 0,
+    this.snarhiS1 = 0,
+    this.snarhi2 = 0,
+    this.snarhiS2= 0,
   });
 
   factory Skl2Result.fromJson(Map<String, dynamic> json) => Skl2Result(
