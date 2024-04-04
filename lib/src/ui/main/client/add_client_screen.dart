@@ -56,6 +56,10 @@ class _AddClientScreenState extends State<AddClientScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Янги киритиш"),
+      ),
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -64,7 +68,7 @@ class _AddClientScreenState extends State<AddClientScreen> {
             children: [
               Padding(
                 padding:EdgeInsets.only(left: 16.0.w,bottom: 8.h,top: 12.h),
-                child: Text("Ходим тури",style: AppStyle.small(Colors.black),),
+                child: Text("Харидор тури",style: AppStyle.small(Colors.black),),
               ),
               Row(
                 children: [
@@ -489,6 +493,7 @@ class _AddClientScreenState extends State<AddClientScreen> {
                     "ST": 1,
                   };
                   _repository.saveClientBase(ClientResult.fromJson(saveBaseClient));
+                  if(context.mounted)Navigator.pop(context);
                   if(context.mounted)Navigator.pop(context);
                   clientBloc.getAllClient('');
                   CenterDialog.showSuccessDialog(context,);

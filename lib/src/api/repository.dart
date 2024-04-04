@@ -227,4 +227,5 @@ class Repository{
   Future<HttpResult> warehouseTransferItemUpdate(Map data) => _apiProvider.warehouseTransferItemUpdate(data);
   Future<HttpResult> getWarehouseTransfer(year,month) => _apiProvider.getWarehouseTransfer(year,month);
   Future<HttpResult> lockWarehouse(year,month) => _apiProvider.lockWarehouse(year,month);
+  Future<HttpResult> deleteWarehouseTransfer(id) => _apiProvider.deleteWarehouseTransfer(id);
 }

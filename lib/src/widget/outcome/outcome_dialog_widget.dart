@@ -36,12 +36,12 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
   @override
   void initState() {
     _controllerCount = TextEditingController(text: '1');
-    _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormat.format(widget.price * currency) : priceFormat.format(widget.price));
+    _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormatUsd.format(widget.price) : priceFormat.format(widget.price));
     // _controllerPrice = TextEditingController(text: widget.price.toString());
     if(priceType==1){
       if (widget.priceUsd == 0) {
-        _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
-        _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
+          _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll("RegExp('[^0-9]')", '')) / currency);
+          _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
       } else {
         _controllerPrice.text = priceFormatUsd.format(widget.price);
         _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * widget.price);
@@ -52,6 +52,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
         _controllerPrice.text = priceFormat.format(widget.price);
         _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
       } else {
+        _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(",", '.')) * currency);
         _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
       }
     }
@@ -180,7 +181,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                             _controllerPrice.text = priceFormat.format(widget.price);
                             _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
                           } else {
-                            _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text) * currency);
+                            _controllerPrice.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(",", '.')) * currency);
                             _controllerTotal.text = priceFormat.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text));
                           }
                           setState(() => priceType = 0);
@@ -206,7 +207,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                           onTap+=1;
                           priceType = 1;
                           if (widget.priceUsd == 0) {
-                            if(onTap ==1){
+                            if(onTap == 1){
                               _controllerPrice.text = priceFormatUsd.format(num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')) / currency);
                               _controllerTotal.text = priceFormatUsd.format(num.parse(_controllerCount.text) * num.parse(_controllerPrice.text.replaceAll(RegExp('^0-9'), '')));
                             }

@@ -647,7 +647,14 @@ class ApiProvider {
       "ID":id,
       "PROV":prov
     };
-    return await _postRequest(url,json.encode(data));
+    return await _patchRequest(url,json.encode(data));
+  }
+  Future<HttpResult> deleteWarehouseTransfer(id)async{
+    String url = "${_baseUrl}per0_del?DB=$db&JWT=$token&ID=$id";
+    var data = {
+      "ID":id,
+    };
+    return await _deleteRequest(url,json.encode(data));
   }
 
 }

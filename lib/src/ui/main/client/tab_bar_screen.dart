@@ -37,50 +37,25 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
                   text: "Харидорлар",
                 ),
                 Tab(
-                  text: "Харидор қўшиш",
+                  text: "Мол етказиб берувчи",
                 ),
               ],
             )
         ),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (ctx){
+              return const AddClientScreen();
+            }));
+          }, icon: const Icon(Icons.person_add_outlined,size: 32,))
+        ],
       ),
       body: TabBarView(
         controller: _controller,
-        children:  [
-          ClientScreen(clientType: clientType,),
-          const AddClientScreen()
+        children:  const [
+          ClientScreen(clientType: 0,),
+          ClientScreen(clientType: 1,),
         ],
-      ),
-      endDrawer: Drawer(
-        backgroundColor: AppColors.background,
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:  EdgeInsets.only(left: 16.0.w),
-                child: Text("Ходимлар тури бўйича",style: AppStyle.medium(Colors.black),),
-              ),
-              ListTile(
-                onTap: (){
-                  clientType = 0;
-                  setState(() {});
-                },
-                leading: const Icon(Icons.person),
-                title: Text("Харидор",style: AppStyle.small(Colors.black),),
-                trailing: Icon(Icons.radio_button_checked,color: clientType ==0?AppColors.green:Colors.grey,),
-              ),
-              ListTile(
-                onTap: (){
-                  clientType = 1;
-                  setState(() {});
-                },
-                leading: const Icon(Icons.person),
-                title: Text("Мол етказиб берувчи",style: AppStyle.small(Colors.black),),
-                trailing: Icon(Icons.radio_button_checked,color: clientType ==1?AppColors.green:Colors.grey,),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
