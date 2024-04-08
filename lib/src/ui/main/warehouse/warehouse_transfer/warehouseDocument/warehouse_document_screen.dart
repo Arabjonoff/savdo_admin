@@ -75,7 +75,7 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
                       padding: EdgeInsets.only(left: 14.w),
                       child: Text("Қайси омбордан:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerWarehouseFrom, hintText: 'Қайси омбордан',readOnly: true,suffixIcon: IconButton(onPressed: () =>CenterDialog.showWarehouseDialog(context, 1), icon: const Icon(Icons.arrow_drop_down_circle_outlined),)),
+                    TextFieldWidget(controller: _controllerWarehouseFrom, hintText: 'Қайси омбордан',readOnly: true),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
                       child: Text("Қайси омборга:",style: AppStyle.small(Colors.black),),
@@ -91,8 +91,8 @@ class _WarehouseDocumentScreenState extends State<WarehouseDocumentScreen> {
               ),
             ),
             ButtonWidget(onTap: () async {
-              if(_controllerWarehouseFromId.text == _controllerWarehouseToId.text){
-                CenterDialog.showErrorDialog(context, "Омборлар номи бир-хил бўлиши мумкин эмас");
+              if(_controllerWarehouseFromId.text == _controllerWarehouseToId.text || _controllerWarehouseToId.text.isEmpty){
+                CenterDialog.showErrorDialog(context, "Маълумот хато тўлдирилди текшириб қайта киритинг");
               }
               else{
                 skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,int.parse(_controllerWarehouseFromId.text));

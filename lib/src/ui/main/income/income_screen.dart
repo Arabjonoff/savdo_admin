@@ -280,8 +280,20 @@ bool scrollTop = false;
                 }
               ),
             ),
-            ButtonWidget(onTap: (){
-              Navigator.pushNamed(context, AppRouteName.addDocumentIncome);
+            ButtonWidget(onTap: () async {
+              CenterDialog.showLoadingDialog(context, "Бироз кутинг");
+              HttpResult setDoc = await _repository.setDoc(1);
+              if(setDoc.result['status'] == true){
+                if(context.mounted){
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRouteName.addDocumentIncome,arguments: setDoc.result['ndoc']);
+                }
+              }else{
+                if(context.mounted){
+                  Navigator.pop(context);
+                  CenterDialog.showErrorDialog(context, setDoc.result['message']);
+                }
+              }
             }, color: AppColors.green, text: "Янги ҳужжат очиш"),
             SizedBox(height: 24.h,)
           ],

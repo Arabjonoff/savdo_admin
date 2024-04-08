@@ -1,4 +1,5 @@
 // import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,33 +51,33 @@ class _IncomeListScreenState extends State<IncomeListScreen> {
           controller: _controllerBarCode,
           suffixIcon:const Icon(Icons.qr_code_scanner, size: 30,),
           suffixMode: OverlayVisibilityMode.always,
-          // onSuffixTap: ()async{
-          //   List<Skl2Result> productBase = await _repository.searchProduct('');
-          //   List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
-          //   var result = await BarcodeScanner.scan();
-          //   result.rawContent;
-          //   for(int i = 0; i<barcodeBase.length;i++){
-          //     if(barcodeBase[i].shtr == result.rawContent){
-          //       for(int j = 0; j<productBase.length;j++){
-          //         if(barcodeBase[i].idSkl2 == productBase[j].id){
-          //           productBloc.searchProduct(productBase[j].name);
-          //         }
-          //       }
-          //     }
-          //   }
-          // },
+          onSuffixTap: ()async{
+            List<Skl2Result> productBase = await _repository.searchProduct('');
+            List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
+            var result = await BarcodeScanner.scan();
+            result.rawContent;
+            for(int i = 0; i<barcodeBase.length;i++){
+              if(barcodeBase[i].shtr == result.rawContent){
+                for(int j = 0; j<productBase.length;j++){
+                  if(barcodeBase[i].idSkl2 == productBase[j].id){
+                    productBloc.searchProduct(productBase[j].name);
+                  }
+                }
+              }
+            }
+          },
           padding: EdgeInsets.only(left: 16.w, bottom: 10.w, top: 10.w),
           placeholder: "Излаш",
           onChanged: (i) {
             productBloc.searchProduct(i);
           },
         ),
-        actions: [
-          IconButton(onPressed: ()async{
-            productTypeBloc.getProductTypeAll();
-            // _scaffoldKey.currentState!.openEndDrawer();
-          }, icon: const Icon(Icons.filter_list))
-        ],
+        // actions: [
+        //   IconButton(onPressed: ()async{
+        //     productTypeBloc.getProductTypeAll();
+        //     // _scaffoldKey.currentState!.openEndDrawer();
+        //   }, icon: const Icon(Icons.filter_list))
+        // ],
         backgroundColor: AppColors.background,
       ),
       body: SnappingSheet(
@@ -200,29 +201,29 @@ class _IncomeListScreenState extends State<IncomeListScreen> {
           }
         ),
       ),
-      endDrawer: Drawer(
-        shape: const RoundedRectangleBorder(),
-        backgroundColor: AppColors.background,
-        child: SafeArea(
-          child: StreamBuilder<List<ProductTypeAllResult>>(
-            stream: productTypeBloc.getProductTypeStream,
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
-                var data = snapshot.data!;
-                return ListView.builder(
-                  itemCount: data.length,
-                    itemBuilder: (ctx,index){
-                  return ListTile(
-                    title: Text(data[index].name),
-                  );
-                });
-              }return TextButton(onPressed: (){
-                productTypeBloc.getProductTypeAll();
-              }, child: Text("SS"));
-            }
-          ),
-        ),
-      ),
+      // endDrawer: Drawer(
+      //   shape: const RoundedRectangleBorder(),
+      //   backgroundColor: AppColors.background,
+      //   child: SafeArea(
+      //     child: StreamBuilder<List<ProductTypeAllResult>>(
+      //       stream: productTypeBloc.getProductTypeStream,
+      //       builder: (context, snapshot) {
+      //         if(snapshot.hasData){
+      //           var data = snapshot.data!;
+      //           return ListView.builder(
+      //             itemCount: data.length,
+      //               itemBuilder: (ctx,index){
+      //             return ListTile(
+      //               title: Text(data[index].name),
+      //             );
+      //           });
+      //         }return TextButton(onPressed: (){
+      //           productTypeBloc.getProductTypeAll();
+      //         }, child: Text("SS"));
+      //       }
+      //     ),
+      //   ),
+      // ),
       // floatingActionButton: FloatingActionButton(
       //   backgroundColor: AppColors.green,
       //   onPressed: () {

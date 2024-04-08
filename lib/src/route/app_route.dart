@@ -71,7 +71,7 @@ class AppRoute{
     /// Income Screen
       case AppRouteName.addIncome: return MaterialPageRoute(builder: (BuildContext context) =>   IncomeListScreen(id: args,));
     /// Income Screen
-      case AppRouteName.addDocumentIncome: return MaterialPageRoute(builder: (BuildContext context) =>  const DocumentIncomeScreen());
+      case AppRouteName.addDocumentIncome: return MaterialPageRoute(builder: (BuildContext context) =>   DocumentIncomeScreen(ndoc: args,));
     /// Income Screen
       case AppRouteName.incomeExpenseScreen: return MaterialPageRoute(builder: (BuildContext context) =>   IncomeExpenseScreen(idSklPr: args as int,));
     /// Add Client Screen

@@ -1,3 +1,4 @@
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:savdo_admin/src/bloc/income/skl_pr_tov_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/income/income_model.dart';
+import 'package:savdo_admin/src/model/product/barcode_model.dart';
 import 'package:savdo_admin/src/model/skl2/skl2_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -25,6 +27,7 @@ class UpdateIncomeScreen extends StatefulWidget {
 }
 
 class _UpdateIncomeScreenState extends State<UpdateIncomeScreen> {
+  final TextEditingController _controllerBarCode = TextEditingController();
   final Repository _repository = Repository();
   @override
   void initState() {
@@ -46,11 +49,30 @@ class _UpdateIncomeScreenState extends State<UpdateIncomeScreen> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 4.h),
             child: CupertinoSearchTextField(
-              placeholder: "Излаш",
-              onChanged: (i){
-                productBloc.searchProduct(i);
-              },
-            ),
+            controller: _controllerBarCode,
+            suffixIcon:const Icon(Icons.qr_code_scanner, size: 30,),
+            suffixMode: OverlayVisibilityMode.always,
+            onSuffixTap: ()async{
+              List<Skl2Result> productBase = await _repository.searchProduct('');
+              List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
+              var result = await BarcodeScanner.scan();
+              result.rawContent;
+              for(int i = 0; i<barcodeBase.length;i++){
+                if(barcodeBase[i].shtr == result.rawContent){
+                  for(int j = 0; j<productBase.length;j++){
+                    if(barcodeBase[i].idSkl2 == productBase[j].id){
+                      productBloc.searchProduct(productBase[j].name);
+                    }
+                  }
+                }
+              }
+            },
+            padding: EdgeInsets.only(left: 16.w, bottom: 10.w, top: 10.w),
+            placeholder: "Излаш",
+            onChanged: (i) {
+              productBloc.searchProduct(i);
+            },
+          ),
           ),
         ),
       ),

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
-import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
 import 'package:savdo_admin/src/bloc/income/income_bloc.dart';
-import 'package:savdo_admin/src/bloc/product/product_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -18,7 +16,8 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class DocumentIncomeScreen extends StatefulWidget {
-  const DocumentIncomeScreen({super.key});
+  final dynamic ndoc;
+  const DocumentIncomeScreen({super.key, this.ndoc});
 
   @override
   State<DocumentIncomeScreen> createState() => _DocumentIncomeScreenState();
@@ -34,6 +33,7 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
   final TextEditingController _controllerHodimID = TextEditingController();
   @override
   void initState() {
+    _controllerDocNumber.text = widget.ndoc.toString();
     _initBus();
     super.initState();
   }
@@ -70,9 +70,9 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
-                      child: Text("Мол етказиб берувчи:",style: AppStyle.small(Colors.black),),
+                      child: Text("Харидорлар:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerClient, hintText: 'Мол етказиб берувчи',readOnly: true,suffixIcon: IconButton(onPressed: () =>CenterDialog.showProductTypeDialog(context, 'Мол етказиб берувчи', const DocumentClientScreen()), icon: const Icon(Icons.perm_contact_calendar_outlined),),),
+                    TextFieldWidget(controller: _controllerClient, hintText: 'Харидорлар',readOnly: true,suffixIcon: IconButton(onPressed: () =>CenterDialog.showProductTypeDialog(context, 'Мол етказиб берувчи', const DocumentClientScreen()), icon: const Icon(Icons.perm_contact_calendar_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
                       child: Text("Изох:",style: AppStyle.small(Colors.black),),
@@ -84,16 +84,15 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
             ),
             ButtonWidget(onTap: () async {
               CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
-              HttpResult setDoc = await _repository.setDoc(1);
               HttpResult res = await _repository.addIncome(
                   _controllerClient.text,
                   _controllerClientIdT.text,
-                    await setDoc.result['ndoc']??"999",
+                    _controllerDocNumber.text,
                   _controllerDate.text,
                   _controllerComment.text,
                   _controllerHodimID.text,
                   1);
-              if(res.result["status"] == true && setDoc.result["status"] == true){
+              if(res.result["status"] == true){
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
                 incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
@@ -156,8 +155,9 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                       child: ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (ctx,index){
-                            if(CacheService.getIdAgent() == data[index].idAgent&&data[index].tp ==1){
                               return ListTile(
+                                dense: true,
+                                contentPadding: EdgeInsets.zero,
                                 onTap: (){
                                   CacheService.saveClientIdT(data[index].idT);
                                   CacheService.saveIdHodim(data[index].idHodimlar);
@@ -173,12 +173,15 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                                   RxBus.post(data[index].osKS.toString(),tag: 'clientDebtUzs');
                                   Navigator.pop(context);
                                 },
-                                title: Text("${data[index].idT} - ${data[index].name}",style: AppStyle.medium(Colors.black),),
+                                title: Text("${data[index].idT}-${data[index].name}",style: AppStyle.medium(Colors.black),),
+                                trailing: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                    decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(5)
+                                    ),
+                                    child: Text(data[index].tp==1?"Мол етказувчи":"Харидор",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
                               );
-                            }
-                            else{
-                              return const SizedBox();
-                            }
                           }
                       ),
                     ),

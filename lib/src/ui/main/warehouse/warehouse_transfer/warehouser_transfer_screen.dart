@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/warehousetransfer/warehouse_transfer_bloc.dart';
+import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/warehousetransfer/warehouse_model.dart';
@@ -13,6 +14,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouseDocument/warehouse_document_screen.dart';
+import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouse_detail_screen.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -136,64 +138,69 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                 ),
                               ],
                             ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300
-                                      )
-                                  )
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration:  BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomRight: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                      color: AppColors.green
-                                    ),
-                                    padding: EdgeInsets.symmetric(horizontal: 12.w,vertical:4.h),
-                                    margin: EdgeInsets.only(left: 16.w),
-                                    child: Text("№${data[index].ndoc}",style: AppStyle.smallBold(Colors.white),),
-                                  ),
-                                  ListTile(
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Expanded(child: Text(data[index].warehouseFrom,maxLines: 1,style: AppStyle.mediumBold(Colors.black),)),
-                                        CircleAvatar(
-                                          child: Icon(data[index].pr ==1?Icons.lock:Icons.repeat,color: AppColors.green,),
+                            child: GestureDetector(
+                              onTap: (){
+                                BottomDialog.showAddOutComeDialog(context, WareHouseDetailScreen(data: data[index].sklPerTov));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade300
+                                        )
+                                    )
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration:  BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
                                         ),
-                                        SizedBox(width: 12.w,),
-                                        Expanded(child: Text(data[index].warehouseTo,maxLines: 1,style: AppStyle.mediumBold(Colors.black),)),
-                                      ],
+                                        color: AppColors.green
+                                      ),
+                                      padding: EdgeInsets.symmetric(horizontal: 12.w,vertical:4.h),
+                                      margin: EdgeInsets.only(left: 16.w),
+                                      child: Text("№${data[index].ndoc}",style: AppStyle.smallBold(Colors.white),),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4.h),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Жами сўм:",style: AppStyle.smallBold(Colors.black),),
-                                        Text("${priceFormat.format(data[index].sm)} сўм",style: AppStyle.smallBold(Colors.black),),
-                                      ],
+                                    ListTile(
+                                      title: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Expanded(child: Text(data[index].warehouseFrom,maxLines: 1,style: AppStyle.mediumBold(Colors.black),)),
+                                          CircleAvatar(
+                                            child: Icon(data[index].pr ==1?Icons.lock:Icons.repeat,color: AppColors.green,),
+                                          ),
+                                          SizedBox(width: 12.w,),
+                                          Expanded(child: Text(data[index].warehouseTo,maxLines: 1,style: AppStyle.mediumBold(Colors.black),)),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4.h),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Жами валюта:",style: AppStyle.smallBold(Colors.black),),
-                                        Text("${priceFormatUsd.format(data[index].smS)} \$",style: AppStyle.smallBold(Colors.black),),
-                                      ],
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4.h),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Жами сўм:",style: AppStyle.smallBold(Colors.black),),
+                                          Text("${priceFormat.format(data[index].sm)} сўм",style: AppStyle.smallBold(Colors.black),),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4.h),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Жами валюта:",style: AppStyle.smallBold(Colors.black),),
+                                          Text("${priceFormatUsd.format(data[index].smS)} \$",style: AppStyle.smallBold(Colors.black),),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );

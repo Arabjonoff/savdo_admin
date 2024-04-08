@@ -10,6 +10,7 @@ class AgentsBloc{
 
   getAllAgents()async{
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
+    _fetchAgentsInfo.sink.add(agentBase);
     if(agentBase.isEmpty){
       HttpResult result = await _repository.getClientWorker();
       if(result.isSuccess){

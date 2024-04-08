@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/bloc/expense/expense_bloc.dart';
 import 'package:savdo_admin/src/bloc/expense/get_expense_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
+import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/expense/expense_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
@@ -62,7 +65,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Кимга:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: false,suffixIcon: IconButton(onPressed: ()=> CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentClientScreen()),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
+                    TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: false,suffixIcon: IconButton(onPressed: ()=> CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentAgentScreen()),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Нима учун:",style: AppStyle.small(Colors.black),),
@@ -238,6 +241,59 @@ class _ExpenseTypeChoseScreenState extends State<ExpenseTypeChoseScreen> {
             }
             return Container();
           }
+        ),
+      ),
+    );
+  }
+}
+
+class DocumentAgentScreen extends StatefulWidget {
+  const DocumentAgentScreen({super.key});
+
+  @override
+  State<DocumentAgentScreen> createState() => _DocumentAgentScreenState();
+}
+
+class _DocumentAgentScreenState extends State<DocumentAgentScreen> {
+  final TextEditingController _controllerSearch = TextEditingController();
+
+  @override
+  void initState() {
+    agentsBloc.getAllAgents();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child:StreamBuilder<List<AgentsResult>>(
+            stream: agentsBloc.getAgentsStream,
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                var data = snapshot.data!;
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (ctx,index){
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              onTap: (){
+                                CacheService.saveClientName(data[index].name);
+                                RxBus.post(data[index].name,tag: 'clientName');
+                                RxBus.post(data[index].id.toString(),tag: 'idHodimlar');
+                                Navigator.pop(context);
+                              },
+                              title: Text(data[index].name,style: AppStyle.medium(Colors.black),),
+                            );
+                          }
+                      ),
+                    ),
+                  ],
+                );}
+              return const SizedBox();
+            }
         ),
       ),
     );
