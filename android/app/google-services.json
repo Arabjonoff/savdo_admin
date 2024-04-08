@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1045718509938",
+    "project_id": "n-savdo",
+    "storage_bucket": "n-savdo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045718509938:android:80a31a366f70e1768315eb",
+        "android_client_info": {
+          "package_name": "uz.naqshsoft.savdo_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvbtnz63KfPeN4L10h9awVkM4jFKMIJi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045718509938:android:5a9e600ffb0f6ce68315eb",
+        "android_client_info": {
+          "package_name": "uz.nashsoft.n_savdo_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvbtnz63KfPeN4L10h9awVkM4jFKMIJi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

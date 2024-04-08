@@ -12,13 +12,13 @@ class IncomeProductBase {
     var res = dbClient.insert('incomeProduct', item);
     return res;
   }
-  Future<int> updateIncomeProduct(Map<String,dynamic> item) async {
+  Future<int> updateIncomeProduct(IncomeAddModel item) async {
     var dbClient = await dbProvider.db;
     var res = await dbClient.update(
       'incomeProduct',
-      item,
+      item.toJsonUpd(),
       where: 'id = ?',
-      whereArgs: [item]
+      whereArgs: [item.id]
     );
     return res;
   }

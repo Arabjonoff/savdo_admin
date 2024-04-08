@@ -31,17 +31,18 @@ class OutcomeResult {
   num smS;
   int idHodim;
   int idAgent;
+  String idAgentName;
   int pr;
   String yil;
   String oy;
   int idSkl;
   DateTime vaqt;
   int idHaridor;
-  int kurs;
-  int tlNaqd;
-  int tlVal;
-  int tlKarta;
-  int? tlBank;
+  num kurs;
+  num tlNaqd;
+  num tlVal;
+  num tlKarta;
+  num? tlBank;
   int idFaol;
   int idKlass;
   List<SklRsTov> sklRsTov;
@@ -71,6 +72,7 @@ class OutcomeResult {
     required this.idFaol,
     required this.idKlass,
     required this.sklRsTov,
+    this.idAgentName = "",
   });
 
   factory OutcomeResult.fromJson(Map<String, dynamic> json) => OutcomeResult(

@@ -370,7 +370,7 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
                 child: Text("Филтрлаш",style: AppStyle.large(Colors.grey),),
               ),
               Expanded(child: ListView.builder(
-                  itemCount: filterProduct!.length,
+                  itemCount: filterProduct.length,
                   itemBuilder: (ctx,index){
                     return ListTile(
                       selected: filterProduct[index].id==filterId?true:false,

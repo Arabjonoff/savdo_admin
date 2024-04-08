@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+// import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +188,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(data[index].name.toString(), style: AppStyle.medium(Colors.black),),
+                                        Text(data[index].name.toString(), style: AppStyle.mediumBold(Colors.black),),
                                         SizedBox(height: 8.w,),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,6 +207,13 @@ class _ProductScreenState extends State<ProductScreen> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
+                                            Text("Ишлаб чиқарувчи:", style: AppStyle.small(Colors.black),),
+                                            Text(data[index].firmName, style: AppStyle.small(Colors.black),),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
                                             Text("Мин сони:", style: AppStyle.small(Colors.black),),
                                             Text(data[index].msoni.toString(), style: AppStyle.small(Colors.black),),
                                           ],
@@ -213,8 +221,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text("Ишлаб чиқарувчи:", style: AppStyle.small(Colors.black),),
-                                            Text(data[index].firmName, style: AppStyle.small(Colors.black),),
+                                            Text("Вазни:", style: AppStyle.small(Colors.black),),
+                                            Text(data[index].vz.toString(), style: AppStyle.small(Colors.black),),
                                           ],
                                         ),
                                       ],

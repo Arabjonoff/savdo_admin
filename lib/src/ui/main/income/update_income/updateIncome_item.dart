@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -6,7 +5,6 @@ import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.d
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
-import 'package:savdo_admin/src/model/skl2/skl2_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
@@ -43,15 +41,35 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
   final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
   @override
   void initState() {
-    _controllerCount.text = widget.data.soni.toString();
-    _controllerIncomePriceUzs.text = widget.data.narhi.toString();
-    _controllerIncomePriceUsd.text = widget.data.narhiS.toString();
-    _controllerSalePriceUzs1.text = widget.data.snarhi.toString();
-    _controllerSalePriceUsd1.text = widget.data.snarhiS.toString();
-    _controllerSalePriceUsd2.text = widget.data.snarhi1S.toString();
-    _controllerSalePriceUzs2.text = widget.data.snarhi1.toString();
-    _controllerSalePriceUzs3.text = widget.data.snarhi2.toString();
-    _controllerSalePriceUsd3.text = widget.data.snarhi2S.toString();
+    if(widget.data.narhi==0){
+      _controllerIncomePriceTotal.text = (widget.data.narhiS*widget.data.soni).toString();
+    }else{
+      _controllerIncomePriceTotal.text = (widget.data.narhi*widget.data.soni).toString();
+    }
+    if(widget.data.snarhi==0){
+      _controllerIncomePrice1Total.text = (widget.data.snarhiS*widget.data.soni).toString();
+    }else{
+      _controllerIncomePrice1Total.text = (widget.data.snarhi*widget.data.soni).toString();
+    }
+    if(widget.data.snarhi1==0){
+      _controllerIncomePrice2Total.text = (widget.data.snarhi1S*widget.data.soni).toString();
+    }else{
+      _controllerIncomePrice2Total.text = (widget.data.snarhi1*widget.data.soni).toString();
+    }
+    if(widget.data.snarhi2==0){
+      _controllerIncomePrice3Total.text = (widget.data.snarhi2S*widget.data.soni).toString();
+    }else{
+      _controllerIncomePrice3Total.text = (widget.data.snarhi2*widget.data.soni).toString();
+    }
+    _controllerCount.text = priceFormatUsd.format(widget.data.soni);
+    _controllerIncomePriceUzs.text = priceFormat.format(widget.data.narhi);
+    _controllerIncomePriceUsd.text = priceFormatUsd.format(widget.data.narhiS);
+    _controllerSalePriceUzs1.text = priceFormat.format(widget.data.snarhi);
+    _controllerSalePriceUsd1.text = priceFormatUsd.format(widget.data.snarhiS);
+    _controllerSalePriceUsd2.text = priceFormatUsd.format(widget.data.snarhi1S);
+    _controllerSalePriceUzs2.text = priceFormat.format(widget.data.snarhi1);
+    _controllerSalePriceUzs3.text = priceFormat.format(widget.data.snarhi2);
+    _controllerSalePriceUsd3.text = priceFormatUsd.format(widget.data.snarhi2S);
     db = CacheService.getDb();
     _scrollController = ScrollController();
     _scrollController!.addListener(_scrollListener);
@@ -96,14 +114,31 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                       style: AppStyle.medium(Colors.black),
                       controller: _controllerCount,
                       onChanged: (i){
-                          _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUzs.text)).toString();
-                          // _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUsd.text)).toString();
-                          _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd1.text)).toString();
-                          // _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs1.text)).toString();
-                          _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd2.text)).toString();
-                          // _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs2.text)).toString();
-                          // _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd3.text)).toString();
-                          _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs3.text)).toString();
+                        if(_controllerIncomePriceUzs.text == '0'||_controllerIncomePriceUzs.text.isEmpty){
+                          _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.'))).toString();
+                        }
+                        else{
+                          _controllerIncomePriceTotal.text = (num.parse(i)*num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp("[^0-9]"), ''))).toString();
+                        }
+                        if(_controllerSalePriceUzs1.text == '0'||_controllerSalePriceUzs1.text.isEmpty){
+                          _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd1.text.replaceAll(',', '.'))).toString();
+                        }
+                        else{
+                          _controllerIncomePrice1Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp("[^0-9]"), ''))).toString();
+                        }
+                        if(_controllerSalePriceUzs2.text == '0'||_controllerSalePriceUzs2.text.isEmpty){
+                          _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd2.text.replaceAll(',', '.'))).toString();
+                        }
+                        else{
+                          _controllerIncomePrice2Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp("[^0-9]"), ''))).toString();
+                        }
+                        if(_controllerSalePriceUzs3.text == '0'||_controllerSalePriceUzs3.text.isEmpty){
+                          _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUsd3.text.replaceAll(',', '.'))).toString();
+                        }
+                        else{
+                          _controllerIncomePrice3Total.text = (num.parse(i)*num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp("[^0-9]"), ''))).toString();
+                        }
+                          setState(() {});
                       },
                       decoration:  InputDecoration(
                         contentPadding: EdgeInsets.only(top: 5.h),
@@ -147,7 +182,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               try{
                                 _controllerIncomePriceUsd.text ='0';
-                                _controllerIncomePriceTotal.text = (num.parse(_controllerCount.text)*num.parse(_controllerIncomePriceUzs.text)).toString();
+                                _controllerIncomePriceTotal.text = (num.parse(_controllerCount.text.replaceAll(",", '.'))*num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -176,7 +211,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               try{
                                 _controllerIncomePriceUzs.text = '0';
-                                _controllerIncomePriceTotal.text = (num.parse(_controllerCount.text)*num.parse(_controllerIncomePriceUsd.text)).toString();
+                                _controllerIncomePriceTotal.text = (num.parse(_controllerCount.text.replaceAll(",", '.'))*num.parse(_controllerIncomePriceUsd.text.replaceAll(",", "."))).toString();
                                 setState(() {
                                 });
                               }catch(_){
@@ -244,7 +279,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUsd1.text='0';
                               try{
-                                _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUzs1.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -273,7 +308,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUzs1.text = '0';
                               try{
-                                _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUsd1.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice1Total.text = (num.parse(_controllerSalePriceUsd1.text.replaceAll(",", ".")) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -338,7 +373,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUsd2.text = '0';
                               try{
-                                _controllerIncomePrice2Total.text = (num.parse(_controllerSalePriceUzs2.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice2Total.text = (num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -367,7 +402,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUzs2.text = '0';
                               try{
-                                _controllerIncomePrice2Total.text = (num.parse(_controllerSalePriceUsd2.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice2Total.text = (num.parse(_controllerSalePriceUsd2.text.replaceAll(",", ".")) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -431,7 +466,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUsd3.text = '0';
                               try{
-                                _controllerIncomePrice3Total.text = (num.parse(_controllerSalePriceUzs3.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice3Total.text = (num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -460,7 +495,7 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                             onChanged: (i){
                               _controllerSalePriceUzs3.text = '0';
                               try{
-                                _controllerIncomePrice3Total.text = (num.parse(_controllerSalePriceUsd3.text) * num.parse(_controllerCount.text)).toString();
+                                _controllerIncomePrice3Total.text = (num.parse(_controllerSalePriceUsd3.text.replaceAll(",", ".")) * num.parse(_controllerCount.text.replaceAll(",", '.'))).toString();
                                 setState(() {});
                               }catch(_){}
                             },
@@ -488,24 +523,24 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                     CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
                     IncomeAddModel addIncome = IncomeAddModel(
                       id: widget.data.id,
-                      price: num.parse(_controllerIncomePriceUzs.text) ,
-                      idSklPr: widget.id.id,
+                      price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                      idSklPr: widget.id,
                       idSkl2: widget.data.idSkl2,
                       name: widget.data.name,
                       idTip: widget.data.idTip,
                       idFirma: widget.data.idFirma,
                       idEdiz: widget.data.idEdiz,
-                      soni: num.parse(_controllerCount.text),
-                      narhi: num.parse(_controllerIncomePriceUzs.text),
-                      narhiS: num.parse(_controllerIncomePriceUsd.text),
+                      soni: num.parse(_controllerCount.text.replaceAll(",", '.')),
+                      narhi: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                      narhiS: num.parse(_controllerIncomePriceUsd.text.replaceAll(",", ".")),
                       sm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
                       smS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
-                      snarhi: num.parse(_controllerSalePriceUzs1.text),
-                      snarhiS: num.parse(_controllerSalePriceUsd1.text),
-                      snarhi1: num.parse(_controllerSalePriceUzs2.text),
-                      snarhi1S: num.parse(_controllerSalePriceUsd2.text),
-                      snarhi2: num.parse(_controllerSalePriceUzs3.text),
-                      snarhi2S: num.parse(_controllerSalePriceUsd3.text),
+                      snarhi: num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), '')),
+                      snarhiS: num.parse(_controllerSalePriceUsd1.text.replaceAll(",", ".")),
+                      snarhi1: num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), '')),
+                      snarhi1S: num.parse(_controllerSalePriceUsd2.text.replaceAll(",", ".")),
+                      snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
+                      snarhi2S: num.parse(_controllerSalePriceUsd3.text.replaceAll(",", ".")),
                       tnarhi: 0,
                       tnarhiS: 0,
                       tsm: 0,
@@ -516,31 +551,31 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                     if(res.result['status'] == true){
                       IncomeAddModel addIncomeBase = IncomeAddModel(
                         id: widget.data.id,
-                        price: num.parse(_controllerIncomePriceUzs.text) ,
-                        idSklPr: widget.id.id,
+                        price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                        idSklPr: widget.id,
                         idSkl2: widget.data.id,
                         name: widget.data.name,
                         idTip: widget.data.idTip,
                         idFirma: widget.data.idFirma,
                         idEdiz: widget.data.idEdiz,
-                        soni: num.parse(_controllerCount.text),
-                        narhi: num.parse(_controllerIncomePriceUzs.text),
-                        narhiS: num.parse(_controllerIncomePriceUsd.text),
+                        soni: num.parse(_controllerCount.text.replaceAll(",", '.')),
+                        narhi: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                        narhiS: num.parse(_controllerIncomePriceUsd.text.replaceAll(",", ".")),
                         sm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
                         smS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
-                        snarhi: num.parse(_controllerSalePriceUzs1.text),
-                        snarhiS: num.parse(_controllerSalePriceUsd1.text),
-                        snarhi1: num.parse(_controllerSalePriceUzs2.text),
-                        snarhi1S: num.parse(_controllerSalePriceUsd2.text),
-                        snarhi2: num.parse(_controllerSalePriceUzs3.text),
-                        snarhi2S: num.parse(_controllerSalePriceUsd3.text),
+                        snarhi: num.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), '')),
+                        snarhiS: num.parse(_controllerSalePriceUsd1.text.replaceAll(",", ".")),
+                        snarhi1: num.parse(_controllerSalePriceUzs2.text.replaceAll(RegExp('[^0-9]'), '')),
+                        snarhi1S: num.parse(_controllerSalePriceUsd2.text.replaceAll(",", ".")),
+                        snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
+                        snarhi2S: num.parse(_controllerSalePriceUsd3.text.replaceAll(",", ".")),
                         tnarhi: 0,
                         tnarhiS: 0,
                         tsm: 0,
                         tsmS: 0,
                         shtr: '',
                       );
-                      _repository.updateIncomeProductBase(addIncomeBase.toJsonIns());
+                      _repository.updateIncomeProductBase(addIncomeBase);
                       incomeProductBloc.getAllIncomeProduct();
                       if(context.mounted)Navigator.pop(context);
                       if(context.mounted)Navigator.pop(context);

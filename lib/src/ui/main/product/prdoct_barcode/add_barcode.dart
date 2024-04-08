@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:barcode_scan2/barcode_scan2.dart';
+// import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,11 +53,11 @@ class _AddBarcodeScreenState extends State<AddBarcodeScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "ШТРИХ рақам киритинг",
-                      suffixIcon:IconButton(onPressed: ()async{
-                        var result = await BarcodeScanner.scan();
-                        _controllerBarCode.text = result.rawContent;
-                        setState(() {});
-                      },icon: const Icon(Icons.qr_code_scanner),),
+                      // suffixIcon:IconButton(onPressed: ()async{
+                      //   var result = await BarcodeScanner.scan();
+                      //   _controllerBarCode.text = result.rawContent;
+                      //   setState(() {});
+                      // },icon: const Icon(Icons.qr_code_scanner),),
                     ),
                   ),
                 ),

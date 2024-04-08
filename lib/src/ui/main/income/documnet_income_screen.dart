@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
+import 'package:savdo_admin/src/bloc/income/income_bloc.dart';
+import 'package:savdo_admin/src/bloc/product/product_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -92,9 +94,9 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
                   _controllerHodimID.text,
                   1);
               if(res.result["status"] == true && setDoc.result["status"] == true){
-                incomeProductBloc.getAllIncomeProduct();
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
+                incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
               }
             }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
           ],

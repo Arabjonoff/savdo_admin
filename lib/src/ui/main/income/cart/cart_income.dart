@@ -10,6 +10,7 @@ import 'package:savdo_admin/src/model/income/income_add_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/income/expense/income_expense_screen.dart';
+import 'package:savdo_admin/src/ui/main/income/update_income/updateIncome_item.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
@@ -118,6 +119,16 @@ class _CartIncomeScreenState extends State<CartIncomeScreen> {
                                         });
                                       },
                                     icon: Icons.delete,
+                                    label: "Ўчириш",
+                                  ),
+                                  SlidableAction(
+                                      onPressed: (i) async {
+                                        Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                          return UpdateIncomeItem(id: widget.idSklPr, data: data[index],);
+                                        }));
+                                      },
+                                    icon: Icons.edit,
+                                    label: "Таҳрирлаш",
                                   ),
                                 ],
                               ),

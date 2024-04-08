@@ -1,4 +1,4 @@
-import 'package:barcode_scan2/barcode_scan2.dart';
+// import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,45 +64,45 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
             placeholder: "Излаш",
             suffixIcon:const Icon(Icons.qr_code_scanner, size: 25,),
             suffixMode: OverlayVisibilityMode.always,
-            onSuffixTap: ()async{
-              List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
-              List<SkladResult> outcomeBase = await _repository.getSkladBase();
-              var result = await BarcodeScanner.scan();
-              result.rawContent;
-              for(int i = 0; i<barcodeBase.length;i++){
-                if(barcodeBase[i].shtr == result.rawContent){
-                  for(int j = 0; j<outcomeBase.length;j++){
-                    if(barcodeBase[i].idSkl2 == outcomeBase[j].id){
-                      price = 0;
-                      priceUsd = 0;
-                      if (idPrice == 0) {
-                        if (outcomeBase[j].snarhi != 0) {
-                          price = outcomeBase[j].snarhi;
-                        } else {
-                          price = outcomeBase[j].snarhiS;
-                          priceUsd = 1;
-                        }
-                      } else if (idPrice == 1) {
-                        if (outcomeBase[j].snarhi1 != 0) {
-                          price = outcomeBase[j].snarhi1;
-                        } else {
-                          price = outcomeBase[j].snarhi1S;
-                          priceUsd = 1;
-                        }
-                      } else if (idPrice == 2) {
-                        if (outcomeBase[j].snarhi2 != 0) {
-                          price = outcomeBase[j].snarhi2;
-                        } else {
-                          price = outcomeBase[j].snarhi2S;
-                          priceUsd = 1;
-                        }
-                      }
-                      BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: outcomeBase[j].idEdizName,));
-                    }
-                  }
-                }
-              }
-            },
+            // onSuffixTap: ()async{
+            //   List<BarcodeResult> barcodeBase = await _repository.getBarcodeBase();
+            //   List<SkladResult> outcomeBase = await _repository.getSkladBase();
+            //   var result = await BarcodeScanner.scan();
+            //   result.rawContent;
+            //   for(int i = 0; i<barcodeBase.length;i++){
+            //     if(barcodeBase[i].shtr == result.rawContent){
+            //       for(int j = 0; j<outcomeBase.length;j++){
+            //         if(barcodeBase[i].idSkl2 == outcomeBase[j].id){
+            //           price = 0;
+            //           priceUsd = 0;
+            //           if (idPrice == 0) {
+            //             if (outcomeBase[j].snarhi != 0) {
+            //               price = outcomeBase[j].snarhi;
+            //             } else {
+            //               price = outcomeBase[j].snarhiS;
+            //               priceUsd = 1;
+            //             }
+            //           } else if (idPrice == 1) {
+            //             if (outcomeBase[j].snarhi1 != 0) {
+            //               price = outcomeBase[j].snarhi1;
+            //             } else {
+            //               price = outcomeBase[j].snarhi1S;
+            //               priceUsd = 1;
+            //             }
+            //           } else if (idPrice == 2) {
+            //             if (outcomeBase[j].snarhi2 != 0) {
+            //               price = outcomeBase[j].snarhi2;
+            //             } else {
+            //               price = outcomeBase[j].snarhi2S;
+            //               priceUsd = 1;
+            //             }
+            //           }
+            //           BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: outcomeBase[j].idEdizName,));
+            //         }
+            //       }
+            //     }
+            //   }
+            // },
             onChanged: (i)async{
               await skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,i);
             },

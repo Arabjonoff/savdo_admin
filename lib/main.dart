@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
@@ -10,32 +8,13 @@ import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  // if(Platform.isAndroid){
-  //   await Firebase.initializeApp(
-  //     options: const FirebaseOptions(
-  //         apiKey: "AIzaSyAvbtnz63KfPeN4L10h9awVkM4jFKMIJi0",
-  //         authDomain: "n-savdo.firebaseapp.com",
-  //         projectId: "n-savdo",
-  //         storageBucket: "n-savdo.appspot.com",
-  //         messagingSenderId: "1045718509938",
-  //         appId: "1:1045718509938:android:5a9e600ffb0f6ce68315eb",
-  //         measurementId: "G-MXW0SET0LK"
-  //     ),
-  //   );
-  // }else if(Platform.isIOS){
-  //   await Firebase.initializeApp(
-  //     options: const FirebaseOptions(
-  //         apiKey: "AIzaSyBfNajAFmxxk7XetAw9ZFORrCm-AkmrTag",
-  //         authDomain: "n-savdo.firebaseapp.com",
-  //         projectId: "n-savdo",
-  //         storageBucket: "n-savdo.appspot.com",
-  //         messagingSenderId: "1045718509938",
-  //         appId: "1:1045718509938:ios:4ced77f71ebdc3a08315eb",
-  //         measurementId: "G-MXW0SET0LK"
-  //     ),
-  //   );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // await FirebaseMessaging.instance.requestPermission();
+  // if (Platform.isAndroid) {
+  //   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   // }
-  // await NotificationService().getDeviceToken();§
   CacheService.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   initNoInternetListener();

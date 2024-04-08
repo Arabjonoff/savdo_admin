@@ -426,56 +426,21 @@ class _AddClientScreenState extends State<AddClientScreen> {
               SizedBox(height: 32.h,),
               ButtonWidget(onTap: () async {
                 if(context.mounted)CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
-                Map<String,dynamic> addClient = {
-                "NAME": _controllerName.text,
-                "ID_T": _controllerCode.text,
-                "IZOH": _controllerComment.text,
-                "MANZIL": _controllerName.text,
-                "TEL": _controllerName.text,
-                "TP": 0,
-                "ID_NARH": idPrice,
-                "ID_FAOL": _controllerActivity.text,
-                "ID_KLASS": _controllerTerritory.text,
-                "ID_AGENT": 'idAgent',
-                "SMS": 0,
-                "VAQT": DateTime.now().toString(),
-                "ID_HODIMLAR": '',
-                "NAQD": 0,
-                "PAS": _controllerPassword.text,
-                "D1": d1,
-                "D2": d2,
-                "D3": d3,
-                "D4": d4,
-                "H1": monday,
-                "H2": tuesday,
-                "H3": wednesday,
-                "H4": thursday,
-                "H5": friday,
-                "H6": saturday,
-                "H7": sunday,
-                "MULJAL": '',
-                "ST": 1,
-              };
-                HttpResult res = await _repository.addClient(addClient);
-                if(res.result["status"] == true){
-                  clientBloc.getAllClient('');
-                  Map<String,dynamic> saveBaseClient = {
-                    "ID": res.result["id"],
+                try{
+                  Map<String,dynamic> addClient = {
                     "NAME": _controllerName.text,
                     "ID_T": _controllerCode.text,
                     "IZOH": _controllerComment.text,
                     "MANZIL": _controllerName.text,
-                    "TEL": _controllerPhone.text,
-                    "TP": clientType,
+                    "TEL": _controllerName.text,
+                    "TP": 0,
                     "ID_NARH": idPrice,
-                    "ID_FAOL": int.parse(_controllerActivity.text),
-                    "ID_FAOL_NAME": _controllerActivityName.text,
-                    "ID_KLASS": int.parse(_controllerTerritory.text),
-                    "ID_KLASS_NAME": _controllerTerritoryName.text,
-                    "ID_AGENT": CacheService.getIdAgent(),
+                    "ID_FAOL": _controllerActivity.text,
+                    "ID_KLASS": _controllerTerritory.text,
+                    "ID_AGENT": 'idAgent',
                     "SMS": 0,
                     "VAQT": DateTime.now().toString(),
-                    "ID_HODIMLAR": CacheService.getIdAgent(),
+                    "ID_HODIMLAR": '',
                     "NAQD": 0,
                     "PAS": _controllerPassword.text,
                     "D1": d1,
@@ -489,17 +454,57 @@ class _AddClientScreenState extends State<AddClientScreen> {
                     "H5": friday,
                     "H6": saturday,
                     "H7": sunday,
-                    "MULJAL": _controllerTarget.text,
+                    "MULJAL": '',
                     "ST": 1,
                   };
-                  _repository.saveClientBase(ClientResult.fromJson(saveBaseClient));
+                  HttpResult res = await _repository.addClient(addClient);
+                  if(res.result["status"] == true){
+                    clientBloc.getAllClient('');
+                    Map<String,dynamic> saveBaseClient = {
+                      "ID": res.result["id"],
+                      "NAME": _controllerName.text,
+                      "ID_T": _controllerCode.text,
+                      "IZOH": _controllerComment.text,
+                      "MANZIL": _controllerName.text,
+                      "TEL": _controllerPhone.text,
+                      "TP": clientType,
+                      "ID_NARH": idPrice,
+                      "ID_FAOL": int.parse(_controllerActivity.text),
+                      "ID_FAOL_NAME": _controllerActivityName.text,
+                      "ID_KLASS": int.parse(_controllerTerritory.text),
+                      "ID_KLASS_NAME": _controllerTerritoryName.text,
+                      "ID_AGENT": CacheService.getIdAgent(),
+                      "SMS": 0,
+                      "VAQT": DateTime.now().toString(),
+                      "ID_HODIMLAR": CacheService.getIdAgent(),
+                      "NAQD": 0,
+                      "PAS": _controllerPassword.text,
+                      "D1": d1,
+                      "D2": d2,
+                      "D3": d3,
+                      "D4": d4,
+                      "H1": monday,
+                      "H2": tuesday,
+                      "H3": wednesday,
+                      "H4": thursday,
+                      "H5": friday,
+                      "H6": saturday,
+                      "H7": sunday,
+                      "MULJAL": _controllerTarget.text,
+                      "ST": 1,
+                    };
+                    _repository.saveClientBase(ClientResult.fromJson(saveBaseClient));
+                    if(context.mounted)Navigator.pop(context);
+                    if(context.mounted)Navigator.pop(context);
+                    clientBloc.getAllClient('');
+                    CenterDialog.showSuccessDialog(context,);
+                  }else{
+                    if(context.mounted)Navigator.pop(context);
+                    if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
+                  }
+                }catch(e){
                   if(context.mounted)Navigator.pop(context);
-                  if(context.mounted)Navigator.pop(context);
-                  clientBloc.getAllClient('');
-                  CenterDialog.showSuccessDialog(context,);
-                }else{
-                  if(context.mounted)Navigator.pop(context);
-                  if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
+                  if(context.mounted)CenterDialog.showErrorDialog(context, e.toString());
                 }
               }, color: AppColors.green, text: "Сақлаш"),
               SizedBox(height: 12.h,),

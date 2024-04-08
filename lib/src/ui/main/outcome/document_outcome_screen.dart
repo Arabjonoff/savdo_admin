@@ -16,7 +16,9 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class DocumentOutComeScreen extends StatefulWidget {
-  const DocumentOutComeScreen({super.key});
+  final bool isUpdate;
+  final dynamic ndoc;
+  const DocumentOutComeScreen({super.key, this.ndoc, this.isUpdate = false});
 
   @override
   State<DocumentOutComeScreen> createState() => _DocumentOutComeScreenState();
@@ -25,7 +27,7 @@ class DocumentOutComeScreen extends StatefulWidget {
 class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   final Repository _repository = Repository();
   final TextEditingController _controllerDate = TextEditingController(text: DateTime.now().toIso8601String().substring(0,10));
-  final TextEditingController _controllerDocNumber = TextEditingController(text: "999");
+   TextEditingController _controllerDocNumber = TextEditingController();
   final TextEditingController _controllerClient = TextEditingController();
   final TextEditingController _controllerClientIdT = TextEditingController();
   final TextEditingController _controllerClientHodim = TextEditingController();
@@ -37,6 +39,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   bool disable = true;
   @override
   void initState() {
+    _controllerDocNumber = TextEditingController(text: widget.ndoc.toString());
     skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,1);
     _initBus();
     super.initState();
@@ -69,19 +72,19 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                     Row(
                       children: [
                         Expanded(child: TextFieldWidget(controller: _controllerDate, hintText: "Сана",readOnly: true,)),
-                        Expanded(child: TextFieldWidget(controller: _controllerDocNumber, hintText: "№:",readOnly: true,)),
+                        Expanded(child: TextFieldWidget(controller: _controllerDocNumber, hintText: "№:",)),
                       ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
-                      child: Text("Мол етказиб берувчи:",style: AppStyle.small(Colors.black),),
+                      child: Text("Харидорлар:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerClient, hintText: 'Мол етказиб берувчи',readOnly: true,suffixIcon: IconButton(onPressed: () {CenterDialog.showProductTypeDialog(context, 'Мол етказиб берувчи', const DocumentClientScreen());}, icon: const Icon(Icons.perm_contact_calendar_outlined),),),
+                    TextFieldWidget(controller: _controllerClient, hintText: 'Харидорлар',readOnly: true,suffixIcon: IconButton(onPressed: () {CenterDialog.showProductTypeDialog(context, 'Харидорлар', const DocumentClientScreen());}, icon: const Icon(Icons.perm_contact_calendar_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 14.w),
-                      child: Text("Изох:",style: AppStyle.small(Colors.black),),
+                      child: Text("Изох (ихтиёри):",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerComment, hintText: 'Изох'),
+                    TextFieldWidget(controller: _controllerComment, hintText: 'Ихтиёри'),
                   ],
                 ),
               ),
@@ -89,12 +92,11 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
             ButtonWidget(
               onTap: () async {
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-              HttpResult res = await _repository.setDoc(2);
-              if(res.result["status"] == true){
+              if(widget.isUpdate == false){
                 var body = {
                   "NAME": _controllerClient.text,
                   "ID_T": _controllerClientIdT.text,
-                  "NDOC": res.result["ndoc"],
+                  "NDOC": _controllerDocNumber.text,
                   "SANA": DateTime.now().toString(),
                   "IZOH": _controllerComment.text,
                   "ID_HODIM": _controllerClientHodim.text,
@@ -117,8 +119,9 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                 }
               }
               else{
-                if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
+
               }
+
             }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
           ],
         ),
@@ -126,7 +129,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
     );
   }
 
-  void _initBus() {
+  void _initBus() async{
     RxBus.register(tag: 'clientName').listen((event) {
       _controllerClient.text = event;
     });
@@ -189,7 +192,6 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                       child: ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (ctx,index){
-                           if(CacheService.getIdAgent() == data[index].idAgent){
                              return ListTile(
                                onTap: (){
                                  CacheService.saveClientIdT(data[index].idT);
@@ -208,10 +210,6 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                                },
                                title: Text("${data[index].idT} - ${data[index].name}",style: AppStyle.medium(Colors.black),),
                              );
-                           }
-                           else{
-                             return const SizedBox();
-                           }
                           }
                       ),
                     ),

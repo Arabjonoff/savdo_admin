@@ -154,19 +154,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Савдо-сотиқ"),
                 ),
               /// Product Returned
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                selectedTileColor: AppColors.green,
-                selected: selected ==6?true:false,
-                selectedColor: selected ==6?AppColors.white:AppColors.black,
-                  leading: const Icon(Icons.event_repeat_outlined),
-                  onTap: (){
-                    setState(() =>selected =6);
-                  },
-                  title: const Text("Қайтарилди"),
-                ),
+              // ListTile(
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10)
+              //   ),
+              //   selectedTileColor: AppColors.green,
+              //   selected: selected ==6?true:false,
+              //   selectedColor: selected ==6?AppColors.white:AppColors.black,
+              //     leading: const Icon(Icons.event_repeat_outlined),
+              //     onTap: (){
+              //       setState(() =>selected =6);
+              //     },
+              //     title: const Text("Қайтарилди"),
+              //   ),
             ],),
 
             /// Buyers Bloc

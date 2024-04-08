@@ -489,6 +489,10 @@ class ApiProvider {
     String url = "${_baseUrl}chikim0_ins?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(item));
   }
+  Future<HttpResult> updateDocOutcome(Map item)async{
+    String url = "${_baseUrl}chikim0_upd?DB=$db&JWT=$token";
+    return await _patchRequest(url,json.encode(item));
+  }
   Future<HttpResult> addOutcomeSklRs(data)async{
     String url = "${_baseUrl}chikim1_ins?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(data));
@@ -584,7 +588,8 @@ class ApiProvider {
     return await _getRequest(url,);
   }
   Future<HttpResult> getOutCome(date)async{
-    String url = "${_baseUrl}chikim_agent?DB=$db&DT=$date&ID_AGENT=$userId&ID_SKL=$idSkl&JWT=$token";
+    // String url = "${_baseUrl}chikim_agent?DB=$db&DT=$date&ID_AGENT=$userId&ID_SKL=$idSkl&JWT=$token";
+    String url = "${_baseUrl}chikim2?DB=$db&DT1=$date&DT2=$date&ID_SKL=$idSkl";
     return await _getRequest(url,);
   }
   Future<HttpResult> lockOutcome(id,prov)async{

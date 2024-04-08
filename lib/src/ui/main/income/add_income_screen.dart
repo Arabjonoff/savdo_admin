@@ -570,7 +570,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
                     try{
                       IncomeAddModel addIncome = IncomeAddModel(
-                        price: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')) ,
+                        price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
                         idSklPr: widget.id,
                         idSkl2: widget.data.id,
                         name: widget.data.name,
@@ -598,7 +598,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                       if(res.result['status'] == true){
                         IncomeAddModel addIncomeBase = IncomeAddModel(
                           id: int.parse(res.result['id']),
-                          price: num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')) ,
+                          price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
                           idSklPr: widget.id,
                           idSkl2: widget.data.id,
                           name: widget.data.name,

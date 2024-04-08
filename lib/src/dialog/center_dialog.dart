@@ -93,7 +93,7 @@ class CenterDialog{
   /// Loading Dialog
   static void showLoadingDialog(BuildContext context,String text){
     showDialog(
-      barrierDismissible: false,
+      barrierDismissible: true,
         context: context, builder: (ctx){
       return Dialog(
         elevation: 0,
@@ -161,21 +161,16 @@ class CenterDialog{
 
   static void showSuccessDialog(BuildContext context){
     showDialog(context: context, builder: (ctx){
-      return GestureDetector(
-        onTap: (){
-          Navigator.pop(context);
-        },
-        child: AlertDialog(
-          title:  Text("Ҳаммаси яхши",style: AppStyle.medium(Colors.black),),
-          content: SizedBox(
-            height: 150.h,
-            child: Column(
-              children: [
-                Text("😀",style: TextStyle(fontSize: 50),),
-                SizedBox(height: 12.h,),
-                Center(child: Text("Ҳаммаси яхши ишлашда давом этинг",textAlign:TextAlign.center,style: AppStyle.mediumBold(AppColors.textBoldLight),)),
-              ],
-            ),
+      return AlertDialog(
+        title:  Text("Ҳаммаси яхши",style: AppStyle.medium(Colors.black),),
+        content: SizedBox(
+          height: 150.h,
+          child: Column(
+            children: [
+              Text("😀",style: TextStyle(fontSize: 50),),
+              SizedBox(height: 12.h,),
+              Center(child: Text("Ҳаммаси яхши ишлашда давом этинг",textAlign:TextAlign.center,style: AppStyle.mediumBold(AppColors.textBoldLight),)),
+            ],
           ),
         ),
       );

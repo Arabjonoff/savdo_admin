@@ -57,6 +57,15 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                             // ),
                             SlidableAction(
                               onPressed: (i){
+                                Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                  return UpdateIncomeItem(id: widget.data.id, data: data[index],);
+                                }));
+                              },
+                              icon: Icons.edit,
+                              label: "Таҳрирлаш",
+                            ),
+                            SlidableAction(
+                              onPressed: (i){
                                 CenterDialog.showDeleteDialog(context, () async{
                                   HttpResult res = await _repository.deleteIncomeSklPr(data[index].id, widget.data.id, data[index].idSkl2);
                                   if(res.result["status"] == true){
@@ -96,14 +105,14 @@ class _CartUpdateIncomeScreenState extends State<CartUpdateIncomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Миқдори:',style: AppStyle.small(Colors.grey),),
-                              Text(data[index].soni.toString(),style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormatUsd.format(data[index].soni),style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Нархи:',style: AppStyle.small(Colors.grey),),
-                              data[index].narhi!=0?Text("${priceFormat.format(data[index].narhi)} сўм",style: AppStyle.smallBold(Colors.black),):Text("${priceFormat.format(data[index].narhiS)} \$",style: AppStyle.smallBold(Colors.black),),
+                              data[index].narhi!=0?Text("${priceFormat.format(data[index].narhi)} сўм",style: AppStyle.smallBold(Colors.black),):Text("${priceFormatUsd.format(data[index].narhiS)} \$",style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
                           Container(

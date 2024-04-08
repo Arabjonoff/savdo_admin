@@ -20,8 +20,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // NotificationService notificationService = NotificationService();
   final Repository _repository = Repository();
-  final TextEditingController _controllerName = TextEditingController(text: "Muhammadjon");
-  final TextEditingController _controllerPassword = TextEditingController(text: "1");
+  final TextEditingController _controllerName = TextEditingController(text: "admin");
+  final TextEditingController _controllerPassword = TextEditingController(text: "37");
   final TextEditingController _controllerBase = TextEditingController(text: "002");
 @override
   void initState() {

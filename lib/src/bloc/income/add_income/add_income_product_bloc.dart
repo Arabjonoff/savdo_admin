@@ -21,64 +21,64 @@ class IncomeProductBloc{
     num resUzs = CacheService.getExpenseSummaUzs() / countUzs;
     num resUsd = CacheService.getExpenseSummaUsd() / countUsd;
     for(int i =0;i<data.length;i++){
-       if(data[i].narhi != 0){
-         IncomeAddModel incomeModel = IncomeAddModel(
-           price: data[i].price,
-           id: data[i].id,
-           idSklPr: data[i].idSklPr,
-           idSkl2: data[i].idSkl2,
-           name: data[i].name,
-           idTip: data[i].idTip,
-           idFirma: data[i].idFirma,
-           idEdiz: data[i].idEdiz,
-           soni: data[i].soni,
-           narhi: data[i].narhi,
-           narhiS: data[i].narhiS,
-           sm: data[i].sm,
-           smS: data[i].smS,
-           snarhi: data[i].snarhi,
-           snarhiS: data[i].snarhiS,
-           snarhi1: data[i].snarhi1,
-           snarhi1S: data[i].snarhi1S,
-           snarhi2: data[i].snarhi2,
-           snarhi2S: data[i].snarhi2S,
-           tnarhi: data[i].narhi+resUzs,
-           tnarhiS: data[i].tnarhiS,
-           tsm: data[i].tsm,
-           tsmS: data[i].tsmS,
-           shtr: data[i].shtr,
-         );
-         await _repository.updateIncomeProductBase(incomeModel);
-       }
-       else{
-         IncomeAddModel incomeModel = IncomeAddModel(
-           price: data[i].price,
-           id: data[i].id,
-           idSklPr: data[i].idSklPr,
-           idSkl2: data[i].idSkl2,
-           name: data[i].name,
-           idTip: data[i].idTip,
-           idFirma: data[i].idFirma,
-           idEdiz: data[i].idEdiz,
-           soni: data[i].soni,
-           narhi: data[i].narhi,
-           narhiS: data[i].narhiS,
-           sm: data[i].sm,
-           smS: data[i].smS,
-           snarhi: data[i].snarhi,
-           snarhiS: data[i].snarhiS,
-           snarhi1: data[i].snarhi1,
-           snarhi1S: data[i].snarhi1S,
-           snarhi2: data[i].snarhi2,
-           snarhi2S: data[i].snarhi2S,
-           tnarhi: data[i].tnarhi,
-           tnarhiS: data[i].narhiS+resUsd,
-           tsm: data[i].tsm,
-           tsmS: data[i].tsmS,
-           shtr: data[i].shtr,
-         );
-         await _repository.updateIncomeProductBase(incomeModel);
-       }
+      if(data[i].narhi != 0){
+        IncomeAddModel incomeModel = IncomeAddModel(
+          price: data[i].price,
+          id: data[i].id,
+          idSklPr: data[i].idSklPr,
+          idSkl2: data[i].idSkl2,
+          name: data[i].name,
+          idTip: data[i].idTip,
+          idFirma: data[i].idFirma,
+          idEdiz: data[i].idEdiz,
+          soni: data[i].soni,
+          narhi: data[i].narhi,
+          narhiS: data[i].narhiS,
+          sm: data[i].sm,
+          smS: data[i].smS,
+          snarhi: data[i].snarhi,
+          snarhiS: data[i].snarhiS,
+          snarhi1: data[i].snarhi1,
+          snarhi1S: data[i].snarhi1S,
+          snarhi2: data[i].snarhi2,
+          snarhi2S: data[i].snarhi2S,
+          tnarhi: data[i].narhi+resUzs,
+          tnarhiS: data[i].tnarhiS,
+          tsm: data[i].tsm,
+          tsmS: data[i].tsmS,
+          shtr: data[i].shtr,
+        );
+        await _repository.updateIncomeProductBase(incomeModel);
+      }
+      else{
+        IncomeAddModel incomeModel = IncomeAddModel(
+          price: data[i].price,
+          id: data[i].id,
+          idSklPr: data[i].idSklPr,
+          idSkl2: data[i].idSkl2,
+          name: data[i].name,
+          idTip: data[i].idTip,
+          idFirma: data[i].idFirma,
+          idEdiz: data[i].idEdiz,
+          soni: data[i].soni,
+          narhi: data[i].narhi,
+          narhiS: data[i].narhiS,
+          sm: data[i].sm,
+          smS: data[i].smS,
+          snarhi: data[i].snarhi,
+          snarhiS: data[i].snarhiS,
+          snarhi1: data[i].snarhi1,
+          snarhi1S: data[i].snarhi1S,
+          snarhi2: data[i].snarhi2,
+          snarhi2S: data[i].snarhi2S,
+          tnarhi: data[i].tnarhi,
+          tnarhiS: data[i].narhiS+resUsd,
+          tsm: data[i].tsm,
+          tsmS: data[i].tsmS,
+          shtr: data[i].shtr,
+        );
+        await _repository.updateIncomeProductBase(incomeModel);
+      }
       await getAllIncomeProduct();
     }
   }
@@ -161,6 +161,5 @@ class IncomeProductBloc{
 }
 
 final incomeProductBloc = IncomeProductBloc();
-
 
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -107,17 +108,31 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(onPressed: (i) async {
-                                  HttpResult res = await repository.deleteWarehouseTransfer(data[index].id);
-                                  if(res.result['status'] == true){
-                                    await wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
-                                  }
-                                  else{
-                                    if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
-                                  }
-                                },
-                                  icon: Icons.delete,
-                                  label: "Ўчириш",
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      SlidableAction(onPressed: (i)
+                                      async {
+                                        HttpResult res = await repository.deleteWarehouseTransfer(data[index].id);
+                                        if(res.result['status'] == true){
+                                          await wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+                                        }
+                                        else{
+                                          if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+                                        }
+                                      },
+                                        icon: Icons.delete,
+                                        label: "Ўчириш",
+                                      ),
+                                      // SlidableAction(onPressed: (i) async
+                                      // {
+                                      //
+                                      // },
+                                      //   icon: Icons.edit,
+                                      //   label: "Таҳрирлаш",
+                                      // ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
