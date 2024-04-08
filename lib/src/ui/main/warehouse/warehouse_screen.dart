@@ -18,6 +18,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/ui/main/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouser_search.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
@@ -80,6 +81,8 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                           onTap: (){
                             wareHouseId = wareHouse[index].id;
                             wareHouseName = wareHouse[index].name;
+                            CacheService.saveWareHouseId(wareHouse[index].id);
+                            CacheService.saveWareHouseName(wareHouse[index].name);
                             _repository.clearSkladBase();
                             skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
                             setState(() {});

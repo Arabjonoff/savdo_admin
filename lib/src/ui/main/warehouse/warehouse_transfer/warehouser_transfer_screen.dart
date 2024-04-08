@@ -148,6 +148,18 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Container(
+                                    decoration:  BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                      ),
+                                      color: AppColors.green
+                                    ),
+                                    padding: EdgeInsets.symmetric(horizontal: 12.w,vertical:4.h),
+                                    margin: EdgeInsets.only(left: 16.w),
+                                    child: Text("№${data[index].ndoc}",style: AppStyle.smallBold(Colors.white),),
+                                  ),
                                   ListTile(
                                     title: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -194,10 +206,21 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
               }
             ),
           ),
-          ButtonWidget(onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (ctx){
-              return const WarehouseDocumentScreen();
-            }));
+          ButtonWidget(onTap: () async {
+            CenterDialog.showLoadingDialog(context, "Бироз кутинг");
+            HttpResult setDoc = await repository.setDoc(5);
+            if(setDoc.result['status'] == true){
+              if(context.mounted) {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                return  WarehouseDocumentScreen(ndoc: setDoc.result['ndoc'],);
+              }));
+              }
+            }
+            else{
+              if(context.mounted)Navigator.pop(context);
+              if(context.mounted)CenterDialog.showErrorDialog(context, setDoc.result['message']);
+            }
           }, color: AppColors.green, text: "Янги киритиш"),
           SizedBox(height: 24.h,)
         ],

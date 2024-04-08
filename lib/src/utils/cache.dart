@@ -65,6 +65,13 @@ class CacheService {
   static void saveName(String data) {
     preferences!.setString("saveName", data);
   }
+  static void saveWareHouseName(String data) {
+    preferences!.setString("saveWareHouseName", data);
+  }
+  static void saveWareHouseId(int data) {
+    preferences!.setInt("saveWareHouseId", data);
+  }
+
 
   static  saveDateId(int data) {
     preferences!.setInt("saveDateId", data);
@@ -76,6 +83,14 @@ class CacheService {
 
   static int getDateId() {
     int data = preferences!.getInt("saveDateId") ?? 0;
+    return data;
+  }
+  static int getWareHouseId() {
+    int data = preferences!.getInt("saveWareHouseId") ?? 0;
+    return data;
+  }
+  static String getWareHouseName() {
+    String data = preferences!.getString("saveWareHouseName") ?? '';
     return data;
   }
   static String getClientIdT() {
