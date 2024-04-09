@@ -6,6 +6,7 @@ import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/bloc/client/client_class_bloc.dart';
 import 'package:savdo_admin/src/bloc/client/client_type_bloc.dart';
+import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -482,6 +483,7 @@ class _UpdateClientScreenState extends State<UpdateClientScreen> {
                 };
                 HttpResult res = await _repository.updateClient(addClient);
                 if(res.result["status"] == true){
+                  planBloc.getPlanAll();
                   Map<String,dynamic> saveBaseClient = {
                     "ID": widget.data.id,
                     "NAME": _controllerName.text,

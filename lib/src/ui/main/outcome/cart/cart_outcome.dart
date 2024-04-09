@@ -176,7 +176,6 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                         }
                         await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                         repository.clearOutcomeCart();
-                        CenterDialog.showSuccessDialog(context,);
                       }, color: AppColors.green, text: "Сақлаш")),
                       FloatingActionButton(
                         elevation: 0,

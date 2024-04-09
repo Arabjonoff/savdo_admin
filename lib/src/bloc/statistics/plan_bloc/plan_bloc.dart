@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:intl/intl.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
+import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 
 class PlanBloc{
+  final _fetchPieChartInfo = PublishSubject<PlanModel>();
+  Stream<PlanModel> get getPlanStream => _fetchPieChartInfo.stream;
   double percent = 0.0, f = 0;
   int taskDone = 0,
       taskGo = 0,
@@ -159,6 +165,7 @@ class PlanBloc{
         percent = 1;
         f = f = 100;
       }
+      _fetchPieChartInfo.sink.add(PlanModel(taskDone: taskDone, taskOut: taskOut, taskGo: taskGo, percent: percent, f: f, weekday: weekday));
     }
     print("************************");
     print("Borilgan $taskDone");
