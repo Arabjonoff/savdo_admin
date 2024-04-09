@@ -36,6 +36,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: const HomeScreen(),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (i){
+          print(DateTime.now().weekday);
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: "Asosiy"),
           BottomNavigationBarItem(icon: Icon(Icons.monitor_heart),label: "Monitoring"),

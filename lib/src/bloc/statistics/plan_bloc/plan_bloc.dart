@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -12,8 +13,13 @@ class PlanBloc{
   final Repository _repository = Repository();
   getPlanAll()async{
     List<ClientResult> clientBase = await _repository.getClientBase('');
-    HttpResult result = await _repository.getOutCome(DateTime);
+    HttpResult result = await _repository.getOutCome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     if(result.isSuccess){
+    taskDone = 0;
+    taskGo = 0;
+    weekday = DateTime.now().weekday;
+    taskOut= 0;
+    percent = 0.0; f = 0;
       var data = OutcomeModel.fromJson(result.result);
       /// Tasks function Done
       for(int i=0; i<data.outcomeResult.length;i++){
@@ -80,11 +86,8 @@ class PlanBloc{
         }
       }
     }
-
       /// Tasks function go
-      for(int i =0;i<data.outcomeResult.length;i++){
         for (int j = 0; j < clientBase.length; j++) {
-          if (data.outcomeResult[i].idAgent == clientBase[j].idAgent) {
             if (weekday == 7) {
               if (clientBase[j].h7 == 1) {
                 taskGo += clientBase[j].h7;
@@ -112,6 +115,7 @@ class PlanBloc{
             }
             if (weekday == 2) {
               if (clientBase[j].h2 == 1) {
+                print(clientBase[j].name);
                 taskGo += clientBase[j].h2;
               }
             }
@@ -120,9 +124,7 @@ class PlanBloc{
                 taskGo += clientBase[j].h1;
               }
             }
-          }
         }
-      }
 
       f = 0;
       f = 100 / (taskGo / taskDone);
@@ -159,8 +161,10 @@ class PlanBloc{
       }
     }
     print("************************");
-    print(taskDone);
-    print(taskGo);
+    print("Borilgan $taskDone");
+    print("Borishi kerak bo'lgan $taskGo");
+    print("Rejadan tashqarida $taskOut");
+    print("foiz $f");
   }
 }
 final planBloc = PlanBloc();
