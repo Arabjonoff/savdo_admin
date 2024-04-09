@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/cart/cart_outcome_bloc.dart';
-import 'package:savdo_admin/src/bloc/outcome/product_outcome_bloc.dart';
 import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';

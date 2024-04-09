@@ -185,28 +185,28 @@ class ApiProvider {
     String url = "${_baseUrl}skl2?DB=$db&JWT=";
     return await _getRequest(url);
   }
-  Future<HttpResult> postProduct(name,id_tip,id_quantity,id_firma,vz,min_count,st)async{
+  Future<HttpResult> postProduct(name,idTip,idQuantity,idFirma,vz,minCount,st)async{
     var body = {
       "NAME":name,
-      "ID_TIP":id_tip,
-      "ID_EDIZ":id_quantity,
-      "ID_FIRMA":id_firma,
+      "ID_TIP":idTip,
+      "ID_EDIZ":idQuantity,
+      "ID_FIRMA":idFirma,
       "VZ":vz,
-      "MSONI":min_count,
+      "MSONI":minCount,
       "ST":st,
     };
     String url = "${_baseUrl}skl2_ins?DB=$db&JWT=";
     return await _postRequest(url,json.encode(body));
   }
-  Future<HttpResult> updateProduct(id,name,id_tip,id_quantity,id_firma,vz,min_count,st)async{
+  Future<HttpResult> updateProduct(id,name,idTip,idQuantity,idFirma,vz,minCount,st)async{
     var body = {
       "ID":id,
       "NAME":name,
-      "ID_TIP":id_tip,
-      "ID_EDIZ":id_quantity,
-      "ID_FIRMA":id_firma,
+      "ID_TIP":idTip,
+      "ID_EDIZ":idQuantity,
+      "ID_FIRMA":idFirma,
       "VZ":vz,
-      "MSONI":min_count,
+      "MSONI":minCount,
       "ST":st,
     };
     String url = "${_baseUrl}skl2_upd?DB=$db&JWT=";
@@ -610,36 +610,11 @@ class ApiProvider {
     return await _postRequest(url,json.encode(data));
   }
   Future<HttpResult> warehouseTransferItemUpdate(Map data)async{
-  //   {
-  //     "ID_SKL_PER":"",
-  //   "ID_SKL2":"",
-  //   "NAME": "",
-  //   "ID_TIP": "",
-  //   "ID_EDIZ": "",
-  //   "SONI":"",
-  //   "NARHI":"",
-  //   "NARHI_S":"",
-  //   "TNARHI":"",
-  //   "TNARHI_S":"",
-  //   "SM":"",
-  //   "SM_S":"",
-  //   "SNARHI":"",
-  //   "SNARHI_S":"",
-  //   "SSM":"",
-  //   "SSM_S":"",
-  //   "TSM":"",
-  //   "TSM_S":"",
-  //   "SNARHI1":0,
-  //   "SNARHI1_S":0,
-  //   "SNARHI2":0,
-  //   "SNARHI2_S":0,
-  //   "SHTR":"0"
-  // }
     String url = "${_baseUrl}per1_upd?DB=$db&JWT=$token";
     return await _patchRequest(url,json.encode(data));
   }
-  Future<HttpResult> warehouseTransferItemDelete(id,id_skl_per,id_skl2)async{
-    String url = "${_baseUrl}per1_del?DB=$db&ID=$id&ID_SKL_PER=$id_skl_per&ID_SKL2=$id_skl2&JWT=$token";
+  Future<HttpResult> warehouseTransferItemDelete(id,idSklPer,idSkl2)async{
+    String url = "${_baseUrl}per1_del?DB=$db&ID=$id&ID_SKL_PER=$idSklPer&ID_SKL2=$idSkl2&JWT=$token";
     return await _deleteRequest(url,{});
   }
   Future<HttpResult> getWarehouseTransfer(year,month)async{
@@ -661,5 +636,8 @@ class ApiProvider {
     };
     return await _deleteRequest(url,json.encode(data));
   }
-
+  Future<HttpResult> getCurrency()async{
+    String url = "${_baseUrl}getkurs?DB=$db&JWT=$token";
+    return await _getRequest(url);
+  }
 }

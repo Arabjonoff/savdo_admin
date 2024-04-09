@@ -148,26 +148,26 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                             ),
                             child: GestureDetector(
                               onTap: () async {
-                                Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                                  return DocumentOutComeScreen();
-                                }));
-                                var body = {
-                                  "NAME": data[index].name,
-                                  "ID_T": data[index].idT,
-                                  "NDOC": data[index].ndoc,
-                                  "SANA": data[index].sana.toString(),
-                                  "IZOH": data[index].izoh,
-                                  "ID_HODIM": data[index].idHodim,
-                                  "ID_AGENT": data[index].idAgent,
-                                  "ID_HARIDOR": data[index].idHaridor,
-                                  "KURS": data[index].kurs,
-                                  "ID_FAOL": data[index].idFaol,
-                                  "ID_KLASS": data[index].idKlass,
-                                  "ID_SKL": 1,
-                                  "YIL": DateTime.now().year,
-                                  "OY":  DateTime.now().month
-                                };
-                                HttpResult res = await _repository.updateDocOutcome(body);
+                                // Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                //   return DocumentOutComeScreen();
+                                // }));
+                                // var body = {
+                                //   "NAME": data[index].name,
+                                //   "ID_T": data[index].idT,
+                                //   "NDOC": data[index].ndoc,
+                                //   "SANA": data[index].sana.toString(),
+                                //   "IZOH": data[index].izoh,
+                                //   "ID_HODIM": data[index].idHodim,
+                                //   "ID_AGENT": data[index].idAgent,
+                                //   "ID_HARIDOR": data[index].idHaridor,
+                                //   "KURS": data[index].kurs,
+                                //   "ID_FAOL": data[index].idFaol,
+                                //   "ID_KLASS": data[index].idKlass,
+                                //   "ID_SKL": 1,
+                                //   "YIL": DateTime.now().year,
+                                //   "OY":  DateTime.now().month
+                                // };
+                                // HttpResult res = await _repository.updateDocOutcome(body);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),

@@ -7,12 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/income_bloc.dart';
+import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_model.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/main/income/income_detail.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
@@ -183,92 +185,97 @@ bool scrollTop = false;
                                     ),
                                   ],
                                 ),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16),
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.card,
-                                      border:  Border(bottom: BorderSide(color: Colors.grey.shade400)
-                                      )
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: data[index].pr==1?AppColors.red:AppColors.green
-                                              ),
-                                              padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 1),
-                                              child: Text("№${data[index].ndoc}",style: AppStyle.medium(Colors.white),),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 8.h,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        Text("Кирим нархи:",style: AppStyle.small(Colors.black),),
-                                        Text("${priceFormat.format(data[index].smT)} сўм | ${priceFormatUsd.format(data[index].smTS)} \$",style: AppStyle.smallBold(Colors.black),)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        Text("Сотиш нархи:",style: AppStyle.small(Colors.black),),
-                                        Text("${priceFormat.format(data[index].sm)} сўм | ${priceFormat.format(data[index].smS)} \$",style: AppStyle.smallBold(AppColors.green),)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        Text("Харажат:",style: AppStyle.small(Colors.black),),
-                                        Text("${priceFormat.format(data[index].har)} сўм | ${priceFormat.format(data[index].harS)} \$",style: AppStyle.smallBold(Colors.red),),
-                                        ],
-                                      ),
-                                      SizedBox(height: 4.h,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        Text("Вақти:",style: AppStyle.small(Colors.black),),
-                                        Text(data[index].vaqt.toString().substring(0,19),style: AppStyle.small(Colors.black),),
-                                        ],
-                                      ),
-                                      // SizedBox(
-                                      //   height: 1,
-                                      //   width: MediaQuery.of(context).size.width,
-                                      //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
-                                      // ),
-                                      ///
-                                      // Text("Жами кирим сотув нархда:",style: AppStyle.medium(Colors.indigo),),
-                                      // Row(
-                                      //   children: [
-                                      //     Text("320 323 сўм | ",style: AppStyle.medium(Colors.indigo),),
-                                      //     Text("909 320 \$",style: AppStyle.medium(Colors.indigo),),
-                                      //   ],
-                                      // ),
-                                      // SizedBox(
-                                      //   height: 1,
-                                      //   width: MediaQuery.of(context).size.width,
-                                      //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
-                                      // ),
-                                      // Text("Кирим харажатлари:",style: AppStyle.medium(Colors.red),),
-                                      // Row(
-                                      //   children: [
-                                      //     Text("909 323 сўм | ",style: AppStyle.medium(Colors.red),),
-                                      //     Text("909 323 \$",style: AppStyle.medium(Colors.red),),
-                                      //   ],
-                                      // ),
-                                      // SizedBox(
-                                      //   height: 1,
-                                      //   width: MediaQuery.of(context).size.width,
-                                      //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
-                                      // ),
-                                    ],
+                                child: GestureDetector(
+                                  onTap: (){
+                                    BottomDialog.showAddOutComeDialog(context, IncomeDetailScreen(data: data[index].sklPrTov,));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16),
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.card,
+                                        border:  Border(bottom: BorderSide(color: Colors.grey.shade400)
+                                        )
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                            Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  color: data[index].pr==1?AppColors.red:AppColors.green
+                                                ),
+                                                padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 1),
+                                                child: Text("№${data[index].ndoc}",style: AppStyle.medium(Colors.white),),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8.h,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                          Text("Кирим нархи:",style: AppStyle.small(Colors.black),),
+                                          Text("${priceFormat.format(data[index].smT)} сўм | ${priceFormatUsd.format(data[index].smTS)} \$",style: AppStyle.smallBold(Colors.black),)
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                          Text("Сотиш нархи:",style: AppStyle.small(Colors.black),),
+                                          Text("${priceFormat.format(data[index].sm)} сўм | ${priceFormat.format(data[index].smS)} \$",style: AppStyle.smallBold(AppColors.green),)
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                          Text("Харажат:",style: AppStyle.small(Colors.black),),
+                                          Text("${priceFormat.format(data[index].har)} сўм | ${priceFormat.format(data[index].harS)} \$",style: AppStyle.smallBold(Colors.red),),
+                                          ],
+                                        ),
+                                        SizedBox(height: 4.h,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                          Text("Вақти:",style: AppStyle.small(Colors.black),),
+                                          Text(data[index].vaqt.toString().substring(0,19),style: AppStyle.small(Colors.black),),
+                                          ],
+                                        ),
+                                        // SizedBox(
+                                        //   height: 1,
+                                        //   width: MediaQuery.of(context).size.width,
+                                        //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
+                                        // ),
+                                        ///
+                                        // Text("Жами кирим сотув нархда:",style: AppStyle.medium(Colors.indigo),),
+                                        // Row(
+                                        //   children: [
+                                        //     Text("320 323 сўм | ",style: AppStyle.medium(Colors.indigo),),
+                                        //     Text("909 320 \$",style: AppStyle.medium(Colors.indigo),),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 1,
+                                        //   width: MediaQuery.of(context).size.width,
+                                        //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
+                                        // ),
+                                        // Text("Кирим харажатлари:",style: AppStyle.medium(Colors.red),),
+                                        // Row(
+                                        //   children: [
+                                        //     Text("909 323 сўм | ",style: AppStyle.medium(Colors.red),),
+                                        //     Text("909 323 \$",style: AppStyle.medium(Colors.red),),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 1,
+                                        //   width: MediaQuery.of(context).size.width,
+                                        //   child: DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
+                                        // ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

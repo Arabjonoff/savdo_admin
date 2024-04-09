@@ -30,7 +30,7 @@ class _OutcomePaymentScreenState extends State<OutcomePaymentScreen> with Ticker
   TextEditingController controllerComment = TextEditingController();
   TextEditingController controllerAcceptedSumma = TextEditingController();
   TextEditingController controllerSumma = TextEditingController();
-  TextEditingController controllerCurrency = TextEditingController(text: priceFormat.format(11450));
+  TextEditingController controllerCurrency = TextEditingController(text: priceFormat.format(CacheService.getCurrency()));
   TextEditingController controllerPercent = TextEditingController(text: '100');
   bool isSearching = false;
   int idValyuta = 0;

@@ -224,9 +224,10 @@ class Repository{
   Future<HttpResult> deleteOutcomeDoc(id) => _apiProvider.deleteOutcomeDoc(id);
   Future<HttpResult> warehouseTransfer(Map data) => _apiProvider.warehouseTransfer(data);
   Future<HttpResult> warehouseTransferItem(Map data) => _apiProvider.warehouseTransferItem(data);
-  Future<HttpResult> warehouseTransferItemDelete(id,id_skl_per,id_skl2) => _apiProvider.warehouseTransferItemDelete(id,id_skl_per,id_skl2);
+  Future<HttpResult> warehouseTransferItemDelete(id,idSklPer,idSkl2) => _apiProvider.warehouseTransferItemDelete(id,idSklPer,idSkl2);
   Future<HttpResult> warehouseTransferItemUpdate(Map data) => _apiProvider.warehouseTransferItemUpdate(data);
   Future<HttpResult> getWarehouseTransfer(year,month) => _apiProvider.getWarehouseTransfer(year,month);
   Future<HttpResult> lockWarehouse(year,month) => _apiProvider.lockWarehouse(year,month);
   Future<HttpResult> deleteWarehouseTransfer(id) => _apiProvider.deleteWarehouseTransfer(id);
+  Future<HttpResult> getCurrency() => _apiProvider.getCurrency();
 }

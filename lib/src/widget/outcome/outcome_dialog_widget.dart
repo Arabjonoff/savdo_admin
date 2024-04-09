@@ -11,6 +11,7 @@ import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
@@ -32,9 +33,10 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
    final Repository _repository = Repository();
    final TextEditingController _controllerCurrency = TextEditingController(text: "12 450");
   int priceType = 0,onTap=0;
-  int currency = 12450;
+  int currency = CacheService.getCurrency();
   @override
   void initState() {
+    currency = CacheService.getCurrency();
     _controllerCount = TextEditingController(text: '1');
     _controllerPrice = TextEditingController(text: widget.priceUsd == 1 ? priceFormatUsd.format(widget.price) : priceFormat.format(widget.price));
     // _controllerPrice = TextEditingController(text: widget.price.toString());

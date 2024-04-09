@@ -165,10 +165,20 @@ class CacheService {
 
 
 
+
   /// order save
   /// /// //// ///// ////////////////////
   static void saveClientComment(String data) {
     preferences!.setString("saveClientComment", data);
   }
+
+  static void saveCurrency(int data) {
+    preferences!.setInt("saveCurrency", data);
+  }
+  static int getCurrency() {
+    int data = preferences!.getInt("saveCurrency") ?? 0;
+    return data;
+  }
+
 
 }
