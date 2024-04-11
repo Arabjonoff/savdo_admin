@@ -10,7 +10,7 @@ import 'package:savdo_admin/src/utils/cache.dart';
 String db = CacheService.getDb();
 int userId = CacheService.getIdAgent();
 int idSkl = 1;
-String token = '';
+String token = CacheService.getToken();
 
 class ApiProvider {
   var date = DateTime.now();
@@ -209,7 +209,7 @@ class ApiProvider {
       "MSONI":minCount,
       "ST":st,
     };
-    String url = "${_baseUrl}skl2_upd?DB=$db&JWT=";
+    String url = "${_baseUrl}skl2_upd?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteProduct(name,id)async{
@@ -217,13 +217,13 @@ class ApiProvider {
       "NAME":name,
       "ID":id
     };
-    String url = "${_baseUrl}skl2_del?DB=$db&JWT=";
+    String url = "${_baseUrl}skl2_del?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
 
   /// Product Type Get Post Delete API
   Future<HttpResult> getProductType()async{
-    String url = "${_baseUrl}tip?DB=$db&JWT=";
+    String url = "${_baseUrl}tip?DB=$db&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> postProductType(String name)async{
@@ -231,7 +231,7 @@ class ApiProvider {
       "NAME":name,
       "ST":1
     };
-    String url = "${_baseUrl}tip_ins?DB=$db&JWT=";
+    String url = "${_baseUrl}tip_ins?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteProductType(String name,int id)async{
@@ -239,17 +239,17 @@ class ApiProvider {
       "NAME":name,
       "ID":"$id"
     };
-    String url = "${_baseUrl}tip_del?DB=$db&JWT=";
+    String url = "${_baseUrl}tip_del?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
 
   /// Quantity Type Get Post Delete API
   Future<HttpResult> getQuantityType()async{
-    String url = "${_baseUrl}ediz?DB=$db&JWT=";
+    String url = "${_baseUrl}ediz?DB=$db&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> postQuantityType(String name)async{
-    String url = "${_baseUrl}ediz_ins?DB=$db&JWT=";
+    String url = "${_baseUrl}ediz_ins?DB=$db&JWT=$token";
     var body = {
       "NAME":name,
       "ST":1
@@ -261,13 +261,13 @@ class ApiProvider {
       "NAME":name,
       "ID":"$id"
     };
-    String url = "${_baseUrl}ediz_del?DB=$db&JWT=";
+    String url = "${_baseUrl}ediz_del?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
 
   /// Get Quantity Type API
   Future<HttpResult> getFirmaType()async{
-    String url = "${_baseUrl}firma?DB=$db&JWT=";
+    String url = "${_baseUrl}firma?DB=$db&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> postFirmaType(String name)async{
@@ -275,7 +275,7 @@ class ApiProvider {
       "NAME":name,
       "ST":1
     };
-    String url = "${_baseUrl}firma_ins?DB=$db&JWT=";
+    String url = "${_baseUrl}firma_ins?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteFirmaType(String name,int id)async{
@@ -283,13 +283,13 @@ class ApiProvider {
       "NAME":name,
       "ID":"$id"
     };
-    String url = "${_baseUrl}firma_del?DB=$db&JWT=";
+    String url = "${_baseUrl}firma_del?DB=$db&JWT=$token";
     return await _postRequest(url,json.encode(body));
   }
 
   /// Barcode API
   Future<HttpResult> getBarcodeDetail(id)async{
-    String url = "${_baseUrl}shtr?DB=$db&ID=$id";
+    String url = "${_baseUrl}shtr?DB=$db&ID=$id&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> getBarcode()async{
@@ -297,7 +297,7 @@ class ApiProvider {
     return await _getRequest(url);
   }
   Future<HttpResult> postBarcode(name,barcode,idSkl2)async{
-    String url = "${_baseUrl}shtr_ins?DB=$db";
+    String url = "${_baseUrl}shtr_ins?DB=$db&JWT=$token";
     var data = {
       "NAME":name,
       "SHTR":barcode,
@@ -306,7 +306,7 @@ class ApiProvider {
     return await _postRequest(url,json.encode(data));
   }
   Future<HttpResult> deleteBarcode(name,id,)async{
-    String url = "${_baseUrl}shtr_del?DB=$db";
+    String url = "${_baseUrl}shtr_del?DB=$db&JWT=$token";
     var data = {
       "NAME":name,
       "ID":id,
@@ -316,15 +316,15 @@ class ApiProvider {
 
   /// Sklad API
   Future<HttpResult> getSklad(year,month,idSkl)async{
-    String url = "${_baseUrl}sklad01?DB=$db&YIL=$year&OY=$month&ID_SKL0=$idSkl";
+    String url = "${_baseUrl}sklad01?DB=$db&YIL=$year&OY=$month&ID_SKL0=$idSkl&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> postImage(image,idSkl2)async{
-    String url = "${_baseUrl}image?DB=$db";
+    String url = "${_baseUrl}image?DB=$db&JWT=$token";
     return  await _postRequestImage(url,image,idSkl2);
   }
   Future<HttpResult> getIncome(year,month)async{
-    String url = "${_baseUrl}kirim?DB=$db&ID_SKL=1&YIL=$year&OY=$month";
+    String url = "${_baseUrl}kirim?DB=$db&ID_SKL=1&YIL=$year&OY=$month&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> addIncome(name,idT,doc,date,comment,idHodim,idSkl,)async{
@@ -339,7 +339,7 @@ class ApiProvider {
       "YIL": year,
       "OY": month
     };
-    String url = "${_baseUrl}kirim0_ins?DB=$db";
+    String url = "${_baseUrl}kirim0_ins?DB=$db&JWT=$token";
     return  await _postRequest(url,json.encode(body));
   }
   Future<HttpResult> updateIncome(id,name,idT,doc,date,comment,idHodim,idSkl,)async{
@@ -355,11 +355,11 @@ class ApiProvider {
       "YIL": year,
       "OY": month
     };
-    String url = "${_baseUrl}kirim0_upd?DB=$db";
+    String url = "${_baseUrl}kirim0_upd?DB=$db&JWT=$token";
     return await _patchRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteIncome(id)async{
-    String url = "${_baseUrl}kirim0_del?ID=$id&DB=$db";
+    String url = "${_baseUrl}kirim0_del?ID=$id&DB=$db&JWT=$token";
     var body = {
       "ID":id
     };
@@ -480,7 +480,7 @@ class ApiProvider {
     return await _patchRequest(url,json.encode(body));
   }
   Future<HttpResult> deleteIncomeSklPr(id,idSklPr,idSkl2)async{
-    String url = "${_baseUrl}kirim1_del?ID=$id&ID_SKL_PR=$idSklPr&ID_SKL2=$idSkl2&DB=$db&SANA=2024-04-01";
+    String url = "${_baseUrl}kirim1_del?ID=$id&ID_SKL_PR=$idSklPr&ID_SKL2=$idSkl2&DB=$db&SANA=2024-04-01&JWT=$token";
     return await _deleteRequest(url,{});
   }
 
@@ -554,7 +554,7 @@ class ApiProvider {
     return await _postRequest(url,json.encode(data));
   }
   Future<HttpResult> getPaymentsDaily(date)async{
-    String url = "${_baseUrl}tl0Sana?DB=$db&JWT=$token&YIL=$year&OY=$month&SANA=$date";
+    String url = "${_baseUrl}tl0Sana?DB=$db&JWT=$token&YIL=$year&OY=$month&SANA=$date&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> getSkladPer(year,month,idSkl)async{
@@ -589,7 +589,7 @@ class ApiProvider {
   }
   Future<HttpResult> getOutCome(date)async{
     // String url = "${_baseUrl}chikim_agent?DB=$db&DT=$date&ID_AGENT=$userId&ID_SKL=$idSkl&JWT=$token";
-    String url = "${_baseUrl}chikim2?DB=$db&DT1=$date&DT2=$date&ID_SKL=$idSkl";
+    String url = "${_baseUrl}chikim2?DB=$db&DT1=$date&DT2=$date&ID_SKL=$idSkl&JWT=$token";
     return await _getRequest(url,);
   }
   Future<HttpResult> lockOutcome(id,prov)async{
@@ -618,7 +618,7 @@ class ApiProvider {
     return await _deleteRequest(url,{});
   }
   Future<HttpResult> getWarehouseTransfer(year,month)async{
-    String url = "${_baseUrl}per?DB=$db&ID_SKL=$idSkl&YIL=$year&OY=$month";
+    String url = "${_baseUrl}per?DB=$db&ID_SKL=$idSkl&YIL=$year&OY=$month&JWT=$token";
     return await _getRequest(url);
   }
   Future<HttpResult> lockWarehouse(id,prov)async{

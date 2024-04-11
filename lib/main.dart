@@ -5,6 +5,7 @@ import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +17,16 @@ void main()async {
   //   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   // }
   CacheService.init();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String token = preferences.getString("token")??'';
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   initNoInternetListener();
-  runApp(const MyApp());
+  runApp( MyApp(token: token,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String token;
+  const MyApp({super.key, required this.token});
 
   // This widget is the root of your application.
   @override
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           onGenerateRoute: AppRoute.routes,
-          initialRoute: AppRouteName.login,
+          initialRoute: token.isEmpty?AppRouteName.login:AppRouteName.splash,
           debugShowCheckedModeBanner: false,
           builder: (BuildContext context, Widget? child,) {
             return MediaQuery(

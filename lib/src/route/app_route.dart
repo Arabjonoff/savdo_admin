@@ -22,6 +22,7 @@ import 'package:savdo_admin/src/ui/main/product/add_product.dart';
 import 'package:savdo_admin/src/ui/main/product/product_screen.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouse_screen.dart';
 import 'package:savdo_admin/src/ui/main/warehouse/warehouse_transfer/warehouser_transfer_screen.dart';
+import 'package:savdo_admin/src/ui/spalsh/spalsh_screen.dart';
 
 abstract class AppRouteName {
   static const main = 'main';
@@ -56,6 +57,8 @@ class AppRoute{
   static Route routes(RouteSettings settings){
     var args = settings.arguments;
     switch (settings.name){
+    /// Splash Screen
+      case AppRouteName.splash: return MaterialPageRoute(builder: (BuildContext context) =>  const SplashScreen());
     /// Login Screen
       case AppRouteName.login: return MaterialPageRoute(builder: (BuildContext context) =>  const LoginScreen());
     /// Splash Screen
@@ -95,7 +98,7 @@ class AppRoute{
     /// Income Pay Screen
       case AppRouteName.incomePay: return MaterialPageRoute(builder: (BuildContext context) => const IncomePayScreen());
     /// Outcome Pay Screen
-      case AppRouteName.outComePay: return MaterialPageRoute(builder: (BuildContext context) => const OutcomePayScreen());
+      case AppRouteName.outComePay: return MaterialPageRoute(builder: (BuildContext context) =>  const OutcomePayScreen(idAgent: 0,));
     /// Add Outcome Pay Screen
       case AppRouteName.addOutComePay: return MaterialPageRoute(builder: (BuildContext context) => const AddOutcomePayScreen());
     /// Add Income Pay Screen

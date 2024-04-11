@@ -136,7 +136,7 @@ class _CartIncomeScreenState extends State<CartIncomeScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                                 width: width,
                                 decoration: BoxDecoration(
-                                  color: AppColors.white,
+                                  color: index%2==0?AppColors.white:Colors.grey.shade300,
                                   border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.4))),
                                 ),
                                 child: Column(
@@ -200,6 +200,22 @@ class _CartIncomeScreenState extends State<CartIncomeScreen> {
                                         ),
                                       ],
                                     ),
+                                    const Divider(),
+                                    Row(
+                                      children: [
+                                        Expanded(child: Text('Сотиш нархи 1',style: AppStyle.small(AppColors.black),)),
+                                        Expanded(child: Text('Сотиш нархи 2',style: AppStyle.small(AppColors.black),)),
+                                        Expanded(child: Text('Сотиш нархи 3',style: AppStyle.small(AppColors.black),)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(child: Text(data[index].snarhi != 0?"${priceFormat.format(data[index].snarhi)} сўм":"${priceFormatUsd.format(data[index].snarhiS)} \$",style: AppStyle.small(AppColors.black),)),
+                                        Expanded(child: Text(data[index].snarhi1 != 0?"${priceFormat.format(data[index].snarhi1)} сўм":"${priceFormatUsd.format(data[index].snarhi1S)} \$",style: AppStyle.small(AppColors.black),)),
+                                        Expanded(child: Text(data[index].snarhi2 != 0?"${priceFormat.format(data[index].snarhi2)} сўм":"${priceFormatUsd.format(data[index].snarhi2S)} \$",style: AppStyle.small(AppColors.black),)),
+                                      ],
+                                    ),
+
                                   ],
                                 ),
                               ),
