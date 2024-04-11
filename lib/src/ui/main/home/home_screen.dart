@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/drawer_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,17 +56,42 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           children: [
             Container(
+              margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
               alignment: Alignment.center,
               width: width,
-              height: 150.h,
               decoration: BoxDecoration(
-                color: AppColors.green,
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10)
-                )
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 3,
+                        color: Colors.grey.shade400
+                    )
+                  ],
+                  color: AppColors.white,
+                  borderRadius:  BorderRadius.circular(10)
               ),
-              child: Text("103 924 593 Сўм",style: AppStyle.extraLarge(Colors.white),),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Сана",style: AppStyle.smallBold(Colors.black),),
+                        Text(DateFormat("yyyy-MM-dd").format(DateTime.now()),style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
+                        Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             StreamBuilder<PlanModel>(
               stream: planBloc.getPlanStream,
@@ -77,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    },
                    child: Container(
                      padding: EdgeInsets.symmetric(vertical: 4.h),
-                     margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 12.h),
+                     margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
                      width: width,
                      height: 150.w,
                      decoration: BoxDecoration(
@@ -158,6 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
                  );
                }return SizedBox();
               }
+            ),
+            Row(
+              children: [
+
+              ],
             )
           ],
         ),

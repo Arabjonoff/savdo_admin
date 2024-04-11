@@ -33,6 +33,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
   @override
   void initState() {
     _controllerDate.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    incomePayBloc.getAllIncomePay(_controllerDate.text);
     super.initState();
   }
   @override
@@ -42,6 +43,9 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Чиқимлар"),
+        ),
         key: _key,
         backgroundColor: AppColors.background,
         body:StreamBuilder<List<PaymentsResult>>(
@@ -54,26 +58,26 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                 card = 0;
                 bank = 0;
                 for(int i = 0;i<data[0].tl1.length;i++){
-                  if(data[0].tl1[i].idAgent == widget.idAgent){
-                    if (data[0].tl1[i].tp == 0) {
-                      price += data[0].tl1[i].sm;
-                    }if (data[0].tl1[i].tp == 1) {
-                      currency +=  data[0].tl1[i].sm.toDouble();
-                    }  if (data[0].tl1[i].tp == 2) {
-                      card +=  data[0].tl1[i].sm;
-                    }  if (data[0].tl1[i].tp == 3) {
-                      bank +=  data[0].tl1[i].sm;
+                  if(data[0].tl1[i].tip ==2){
+                    if(data[0].tl1[i].idAgent == widget.idAgent){
+                      if (data[0].tl1[i].tp == 0) {
+                        price += data[0].tl1[i].sm;
+                      }if (data[0].tl1[i].tp == 1) {
+                        currency +=  data[0].tl1[i].sm.toDouble();
+                      }  if (data[0].tl1[i].tp == 2) {
+                        card +=  data[0].tl1[i].sm;
+                      }  if (data[0].tl1[i].tp == 3) {bank +=  data[0].tl1[i].sm;}
                     }
-                  }
-                  else if(widget.idAgent ==0){
-                    if (data[0].tl1[i].tp == 0) {
-                      price += data[0].tl1[i].sm;
-                    }if (data[0].tl1[i].tp == 1) {
-                      currency +=  data[0].tl1[i].sm.toDouble();
-                    }  if (data[0].tl1[i].tp == 2) {
-                      card +=  data[0].tl1[i].sm;
-                    }  if (data[0].tl1[i].tp == 3) {
-                      bank +=  data[0].tl1[i].sm;
+                    else if(widget.idAgent ==0){
+                      if (data[0].tl1[i].tp == 0) {
+                        price += data[0].tl1[i].sm;
+                      }if (data[0].tl1[i].tp == 1) {
+                        currency +=  data[0].tl1[i].sm.toDouble();
+                      }  if (data[0].tl1[i].tp == 2) {
+                        card +=  data[0].tl1[i].sm;
+                      }  if (data[0].tl1[i].tp == 3) {
+                        bank +=  data[0].tl1[i].sm;
+                      }
                     }
                   }
                 }
@@ -145,7 +149,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                   child: ListView.builder(
                       itemCount: data[0].tl1.length,
                       itemBuilder: (ctx,index){
-                        if(data[0].tl1[index].idAgent == widget.idAgent) {
+                        if(data[0].tl1[index].idAgent == widget.idAgent && data[0].tl1[index].tip==2) {
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
@@ -222,7 +226,8 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                               ),
                             ),
                           );
-                        }else if(widget.idAgent == 0){
+                        }
+                        else if(widget.idAgent == 0&& data[0].tl1[index].tip==2){
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
@@ -309,8 +314,6 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
       ),
     );
   }
-  @override
-  bool get wantKeepAlive => true;
   Widget paymentCheck(Tolov1 data){
     if(data.tp == 0){
       return Text("${priceFormatUsd.format(data.sm)} сўм",style: AppStyle.medium(AppColors.green),);
