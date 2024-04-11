@@ -161,6 +161,7 @@ class CenterDialog{
 
   static void showSuccessDialog(BuildContext context){
     showDialog(context: context, builder: (ctx){
+      Future.delayed(Duration(seconds: 1)).then((value) => Navigator.of(context).pop());
       return AlertDialog(
         title:  Text("Ҳаммаси яхши",style: AppStyle.medium(Colors.black),),
         content: SizedBox(

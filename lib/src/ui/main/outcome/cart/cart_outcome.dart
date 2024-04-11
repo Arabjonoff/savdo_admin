@@ -74,7 +74,7 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                             ),
                             child: GestureDetector(
                               onTap: (){
-                                BottomDialog.showAddOutComeDialog(context,UpdateOutcomeWidgetDialog(data: data[index], price: data[index].snarhi!=0?data[index].snarhi:data[index].snarhiS, priceUsd: data[index].frS.toInt(), typeName: data[index].vz,ndocId: widget.data, id: data[index].id,));
+                                BottomDialog.showScreenDialog(context,UpdateOutcomeWidgetDialog(data: data[index], price: data[index].snarhi!=0?data[index].snarhi:data[index].snarhiS, priceUsd: data[index].frS.toInt(), typeName: data[index].vz,ndocId: widget.data, id: data[index].id,));
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),

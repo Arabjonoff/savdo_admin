@@ -37,12 +37,11 @@ class _MainScreenState extends State<MainScreen> {
       body: const HomeScreen(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (i){
-          print(DateTime.now().weekday);
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: "Asosiy"),
-          BottomNavigationBarItem(icon: Icon(Icons.monitor_heart),label: "Monitoring"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Sozlamalr"),
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled),label: "Асосий"),
+          BottomNavigationBarItem(icon: Icon(Icons.monitor_heart),label: "Мониторинг"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Созламалар"),
         ],
       ),
     );

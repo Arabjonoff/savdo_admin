@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BottomDialog{
-  static void showAddOutComeDialog(BuildContext context ,Widget screen){
+  static void showScreenDialog(BuildContext context ,Widget screen){
     showModalBottomSheet(
       useRootNavigator: true,
       useSafeArea: true,

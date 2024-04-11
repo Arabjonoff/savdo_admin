@@ -140,7 +140,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                             ),
                             child: GestureDetector(
                               onTap: (){
-                                BottomDialog.showAddOutComeDialog(context, WareHouseDetailScreen(data: data[index].sklPerTov));
+                                BottomDialog.showScreenDialog(context, WareHouseDetailScreen(data: data[index].sklPerTov));
                               },
                               child: Container(
                                 decoration: BoxDecoration(

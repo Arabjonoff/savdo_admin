@@ -9,6 +9,7 @@ import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/main/income/documnet_income_screen.dart';
 import 'package:savdo_admin/src/ui/main/outcome/outcome_list_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/rx_bus.dart';
@@ -154,72 +155,4 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   }
 }
 
-class DocumentClientScreen extends StatefulWidget {
-  const DocumentClientScreen({super.key});
-
-  @override
-  State<DocumentClientScreen> createState() => _DocumentClientScreenState();
-}
-
-class _DocumentClientScreenState extends State<DocumentClientScreen> {
-  final TextEditingController _controllerSearch = TextEditingController();
-
-  @override
-  void initState() {
-    clientBloc.getAllClientSearch('');
-    clientBloc.getAllClient('');
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child:StreamBuilder<List<ClientResult>>(
-            stream: clientBloc.getClientSearchStream,
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
-                var data = snapshot.data!;
-                return Column(
-                  children: [
-                    CupertinoSearchTextField(
-                      placeholder: "Излаш",
-                      controller: _controllerSearch,
-                      onChanged: (i){
-                        clientBloc.getAllClientSearch(i);
-                      },
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (ctx,index){
-                             return ListTile(
-                               onTap: (){
-                                 CacheService.saveClientIdT(data[index].idT);
-                                 CacheService.saveIdHodim(data[index].idHodimlar);
-                                 CacheService.saveClientName(data[index].name);
-                                 RxBus.post(data[index].name,tag: 'clientName');
-                                 RxBus.post(data[index].idT.toString(),tag: 'clientId');
-                                 RxBus.post(data[index].idAgent.toString(),tag: 'idAgent');
-                                 RxBus.post(data[index].idHodimlar.toString(),tag: 'idHodimlar');
-                                 RxBus.post(data[index].idFaol.toString(),tag: 'idFaol');
-                                 RxBus.post(data[index].idKlass.toString(),tag: 'idKlass');
-                                 RxBus.post(data[index].id.toString(),tag: 'idHaridor');
-                                 RxBus.post(data[index].osK.toString(),tag: 'clientDebtUsd');
-                                 RxBus.post(data[index].osKS.toString(),tag: 'clientDebtUzs');
-                                 Navigator.pop(context);
-                               },
-                               title: Text("${data[index].idT} - ${data[index].name}",style: AppStyle.medium(Colors.black),),
-                             );
-                          }
-                      ),
-                    ),
-                  ],
-                );}
-              return const SizedBox();
-            }
-        ),
-      ),
-    );
-  }
-}
 

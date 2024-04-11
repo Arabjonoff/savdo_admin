@@ -193,7 +193,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                         priceUsd = 1;
                                       }
                                     }
-                                    BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
+                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                   }
                                 },
                                 child: SizedBox(
@@ -310,7 +310,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                         priceUsd = 1;
                                       }
                                     }
-                                    BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
+                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                   }
                                 },
                                 child: SizedBox(

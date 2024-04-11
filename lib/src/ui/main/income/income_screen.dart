@@ -187,7 +187,7 @@ bool scrollTop = false;
                                 ),
                                 child: GestureDetector(
                                   onTap: (){
-                                    BottomDialog.showAddOutComeDialog(context, IncomeDetailScreen(data: data[index].sklPrTov,));
+                                    BottomDialog.showScreenDialog(context, IncomeDetailScreen(data: data[index].sklPrTov,));
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16),

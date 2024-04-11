@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
+import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/drawer_screen.dart';
+import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 
@@ -44,94 +46,121 @@ class _HomeScreenState extends State<HomeScreen> {
         // ],
       ),
       drawer: const DrawerScreen(),
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            width: width,
-            height: 150.h,
-            decoration: BoxDecoration(
-              color: AppColors.green,
-              borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10)
-              )
+      body: RefreshIndicator(
+        onRefresh: ()async{
+          await planBloc.getPlanAll();
+          await planBloc.getPlanAgentAll();
+        },
+        child: ListView(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: width,
+              height: 150.h,
+              decoration: BoxDecoration(
+                color: AppColors.green,
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)
+                )
+              ),
+              child: Text("103 924 593 Сўм",style: AppStyle.extraLarge(Colors.white),),
             ),
-            child: Text("103 924 593 Сўм",style: AppStyle.extraLarge(Colors.white),),
-          ),
-          StreamBuilder<PlanModel>(
-            stream: planBloc.getPlanStream,
-            builder: (context, snapshot) {
-             if(snapshot.hasData){
-               var data = snapshot.data!;
-               return Container(
-                 padding: EdgeInsets.symmetric(vertical: 4.h),
-                 margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 12.h),
-                 width: width,
-                 height: 150.w,
-                 decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(10),
-                     color: Colors.white,
-                     boxShadow: [
-                       BoxShadow(
-                           blurRadius: 5,
-                           color: Colors.grey.shade400
-                       ),
-                     ]
-                 ),
-                 child: Row(
-                   children: [
-                     Expanded(
-                       child: PieChart(
-                         PieChartData(
-                             sectionsSpace: 0.9,
-                           sections: [
-                             PieChartSectionData(
-                               value: data.taskDone.toDouble(),
-                               title: priceFormat.format(data.taskDone),
-                               color: AppColors.green,
-                               radius:30.r,
-                               titleStyle: AppStyle.smallBold(Colors.white),
-                               badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
-                               badgePositionPercentageOffset: -1.3
-                             ),
-                             PieChartSectionData(
-                               value: data.taskGo.toDouble(),
-                               title: priceFormat.format(data.taskGo),
-                               color: AppColors.red,
-                               titleStyle: AppStyle.smallBold(Colors.white),
-                               radius:30.r
-
-                             ),
-                             PieChartSectionData(
-                               value: data.taskOut.toDouble(),
-                               title: priceFormat.format(data.taskOut),
-                               color: Colors.orange,
-                               titleStyle: AppStyle.smallBold(Colors.white),
-                               radius:30.r
-
-                             ),
-                           ]
-                           // read about it in the PieChartData section
-                         ),
-                         swapAnimationDuration: const Duration(milliseconds: 250), // Optional
-                         swapAnimationCurve: Curves.linear, // Optional
-                       ),
+            StreamBuilder<PlanModel>(
+              stream: planBloc.getPlanStream,
+              builder: (context, snapshot) {
+               if(snapshot.hasData){
+                 var data = snapshot.data!;
+                 return GestureDetector(
+                   onTap: (){
+                     BottomDialog.showScreenDialog(context, PlanScreen());
+                   },
+                   child: Container(
+                     padding: EdgeInsets.symmetric(vertical: 4.h),
+                     margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 12.h),
+                     width: width,
+                     height: 150.w,
+                     decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                               blurRadius: 2,
+                               color: Colors.grey.shade400
+                           ),
+                         ]
                      ),
-                     Expanded(
-                       child: Column(
-                         children: [
-                       
-                         ],
-                       ),
-                     )
-                   ],
-                 ),
-               );
-             }return SizedBox();
-            }
-          )
-        ],
+                     child: Row(
+                       children: [
+                         Expanded(
+                           child: PieChart(
+                             PieChartData(
+                                 sectionsSpace: 1.2,
+                               sections: [
+                                 PieChartSectionData(
+                                   value: data.taskDone.toDouble(),
+                                   title: priceFormat.format(data.taskDone),
+                                   color: AppColors.green,
+                                   radius:25.r,
+                                   titleStyle: AppStyle.smallBold(Colors.white),
+                                   badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
+                                   badgePositionPercentageOffset: -1.8.spMax,
+                                 ),
+                                 PieChartSectionData(
+                                   value: data.taskGo.toDouble()-data.taskDone.toDouble(),
+                                   title: priceFormat.format(data.taskGo.toDouble()-data.taskDone.toDouble()),
+                                   color: AppColors.red,
+                                   titleStyle: AppStyle.smallBold(Colors.white),
+                                   radius:25.r
+                                 ),
+                                 PieChartSectionData(
+                                   value: data.taskOut.toDouble(),
+                                   title: priceFormat.format(data.taskOut),
+                                   color: Colors.orange,
+                                   titleStyle: AppStyle.smallBold(Colors.white),
+                                   radius:25.r
+                                 ),
+                               ]
+                               // read about it in the PieChartData section
+                             ),
+                             swapAnimationDuration: const Duration(milliseconds: 250), // Optional
+                             swapAnimationCurve: Curves.linear, // Optional
+                           ),
+                         ),
+                         Expanded(
+                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             children: [
+                               Row(
+                                 children: [
+                                   const Icon(Icons.square,color: Colors.red,),
+                                   Text("Режа бўйича",style: AppStyle.smallBold(Colors.black),),
+                                 ],
+                               ),
+                               Row(
+                                 children: [
+                                   const Icon(Icons.square,color: Colors.orange,),
+                                   Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
+                                 ],
+                               ),
+                               Row(
+                                 children: [
+                                   Icon(Icons.square,color: AppColors.green,),
+                                   Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
+                                 ],
+                               ),
+                             ],
+                           ),
+                         )
+                       ],
+                     ),
+                   ),
+                 );
+               }return SizedBox();
+              }
+            )
+          ],
+        ),
       ),
     );
   }

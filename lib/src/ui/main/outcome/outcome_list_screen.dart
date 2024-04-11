@@ -98,7 +98,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                           priceUsd = 1;
                         }
                       }
-                      BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: outcomeBase[j].idEdizName,));
+                      BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: outcomeBase[j], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: outcomeBase[j].idEdizName,));
                     }
                   }
                 }
@@ -231,7 +231,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                       priceUsd = 1;
                                     }
                                   }
-                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
+                                  BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                 }
                               },
                               child: SizedBox(
@@ -351,7 +351,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                       priceUsd = 1;
                                     }
                                   }
-                                  BottomDialog.showAddOutComeDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
+                                  BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                 }
                               },
                               child: SizedBox(
