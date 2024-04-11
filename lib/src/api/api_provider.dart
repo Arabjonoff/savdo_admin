@@ -640,4 +640,8 @@ class ApiProvider {
     String url = "${_baseUrl}getkurs?DB=$db&JWT=$token";
     return await _getRequest(url);
   }
+  Future<HttpResult> getBalance(date)async{
+    String url = "${_baseUrl}get_blns?DB=$db&YIL=$year&OY=$month&SANA=$date";
+    return await _getRequest(url);
+  }
 }

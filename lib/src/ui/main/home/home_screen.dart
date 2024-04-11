@@ -93,6 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.only(left: 12.w),
+              child: Text("Бугунги режалар",style: AppStyle.smallBold(Colors.black),),
+            ),
             StreamBuilder<PlanModel>(
               stream: planBloc.getPlanStream,
               builder: (context, snapshot) {
@@ -186,11 +190,25 @@ class _HomeScreenState extends State<HomeScreen> {
                }return SizedBox();
               }
             ),
-            Row(
-              children: [
-
-              ],
-            )
+            // Padding(
+            //   padding: EdgeInsets.only(left: 12.w),
+            //   child: Text("Янгиликлар",style: AppStyle.smallBold(Colors.black),),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+            //   width: width,
+            //   height: 100,
+            //   decoration: BoxDecoration(
+            //     boxShadow: [
+            //         BoxShadow(
+            //             blurRadius: 3,
+            //             color: Colors.grey.shade400
+            //         )
+            //       ],
+            //     color: AppColors.white,
+            //     borderRadius: BorderRadius.circular(10)
+            //   ),
+            // )
           ],
         ),
       ),

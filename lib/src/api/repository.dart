@@ -230,4 +230,5 @@ class Repository{
   Future<HttpResult> lockWarehouse(year,month) => _apiProvider.lockWarehouse(year,month);
   Future<HttpResult> deleteWarehouseTransfer(id) => _apiProvider.deleteWarehouseTransfer(id);
   Future<HttpResult> getCurrency() => _apiProvider.getCurrency();
+  Future<HttpResult> getBalance(date) => _apiProvider.getBalance(date);
 }
