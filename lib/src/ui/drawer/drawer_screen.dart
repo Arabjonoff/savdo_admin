@@ -77,6 +77,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
             ExpansionTile(title:  Text("Омбор ҳаракати",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
+              initiallyExpanded: true,
               children: [
               /// Warehouse
               ListTile(
@@ -172,6 +173,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             /// Buyers Bloc
             ExpansionTile(title:  Text("Харидорлар",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
+              initiallyExpanded: true,
               children: [
                 ListTile(
                   shape: RoundedRectangleBorder(
@@ -193,6 +195,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             /// Income Outcome and Cost Bloc
             ExpansionTile(title:  Text("Кирим-чиқим",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
+              initiallyExpanded: true,
               children: [
                 /// Income
                 ListTile(

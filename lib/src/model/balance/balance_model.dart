@@ -21,6 +21,8 @@ class BalanceModel {
   num fr;
   num frS;
   num soni;
+  num balance;
+  num balanceUsd;
 
   BalanceModel({
     required this.status,
@@ -39,6 +41,8 @@ class BalanceModel {
     required this.fr,
     required this.frS,
     required this.soni,
+     this.balance = 0,
+     this.balanceUsd = 0,
   });
 
   factory BalanceModel.fromJson(Map<String, dynamic> json) => BalanceModel(

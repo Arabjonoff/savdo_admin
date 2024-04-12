@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
+import 'package:savdo_admin/src/model/balance/balance_model.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.green,
-        title: const Text("N-Savdo "),
+        title:  Text("N-Savdo"),
         // actions: [
         //   IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_active))
         // ],
@@ -50,11 +52,47 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const DrawerScreen(),
       body: RefreshIndicator(
         onRefresh: ()async{
+          await balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
           await planBloc.getPlanAll();
           await planBloc.getPlanAgentAll();
         },
         child: ListView(
           children: [
+            StreamBuilder<BalanceModel>(
+              stream: balanceBloc.getBalanceStream,
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  var data = snapshot.data!;
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                    width: width,
+                    height: 150,
+                    decoration:  BoxDecoration(
+                        color: AppColors.green,
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)
+                        )
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 12.0.w),
+                          child: Text("Баланс",style: AppStyle.large(Colors.white),),
+                        ),
+                        ListTile(
+                          title: Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
+                          trailing: IconButton(onPressed: (){},icon: const Icon(Icons.repeat,color: Colors.white,),),
+                          onTap: (){},
+                        )
+                      ],
+                    ),
+                  );
+                }return const SizedBox();
+              }
+            ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
               padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
@@ -71,25 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius:  BorderRadius.circular(10)
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Сана",style: AppStyle.smallBold(Colors.black),),
-                        Text(DateFormat("yyyy-MM-dd").format(DateTime.now()),style: AppStyle.smallBold(Colors.black),),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
-                        Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
-                      ],
-                    ),
-                  ),
+                  Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
+                  Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
                 ],
               ),
             ),
