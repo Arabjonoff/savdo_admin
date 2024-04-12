@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        elevation: 0,
         foregroundColor: Colors.white,
         backgroundColor: AppColors.green,
         title:  Text("N-Savdo"),
