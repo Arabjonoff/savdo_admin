@@ -7,17 +7,17 @@ import 'package:savdo_admin/src/bloc/payments/income_pay_bloc.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
-import 'package:savdo_admin/src/ui/main/payment/income_pay/add_inocme_apy.dart';
-import 'package:savdo_admin/src/ui/main/payment/income_pay/income_pay_screen.dart';
+import 'package:savdo_admin/src/ui/main/payment/outcome_pay/add_outcome_pay.dart';
+import 'package:savdo_admin/src/ui/main/payment/outcome_pay/outcome_pay_screen.dart';
 
-class IncomeTabBarScreen extends StatefulWidget {
-  const IncomeTabBarScreen({super.key});
+class OutcomeTabBarScreen extends StatefulWidget {
+  const OutcomeTabBarScreen({super.key});
 
   @override
-  State<IncomeTabBarScreen> createState() => _IncomeTabBarScreenState();
+  State<OutcomeTabBarScreen> createState() => _OutcomeTabBarScreenState();
 }
 
-class _IncomeTabBarScreenState extends State<IncomeTabBarScreen> with SingleTickerProviderStateMixin{
+class _OutcomeTabBarScreenState extends State<OutcomeTabBarScreen> with SingleTickerProviderStateMixin{
   TabController? _tabController;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
@@ -37,9 +37,9 @@ class _IncomeTabBarScreenState extends State<IncomeTabBarScreen> with SingleTick
             backgroundColor: AppColors.background,
             title: Column(
               children: [
-                const Text("Киримлар"),
-                 SizedBox(height: 4.h,),
-                 Text(_controllerDate.text,style: AppStyle.smallBold(Colors.grey),),
+                const Text("Чиқимлар"),
+                SizedBox(height: 4.h,),
+                Text(_controllerDate.text,style: AppStyle.smallBold(Colors.grey),),
               ],
             ),
             bottom: PreferredSize(
@@ -50,10 +50,10 @@ class _IncomeTabBarScreenState extends State<IncomeTabBarScreen> with SingleTick
                   controller: _tabController,
                   tabs: const [
                     Tab(
-                      child:Text("Барча киримлар"),
+                      child:Text("Барча чиқимлар"),
                     ),
                     Tab(
-                      child:Text("Кирим қўшиш",),
+                      child:Text("Чиқим қўшиш",),
                     ),
                   ],
                 )
@@ -69,8 +69,8 @@ class _IncomeTabBarScreenState extends State<IncomeTabBarScreen> with SingleTick
           body: TabBarView(
             controller: _tabController,
             children: [
-              IncomePayScreen(idAgent: idAgent,),
-              const AddIncomePayScreen(),
+              OutcomePayScreen(idAgent: idAgent,),
+              const AddOutcomePayScreen(),
             ],
           ),
           endDrawer: Drawer(

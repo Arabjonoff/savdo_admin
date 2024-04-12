@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/payments/income_pay_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -550,6 +551,7 @@ class _AddOutcomePayScreenState extends State<AddOutcomePayScreen> {
                     "TULOVNAME":""};
                   HttpResult res = await repository.addIncomePayment(payment);
                   if(res.result['status'] == true){
+                    incomePayBloc.getAllIncomePay(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                     if(context.mounted)FocusScope.of(context).unfocus();
                     _controllerClient.clear();
                     controllerClientUzs.clear();

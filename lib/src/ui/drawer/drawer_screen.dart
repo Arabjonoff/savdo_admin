@@ -8,6 +8,7 @@ import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/client/tab_bar_screen.dart';
+import 'package:savdo_admin/src/ui/main/payment/outcome_pay/outcome_tapbar.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 
 
@@ -223,7 +224,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   leading: const Icon(Icons.outbound),
                   onTap: (){
                     setState(() =>selected =9);
-                    Navigator.pushNamed(context, AppRouteName.outComePay);},
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return const OutcomeTabBarScreen();
+                    }));
+                    },
                   title: const Text("Чиқимлар"),
                 ),
                 /// Cost

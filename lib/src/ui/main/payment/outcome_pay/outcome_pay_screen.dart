@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/payments/income_pay_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
@@ -11,6 +11,8 @@ import 'package:savdo_admin/src/model/payments/payments_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/ui/main/payment/income_pay/update_inocme_pay.dart';
+import 'package:savdo_admin/src/ui/main/payment/outcome_pay/update_outcome_pay.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
@@ -18,13 +20,13 @@ class OutcomePayScreen extends StatefulWidget {
   final bool? isPayment;
   final int? idSklPr;
   final int idAgent;
-  const OutcomePayScreen({super.key, this.isPayment, this.idSklPr, required this.idAgent});
+  const OutcomePayScreen({super.key,  this.isPayment,  this.idSklPr, this.idAgent =0});
 
   @override
   State<OutcomePayScreen> createState() => _OutcomePayScreenState();
 }
 
-class _OutcomePayScreenState extends State<OutcomePayScreen> {
+class _OutcomePayScreenState extends State<OutcomePayScreen> with AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final TextEditingController _controllerDate = TextEditingController();
   List<AgentsResult> agents = [];
@@ -38,14 +40,12 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Repository repository = Repository();
     double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Чиқимлар"),
-        ),
         key: _key,
         backgroundColor: AppColors.background,
         body:StreamBuilder<List<PaymentsResult>>(
@@ -58,7 +58,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                 card = 0;
                 bank = 0;
                 for(int i = 0;i<data[0].tl1.length;i++){
-                  if(data[0].tl1[i].tip ==2){
+                  if(data[0].tl1[i].tip == 2){
                     if(data[0].tl1[i].idAgent == widget.idAgent){
                       if (data[0].tl1[i].tp == 0) {
                         price += data[0].tl1[i].sm;
@@ -66,7 +66,9 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                         currency +=  data[0].tl1[i].sm.toDouble();
                       }  if (data[0].tl1[i].tp == 2) {
                         card +=  data[0].tl1[i].sm;
-                      }  if (data[0].tl1[i].tp == 3) {bank +=  data[0].tl1[i].sm;}
+                      }  if (data[0].tl1[i].tp == 3) {
+                        bank +=  data[0].tl1[i].sm;
+                      }
                     }
                     else if(widget.idAgent ==0){
                       if (data[0].tl1[i].tp == 0) {
@@ -149,7 +151,8 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                   child: ListView.builder(
                       itemCount: data[0].tl1.length,
                       itemBuilder: (ctx,index){
-                        if(data[0].tl1[index].idAgent == widget.idAgent && data[0].tl1[index].tip==2) {
+                        if(data[0].tl1[index].idAgent == widget.idAgent&&data[0].tl1[index].tip ==2)
+                        {
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
@@ -162,6 +165,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       HttpResult res = await repository.deleteIncomePayment(data[0].tl1[index].id, DateTime.now());
                                       if(res.result['status'] == true){
+                                        incomePayBloc.getAllIncomePay(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                                         if(context.mounted)Navigator.pop(context);
                                       }
                                       else{
@@ -176,6 +180,9 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",
                                   onPressed: (i){
+                                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                      return UpdateOutcomePayScreen(data: data[0].tl1[index],);
+                                    }));
                                   },
                                 ),
                               ],
@@ -227,7 +234,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                             ),
                           );
                         }
-                        else if(widget.idAgent == 0&& data[0].tl1[index].tip==2){
+                        else if(widget.idAgent == 0&&data[0].tl1[index].tip ==2){
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
@@ -240,6 +247,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       HttpResult res = await repository.deleteIncomePayment(data[0].tl1[index].id, DateTime.now());
                                       if(res.result['status'] == true){
+                                        incomePayBloc.getAllIncomePay(DateFormat('yyyy-MM-dd').format(DateTime.now()));
                                         if(context.mounted)Navigator.pop(context);
                                       }
                                       else{
@@ -254,6 +262,9 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",
                                   onPressed: (i){
+                                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                      return UpdateOutcomePayScreen(data: data[0].tl1[index],);
+                                    }));
                                   },
                                 ),
                               ],
@@ -314,6 +325,8 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> {
       ),
     );
   }
+  @override
+  bool get wantKeepAlive => true;
   Widget paymentCheck(Tolov1 data){
     if(data.tp == 0){
       return Text("${priceFormatUsd.format(data.sm)} сўм",style: AppStyle.medium(AppColors.green),);
