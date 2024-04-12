@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                    radius:25.r,
                                    titleStyle: AppStyle.smallBold(Colors.white),
                                    badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
-                                   badgePositionPercentageOffset: -1.8.spMax,
+                                   badgePositionPercentageOffset: -1.8.w,
                                  ),
                                  PieChartSectionData(
                                    value: data.taskGo.toDouble()-data.taskDone.toDouble(),

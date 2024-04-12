@@ -1,17 +1,16 @@
 import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class Message extends StatefulWidget {
-  const Message({super.key});
+class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
 
   @override
-  State<Message> createState() => _MessageState();
+  State<MessageScreen> createState() => _MessageScreenState();
 }
 
-class _MessageState extends State<Message> {
+class _MessageScreenState extends State<MessageScreen> {
   Map payload = {};
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class _MessageState extends State<Message> {
       payload = data.data;
     }
     if (data is NotificationResponse) {
-      payload = jsonDecode(data.payload!);
+      payload = json.decode(data.payload!);
     }
 
     return Scaffold(
