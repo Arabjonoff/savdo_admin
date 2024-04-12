@@ -59,6 +59,9 @@ dependencies:
   connectivity_plus: ^5.0.2
   google_fonts: ^6.2.1
   fl_chart: ^0.67.0
+  firebase_core: ^2.29.0
+  firebase_messaging: ^14.8.1
+  flutter_local_notifications: ^17.0.0
 
 dev_dependencies:
   flutter_test:

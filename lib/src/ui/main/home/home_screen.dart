@@ -1,9 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
@@ -25,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool hasInterNetConnection = false;
+  bool balance = false;
   void connectionChanged(dynamic hasConnection) {
   }
   @override
@@ -83,9 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text("Баланс",style: AppStyle.large(Colors.white),),
                         ),
                         ListTile(
-                          title: Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
-                          trailing: IconButton(onPressed: (){},icon: const Icon(Icons.repeat,color: Colors.white,),),
+                          title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
                           onTap: (){},
+                          trailing: IconButton(onPressed: (){
+                            setState(() {
+                              balance = !balance;
+                            });
+                          },icon: const Icon(Icons.repeat,color: Colors.white,),),
                         )
                       ],
                     ),

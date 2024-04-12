@@ -14,6 +14,7 @@ class BalanceBloc{
     if(result.isSuccess){
       var data = BalanceModel.fromJson(result.result);
       data.balance = (data.sklSm+data.kzSm+data.tlSm)-(data.psSm-data.oySm);
+      data.balanceUsd = (data.sklSmS+data.kzSmS+data.tlSmS)-(data.psSmS-data.oySmS);
       _fetchBalanceInfo.sink.add(data);
     }
   }
