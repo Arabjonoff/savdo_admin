@@ -34,7 +34,6 @@ void main()async {
   initNoInternetListener();
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
-      print("Background Notification Tapped");
       navigatorKey.currentState!.pushNamed("/message", arguments: message);
     }
   });
