@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:savdo_admin/main.dart';
@@ -18,8 +20,13 @@ class PushNotifications {
       sound: true,
     );
     // get the device fcm token
-    final token = await _firebaseMessaging.getToken();
-    print("device token: $token");
+    if(Platform.isIOS){
+      final token = await _firebaseMessaging.getAPNSToken();
+      print("apns token: $token");
+    }else{
+      final token = await _firebaseMessaging.getToken();
+      print("device token: $token");
+    }
   }
 
 // initalize local notifications

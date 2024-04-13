@@ -7,6 +7,7 @@ import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
+import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/drawer_screen.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
+    balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     planBloc.getPlanAll();
     ConnectionUtil connectionStatus = ConnectionUtil.getInstance();
     connectionStatus.initialize();
@@ -44,9 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
         foregroundColor: Colors.white,
         backgroundColor: AppColors.green,
         title:  Text("N-Savdo"),
-        // actions: [
-        //   IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_active))
-        // ],
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, AppRouteName.message);
+          }, icon: const Icon(Icons.notifications_active))
+        ],
       ),
       drawer: const DrawerScreen(),
       body: RefreshIndicator(
@@ -96,31 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 }return const SizedBox();
               }
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-              padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
-              alignment: Alignment.center,
-              width: width,
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 3,
-                        color: Colors.grey.shade400
-                    )
-                  ],
-                  color: AppColors.white,
-                  borderRadius:  BorderRadius.circular(10)
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
-                  Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
-                ],
-              ),
-            ),
             Padding(
-              padding: EdgeInsets.only(left: 12.w),
+              padding: EdgeInsets.only(left: 12.w,top: 8.h),
               child: Text("Бугунги режалар",style: AppStyle.smallBold(Colors.black),),
             ),
             StreamBuilder<PlanModel>(
@@ -196,14 +177,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                ),
                                Row(
                                  children: [
-                                   const Icon(Icons.square,color: Colors.orange,),
-                                   Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
+                                   Icon(Icons.square,color: AppColors.green,),
+                                   Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
                                  ],
                                ),
                                Row(
                                  children: [
-                                   Icon(Icons.square,color: AppColors.green,),
-                                   Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
+                                   const Icon(Icons.square,color: Colors.orange,),
+                                   Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
                                  ],
                                ),
                              ],
@@ -216,6 +197,29 @@ class _HomeScreenState extends State<HomeScreen> {
                }return SizedBox();
               }
             ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
+              alignment: Alignment.center,
+              width: width,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 3,
+                        color: Colors.grey.shade400
+                    )
+                  ],
+                  color: AppColors.white,
+                  borderRadius:  BorderRadius.circular(10)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
+                  Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
+                ],
+              ),
+            ),
             // Padding(
             //   padding: EdgeInsets.only(left: 12.w),
             //   child: Text("Янгиликлар",style: AppStyle.smallBold(Colors.black),),
@@ -227,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   decoration: BoxDecoration(
             //     boxShadow: [
             //         BoxShadow(
-            //             blurRadius: 3,
+            //             blurRadius: 2,
             //             color: Colors.grey.shade400
             //         )
             //       ],

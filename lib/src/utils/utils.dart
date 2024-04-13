@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
-import 'package:savdo_admin/src/ui/main/income/add_income_screen.dart';
 class DashedRect extends StatelessWidget {
   final Color color;
   final double strokeWidth;

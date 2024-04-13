@@ -7,8 +7,8 @@ import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
-import 'package:savdo_admin/src/ui/main/client/tab_bar_screen.dart';
-import 'package:savdo_admin/src/ui/main/payment/outcome_pay/outcome_tapbar.dart';
+import 'package:savdo_admin/src/ui/drawer/client/tab_bar_screen.dart';
+import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_tapbar.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 
 
