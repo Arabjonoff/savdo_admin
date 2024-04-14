@@ -12,8 +12,6 @@ class ProductBloc{
   Stream<List<Skl2Result>> get getProductStream => _fetchProductInfo.stream;
 
   getAllProduct()async{
-    HttpResult currency = await _repository.getCurrency();
-    CacheService.saveCurrency(currency.result["KURS"]);
     List<SkladResult> skladBase = await _repository.getSkladBase();
     List<ProductTypeAllResult> firmaBase = await _repository.getFirmaTypeBase();
     List<ProductTypeAllResult> quantityBase = await _repository.getQuantityTypBase();

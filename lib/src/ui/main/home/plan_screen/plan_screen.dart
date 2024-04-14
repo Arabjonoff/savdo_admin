@@ -46,7 +46,7 @@ class _PlanScreenState extends State<PlanScreen> {
                  return ListView.builder(
                    itemCount: data.length,
                      itemBuilder: (ctx,index){
-                     if(weekday==1&&data[index].h1==1){
+                     if(weekday==1&&data[index].h1==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -56,7 +56,7 @@ class _PlanScreenState extends State<PlanScreen> {
                          ),
                        );
                      }
-                     if(weekday==2&&data[index].h2==1){
+                     if(weekday==2&&data[index].h2==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -66,7 +66,7 @@ class _PlanScreenState extends State<PlanScreen> {
                          ),
                        );
                      }
-                     if(weekday==3&&data[index].h3==1){
+                     if(weekday==3&&data[index].h3==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -76,7 +76,7 @@ class _PlanScreenState extends State<PlanScreen> {
                          ),
                        );
                      }
-                     if(weekday==4&&data[index].h4==1){
+                     if(weekday==4&&data[index].h4==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -86,7 +86,7 @@ class _PlanScreenState extends State<PlanScreen> {
                          ),
                        );
                      }
-                     if(weekday==5&&data[index].h5==1){
+                     if(weekday==5&&data[index].h5==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -96,7 +96,17 @@ class _PlanScreenState extends State<PlanScreen> {
                          ),
                        );
                      }
-                     if(weekday==6&&data[index].h6==1){
+                     if(weekday==6&&data[index].h6==1&&data[index].tp==0){
+                       return Container(
+                         margin: EdgeInsets.symmetric(vertical: 8.h),
+                         height: 50.r,
+                         width: width,
+                         child: ListTile(
+                           title: Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                         ),
+                       );
+                     }
+                     if(weekday==7&&data[index].h7==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
                          height: 50.r,
@@ -107,14 +117,7 @@ class _PlanScreenState extends State<PlanScreen> {
                        );
                      }
                      else{
-                       return Container(
-                         margin: EdgeInsets.symmetric(vertical: 8.h),
-                         height: 50.r,
-                         width: width,
-                         child: ListTile(
-                           title: Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
-                         ),
-                       );
+                       return Container();
                      }
                      });
                }

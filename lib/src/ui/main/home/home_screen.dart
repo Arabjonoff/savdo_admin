@@ -109,6 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, snapshot) {
                if(snapshot.hasData){
                  var data = snapshot.data!;
+                 var d = data.taskGo.toDouble()-data.taskDone.toDouble();
+                 if(d<0){
+                   d=0;
+                 }
                  return GestureDetector(
                    onTap: (){
                      BottomDialog.showScreenDialog(context, PlanScreen());
@@ -145,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                    badgePositionPercentageOffset: -1.8.w,
                                  ),
                                  PieChartSectionData(
-                                   value: data.taskGo.toDouble()-data.taskDone.toDouble(),
+                                   value: d,
                                    title: priceFormat.format(data.taskGo.toDouble()-data.taskDone.toDouble()),
                                    color: AppColors.red,
                                    titleStyle: AppStyle.smallBold(Colors.white),
