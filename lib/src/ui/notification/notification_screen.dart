@@ -52,6 +52,7 @@ class PushNotifications {
 
   // on tap local notification in foreground
   static void onNotificationTap(NotificationResponse notificationResponse) {
+    print(notificationResponse.payload);
     navigatorKeyMessage.currentState!
         .pushNamed("/message", arguments: notificationResponse);
   }
@@ -63,14 +64,13 @@ class PushNotifications {
     required String payload,
   }) async {
     const AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails('your channel id', 'your channel name',
+    AndroidNotificationDetails(
+        'goodChannelId',
+        'goodChannelName',
         channelDescription: 'your channel description',
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-    NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
+    const NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);await _flutterLocalNotificationsPlugin.show(0, title, body, notificationDetails, payload: payload);
   }
 }

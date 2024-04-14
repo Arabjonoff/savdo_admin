@@ -17,6 +17,9 @@ final navigatorKeyMessage = GlobalKey<NavigatorState>();
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
     print("Some notification Received");
+  }else{
+    print("Some notification Received");
+
   }
 }
 void main()async {
