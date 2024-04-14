@@ -11,6 +11,7 @@ import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/drawer_screen.dart';
+import 'package:savdo_admin/src/ui/main/home/balance/balance_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
                     width: width,
-                    height: 150,
+                    height: 150.h,
                     decoration:  BoxDecoration(
                         color: AppColors.green,
                         borderRadius: const BorderRadius.only(
@@ -87,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         ListTile(
                           title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
-                          onTap: (){},
+                          onTap: (){
+                            BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
+                          },
                           trailing: IconButton(onPressed: (){
                             setState(() {
                               balance = !balance;

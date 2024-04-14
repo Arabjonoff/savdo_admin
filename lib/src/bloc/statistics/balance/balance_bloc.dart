@@ -2,6 +2,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 
 class BalanceBloc{
   final Repository _repository = Repository();
@@ -9,6 +10,8 @@ class BalanceBloc{
   Stream<BalanceModel> get  getBalanceStream => _fetchBalanceInfo.stream;
 
   getAllBalance(date)async{
+    HttpResult currency = await _repository.getCurrency();
+    CacheService.saveCurrency(currency.result["KURS"]);
     num balanceUzs = 0;
     HttpResult result = await _repository.getBalance(date);
     if(result.isSuccess){
