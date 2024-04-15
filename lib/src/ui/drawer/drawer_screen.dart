@@ -194,7 +194,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ],),
             /// Income Outcome and Cost Bloc
-            ExpansionTile(title:  Text("Кирим-чиқим",style: AppStyle.mediumBold(Colors.black),),
+            ExpansionTile(title:  Text("Тўловлар",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
               initiallyExpanded: true,
               children: [

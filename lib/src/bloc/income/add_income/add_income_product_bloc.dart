@@ -72,7 +72,7 @@ class IncomeProductBloc{
           snarhi2: data[i].snarhi2,
           snarhi2S: data[i].snarhi2S,
           tnarhi: data[i].tnarhi,
-          tnarhiS: data[i].narhiS+resUsd,
+          tnarhiS: resUsd == 0?0:data[i].narhiS+resUsd,
           tsm: data[i].tsm,
           tsmS: data[i].tsmS,
           shtr: data[i].shtr,

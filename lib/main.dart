@@ -50,6 +50,7 @@ void main()async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     String payloadData = json.encode(message.data);
     print("Got a message in foreground");
+    print(payloadData);
     if (message.notification != null) {
       PushNotifications.showSimpleNotification(
           title: message.notification!.title!,
