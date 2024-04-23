@@ -8,6 +8,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/income/documnet_income_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/outcome_list_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/rx_bus.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
@@ -99,7 +100,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                   "ID_HODIM": _controllerClientHodim.text,
                   "ID_AGENT": _controllerClientIdAgent.text,
                   "ID_HARIDOR": _controllerClientIdHaridor.text,
-                  "KURS": 12450,
+                  "KURS": CacheService.getCurrency(),
                   "ID_FAOL": _controllerClientIdFaol.text,
                   "ID_KLASS": _controllerClientIdKlass.text,
                   "ID_SKL": 1,

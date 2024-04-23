@@ -31,6 +31,8 @@ class ClientModel {
 class ClientResult {
   int id;
   String name;
+  String agentName;
+  int agentId;
   String idT;
   String izoh;
   String manzil;
@@ -95,8 +97,10 @@ class ClientResult {
     required this.st,
     this.idKlassName = '',
     this.idFaolName = '',
+    this.agentName = '',
     this.osK = 0.0,
     this.osKS = 0.0,
+    this.agentId = 0,
   });
 
   factory ClientResult.fromJson(Map<String, dynamic> json) => ClientResult(

@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/client/clientdebt_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
@@ -16,6 +17,8 @@ class ClientBloc{
 
 
   getAllClient(obj)async{
+    /// Agent Base
+    List<AgentsResult> agentBase = await _repository.getAgentsBase();
     /// Client Base
     List<ClientResult> clientBase = await _repository.getClientBase(obj);
     /// Client Debt Base
@@ -26,6 +29,12 @@ class ClientBloc{
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
 
     for(int i = 0; i < clientBase.length;i++){
+      for(int a = 0;a<agentBase.length;a++){
+        if(clientBase[i].idAgent == agentBase[a].id){
+          clientBase[i].agentName = agentBase[a].name;
+          clientBase[i].agentId = agentBase[a].id;
+        }
+      }
       for(int j =0; j < clientTypeBase.length; j++){
         if(clientBase[i].idFaol == clientTypeBase[j].id){
           clientBase[i].idFaolName = clientTypeBase[j].name;
@@ -79,12 +88,19 @@ class ClientBloc{
     }
   }
   getAllClientSearch(obj)async{
+    /// Agent Base
+    List<AgentsResult> agentBase = await _repository.getAgentsBase();
     List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
     List<ClientResult> clientBase = await _repository.getClientBase(obj);
-
     for(int i=0; i<clientBase.length;i++){
+      for(int a = 0;a<agentBase.length;a++){
+        if(clientBase[i].idAgent == agentBase[a].id){
+          clientBase[i].agentName = agentBase[a].name;
+          clientBase[i].agentId = agentBase[a].id;
+        }
+      }
       for(int j =0; j<clientTypeBase.length;j++){
         if(clientBase[i].idFaol == clientTypeBase[j].id){
           clientBase[i].idFaolName = clientTypeBase[j].name;

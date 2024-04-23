@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
 class PlanScreen extends StatefulWidget {
   const PlanScreen({super.key});
@@ -46,6 +47,7 @@ class _PlanScreenState extends State<PlanScreen> {
                  return ListView.builder(
                    itemCount: data.length,
                      itemBuilder: (ctx,index){
+
                      if(weekday==1&&data[index].h1==1&&data[index].tp==0){
                        return Container(
                          margin: EdgeInsets.symmetric(vertical: 8.h),
@@ -117,11 +119,11 @@ class _PlanScreenState extends State<PlanScreen> {
                        );
                      }
                      else{
-                       return Container();
+                       return const SizedBox();
                      }
                      });
                }
-               return SizedBox();
+               return const EmptyWidgetScreen();
               }
             ),
           ),

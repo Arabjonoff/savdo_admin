@@ -33,7 +33,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
    final TextEditingController _controllerTotal = TextEditingController();
    final Repository _repository = Repository();
    final TextEditingController _controllerCurrency = TextEditingController(text: "12 450");
-  int priceType = 0,onTap=0;
+  int priceType = 0,onTap = 0;
   int currency = CacheService.getCurrency();
   @override
   void initState() {
