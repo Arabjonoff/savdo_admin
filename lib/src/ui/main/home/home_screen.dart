@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
@@ -26,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool balance = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
   void connectionChanged(dynamic hasConnection) {
   }
   @override
@@ -41,18 +44,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return  Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Colors.white,
-        backgroundColor: AppColors.green,
-        title:  Text("N-Savdo"),
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.pushNamed(context, AppRouteName.message);
-          }, icon: const Icon(Icons.notifications_active))
-        ],
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   foregroundColor: Colors.white,
+      //   backgroundColor: AppColors.green,
+      //   title:  Text("N-Savdo"),
+      //   actions: [
+      //     IconButton(onPressed: (){
+      //       Navigator.pushNamed(context, AppRouteName.message);
+      //     }, icon: const Icon(Icons.notifications_active))
+      //   ],
+      // ),
       drawer: const DrawerScreen(),
       body: RefreshIndicator(
         onRefresh: ()async{
@@ -61,191 +65,183 @@ class _HomeScreenState extends State<HomeScreen> {
           await planBloc.getPlanAgentAll();
         },
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            StreamBuilder<BalanceModel>(
-              stream: balanceBloc.getBalanceStream,
-              builder: (context, snapshot) {
-                if(snapshot.hasData){
-                  var data = snapshot.data!;
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    width: width,
-                    height: 150.h,
-                    decoration:  BoxDecoration(
-                        color: AppColors.green,
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 12.0.w),
-                          child: Text("Баланс",style: AppStyle.large(Colors.white),),
+            Stack(
+              children: [
+                StreamBuilder<BalanceModel>(
+                    stream: balanceBloc.getBalanceStream,
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        var data = snapshot.data!;
+                        return Container(
+                          alignment: Alignment.topRight,
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          width: width,
+                          height: 250.h,
+                          decoration: const BoxDecoration(
+                              image:  DecorationImage(
+                                image:  ExactAssetImage('assets/images/bg000.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              IconButton(onPressed: ()=>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu),color: Colors.white,),
+                              SizedBox(height: 12.h,),
+                              Padding(
+                                padding: EdgeInsets.only(left: 12.0.w),
+                                child: Text("Баланс",style: AppStyle.large(Colors.white),),
+                              ),
+                              ListTile(
+                                title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
+                                onTap: (){
+                                  BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
+                                },
+                                trailing: IconButton(onPressed: (){
+                                  setState(() {
+                                    balance = !balance;
+                                  });
+                                },icon: const Icon(Icons.repeat,color: Colors.white,),),
+                              )
+                            ],
+                          ),
+                        );
+                      }return const SizedBox();
+                    }
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 210.spMax),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      StreamBuilder<PlanModel>(
+                          stream: planBloc.getPlanStream,
+                          builder: (context, snapshot) {
+                            if(snapshot.hasData){
+                              var data = snapshot.data!;
+                              var d = data.taskGo.toDouble()-data.taskDone.toDouble();
+                              if(d<0){
+                                d=0;
+                              }
+                              return GestureDetector(
+                                onTap: (){
+                                  BottomDialog.showScreenDialog(context, PlanScreen());
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 4.h),
+                                  margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                                  width: width,
+                                  height: 150.w,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 2,
+                                            color: Colors.grey.shade400
+                                        ),
+                                      ]
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: PieChart(
+                                          PieChartData(
+                                              sectionsSpace: 1.2,
+                                              sections: [
+                                                PieChartSectionData(
+                                                  value: data.taskDone.toDouble(),
+                                                  title: priceFormat.format(data.taskDone),
+                                                  color: AppColors.green,
+                                                  radius:25.r,
+                                                  titleStyle: AppStyle.smallBold(Colors.white),
+                                                  badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
+                                                  badgePositionPercentageOffset: -1.8.w,
+                                                ),
+                                                PieChartSectionData(
+                                                    value: d,
+                                                    title: priceFormat.format(data.taskGo.toDouble()-data.taskDone.toDouble()),
+                                                    color: AppColors.red,
+                                                    titleStyle: AppStyle.smallBold(Colors.white),
+                                                    radius:25.r
+                                                ),
+                                                PieChartSectionData(
+                                                    value: data.taskOut.toDouble(),
+                                                    title: priceFormat.format(data.taskOut),
+                                                    color: Colors.orange,
+                                                    titleStyle: AppStyle.smallBold(Colors.white),
+                                                    radius:25.r
+                                                ),
+                                              ]
+                                            // read about it in the PieChartData section
+                                          ),
+                                          swapAnimationDuration: const Duration(milliseconds: 250), // Optional
+                                          swapAnimationCurve: Curves.linear, // Optional
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.square,color: Colors.red,),
+                                                Text("Режа бўйича",style: AppStyle.smallBold(Colors.black),),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.square,color: AppColors.green,),
+                                                Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.square,color: Colors.orange,),
+                                                Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }return SizedBox();
+                          }
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                        padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
+                        alignment: Alignment.center,
+                        width: width,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 3,
+                                  color: Colors.grey.shade400
+                              )
+                            ],
+                            color: AppColors.white,
+                            borderRadius:  BorderRadius.circular(10)
                         ),
-                        ListTile(
-                          title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
-                          onTap: (){
-                            BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
-                          },
-                          trailing: IconButton(onPressed: (){
-                            setState(() {
-                              balance = !balance;
-                            });
-                          },icon: const Icon(Icons.repeat,color: Colors.white,),),
-                        )
-                      ],
-                    ),
-                  );
-                }return const SizedBox();
-              }
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 12.w,top: 8.h),
-              child: Text("Бугунги режалар",style: AppStyle.smallBold(Colors.black),),
-            ),
-            StreamBuilder<PlanModel>(
-              stream: planBloc.getPlanStream,
-              builder: (context, snapshot) {
-               if(snapshot.hasData){
-                 var data = snapshot.data!;
-                 var d = data.taskGo.toDouble()-data.taskDone.toDouble();
-                 if(d<0){
-                   d=0;
-                 }
-                 return GestureDetector(
-                   onTap: (){
-                     BottomDialog.showScreenDialog(context, PlanScreen());
-                   },
-                   child: Container(
-                     padding: EdgeInsets.symmetric(vertical: 4.h),
-                     margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-                     width: width,
-                     height: 150.w,
-                     decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(10),
-                         color: Colors.white,
-                         boxShadow: [
-                           BoxShadow(
-                               blurRadius: 2,
-                               color: Colors.grey.shade400
-                           ),
-                         ]
-                     ),
-                     child: Row(
-                       children: [
-                         Expanded(
-                           child: PieChart(
-                             PieChartData(
-                                 sectionsSpace: 1.2,
-                               sections: [
-                                 PieChartSectionData(
-                                   value: data.taskDone.toDouble(),
-                                   title: priceFormat.format(data.taskDone),
-                                   color: AppColors.green,
-                                   radius:25.r,
-                                   titleStyle: AppStyle.smallBold(Colors.white),
-                                   badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
-                                   badgePositionPercentageOffset: -1.8.w,
-                                 ),
-                                 PieChartSectionData(
-                                   value: d,
-                                   title: priceFormat.format(data.taskGo.toDouble()-data.taskDone.toDouble()),
-                                   color: AppColors.red,
-                                   titleStyle: AppStyle.smallBold(Colors.white),
-                                   radius:25.r
-                                 ),
-                                 PieChartSectionData(
-                                   value: data.taskOut.toDouble(),
-                                   title: priceFormat.format(data.taskOut),
-                                   color: Colors.orange,
-                                   titleStyle: AppStyle.smallBold(Colors.white),
-                                   radius:25.r
-                                 ),
-                               ]
-                               // read about it in the PieChartData section
-                             ),
-                             swapAnimationDuration: const Duration(milliseconds: 250), // Optional
-                             swapAnimationCurve: Curves.linear, // Optional
-                           ),
-                         ),
-                         Expanded(
-                           child: Column(
-                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                             children: [
-                               Row(
-                                 children: [
-                                   const Icon(Icons.square,color: Colors.red,),
-                                   Text("Режа бўйича",style: AppStyle.smallBold(Colors.black),),
-                                 ],
-                               ),
-                               Row(
-                                 children: [
-                                   Icon(Icons.square,color: AppColors.green,),
-                                   Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
-                                 ],
-                               ),
-                               Row(
-                                 children: [
-                                   const Icon(Icons.square,color: Colors.orange,),
-                                   Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
-                                 ],
-                               ),
-                             ],
-                           ),
-                         )
-                       ],
-                     ),
-                   ),
-                 );
-               }return SizedBox();
-              }
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-              padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
-              alignment: Alignment.center,
-              width: width,
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 3,
-                        color: Colors.grey.shade400
-                    )
-                  ],
-                  color: AppColors.white,
-                  borderRadius:  BorderRadius.circular(10)
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
-                  Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
-                ],
-              ),
-            ),
-            // Padding(
-            //   padding: EdgeInsets.only(left: 12.w),
-            //   child: Text("Янгиликлар",style: AppStyle.smallBold(Colors.black),),
-            // ),
-            // Container(
-            //   margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-            //   width: width,
-            //   height: 100,
-            //   decoration: BoxDecoration(
-            //     boxShadow: [
-            //         BoxShadow(
-            //             blurRadius: 2,
-            //             color: Colors.grey.shade400
-            //         )
-            //       ],
-            //     color: AppColors.white,
-            //     borderRadius: BorderRadius.circular(10)
-            //   ),
-            // )
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
+                            Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
