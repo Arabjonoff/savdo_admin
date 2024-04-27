@@ -1,14 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -43,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    Repository repository = Repository();
     double width = MediaQuery.of(context).size.width;
     return  Scaffold(
       key: _scaffoldKey,
@@ -91,18 +91,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: GestureDetector(
-                                  onTap: ()=>_scaffoldKey.currentState!.openDrawer(),
-                                    child: CircleAvatar(
-                                      child: Text(CacheService.getName()[0].toUpperCase()),
-                                    )),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding:EdgeInsets.only(left: 12.0.spMax),
+                                    child: GestureDetector(
+                                      onTap: ()=>_scaffoldKey.currentState!.openDrawer(),
+                                        child: CircleAvatar(
+                                          child: Text(CacheService.getName()[0].toUpperCase()),
+                                        )),
+                                  ),
+                                  IconButton(onPressed: ()async{
+                                  Navigator.pushNamed(context, AppRouteName.message);
+                                  }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
+                                ],
                               ),
-                              SizedBox(height: 12.h,),
+                              SizedBox(height: 40.spMax,),
                               Padding(
                                 padding: EdgeInsets.only(left: 12.0.w),
-                                child: Text("Баланс",style: AppStyle.large(Colors.white),),
+                                child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),
                               ),
                               ListTile(
                                 title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),

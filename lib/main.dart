@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/firebase_options.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/ui/notification/notification_screen.dart';
@@ -23,6 +24,7 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
   }
 }
 void main()async {
+  Repository repository = Repository();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -45,12 +47,9 @@ void main()async {
   PushNotifications.localNotiInit();
   // Listen to background notifications
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
-
   // to handle foreground notifications
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     String payloadData = json.encode(message.data);
-    print("Got a message in foreground");
-    print(payloadData);
     if (message.notification != null) {
       PushNotifications.showSimpleNotification(
           title: message.notification!.title!,
