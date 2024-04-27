@@ -87,11 +87,11 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
               HttpResult res = await _repository.addIncome(
                   _controllerClient.text,
                   _controllerClientIdT.text,
-                    _controllerDocNumber.text,
+                  _controllerDocNumber.text,
                   _controllerDate.text,
                   _controllerComment.text,
                   _controllerHodimID.text,
-                  1);
+                  CacheService.getIdSkl());
               if(res.result["status"] == true){
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
@@ -177,7 +177,7 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                                 trailing: Container(
                                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                                     decoration: BoxDecoration(
-                                        color: Colors.green,
+                                        color: data[index].tp==0?Colors.green:Colors.red,
                                         borderRadius: BorderRadius.circular(5)
                                     ),
                                     child: Text(data[index].tp==1?"Мол етказувчи":"Харидор",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),

@@ -7,6 +7,7 @@ import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/drawer/client/debtbook/debtbook_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/client/tab_bar_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_tapbar.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
@@ -40,16 +41,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
               padding: EdgeInsets.only(left: 16.w,bottom: 8),
               width: MediaQuery.of(context).size.width,
               height: 150.h,
-              decoration:  BoxDecoration(
-                  color: AppColors.green,
+              decoration: const BoxDecoration(
+                image:  DecorationImage(
+                  image:  ExactAssetImage('assets/images/bg000.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
+
               child: Stack(
                 children: [
                   Positioned(
                       right: -40.w,
                       top: -40,
                       child: Opacity(
-                        opacity: 0.4,
+                        opacity: 0.6,
                         child: SvgPicture.asset("assets/icons/logo.svg",width: 170.r,),
                       ),
                   ),
@@ -191,6 +196,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     }));
                   },
                   title: const Text("Харидорлар"),
+                ),
+                ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==11?true:false,
+                  selectedColor: selected ==11?AppColors.white:AppColors.black,
+                  leading: const Icon(Icons.book_outlined),
+                  onTap: (){
+                    setState(() =>selected =11);
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return DebtBookScreen();
+                    }));
+                  },
+                  title: const Text("Қарздорлик китоби"),
                 ),
               ],),
             /// Income Outcome and Cost Bloc

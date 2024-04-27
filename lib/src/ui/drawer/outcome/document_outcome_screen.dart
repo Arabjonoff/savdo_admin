@@ -103,7 +103,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                   "KURS": CacheService.getCurrency(),
                   "ID_FAOL": _controllerClientIdFaol.text,
                   "ID_KLASS": _controllerClientIdKlass.text,
-                  "ID_SKL": 1,
+                  "ID_SKL": CacheService.getIdSkl(),
                   "YIL": DateTime.now().year,
                   "OY":  DateTime.now().month
                 };
@@ -120,7 +120,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
 
               }
 
-            }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
+            }, color: AppColors.green, text: "Ҳужжатни сақлаш",),
           ],
         ),
       ),

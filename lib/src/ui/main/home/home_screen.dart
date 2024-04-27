@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
@@ -79,8 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 12.w),
                           width: width,
                           height: 250.h,
-                          decoration: const BoxDecoration(
-                              image:  DecorationImage(
+                          decoration:  BoxDecoration(
+                            color: AppColors.green,
+                              image:  const DecorationImage(
                                 image:  ExactAssetImage('assets/images/bg000.jpg'),
                                 fit: BoxFit.cover,
                               ),
@@ -89,7 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              IconButton(onPressed: ()=>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu),color: Colors.white,),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: ()=>_scaffoldKey.currentState!.openDrawer(),
+                                    child: CircleAvatar(
+                                      child: Text(CacheService.getName()[0].toUpperCase()),
+                                    )),
+                              ),
                               SizedBox(height: 12.h,),
                               Padding(
                                 padding: EdgeInsets.only(left: 12.0.w),
@@ -109,7 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         );
-                      }return const SizedBox();
+                      } return Container(
+                        color: AppColors.green,
+                      );
                     }
                 ),
                 Padding(
