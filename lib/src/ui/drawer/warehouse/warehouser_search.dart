@@ -58,11 +58,7 @@ class _WareHouseSearchState extends State<WareHouseSearch> {
           stream: skladBloc.getSkladSearchStream,
           builder: (context, snapshot) {
             if(snapshot.hasData){
-              int productCount = 0;
               var data = snapshot.data!;
-              for(int i =0; i<data.length;i++){
-                productCount++;
-              }
               return data.isEmpty?const Center(child: Text("Маълумотлар ёқ")):
               Column(
                 children: [
@@ -200,14 +196,13 @@ class _WareHouseSearchState extends State<WareHouseSearch> {
 void handleReadOnlyInputClick(context) {
   showBottomSheet(
       context: context,
-      builder: (BuildContext context) => Container(
+      builder: (BuildContext context) => SizedBox(
         width: MediaQuery.of(context).size.width,
         child: YearPicker(
           selectedDate: DateTime(1997),
           firstDate: DateTime(1995),
           lastDate: DateTime.now(),
           onChanged: (val) {
-            print(val);
             Navigator.pop(context);
           },
         ),

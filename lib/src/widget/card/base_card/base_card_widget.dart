@@ -11,6 +11,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 
 class BaseCardWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final data;
   final int idPrice;
   final int filterId;
@@ -38,7 +39,7 @@ class _BaseCardWidgetState extends State<BaseCardWidget> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppColors.card,
-            boxShadow:  [
+            boxShadow:  const [
               BoxShadow(
                   blurRadius: 8
               )
@@ -100,7 +101,7 @@ class _BaseCardWidgetState extends State<BaseCardWidget> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: AppColors.card,
-              boxShadow:  [
+              boxShadow:  const [
                 BoxShadow(
                     blurRadius: 8
                 )

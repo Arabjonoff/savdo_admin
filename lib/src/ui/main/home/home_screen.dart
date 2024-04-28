@@ -2,12 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
-import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -42,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    Repository repository = Repository();
     double width = MediaQuery.of(context).size.width;
     return  Scaffold(
       key: _scaffoldKey,
@@ -147,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }
                               return GestureDetector(
                                 onTap: (){
-                                  BottomDialog.showScreenDialog(context, PlanScreen());
+                                  BottomDialog.showScreenDialog(context, const PlanScreen());
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -230,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               );
-                            }return SizedBox();
+                            }return const SizedBox();
                           }
                       ),
                       Container(

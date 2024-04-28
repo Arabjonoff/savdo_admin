@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/firebase_options.dart';
-import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/ui/notification/notification_screen.dart';
@@ -24,7 +23,6 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
   }
 }
 void main()async {
-  Repository repository = Repository();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -64,7 +62,7 @@ void main()async {
 
   if (message != null) {
     print("Launched from terminated state");
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       navigatorKey.currentState!.pushNamed("/message", arguments: message);
     });
   }

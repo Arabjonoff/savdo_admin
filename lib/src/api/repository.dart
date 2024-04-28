@@ -2,7 +2,6 @@
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/database/client/db_client.dart';
 import 'package:savdo_admin/src/database/income_product/income_product.dart';
-import 'package:savdo_admin/src/database/income_product/skl_pr_tov.dart';
 import 'package:savdo_admin/src/database/outcome/outcome_base.dart';
 import 'package:savdo_admin/src/database/product/db_product.dart';
 import 'package:savdo_admin/src/database/product/db_product_type.dart';
@@ -14,7 +13,6 @@ import 'package:savdo_admin/src/model/client/clientdebt_model.dart';
 import 'package:savdo_admin/src/model/expense/expense_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
-import 'package:savdo_admin/src/model/income/income_model.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
 import 'package:savdo_admin/src/model/product/barcode_model.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
@@ -134,8 +132,8 @@ class Repository{
 
   /// Api product
   Future<HttpResult>  getProduct() => _apiProvider.getProduct();
-  Future<HttpResult> postProduct(name, id_tip, id_quantity, id_firma, vz, min_count, st) => _apiProvider.postProduct(name, id_tip, id_quantity, id_firma, vz, min_count, st);
-  Future<HttpResult> updateProduct(id,name, id_tip, id_quantity, id_firma, vz, min_count, st) => _apiProvider.updateProduct(id,name, id_tip, id_quantity, id_firma, vz, min_count, st);
+  Future<HttpResult> postProduct(name, idTip, idQuantity, idFirma, vz, minCount, st) => _apiProvider.postProduct(name, idTip, idQuantity, idFirma, vz, minCount, st);
+  Future<HttpResult> updateProduct(id,name, idTip, idQuantity, idFirma, vz, minCount, st) => _apiProvider.updateProduct(id,name, idTip, idQuantity, idFirma, vz, minCount, st);
   Future<HttpResult> deleteProduct(name, id) => _apiProvider.deleteProduct(name, id);
 
   /// Api product type

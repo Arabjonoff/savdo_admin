@@ -192,7 +192,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   onTap: (){
                     setState(() =>selected =7);
                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                      return TabBarScreen();
+                      return const TabBarScreen();
                     }));
                   },
                   title: const Text("Харидорлар"),
@@ -208,7 +208,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   onTap: (){
                     setState(() =>selected =11);
                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                      return DebtBookScreen();
+                      return const DebtBookScreen();
                     }));
                   },
                   title: const Text("Қарздорлик китоби"),

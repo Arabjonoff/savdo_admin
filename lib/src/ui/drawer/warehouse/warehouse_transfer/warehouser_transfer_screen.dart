@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -35,7 +34,6 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
   @override
   Widget build(BuildContext context) {
     Repository repository = Repository();
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(

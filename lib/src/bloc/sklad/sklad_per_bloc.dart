@@ -30,7 +30,6 @@ class SkladPerBloc{
       for(int i=start; i<end;i++){
         data.add({'ID_SKL2':sklad[i]});
       }
-      HttpResult result = await _repository.resetSkladPer(data, year, month, idSkl);
       restAllSkladPer(year, month, idSkl,start+=20,end+=20);
     }catch(_){
       sklad.clear();

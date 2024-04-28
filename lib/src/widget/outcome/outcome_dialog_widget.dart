@@ -248,19 +248,6 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
               ),
             ),
             ButtonWidget(onTap: ()async{
-              int pay=1;
-              if(widget.priceUsd==0 && priceType==0){
-                pay=0;
-              }
-              else if(widget.priceUsd==1 && priceType==0){
-                pay=0;
-              }
-              else if(widget.priceUsd==0 && priceType==1){
-                pay=0;
-              }
-              else if(widget.priceUsd==1 && priceType==1){
-                pay=1;
-              }
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
                 Map data = {
                   "ID_SKL_RS": widget.ndocId,

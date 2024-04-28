@@ -12,7 +12,6 @@ class BalanceBloc{
   getAllBalance(date)async{
     HttpResult currency = await _repository.getCurrency();
     CacheService.saveCurrency(currency.result["KURS"]);
-    num balanceUzs = 0;
     HttpResult result = await _repository.getBalance(date);
     if(result.isSuccess){
       var data = BalanceModel.fromJson(result.result);

@@ -146,16 +146,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                 stream: skladBloc.getSkladSearchStream,
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
-                    int productCount = 0;
                     var data = snapshot.data!;
-                    for(int i =0; i<data.length;i++){
-                      if(data[i].idTip==filterId){
-                        productCount++;
-                      }
-                      else{
-                        productCount++;
-                      }
-                    }
                     if (data.isEmpty) {
                       return const EmptyWidgetScreen();
                     } else {

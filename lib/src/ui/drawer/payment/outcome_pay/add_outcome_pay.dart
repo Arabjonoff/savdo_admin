@@ -38,7 +38,6 @@ class _AddOutcomePayScreenState extends State<AddOutcomePayScreen> {
   int paymentType = 0;
   num acceptedSumma = 0;
   num percent = 0;
-  TabController? _tabController;
   @override
   void initState() {
     _initBus();

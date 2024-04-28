@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/income/add_income/add_income_product_bloc.dart';
-import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
@@ -28,11 +27,9 @@ class ProductBottomMenuDialog extends StatefulWidget {
 class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
    TextEditingController _controllerOldCount = TextEditingController();
     TextEditingController _controllerCount = TextEditingController(text: '1');
-   final TextEditingController _controllerAllPrice = TextEditingController();
    TextEditingController _controllerPrice = TextEditingController();
    final TextEditingController _controllerTotal = TextEditingController();
    final Repository _repository = Repository();
-   final TextEditingController _controllerCurrency = TextEditingController(text: "12 450");
    int priceType = 0,onTap=0;
    int currency = 12450;
    @override
@@ -256,19 +253,6 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                ),
              ),
              ButtonWidget(onTap: ()async{
-               int pay=1;
-               if(widget.priceUsd==0 && priceType==0){
-                 pay=0;
-               }
-               else if(widget.priceUsd==1 && priceType==0){
-                 pay=0;
-               }
-               else if(widget.priceUsd==0 && priceType==1){
-                 pay=0;
-               }
-               else if(widget.priceUsd==1 && priceType==1){
-                 pay=1;
-               }
                CenterDialog.showLoadingDialog(context, "Бироз кутинг");
                 Map<String,dynamic> data = {
                   "ID_SKL_PER":widget.doc['NDOC'],

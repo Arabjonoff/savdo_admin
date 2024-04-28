@@ -14,7 +14,6 @@ import 'package:savdo_admin/src/ui/drawer/payment/cost_pay/update_cost_screen.da
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
-
 import '../../../../theme/icons/app_fonts.dart';
 
 class CostListScreen extends StatefulWidget {
@@ -137,7 +136,7 @@ class _CostListScreenState extends State<CostListScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      data[index].idSklPr>0?Text("📝 ",style: TextStyle(fontSize: 18.h),):SizedBox(),
+                                      data[index].idSklPr>0?Text("📝 ",style: TextStyle(fontSize: 18.h),):const SizedBox(),
                                       Text(
                                         data[index].idNimaName.toString(),
                                         maxLines: 1,
@@ -176,7 +175,6 @@ class _CostListScreenState extends State<CostListScreen> {
                                   )
                                 ],
                               ),
-
                             ),
                           );
                         }),

@@ -253,7 +253,6 @@ class DocumentAgentScreen extends StatefulWidget {
 }
 
 class _DocumentAgentScreenState extends State<DocumentAgentScreen> {
-  final TextEditingController _controllerSearch = TextEditingController();
 
   @override
   void initState() {

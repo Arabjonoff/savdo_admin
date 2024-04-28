@@ -58,7 +58,7 @@ class _AddCostScreenState extends State<AddCostScreen> {
                     ),
                     TextFieldWidget(controller: _controllerExpense, hintText: 'Нима учун',readOnly: true,
                     suffixIcon: IconButton(onPressed: (){
-                      CenterDialog.showProductTypeDialog(context, 'Харажат тури', ExpenseTypeChoseScreen(idSklPr: 0,));
+                      CenterDialog.showProductTypeDialog(context, 'Харажат тури', const ExpenseTypeChoseScreen(idSklPr: 0,));
                     },icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),

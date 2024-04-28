@@ -245,7 +245,7 @@ class Tolov1 {
 
   Map<String, dynamic> toJson() => {
     "ID": id,
-    "SANA": "${sana}",
+    "SANA": "$sana",
     "ID_TOCH": idToch,
     "NAME": name,
     "SM": sm,

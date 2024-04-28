@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +29,7 @@ class _MessageScreenState extends State<MessageScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
           backgroundColor: AppColors.background,
-          title: Text("Хабарномалар")),
+          title: const Text("Хабарномалар")),
       body: ListView.builder(
         itemCount: 12,
           itemBuilder: (ctx,index){

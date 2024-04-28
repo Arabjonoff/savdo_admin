@@ -11,8 +11,8 @@ class AppColors{
   );
   static Color green = const Color(0xFF169F57);
   static Color black = const Color(0xFF000000); // dark 0xFF383838
-  static Color white = Color(0xFFFFFFFF);
-  static Color dialog = Color(0xFFFAFAFA);
+  static Color white = const Color(0xFFFFFFFF);
+  static Color dialog = const Color(0xFFFAFAFA);
   static Color red = Colors.red;
 
   static Color background = const Color(0xFFF7F9FB); //white //FAFAFA dark 1F1F1F

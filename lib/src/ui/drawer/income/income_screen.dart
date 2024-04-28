@@ -31,7 +31,6 @@ class IncomeScreen extends StatefulWidget {
 class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderStateMixin{
   final Repository _repository = Repository();
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
-  TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   final _controller = ScrollController();
 bool scrollTop = false;
   @override
@@ -41,7 +40,7 @@ bool scrollTop = false;
   }
   @override
   void dispose() {
-    _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
+    incomeBloc.getAllIncome(dateTime.year,dateTime.month);
     super.dispose();
   }
   @override

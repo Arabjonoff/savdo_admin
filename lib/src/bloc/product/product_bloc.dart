@@ -4,7 +4,6 @@ import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/skl2/skl2_model.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
-import 'package:savdo_admin/src/utils/cache.dart';
 
 class ProductBloc{
   final Repository _repository = Repository();

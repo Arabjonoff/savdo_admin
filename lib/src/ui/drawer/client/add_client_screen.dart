@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -398,22 +400,22 @@ class _AddClientScreenState extends State<AddClientScreen> {
                 child: ExpansionTile(
                   expandedCrossAxisAlignment: CrossAxisAlignment.start,
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                  title: Text("Телефондан рухсат"),
+                  title: const Text("Телефондан рухсат"),
                   children: [
                     ListTile(
-                      title: Text("Телефондан киришга рухсат"),
+                      title: const Text("Телефондан киришга рухсат"),
                       trailing: CupertinoSwitch(value: isd1, onChanged: (bool value) { setState(() => isd1 = value);isd1==false?d1=0:d1=1;},),
                     ),
                     ListTile(
-                      title: Text("Буюртма жўнатиш"),
+                      title: const Text("Буюртма жўнатиш"),
                       trailing: CupertinoSwitch(value: isd2, onChanged: (bool value) {  setState(() => isd2 = value);isd2==false?d2=0:d2=1; },),
                     ),
                     ListTile(
-                      title: Text("Қарздорлик кўриш"),
+                      title: const Text("Қарздорлик кўриш"),
                       trailing: CupertinoSwitch(value: isd3, onChanged: (bool value) {  setState(() => isd3 = value);isd3==false?d3=0:d3=1; },),
                     ),
                     ListTile(
-                      title: Text("Маҳсулот қолдиғини кўриш"),
+                      title: const Text("Маҳсулот қолдиғини кўриш"),
                       trailing: CupertinoSwitch(value: isd4, onChanged: (bool value) {  setState(() => isd4 = value);isd4==false?d4=0:d4=1; },),
                     ),
                     Padding(

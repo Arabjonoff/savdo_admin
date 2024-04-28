@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -21,7 +19,7 @@ class BalanceScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.all(15),
+              margin: const EdgeInsets.all(15),
               width: 100.w,
               height: 5,
               decoration: BoxDecoration(

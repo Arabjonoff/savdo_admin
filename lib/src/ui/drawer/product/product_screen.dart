@@ -31,7 +31,6 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final Repository _repository = Repository();
-  final TextEditingController _controllerBarCode = TextEditingController();
   bool isFindBarcode = false;
 
   @override

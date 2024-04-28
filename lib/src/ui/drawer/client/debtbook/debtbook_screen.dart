@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 
@@ -12,7 +11,6 @@ class DebtBookScreen extends StatefulWidget {
 }
 
 class _DebtBookScreenState extends State<DebtBookScreen> {
-  final Repository _repository = Repository();
   @override
   void initState() {
     super.initState();
@@ -24,7 +22,7 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
         appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text("Қарздорлик китоби")
+        title: const Text("Қарздорлик китоби")
       ),
       body: ListView.builder(itemBuilder: (ctx,index){
         return Container(

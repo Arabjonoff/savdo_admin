@@ -1,7 +1,6 @@
 
 import 'package:savdo_admin/src/database/db_helper.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
-import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 
 class OutcomeSkladBaseHelper {
   OutcomeSkladBaseHelper? outcomeSkladBaseHelper;

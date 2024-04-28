@@ -3,7 +3,6 @@ import 'package:savdo_admin/src/database/db_helper.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
 
 class WareHouseBaseHelper{
-  WareHouseBaseHelper? _wareHouseBaseHelper;
   DatabaseHelper dbProvider = DatabaseHelper.instance;
   Future<int> saveWareHouse(ProductTypeAllResult item) async {
     final dbClient = await dbProvider.db;

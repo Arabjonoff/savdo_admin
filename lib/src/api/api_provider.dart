@@ -9,7 +9,7 @@ import 'package:savdo_admin/src/model/income/income_add_model.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 String db = CacheService.getDb();
 int userId = CacheService.getIdAgent();
-int idSkl = 1;
+int idSkl = CacheService.getidSkl();
 String token = CacheService.getToken();
 
 class ApiProvider {
@@ -92,9 +92,6 @@ class ApiProvider {
     }
   }
   static Future<HttpResult> _postRequestImage(String url, image,idSkl2,) async {
-    print(url);
-    print(image);
-    print(idSkl2);
     try {
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.fields['skl2_image'] = image;
