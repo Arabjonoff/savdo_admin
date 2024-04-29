@@ -643,7 +643,7 @@ class ApiProvider {
   }
 
   Future<HttpResult> getIncomePrice(idSkl2)async{
-    String url = "${_baseUrl}kirim_narh?ID_SKL2=$idSkl2";
+    String url = "${_baseUrl}kirim_narh?ID_SKL2=$idSkl2&DB=$db&JWT=$token";
     return await _getRequest(url);
   }
 }

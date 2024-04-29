@@ -203,7 +203,22 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                         child: Text("Кирим нархи белгилаш:",style: AppStyle.medium(Colors.black),),
                       ),
                       IconButton(onPressed: () async {
+                        CenterDialog.showLoadingDialog(context, '');
                         HttpResult res = await _repository.getIncomePrice(widget.data.id);
+                        if(res.result["status"] == true){
+                          if(context.mounted)Navigator.pop(context);
+                          _controllerIncomePriceUsd.text = res.result['narhi_s'].toString();
+                          _controllerIncomePriceUzs.text = res.result['narhi'].toString();
+                          _controllerSalePriceUzs1.text = res.result['snarhi'].toString();
+                          _controllerSalePriceUzs2.text = res.result['snarhi1'].toString();
+                          _controllerSalePriceUzs3.text = res.result['snarhi2'].toString();
+                          _controllerSalePriceUsd1.text = res.result['snarhi_s'].toString();
+                          _controllerSalePriceUsd2.text = res.result['snarhi1_s'].toString();
+                          _controllerSalePriceUsd3.text = res.result['snarhi2_s'].toString();
+                        }
+                        else{
+                          if(context.mounted)Navigator.pop(context);
+                        }
                       }, icon:Icon(Icons.calendar_month,color: AppColors.green,))
                     ],
                   ),
