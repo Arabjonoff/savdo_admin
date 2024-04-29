@@ -541,10 +541,10 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                       snarhi1S: num.parse(_controllerSalePriceUsd2.text.replaceAll(",", ".")),
                       snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
                       snarhi2S: num.parse(_controllerSalePriceUsd3.text.replaceAll(",", ".")),
-                      tnarhi: 0,
-                      tnarhiS: 0,
-                      tsm: 0,
-                      tsmS: 0,
+                      tnarhi:  num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                      tnarhiS: num.parse(_controllerIncomePriceUsd.text.replaceAll(",", ".")),
+                      tsm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
+                      tsmS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
                       shtr: '',
                     );
                     HttpResult res = await _repository.updateIncomeSklPr(addIncome);
@@ -569,10 +569,10 @@ class _UpdateIncomeItemState extends State<UpdateIncomeItem> {
                         snarhi1S: num.parse(_controllerSalePriceUsd2.text.replaceAll(",", ".")),
                         snarhi2: num.parse(_controllerSalePriceUzs3.text.replaceAll(RegExp('[^0-9]'), '')),
                         snarhi2S: num.parse(_controllerSalePriceUsd3.text.replaceAll(",", ".")),
-                        tnarhi: 0,
-                        tnarhiS: 0,
-                        tsm: 0,
-                        tsmS: 0,
+                        tnarhi:  num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
+                        tnarhiS: num.parse(_controllerIncomePriceUsd.text.replaceAll(",", ".")),
+                        tsm: _controllerIncomePriceUzs.text!='0'?num.parse(_controllerIncomePriceTotal.text):0,
+                        tsmS: _controllerIncomePriceUsd.text !="0"?num.parse(_controllerIncomePriceTotal.text):0,
                         shtr: '',
                       );
                       _repository.updateIncomeProductBase(addIncomeBase);

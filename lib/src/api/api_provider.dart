@@ -641,4 +641,9 @@ class ApiProvider {
     String url = "${_baseUrl}get_blns?DB=$db&YIL=$year&OY=$month&SANA=$date";
     return await _getRequest(url);
   }
+
+  Future<HttpResult> getIncomePrice(idSkl2)async{
+    String url = "${_baseUrl}kirim_narh?ID_SKL2=$idSkl2";
+    return await _getRequest(url);
+  }
 }

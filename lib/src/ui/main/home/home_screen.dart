@@ -2,6 +2,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
+import 'package:savdo_admin/src/bloc/getDate/get_date_bloc.dart';
+import 'package:savdo_admin/src/bloc/product/product_barcode.dart';
+import 'package:savdo_admin/src/bloc/product/product_bloc.dart';
+import 'package:savdo_admin/src/bloc/product/product_quantity_bloc.dart';
+import 'package:savdo_admin/src/bloc/product/product_type_bloc.dart';
+import 'package:savdo_admin/src/bloc/sklad/warehouse_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
@@ -17,6 +24,8 @@ import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 
+import '../../../bloc/product/product_firma_bloc.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,15 +36,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool balance = false;
   final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
-  void connectionChanged(dynamic hasConnection) {
-  }
+  // void connectionChanged(dynamic hasConnection) {
+  // }
   @override
   void initState() {
+    productBloc.getAllProduct();
+    getDateBloc.getDateId();
+    barcodeProductBloc.getBarcodeAll();
+    clientBloc.getAllClient('');
+    wareHouseBloc.getAllWareHouse();
+    clientBloc.getAllClientSearch('');
+    productTypeBloc.getProductTypeAll();
+    productFirmaTypeBloc.getFirmaBaseTypeAll();
+    productQuantityTypeBloc.getQuantityBaseTypeAll();
     balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     planBloc.getPlanAll();
-    ConnectionUtil connectionStatus = ConnectionUtil.getInstance();
-    connectionStatus.initialize();
-    connectionStatus.connectionChange.listen(connectionChanged);
+    // ConnectionUtil connectionStatus = ConnectionUtil.getInstance();
+    // connectionStatus.initialize();
+    // connectionStatus.connectionChange.listen(connectionChanged);
     super.initState();
   }
   @override
@@ -60,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onRefresh: ()async{
           await balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
           await planBloc.getPlanAll();
-          await planBloc.getPlanAgentAll();
         },
         child: ListView(
           padding: EdgeInsets.zero,

@@ -16,10 +16,9 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final navigatorKeyMessage = GlobalKey<NavigatorState>();
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
-    print("Some notification Received");
+    // print("Some notification Received");
   }else{
-    print("Some notification Received");
-
+    // print("Some notification Received");
   }
 }
 void main()async {
@@ -61,7 +60,7 @@ void main()async {
   await FirebaseMessaging.instance.getInitialMessage();
 
   if (message != null) {
-    print("Launched from terminated state");
+    // print("Launched from terminated state");
     Future.delayed(const Duration(seconds: 1), () {
       navigatorKey.currentState!.pushNamed("/message", arguments: message);
     });

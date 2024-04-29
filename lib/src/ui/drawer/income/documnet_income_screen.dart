@@ -91,7 +91,7 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
                   _controllerDate.text,
                   _controllerComment.text,
                   _controllerHodimID.text,
-                  CacheService.getIdSkl());
+                 CacheService.getidSkl());
               if(res.result["status"] == true){
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
