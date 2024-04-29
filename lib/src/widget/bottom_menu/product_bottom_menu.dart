@@ -10,6 +10,7 @@ import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
@@ -31,9 +32,10 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
    final TextEditingController _controllerTotal = TextEditingController();
    final Repository _repository = Repository();
    int priceType = 0,onTap=0;
-   int currency = 12450;
+   int currency = CacheService.getCurrency();
    @override
    void initState() {
+     currency = CacheService.getCurrency();
      priceType = widget.priceType;
      _controllerOldCount = TextEditingController(text: priceFormatUsd.format(widget.data.osoni));
      _controllerCount = TextEditingController(text: '1');
@@ -263,16 +265,16 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                   "SONI":_controllerCount.text,
                   "NARHI":widget.data.narhi,
                   "NARHI_S":widget.data.narhiS,
-                  "TNARHI":0,
-                  "TNARHI_S":0,
+                  "TNARHI":widget.data.narhi,
+                  "TNARHI_S":widget.data.narhiS,
                   "SM": num.parse(_controllerCount.text) * widget.data.narhi,
                   "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
                   "SNARHI": priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
                   "SNARHI_S": priceType==1?num.parse(_controllerPrice.text):0,
                   "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
                   "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
-                  "TSM":widget.data.idSkl2,
-                  "TSM_S":widget.data.idSkl2,
+                  "TSM": num.parse(_controllerCount.text) * widget.data.narhi,
+                  "TSM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
                   "SNARHI1":widget.data.snarhi1,
                   "SNARHI1_S":widget.data.snarhi1S,
                   "SNARHI2":widget.data.snarhi2,
@@ -292,16 +294,16 @@ class _ProductBottomMenuDialogState extends State<ProductBottomMenuDialog> {
                      "SONI":_controllerCount.text,
                      "NARHI":widget.data.narhi,
                      "NARHI_S":widget.data.narhiS,
-                     "TNARHI":0,
-                     "TNARHI_S":0,
+                     "TNARHI":widget.data.narhi,
+                     "TNARHI_S":widget.data.narhiS,
                      "SM": num.parse(_controllerCount.text) * widget.data.narhi,
                      "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
                      "SNARHI": priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
                      "SNARHI_S": priceType==1?num.parse(_controllerPrice.text):0,
                      "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
                      "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
-                     "TSM":0,
-                     "TSM_S":0,
+                     "TSM":num.parse(_controllerCount.text) * widget.data.narhi,
+                     "TSM_S":num.parse(_controllerCount.text) * widget.data.narhiS,
                      "SNARHI1":widget.data.snarhi1,
                      "SNARHI1_S":widget.data.snarhi1S,
                      "SNARHI2":widget.data.snarhi2,

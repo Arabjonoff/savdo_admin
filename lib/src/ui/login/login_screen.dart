@@ -63,14 +63,20 @@ class _LoginScreenState extends State<LoginScreen> {
             HttpResult res = await _repository.login(_controllerName.text, _controllerPassword.text, _controllerBase.text);
             try{
               if(res.isSuccess){
-                CacheService.saveToken(res.result['jwt']);
-                CacheService.savePassword(_controllerPassword.text);
-                CacheService.saveName(_controllerName.text);
-                CacheService.tip(res.result['tip']);
-                CacheService.saveIdAgent(res.result['id']);
-                CacheService.saveDb(_controllerBase.text);
-                if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
-                if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
+                if(res.result['tip'] == 0){
+                  CacheService.saveToken(res.result['jwt']);
+                  CacheService.savePassword(_controllerPassword.text);
+                  CacheService.saveName(_controllerName.text);
+                  CacheService.tip(res.result['tip']);
+                  CacheService.saveIdAgent(res.result['id']);
+                  CacheService.saveDb(_controllerBase.text);
+                  if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
+                  if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
+                }
+                else{
+                  if(context.mounted)Navigator.pop(context);
+                  if(context.mounted)CenterDialog.showErrorDialog(context, "Error");
+                }
               }
               else{
                 if(context.mounted)Navigator.pop(context);
