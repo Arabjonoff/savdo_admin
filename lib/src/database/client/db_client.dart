@@ -1,4 +1,3 @@
-
 import 'package:savdo_admin/src/database/db_helper.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
@@ -15,10 +14,13 @@ class DbClient {
     var res = dbClient.insert('client', item.toJson());
     return res;
   }
+
   Future<List<ClientResult>> getClient(obj) async {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ? ORDER BY id DESC",['%$obj%', '%$obj%', '%$obj%']);
+    List<Map> list = await dbClient.rawQuery(
+        "SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ? ORDER BY id DESC",
+        ['%$obj%', '%$obj%', '%$obj%']);
     for (int i = 0; i < list.length; i++) {
       ClientResult clientResult = ClientResult(
           id: list[i]["ID"],
@@ -54,10 +56,13 @@ class DbClient {
     }
     return data;
   }
+
   Future<List<ClientResult>> getClientSearch(obj) async {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ?",['%$obj%', '%$obj%', '%$obj%']);
+    List<Map> list = await dbClient.rawQuery(
+        "SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ?",
+        ['%$obj%', '%$obj%', '%$obj%']);
     for (int i = 0; i < list.length; i++) {
       ClientResult clientResult = ClientResult(
           id: list[i]["ID"],
@@ -93,15 +98,19 @@ class DbClient {
     }
     return data;
   }
-  Future<int> deleteClient(id)async{
+
+  Future<int> deleteClient(id) async {
     var dbClient = await dbProvider.db;
-    return dbClient.delete("client",where: 'id=?',whereArgs: [id]);
+    return dbClient.delete("client", where: 'id=?', whereArgs: [id]);
   }
-  Future<int> updateClient(ClientResult item)async{
+
+  Future<int> updateClient(ClientResult item) async {
     var dbClient = await dbProvider.db;
-    return dbClient.update("client",item.toJson(),where: 'id=?',whereArgs: [item.id]);
+    return dbClient
+        .update("client", item.toJson(), where: 'id=?', whereArgs: [item.id]);
   }
-  Future<void> clearClient()async{
+
+  Future<void> clearClient() async {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM client");
   }
@@ -112,26 +121,28 @@ class DbClient {
     var res = dbClient.insert('clientType', item.toJson());
     return res;
   }
+
   Future<List<ProductTypeAllResult>> getClientType() async {
     var dbClient = await dbProvider.db;
     List<ProductTypeAllResult> data = <ProductTypeAllResult>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM clientType ORDER BY id DESC");
-    for(int i=0; i< list.length;i++){
+    List<Map> list =
+        await dbClient.rawQuery("SELECT * FROM clientType ORDER BY id DESC");
+    for (int i = 0; i < list.length; i++) {
       ProductTypeAllResult productTypeAllResult = ProductTypeAllResult(
-          id: list[i]["ID"],
-          name: list[i]["NAME"],
-          st: list[i]["ST"]);
+          id: list[i]["ID"], name: list[i]["NAME"], st: list[i]["ST"]);
       data.add(productTypeAllResult);
     }
     return data;
   }
-  Future<void> clearClientType()async{
+
+  Future<void> clearClientType() async {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM clientType");
   }
-  Future<int> deleteClientType(id)async{
+
+  Future<int> deleteClientType(id) async {
     var dbClient = await dbProvider.db;
-    return dbClient.delete("clientType",where: 'id=?',whereArgs: [id]);
+    return dbClient.delete("clientType", where: 'id=?', whereArgs: [id]);
   }
 
   /// Client Class Type save get clear
@@ -140,28 +151,29 @@ class DbClient {
     var res = dbClient.insert('clientKlass', item.toJson());
     return res;
   }
+
   Future<List<ProductTypeAllResult>> getClientClassType() async {
     var dbClient = await dbProvider.db;
     List<ProductTypeAllResult> data = <ProductTypeAllResult>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM clientKlass ORDER BY id DESC");
-    for(int i=0; i< list.length;i++){
+    List<Map> list =
+        await dbClient.rawQuery("SELECT * FROM clientKlass ORDER BY id DESC");
+    for (int i = 0; i < list.length; i++) {
       ProductTypeAllResult productTypeAllResult = ProductTypeAllResult(
-          id: list[i]["ID"],
-          name: list[i]["NAME"],
-          st: list[i]["ST"]);
+          id: list[i]["ID"], name: list[i]["NAME"], st: list[i]["ST"]);
       data.add(productTypeAllResult);
     }
     return data;
   }
-  Future<void> clearClientClassType()async{
+
+  Future<void> clearClientClassType() async {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM clientKlass");
   }
-  Future<int> deleteClientClass(id)async{
-    var dbClient = await dbProvider.db;
-    return dbClient.delete("clientKlass",where: 'id=?',whereArgs: [id]);
-  }
 
+  Future<int> deleteClientClass(id) async {
+    var dbClient = await dbProvider.db;
+    return dbClient.delete("clientKlass", where: 'id=?', whereArgs: [id]);
+  }
 
   /// Client debt base
   Future<int> saveClientDebt(DebtClientModel item) async {
@@ -169,31 +181,57 @@ class DbClient {
     var res = dbClient.insert('client_debt', item.toJson());
     return res;
   }
+
   Future<List<DebtClientModel>> getClientDebt() async {
     var dbClient = await dbProvider.db;
     List<DebtClientModel> data = <DebtClientModel>[];
     List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt");
-    for(int i=0; i< list.length;i++){
-      DebtClientModel productTypeAllResult =DebtClientModel(
-          id: list[i]["ID"],
-          tp: list[i]["TP"],
-          idToch: list[i]["ID_TOCH"],
-          osK: list[i]["OS_K"],
-          osKS: list[i]["OS_K_S"]
+    for (int i = 0; i < list.length; i++) {
+      DebtClientModel debtClientModel = DebtClientModel(
+        id: list[i]["ID"],
+        tp: list[i]["TP"],
+        name: list[i]["NAME"],
+        idToch: list[i]["ID_TOUCH"],
+        yil: list[i]["YIL"],
+        oy: list[i]["OY"],
+        klK: list[i]["KL_K"],
+        klKS: list[i]["KL_K_S"],
+        pr: list[i]["PR"],
+        prS: list[i]["PR_S"],
+        st: list[i]["ST"],
+        stS: list[i]["ST_S"],
+        kt: list[i]["KT"],
+        ktS: list[i]["KT_S"],
+        tlK: list[i]["TL_K"],
+        tlKS: list[i]["TL_K_S"],
+        tlC: list[i]["TL_C"],
+        tlCS: list[i]["TL_C_S"],
+        sd: list[i]["SD"],
+        sdS: list[i]["SD_S"],
+        osK: list[i]["OS_K"],
+        osKS: list[i]["OS_K_S"],
+        sti: list[i]["STI"],
+        idAgent: list[i]["ID_AGENT"],
+        idFaol: list[i]["ID_FAOL"],
+        dtM: list[i]["DT_M"],
+        dtT: list[i]["DT_T"],
+        manzil: list[i]["MANZIL"],
       );
-      data.add(productTypeAllResult);
+      data.add(debtClientModel);
     }
     return data;
   }
-  Future<int> updateClientDebt(DebtClientModel item)async{
+
+  Future<int> updateClientDebt(DebtClientModel item) async {
     var dbClient = await dbProvider.db;
-    return dbClient.update("client_debt",item.toJson(),where: 'id=?',whereArgs: [item.id]);
+    return dbClient.update("client_debt", item.toJson(),
+        where: 'id=?', whereArgs: [item.id]);
   }
-  Future<void> clearClientDebt()async{
+
+  Future<void> clearClientDebt() async {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM client_debt");
   }
-
 
   /// Agents base
   Future<int> saveAgents(AgentsResult item) async {
@@ -201,11 +239,12 @@ class DbClient {
     var res = dbClient.insert('agents', item.toJson());
     return res;
   }
+
   Future<List<AgentsResult>> getAgents() async {
     var dbClient = await dbProvider.db;
     List<AgentsResult> data = <AgentsResult>[];
     List<Map> list = await dbClient.rawQuery("SELECT * FROM agents");
-    for(int i=0; i< list.length;i++){
+    for (int i = 0; i < list.length; i++) {
       AgentsResult agentsResult = AgentsResult(
           id: list[i]['ID'],
           name: list[i]['NAME'],
@@ -220,19 +259,20 @@ class DbClient {
           st: list[i]['ST'],
           shtr: list[i]['SHTR'],
           sms: list[i]['SMS'],
-          vaqt: list[i]['VAQT']
-      );
+          vaqt: list[i]['VAQT']);
       data.add(agentsResult);
     }
     return data;
   }
-  Future<int> updateAgents(AgentsResult item)async{
+
+  Future<int> updateAgents(AgentsResult item) async {
     var dbClient = await dbProvider.db;
-    return dbClient.update("agents",item.toJson(),where: 'id=?',whereArgs: [item.id]);
+    return dbClient
+        .update("agents", item.toJson(), where: 'id=?', whereArgs: [item.id]);
   }
-  Future<void> clearAgents()async{
+
+  Future<void> clearAgents() async {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM agents");
   }
-
 }

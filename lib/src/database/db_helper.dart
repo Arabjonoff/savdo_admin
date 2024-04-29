@@ -142,15 +142,37 @@ class DatabaseHelper{
 
     /// Client Debt Base
     await db.execute('''
-          CREATE TABLE client_debt (
-            ID INTEGER,
-            ID_TOCH TEXT,
-            TP INTEGER,
-            OS_K REAL,
-            OS_K_S REAL
-          )
-          ''');
-
+      CREATE TABLE client_debt (
+        ID INTEGER PRIMARY KEY,
+        TP TEXT,
+        NAME TEXT,
+        ID_TOCH INTEGER,
+        YIL TEXT,
+        OY TEXT,
+        KL_K TEXT,
+        KL_K_S TEXT,
+        PR TEXT,
+        PR_S TEXT,
+        ST TEXT,
+        ST_S TEXT,
+        KT TEXT,
+        KT_S TEXT,
+        TL_K TEXT,
+        TL_K_S TEXT,
+        TL_C TEXT,
+        TL_C_S TEXT,
+        SD TEXT,
+        SD_S TEXT,
+        OS_K TEXT,
+        OS_K_S TEXT,
+        STI TEXT,
+        ID_AGENT INTEGER,
+        ID_FAOL INTEGER,
+        DT_M TEXT,
+        DT_T TEXT,
+        MANZIL TEXT
+      )
+    ''');
     /// Client Active Type
     await db.execute('''
           CREATE TABLE clientType (
