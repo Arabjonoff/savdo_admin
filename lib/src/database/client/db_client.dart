@@ -191,7 +191,7 @@ class DbClient {
         id: list[i]["ID"],
         tp: list[i]["TP"],
         name: list[i]["NAME"],
-        idToch: list[i]["ID_TOUCH"],
+        idToch: list[i]["ID_TOUCH"]??"",
         yil: list[i]["YIL"],
         oy: list[i]["OY"],
         klK: list[i]["KL_K"],

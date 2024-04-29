@@ -10,7 +10,7 @@ String debtClientModelToJson(List<DebtClientModel> data) => json.encode(List<dyn
 
 class DebtClientModel {
   int id;
-  int tp;
+  num tp;
   String name;
   String idToch;
   String yil;
@@ -31,11 +31,11 @@ class DebtClientModel {
   num sdS;
   num osK;
   num osKS;
-  int sti;
-  int idAgent;
-  int idFaol;
-  DateTime? dtM;
-  DateTime? dtT;
+  num sti;
+  num idAgent;
+  num idFaol;
+  dynamic dtM;
+  dynamic dtT;
   String manzil;
 
   DebtClientModel({
@@ -70,12 +70,12 @@ class DebtClientModel {
   });
 
   factory DebtClientModel.fromJson(Map<String, dynamic> json) => DebtClientModel(
-    id: json["ID"],
-    tp: json["TP"],
-    name: json["NAME"],
-    idToch: json["ID_TOCH"],
-    yil: json["YIL"],
-    oy: json["OY"],
+    id: json["ID"]??0,
+    tp: json["TP"]??"",
+    name: json["NAME"]??"",
+    idToch: json["ID_TOCH"]??"",
+    yil: json["YIL"]??"",
+    oy: json["OY"]??"",
     klK: json["KL_K"]??0,
     klKS: json["KL_K_S"]??0,
     pr: json["PR"]??0,

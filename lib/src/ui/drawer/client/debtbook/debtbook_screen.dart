@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:savdo_admin/src/bloc/client/debt_client_bloc.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 
@@ -13,6 +14,7 @@ class DebtBookScreen extends StatefulWidget {
 class _DebtBookScreenState extends State<DebtBookScreen> {
   @override
   void initState() {
+    clientDebtBloc.getAllClientDebt();
     super.initState();
   }
   @override
