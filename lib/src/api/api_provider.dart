@@ -385,7 +385,7 @@ class ApiProvider {
     };
     return await _postRequest(url,json.encode(body));
   }
-  Future<HttpResult> getClient()async{
+  Future<HttpResult> getDebtClientDetail()async{
     String url = "${_baseUrl}haridor?DB=$db&YIL=$year&OY=$month&ID_SKL=1&JWT=$token";
     return await _getRequest(url);
   }

@@ -169,7 +169,7 @@ class Repository{
 
 
 
-  Future<HttpResult> getClient() => _apiProvider.getClient();
+  Future<HttpResult> getDebtClientDetail() => _apiProvider.getDebtClientDetail();
   Future<HttpResult> getClientWorker() => _apiProvider.getClientWorker();
 
   /// Api Outcome

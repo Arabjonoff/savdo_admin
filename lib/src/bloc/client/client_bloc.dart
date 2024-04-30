@@ -54,7 +54,7 @@ class ClientBloc{
     }
     _fetchClientInfo.sink.add(clientBase);
     if(clientBase.isEmpty){
-      HttpResult result = await _repository.getClient();
+      HttpResult result = await _repository.getDebtClientDetail();
       if(result.isSuccess){
         var data = ClientModel.fromJson(result.result);
           for(int i=0; i<data.data.length;i++){

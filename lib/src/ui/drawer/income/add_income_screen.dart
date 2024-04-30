@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -30,6 +31,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   String db = CacheService.getDb();
   bool lastStatus = true;
   final TextEditingController _controllerCount = TextEditingController();
+  final TextEditingController _controllerDate = TextEditingController();
+  final TextEditingController _controllerDoc = TextEditingController();
   final TextEditingController _controllerIncomePriceUzs = TextEditingController(text: '0');
   final TextEditingController _controllerIncomePriceUsd = TextEditingController(text: '0');
   final TextEditingController _controllerSalePriceUzs1 = TextEditingController(text: '0');
@@ -209,6 +212,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                           HttpResult res = await _repository.getIncomePrice(widget.data.id);
                           if(res.result["status"] == true){
                             if(context.mounted)Navigator.pop(context);
+                            _controllerDate.text = res.result['SANA'];
+                            _controllerDoc.text = res.result['NDOC'];
                             _controllerIncomePriceUsd.text = res.result['narhi_s'].toString();
                             _controllerIncomePriceUzs.text = res.result['narhi'].toString();
                             _controllerSalePriceUzs1.text = res.result['snarhi'].toString();
@@ -221,10 +226,34 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                           else{
                             if(context.mounted)Navigator.pop(context);
                           }
-                        }, icon:Icon(Icons.info_outline_rounded,color: AppColors.green,)),
+                        }, icon:Icon(Icons.date_range_sharp,color: AppColors.green,)),
                       )
                     ],
                   ),
+                 Row(
+                   children: [
+                     Expanded(
+                       child: TextField(
+                         readOnly: true,
+                         decoration: const InputDecoration(
+                           labelText: 'Сана',
+                           border: InputBorder.none
+                         ),
+                         controller: _controllerDate,
+                       ),
+                     ),
+                     Expanded(
+                       child: TextField(
+                         readOnly: true,
+                         decoration: const InputDecoration(
+                           labelText: "Ҳужжат рақами",
+                             border: InputBorder.none
+                         ),
+                         controller: _controllerDoc,
+                       ),
+                     ),
+                   ],
+                 ),
                   SizedBox(
                     height: 1,
                     width: MediaQuery.of(context).size.width,

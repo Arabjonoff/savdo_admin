@@ -32,7 +32,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
   final Repository _repository = Repository();
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   final _controller = ScrollController();
-bool scrollTop = false;
+  bool scrollTop = false;
   @override
   void initState() {
     incomeBloc.getAllIncome(dateTime.year,dateTime.month);
