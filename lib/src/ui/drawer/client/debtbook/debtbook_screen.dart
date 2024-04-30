@@ -40,7 +40,7 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
               return GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                    return DebtBookDetail();
+                    return DebtBookDetail(data: data[index], idT: data[index].idToch, name: data[index].name,);
                   }));
                 },
                 child: Container(

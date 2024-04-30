@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -45,12 +44,12 @@ class ClientBloc{
           clientBase[i].idKlassName = clientClassBase[n].name;
         }
       }
-      for(int k =0; k<clientDebtBase.length;k++){
-        if(clientBase[i].idT == clientDebtBase[k].idToch){
-          clientBase[i].osK = clientDebtBase[k].osK;
-          clientBase[i].osKS = clientDebtBase[k].osKS;
-        }
-      }
+      // for(int k =0; k<clientDebtBase.length;k++){
+      //   if(clientBase[i].idT == clientDebtBase[k].idToch){
+      //     clientBase[i].osK = clientDebtBase[k].osK;
+      //     clientBase[i].osKS = clientDebtBase[k].osKS;
+      //   }
+      // }
     }
     _fetchClientInfo.sink.add(clientBase);
     if(clientBase.isEmpty){
@@ -79,13 +78,13 @@ class ClientBloc{
         _fetchClientInfo.sink.add(data.data);
       }
     }
-    if(clientDebtBase.isEmpty){
-      HttpResult debtResult = await _repository.clientDebt();
-      var dataDebt = debtClientModelFromJson(json.encode(debtResult.result));
-      for(int i =0; i<dataDebt.length;i++){
-        await _repository.saveClientDebtBase(dataDebt[i]);
-      }
-    }
+    // if(clientDebtBase.isEmpty){
+    //   HttpResult debtResult = await _repository.clientDebt();
+    //   var dataDebt = debtClientModelFromJson(json.encode(debtResult.result));
+    //   for(int i =0; i<dataDebt.length;i++){
+    //     await _repository.saveClientDebtBase(dataDebt[i]);
+    //   }
+    // }
   }
   getAllClientSearch(obj)async{
     /// Agent Base
@@ -121,5 +120,4 @@ class ClientBloc{
     _fetchClientInfoSearch.sink.add(clientBase);
   }
 }
-
 final clientBloc = ClientBloc();

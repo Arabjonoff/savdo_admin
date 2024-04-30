@@ -146,7 +146,7 @@ class DatabaseHelper{
         ID INTEGER,
         TP REAL,
         NAME TEXT,
-        ID_TOCH INTEGER,
+        ID_TOCH TEXT,
         YIL TEXT,
         OY TEXT,
         KL_K REAL,
