@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart' as dt;
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/bloc/client/debt_client_bloc.dart';
 import 'package:savdo_admin/src/model/client/clientdebt_model.dart';
 import 'package:savdo_admin/src/model/client/debt_detail_model.dart';
@@ -21,6 +22,7 @@ class DebtBookDetail extends StatefulWidget {
 class _DebtBookDetailState extends State<DebtBookDetail> {
   int month = DateTime.now().month;
   int year = DateTime.now().year;
+  DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   @override
   void initState() {
     super.initState();
@@ -34,9 +36,28 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(widget.name),
         actions: [
+          IconButton(onPressed: (){
+            showMonthPicker(
+                roundedCornersRadius: 25,
+                headerColor: AppColors.green,
+                selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
+                context: context,
+                initialDate: dateTime,
+                lastDate: DateTime.now()
+            ).then((date) {
+              if (date != null) {
+                setState(() {
+                  dateTime = date;
+                });
+                // _repository.clearSkladBase();
+                clientDebtBloc.getClientDebtDetail(dateTime.year,dateTime.month, widget.idT,1);
+              }
+            });
+          }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Hero(
@@ -46,10 +67,10 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
                   // CenterDialog.clientShowDetailDialog(context,widget.data);
                 },
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.green.shade300,
                   child: Text(
-                    widget.name,
-                    style: AppStyle.small(Colors.white),
+                    widget.name[0].toUpperCase(),
+                    style: AppStyle.smallBold(Colors.white),
                   ),
                 ),
               ),
@@ -62,75 +83,93 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
       body: Column(
         children: [
           SizedBox(height: 14.h,),
-          Row(
-            children: [
-              SizedBox(width: 16.h,),
-              GestureDetector(
-                onTap: (){
-                  month--;
-                  setState(() {
-
-                  });
-                  if(month >= 1){
-                    // clientDetailBloc.getAllDetail(year,month, widget.idT);
-                  }
-                  else{
-                    month = 1;
-                    setState(() {
-
-                    });
-                  }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  child:  const Icon(Icons.arrow_back_ios,color: Colors.black,),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color:Colors.white
-                  ),
-                  child: Text(monthFormat(month),style: AppStyle.large(Colors.black),),
-                ),
-              ),
-              GestureDetector(
-                onTap: (){
-                  month++;
-                  setState(() {
-
-                  });
-                  if(month <= 12){
-                    // clientDetailBloc.getAllDetail(year,month, widget.idT);
-                  }
-                  else{
-                    month = 12;
-                  }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  child:  Icon(Icons.arrow_forward_ios,color: Colors.black,),
-                ),
-              ),
-              SizedBox(width: 16.h,),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     SizedBox(width: 16.h,),
+          //     GestureDetector(
+          //       onTap: (){
+          //         month--;
+          //         setState(() {
+          //
+          //         });
+          //         if(month >= 1){
+          //           // clientDetailBloc.getAllDetail(year,month, widget.idT);
+          //         }
+          //         else{
+          //           month = 1;
+          //           setState(() {
+          //
+          //           });
+          //         }
+          //       },
+          //       child: Container(
+          //         alignment: Alignment.center,
+          //         width: 50,
+          //         height: 50,
+          //         decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //             color: Colors.white,
+          //             boxShadow: [
+          //               BoxShadow(
+          //                   blurRadius: 5,
+          //                   color: Colors.grey.shade400
+          //               )
+          //             ]
+          //         ),
+          //         child:  const Icon(Icons.arrow_back_ios,color: Colors.black,),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       child: Container(
+          //         alignment: Alignment.center,
+          //         margin: const EdgeInsets.symmetric(horizontal: 16),
+          //         height: 50,
+          //         decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //             color:Colors.white,
+          //             boxShadow: [
+          //               BoxShadow(
+          //                   blurRadius: 5,
+          //                   color: Colors.grey.shade400
+          //               )
+          //             ]
+          //         ),
+          //         child: Text(monthFormat(month),style: AppStyle.large(Colors.black),),
+          //       ),
+          //     ),
+          //     GestureDetector(
+          //       onTap: (){
+          //         month++;
+          //         setState(() {
+          //
+          //         });
+          //         if(month <= 12){
+          //           // clientDetailBloc.getAllDetail(year,month, widget.idT);
+          //         }
+          //         else{
+          //           month = 12;
+          //         }
+          //       },
+          //       child: Container(
+          //         alignment: Alignment.center,
+          //         width: 50,
+          //         height: 50,
+          //         decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //             color: Colors.white,
+          //             boxShadow: [
+          //               BoxShadow(
+          //                   blurRadius: 5,
+          //                   color: Colors.grey.shade400
+          //               )
+          //             ]
+          //         ),
+          //         child:  Icon(Icons.arrow_forward_ios,color: Colors.black,),
+          //       ),
+          //     ),
+          //     SizedBox(width: 16.h,),
+          //   ],
+          // ),
           Expanded(
             child: StreamBuilder<List<DebtClientDetail>>(
                 stream: clientDebtBloc.getClientDebtDetailStream,
@@ -264,9 +303,15 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
                           padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8),
                           width: MediaQuery.of(context).size.width,
                           height: 100,
-                          decoration: const BoxDecoration(
+                          decoration:  BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 20,
+                                    color: Colors.grey.shade400
+                                )
+                              ],
                               color: Colors.white,
-                              borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
+                              borderRadius: const BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,

@@ -17,8 +17,11 @@ class ClientDebtBloc{
     _fetchClientDebtInfo.sink.add(clientDebtBase);
     if(clientDebtBase.isEmpty){
       HttpResult result = await _repository.clientDebt();
-      var data = DebtClientModel.fromJson(result.result);
-      _fetchClientDebtInfo.sink.add([data]);
+      var data = debtClientModelFromJson(json.encode(result.result));
+      for(int i=0; i<data.length;i++){
+        _repository.saveClientDebtBase(data[i]);
+      }
+      _fetchClientDebtInfo.sink.add(data);
     }
   }
   getClientDebtDetail(year,month,idT,tp)async{

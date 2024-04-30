@@ -442,7 +442,7 @@ class ApiProvider {
     return await _getRequest(url);
   }
   Future<HttpResult> clientDetail(year,month,idT,tp)async{
-    String url = "${_baseUrl}hisob?DB=$db&YIL=$year&OY=$month&ID_TOCH=$idT&TP=0&JWT=$token&TP=$tp";
+    String url = "${_baseUrl}hisob?DB=$db&YIL=$year&OY=$month&ID_TOCH=$idT&TP=0&JWT=$token";
     return await _getRequest(url);
   }
 

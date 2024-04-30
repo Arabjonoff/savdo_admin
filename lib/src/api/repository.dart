@@ -81,7 +81,7 @@ class Repository{
 
 
   /// Client Debt
-  // Future<int> saveClientDebtBase(item) => _dbClient.saveClientDebt(item);
+  Future<int> saveClientDebtBase(item) => _dbClient.saveClientDebt(item);
   Future<int> updateClientDebtBase(item) => _dbClient.updateClientDebt(item);
   Future<List<DebtClientModel>> getClientDebtBase() => _dbClient.getClientDebt();
   Future<void> clearClientDebtBase() => _dbClient.clearClientDebt();
