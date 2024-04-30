@@ -25,7 +25,6 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
         backgroundColor: AppColors.background,
         appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: false,
         title: const Text("Қарздорлик китоби")
       ),
       body: StreamBuilder<List<DebtClientModel>>(

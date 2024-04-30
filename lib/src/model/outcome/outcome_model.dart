@@ -23,6 +23,10 @@ class OutcomeModel {
 class OutcomeResult {
   int id;
   String name;
+  String clientPhone;
+  String clientTarget;
+  String clientAddress;
+  String sklName;
   String idT;
   DateTime sana;
   String ndoc;
@@ -73,6 +77,10 @@ class OutcomeResult {
     required this.idKlass,
     required this.sklRsTov,
     this.idAgentName = "",
+    this.clientPhone = "",
+    this.clientTarget = "",
+    this.clientAddress = "",
+    this.sklName = "",
   });
 
   factory OutcomeResult.fromJson(Map<String, dynamic> json) => OutcomeResult(

@@ -134,10 +134,6 @@ class CacheService {
     int data = preferences!.getInt("idAgent") ??0;
     return data;
   }
-  static String getIdSkl() {
-    String data = preferences!.getString("id_skl") ?? "";
-    return data;
-  }
   static String getDb() {
     String data = preferences!.getString("saveDB") ?? '002';
     return data;

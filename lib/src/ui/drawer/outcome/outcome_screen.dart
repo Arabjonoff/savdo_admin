@@ -12,6 +12,7 @@ import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/drawer/outcome/share/share_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/update_outcome/update_outcome_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
@@ -147,6 +148,9 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                             ),
                             child: GestureDetector(
                               onTap: () async {
+                                Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                  return ShareScreen(data: data[index],);
+                                }));
                                 // Navigator.push(context, MaterialPageRoute(builder: (ctx){
                                 //   return DocumentOutComeScreen();
                                 // }));

@@ -103,7 +103,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                   "KURS": CacheService.getCurrency(),
                   "ID_FAOL": _controllerClientIdFaol.text,
                   "ID_KLASS": _controllerClientIdKlass.text,
-                  "ID_SKL": CacheService.getIdSkl(),
+                  "ID_SKL": CacheService.getidSkl(),
                   "YIL": DateTime.now().year,
                   "OY":  DateTime.now().month
                 };
