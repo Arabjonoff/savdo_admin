@@ -20,8 +20,6 @@ class ClientBloc{
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
     /// Client Base
     List<ClientResult> clientBase = await _repository.getClientBase(obj);
-    /// Client Debt Base
-    List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
     /// Client Type Base
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     /// Client Class Base
@@ -67,12 +65,12 @@ class ClientBloc{
                 data.data[i].idKlassName = clientClassBase[n].name;
               }
             }
-            for(int k =0; k<clientDebtBase.length;k++){
-              if(data.data[i].idT == clientDebtBase[k].idToch){
-                data.data[i].osK = clientDebtBase[k].osK;
-                data.data[i].osKS = clientDebtBase[k].osKS;
-              }
-            }
+            // for(int k =0; k<clientDebtBase.length;k++){
+            //   if(data.data[i].idT == clientDebtBase[k].idToch){
+            //     data.data[i].osK = clientDebtBase[k].osK;
+            //     data.data[i].osKS = clientDebtBase[k].osKS;
+            //   }
+            // }
             _repository.saveClientBase(data.data[i]);
         }
         _fetchClientInfo.sink.add(data.data);
@@ -89,7 +87,6 @@ class ClientBloc{
   getAllClientSearch(obj)async{
     /// Agent Base
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
-    List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
     List<ClientResult> clientBase = await _repository.getClientBase(obj);
@@ -110,12 +107,12 @@ class ClientBloc{
           clientBase[i].idKlassName = clientClassBase[n].name;
         }
       }
-      for(int k =0; k<clientDebtBase.length;k++){
-        if(clientBase[i].idT == clientDebtBase[k].idToch){
-          clientBase[i].osK = clientDebtBase[k].osK;
-          clientBase[i].osKS = clientDebtBase[k].osKS;
-        }
-      }
+      // for(int k =0; k<clientDebtBase.length;k++){
+      //   if(clientBase[i].idT == clientDebtBase[k].idToch){
+      //     clientBase[i].osK = clientDebtBase[k].osK;
+      //     clientBase[i].osKS = clientDebtBase[k].osKS;
+      //   }
+      // }
     }
     _fetchClientInfoSearch.sink.add(clientBase);
   }

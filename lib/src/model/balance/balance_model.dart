@@ -51,7 +51,7 @@ class BalanceModel {
     sklSmS: json["SKL_SM_S"]??0,
     kzSm: json["KZ_SM"]??0,
     kzSmS: json["KZ_SM_S"]??0,
-    psSm: json["PS_SM"],
+    psSm: json["PS_SM"]??0,
     psSmS: json["PS_SM_S"]??0,
     oySm: json["OY_SM"]??0,
     oySmS: json["OY_SM_S"]??0,

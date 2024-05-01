@@ -225,7 +225,7 @@ class DbClient {
   Future<int> updateClientDebt(DebtClientModel item) async {
     var dbClient = await dbProvider.db;
     return dbClient.update("client_debt", item.toJson(),
-        where: 'id=?', whereArgs: [item.id]);
+        where: 'id = ?', whereArgs: [item.id]);
   }
 
   Future<void> clearClientDebt() async {
