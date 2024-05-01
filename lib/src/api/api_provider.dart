@@ -646,4 +646,12 @@ class ApiProvider {
     String url = "${_baseUrl}kirim_narh?ID_SKL2=$idSkl2&DB=$db&JWT=$token";
     return await _getRequest(url);
   }
+  Future<HttpResult> getOldDebtClient(year,month)async{
+    String url = "${_baseUrl}tochka2?DB=$db&YIL=$year&OY=$month&JWT=$token";
+    return await _getRequest(url);
+  }
+  Future<HttpResult> postNewDebtClient(year,month,List<Map> data)async{
+    String url = "${_baseUrl}tochka_yangi_oy?DB=$db&YIL=$year&OY=$month&TP=1&JWT=$token";
+    return await _postRequest(url,json.encode(data));
+  }
 }

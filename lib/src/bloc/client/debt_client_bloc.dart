@@ -62,5 +62,7 @@ class ClientDebtBloc{
       _fetchClientDebtDetailInfo.sink.add(data);
     }
   }
+
+
 }
 final clientDebtBloc = ClientDebtBloc();
