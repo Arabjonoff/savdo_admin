@@ -84,6 +84,7 @@ class Repository{
   Future<int> saveClientDebtBase(item) => _dbClient.saveClientDebt(item);
   Future<int> updateClientDebtBase(item) => _dbClient.updateClientDebt(item);
   Future<List<DebtClientModel>> getClientDebtBase() => _dbClient.getClientDebt();
+  Future<List<DebtClientModel>> getClientDebtSearchBase(obj) => _dbClient.getClientSearchDebt(obj);
   Future<void> clearClientDebtBase() => _dbClient.clearClientDebt();
 
 
@@ -208,7 +209,7 @@ class Repository{
   Future<HttpResult> addClient(Map<String, dynamic> item) => _apiProvider.addClient(item);
   Future<HttpResult> updateClient(Map<String, dynamic> item) => _apiProvider.updateClient(item);
   Future<HttpResult> deleteClient(id,idT,name) => _apiProvider.deleteClient(id,idT,name);
-  Future<HttpResult> clientDebt() => _apiProvider.clientDebt();
+  Future<HttpResult> clientDebt(year,month) => _apiProvider.clientDebt(year,month);
   Future<HttpResult> clientDetail(year, month, idT,tp) => _apiProvider.clientDetail(year, month, idT,tp);
   Future<HttpResult> deleteClientClass(name,id) => _apiProvider.deleteClientClass(name,id);
   Future<HttpResult> deleteClientType(name,id) => _apiProvider.deleteClientType(name,id);

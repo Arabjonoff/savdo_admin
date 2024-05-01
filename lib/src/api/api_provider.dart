@@ -437,7 +437,7 @@ class ApiProvider {
     String url = "${_baseUrl}hodimlar?ST=1&DB=$db&JWT=$token";
     return await _getRequest(url);
   }
-  Future<HttpResult> clientDebt()async{
+  Future<HttpResult> clientDebt(year,month)async{
     String url = "${_baseUrl}tochka?DB=$db&JWT=$token&YIL=$year&OY=$month";
     return await _getRequest(url);
   }

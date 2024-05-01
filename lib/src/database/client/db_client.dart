@@ -179,19 +179,20 @@ class DbClient {
   Future<int> saveClientDebt(DebtClientModel item) async {
     var dbClient = await dbProvider.db;
     var res = dbClient.insert('client_debt', item.toJson());
-    return res;
+    print("Debt Client Insert: >>> ${await res}");
+    return await res;
   }
 
   Future<List<DebtClientModel>> getClientDebt() async {
     var dbClient = await dbProvider.db;
     List<DebtClientModel> data = <DebtClientModel>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt");
+    List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt ORDER BY ID_AGENT DESC");
     for (int i = 0; i < list.length; i++) {
       DebtClientModel debtClientModel = DebtClientModel(
         id: list[i]["ID"],
         tp: list[i]["TP"],
         name: list[i]["NAME"],
-        idToch: list[i]["ID_TOUCH"]??"",
+        idToch: list[i]["ID_TOCH"],
         yil: list[i]["YIL"],
         oy: list[i]["OY"],
         klK: list[i]["KL_K"],
@@ -221,6 +222,47 @@ class DbClient {
     }
     return data;
   }
+  Future<List<DebtClientModel>> getClientSearchDebt(obj) async {
+    var dbClient = await dbProvider.db;
+    List<DebtClientModel> data = <DebtClientModel>[];
+    List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt WHERE name LIKE ? OR MANZIL LIKE ?",
+        ['%$obj%', '%$obj%',]);
+    for (int i = 0; i < list.length; i++) {
+      DebtClientModel debtClientModel = DebtClientModel(
+        id: list[i]["ID"],
+        tp: list[i]["TP"],
+        name: list[i]["NAME"],
+        idToch: list[i]["ID_TOCH"],
+        yil: list[i]["YIL"],
+        oy: list[i]["OY"],
+        klK: list[i]["KL_K"],
+        klKS: list[i]["KL_K_S"],
+        pr: list[i]["PR"],
+        prS: list[i]["PR_S"],
+        st: list[i]["ST"],
+        stS: list[i]["ST_S"],
+        kt: list[i]["KT"],
+        ktS: list[i]["KT_S"],
+        tlK: list[i]["TL_K"],
+        tlKS: list[i]["TL_K_S"],
+        tlC: list[i]["TL_C"],
+        tlCS: list[i]["TL_C_S"],
+        sd: list[i]["SD"],
+        sdS: list[i]["SD_S"],
+        osK: list[i]["OS_K"],
+        osKS: list[i]["OS_K_S"],
+        sti: list[i]["STI"],
+        idAgent: list[i]["ID_AGENT"],
+        idFaol: list[i]["ID_FAOL"],
+        dtM: list[i]["DT_M"],
+        dtT: list[i]["DT_T"],
+        manzil: list[i]["MANZIL"],
+      );
+      data.add(debtClientModel);
+    }
+    return data;
+  }
+
 
   Future<int> updateClientDebt(DebtClientModel item) async {
     var dbClient = await dbProvider.db;

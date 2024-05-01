@@ -12,6 +12,8 @@ class DebtClientModel {
   int id;
   num tp;
   String name;
+  String agentName;
+  int agentId;
   String idToch;
   String yil;
   String oy;
@@ -67,6 +69,8 @@ class DebtClientModel {
     required this.dtM,
     required this.dtT,
     required this.manzil,
+     this.agentName = '',
+     this.agentId = 0,
   });
 
   factory DebtClientModel.fromJson(Map<String, dynamic> json) => DebtClientModel(
