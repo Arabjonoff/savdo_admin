@@ -19,7 +19,6 @@ import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
 class WareHouseTransferScreen extends StatefulWidget {
   const WareHouseTransferScreen({super.key});
-
   @override
   State<WareHouseTransferScreen> createState() => _WareHouseTransferScreenState();
 }
@@ -28,7 +27,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   @override
   void initState() {
-    wareHouseTransferBloc.getAllWareHouseTransfer(2024, 4);
+    wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
     super.initState();
   }
   @override

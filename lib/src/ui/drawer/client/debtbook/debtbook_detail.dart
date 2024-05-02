@@ -58,24 +58,6 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
               }
             });
           }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,)),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Hero(
-              tag: widget.idT,
-              child: GestureDetector(
-                onTap: (){
-                  // CenterDialog.clientShowDetailDialog(context,widget.data);
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.green.shade300,
-                  child: Text(
-                    widget.name[0].toUpperCase(),
-                    style: AppStyle.smallBold(Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
