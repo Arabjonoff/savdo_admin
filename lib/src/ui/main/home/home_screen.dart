@@ -1,5 +1,6 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
@@ -22,9 +23,8 @@ import 'package:savdo_admin/src/ui/main/home/balance/balance_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
-import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
-
 import '../../../bloc/product/product_firma_bloc.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -181,65 +181,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: PieChart(
-                                          PieChartData(
-                                              sectionsSpace: 1.2,
-                                              sections: [
-                                                PieChartSectionData(
-                                                  value: data.taskDone.toDouble(),
-                                                  title: priceFormat.format(data.taskDone),
-                                                  color: AppColors.green,
-                                                  radius:25.r,
-                                                  titleStyle: AppStyle.smallBold(Colors.white),
-                                                  badgeWidget: Text("${priceFormat.format(data.f)}%",style: AppStyle.mediumBold(AppColors.black),),
-                                                  badgePositionPercentageOffset: -1.8.w,
-                                                ),
-                                                PieChartSectionData(
-                                                    value: d,
-                                                    title: priceFormat.format(data.taskGo.toDouble()-data.taskDone.toDouble()),
-                                                    color: AppColors.red,
-                                                    titleStyle: AppStyle.smallBold(Colors.white),
-                                                    radius:25.r
-                                                ),
-                                                PieChartSectionData(
-                                                    value: data.taskOut.toDouble(),
-                                                    title: priceFormat.format(data.taskOut),
-                                                    color: Colors.orange,
-                                                    titleStyle: AppStyle.smallBold(Colors.white),
-                                                    radius:25.r
-                                                ),
-                                              ]
-                                            // read about it in the PieChartData section
+                                        child: CircularPercentIndicator(
+                                          radius: 60.0.r,
+                                          lineWidth: 13.0,
+                                          percent: snapshot.data!.percent,
+                                          animation: true,
+                                          circularStrokeCap: CircularStrokeCap.round,
+                                          center: snapshot.data!.f.isNaN?Text('0%',style: AppStyle.medium(AppColors.black)):Text("${snapshot.data!.f.toInt()}%",
+                                            style: AppStyle.medium(Colors.black),
                                           ),
-                                          swapAnimationDuration: const Duration(milliseconds: 250), // Optional
-                                          swapAnimationCurve: Curves.linear, // Optional
+                                          progressColor: Colors.green,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.square,color: Colors.red,),
-                                                Text("Режа бўйича",style: AppStyle.smallBold(Colors.black),),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(Icons.square,color: AppColors.green,),
-                                                Text("Бажарилган",style: AppStyle.smallBold(Colors.black),),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.square,color: Colors.orange,),
-                                                Text("Режадан ташқари",style: AppStyle.smallBold(Colors.black),),
-                                              ],
-                                            ),
+                                            Text("Режа бўйича: ${snapshot.data!.taskGo}",style: AppStyle.smallBold(Colors.black),),
                                           ],
                                         ),
-                                      )
+                                        Row(
+                                          children: [
+                                            Text("Бажарилган: ${snapshot.data!.taskDone}",style: AppStyle.smallBold(Colors.black),),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text("Режадан ташқари: ${snapshot.data!.taskOut}",style: AppStyle.smallBold(Colors.black),),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                      SizedBox(width: 16.w,)
                                     ],
                                   ),
                                 ),

@@ -33,7 +33,7 @@ class _ShareScreenState extends State<ShareScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("check".tr()),
+        title: Text("Чек чиқариш"),
       ),
       body: Screenshot(
         controller: screenshotController,
@@ -58,7 +58,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.date".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Сана",style: AppStyle.smallBold(Colors.black),),
                               Text(DateFormat('yyyy-MM-dd | kk:mm:ss').format(widget.data.vaqt),style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -71,7 +71,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.client".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Харидор",style: AppStyle.smallBold(Colors.black),),
                               Text("${widget.data.idT} - ${widget.data.name}",style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -84,7 +84,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.phone".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Тел",style: AppStyle.smallBold(Colors.black),),
                               Text(widget.data.clientPhone,style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -97,7 +97,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.address".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Манзил",style: AppStyle.smallBold(Colors.black),),
                               Text(widget.data.clientTarget,style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -110,7 +110,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.target".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Мўлжал",style: AppStyle.smallBold(Colors.black),),
                               Text(widget.data.clientAddress,style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -124,7 +124,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Agent",style: AppStyle.smallBold(Colors.black),),
+                              Text("Агент",style: AppStyle.smallBold(Colors.black),),
                               Text(widget.data.idAgentName,style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
@@ -138,14 +138,14 @@ class _ShareScreenState extends State<ShareScreen> {
                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("home.storage".tr(),style: AppStyle.smallBold(Colors.black),),
+                              Text("Омбор номи",style: AppStyle.smallBold(Colors.black),),
                               Text(widget.data.sklName,style: AppStyle.smallBold(Colors.black),),
                             ],
                           ),
                           SizedBox(height: 4.h,),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("home.product".tr(),style: AppStyle.mediumBold(Colors.black),),
+                            child: Text("Маҳсулотлар",style: AppStyle.mediumBold(Colors.black),),
                           ),
                           /// Header
                           createTable(widget.data.sklRsTov),
@@ -162,9 +162,9 @@ class _ShareScreenState extends State<ShareScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Text("home.total".tr(),style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+                                    child: Text("Жами",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
                                   ),
-                                  Text("${priceFormat.format(widget.data.sm)} ${"uzs".tr()}",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+                                  Text("${priceFormat.format(widget.data.sm)} ${"сўм"}",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
                                   Text("${priceFormatUsd.format(widget.data.smS)} \$",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
                                 ],),
                             ],
@@ -172,7 +172,7 @@ class _ShareScreenState extends State<ShareScreen> {
                           /// Footer
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("home.payment".tr(),style: AppStyle.mediumBold(AppColors.green),),
+                            child: Text("Тўловлар",style: AppStyle.mediumBold(AppColors.green),),
                           ),
                           Table(
                             border: const TableBorder(
@@ -184,15 +184,15 @@ class _ShareScreenState extends State<ShareScreen> {
                                     border: Border.all(color: Colors.grey,width: 0.5),
                                 ),
                                 children: [
-                                  Text("tolovsom".tr(),style: AppStyle.small(Colors.black),),
-                                  Text("${priceFormat.format(widget.data.tlNaqd)} ${"uzs".tr()}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end,),
+                                  Text("Тўлов сўм",style: AppStyle.small(Colors.black),),
+                                  Text("${priceFormat.format(widget.data.tlNaqd)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end,),
                                 ],),
                               TableRow(
                                 decoration: BoxDecoration(
                                     border: Border.all(color: Colors.grey,width: 0.5)
                                 ),
                                 children: [
-                                  Text("tolovvalyuta".tr(),style: AppStyle.small(Colors.black),),
+                                  Text("Тўлов валюта",style: AppStyle.small(Colors.black),),
                                   Text("${priceFormat.format(widget.data.tlVal)} \$",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
                                 ],),
                               TableRow(
@@ -200,16 +200,16 @@ class _ShareScreenState extends State<ShareScreen> {
                                     border: Border.all(color: Colors.grey,width: 0.5)
                                 ),
                                 children: [
-                                  Text("tolovbank".tr(),style: AppStyle.small(Colors.black),),
-                                  Text("${priceFormat.format(widget.data.tlBank)} ${"uzs".tr()}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
+                                  Text("Тўлов банк",style: AppStyle.small(Colors.black),),
+                                  Text("${priceFormat.format(widget.data.tlBank)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
                                 ],),
                               TableRow(
                                 decoration: BoxDecoration(
                                     border: Border.all(color: Colors.grey,width: 0.5)
                                 ),
                                 children: [
-                                  Text("tolovplastik".tr(),style: AppStyle.small(Colors.black),),
-                                  Text("${priceFormat.format(widget.data.tlKarta)} ${"uzs".tr()}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
+                                  Text("Тўлов карта",style: AppStyle.small(Colors.black),),
+                                  Text("${priceFormat.format(widget.data.tlKarta)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
                                 ],),
                             ],
                           )
@@ -244,10 +244,10 @@ class _ShareScreenState extends State<ShareScreen> {
           ),
           children: [
             Text('№',style: AppStyle.smallBold(Colors.black),),
-            Text("name".tr(),style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-            Text('s/n',style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center),
-            Text("home.price".tr(),textAlign: TextAlign.center,style: AppStyle.smallBold(Colors.black)),
-            Text("home.summa".tr(),style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+            Text("Номи",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+            Text('д/н',style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center),
+            Text("Нархи",textAlign: TextAlign.center,style: AppStyle.smallBold(Colors.black)),
+            Text("Суммаси",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
           ])
     ];
     for (int i = 0; i < data.length; i++) {
@@ -259,8 +259,8 @@ class _ShareScreenState extends State<ShareScreen> {
         Text("${i+1}",textAlign: TextAlign.center,),
         Text(data[i].name,style: AppStyle.small(Colors.black)),
         Text(data[i].soni.toString(),style: AppStyle.small(Colors.black),textAlign: TextAlign.center),
-        data[i].snarhi ==0?Text("${priceFormatUsd.format(data[i].snarhiS)} \$",textAlign: TextAlign.center,style: AppStyle.small(Colors.black)):Text("${priceFormat.format(data[i].snarhi)} ${"uzs".tr()}",textAlign: TextAlign.center,style: AppStyle.small(Colors.black)),
-        data[i].ssm==0?Text("${priceFormatUsd.format(data[i].ssmS)} \$",style: AppStyle.small(Colors.black),textAlign: TextAlign.center,):Text("${priceFormat.format(data[i].ssm)} ${"uzs".tr()}",style: AppStyle.small(Colors.black),textAlign: TextAlign.center,),
+        data[i].snarhi ==0?Text("${priceFormatUsd.format(data[i].snarhiS)} \$",textAlign: TextAlign.center,style: AppStyle.small(Colors.black)):Text("${priceFormat.format(data[i].snarhi)} ${"сўм"}",textAlign: TextAlign.center,style: AppStyle.small(Colors.black)),
+        data[i].ssm==0?Text("${priceFormatUsd.format(data[i].ssmS)} \$",style: AppStyle.small(Colors.black),textAlign: TextAlign.center,):Text("${priceFormat.format(data[i].ssm)} ${"сўм"}",style: AppStyle.small(Colors.black),textAlign: TextAlign.center,),
       ]));
     }
     return Table(

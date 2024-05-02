@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -69,24 +68,21 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
           placeholder: "Излаш",
         ),
         actions: [
-          // IconButton(onPressed: ()async{
-          //   showMonthPicker(
-          //       roundedCornersRadius: 25,
-          //       headerColor: AppColors.green,
-          //       selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
-          //       context: context,
-          //       initialDate: dateTime,
-          //       lastDate: DateTime.now()
-          //   ).then((date) {
-          //     if (date != null) {
-          //       setState(() {
-          //         dateTime = date;
-          //       });
-          //        repository.clearClientDebtBase();
-          //       clientDebtBloc.getAllClientDebt(dateTime.year,dateTime.month);
-          //     }
-          //   });
-          // }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,)),
+          PopupMenuButton(
+            icon: const Icon(Icons.more_vert_outlined),
+            onSelected: (i){
+              if(i ==1){
+                clientDebtBloc.debtMonth(dateTime.year, dateTime.month,context);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+            return  [
+              const PopupMenuItem(
+                value: 1,
+                child: Text("Ўтган ойдаги қарздорликларни янги ойга олиб ўтиш"),
+              ),
+            ];
+          },),
           IconButton(onPressed: ()async {
             agents = await repository.getAgentsBase();
             setState(() {});

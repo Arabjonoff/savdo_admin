@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/client/clientdebt_model.dart';
 import 'package:savdo_admin/src/model/client/debt_detail_model.dart';
+import 'package:savdo_admin/src/model/client/debt_moth_client.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 
 class ClientDebtBloc{
@@ -62,7 +65,39 @@ class ClientDebtBloc{
       _fetchClientDebtDetailInfo.sink.add(data);
     }
   }
-
-
+  debtMonth(year, month,context)async{
+    CenterDialog.showLoadingDialog(context, 'Бироз кутинг');
+    await _repository.clearClientDebtBase();
+    List<Map> oldMonthDebtList = [];
+    List<Map> newMonthDebtList = [];
+    HttpResult oldMonthDebt = await _repository.getOldDebtClient(year, month);
+    if(oldMonthDebt.isSuccess){
+      var data = debtMonthClientModelFromJson(json.encode(oldMonthDebt.result));
+      for(int i=0; i<data.length;i++){
+        oldMonthDebtList.add({
+            "name":data[i].name,
+            "osK":data[i].osK,
+            "osKS":data[i].osKS,
+            "idToch":data[i].idToch,
+            "tp":data[i].tp,
+          });
+      }
+    }
+    for(int i =0; i<oldMonthDebtList.length;i++){
+      newMonthDebtList.add({
+        "ID_T":oldMonthDebtList[i]["idToch"],
+        "KL_K":oldMonthDebtList[i]["osK"],
+        "KL_K_S":oldMonthDebtList[i]["osKS"],
+        "TP":oldMonthDebtList[i]["tp"],
+      });
+    }
+    HttpResult result =  await _repository.postNewDebtClient(year, month, newMonthDebtList);
+    if(result.result['status']){
+      await getAllClientDebt(year,month);
+      Navigator.pop(context);
+    }else{
+      Navigator.pop(context);
+    }
+  }
 }
 final clientDebtBloc = ClientDebtBloc();
