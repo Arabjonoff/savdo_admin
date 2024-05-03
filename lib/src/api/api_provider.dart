@@ -654,4 +654,8 @@ class ApiProvider {
     String url = "${_baseUrl}tochka_yangi_oy?DB=$db&YIL=$year&OY=$month&TP=1&JWT=$token";
     return await _postRequest(url,json.encode(data));
   }
+  Future<HttpResult> getAgentPermission(id)async{
+    String url = "${_baseUrl}user-per.php/user_per?DB=$db&JWT=$token&ID=$id";
+    return await _getRequest(url);
+  }
 }

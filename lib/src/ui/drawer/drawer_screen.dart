@@ -194,7 +194,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       return AgentScreen();
                     }));
                   },
-                  title: const Text("Агентлар"),
+                  title: const Text("Ходимлар"),
                 ),
                 ListTile(
                   shape: RoundedRectangleBorder(
