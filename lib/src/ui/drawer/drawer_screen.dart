@@ -7,6 +7,7 @@ import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/drawer/agent/agent_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/client/debtbook/debtbook_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/client/tab_bar_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_tapbar.dart';
@@ -80,7 +81,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             ),
             /// Warehouse Bloc
-
             ExpansionTile(title:  Text("Омбор ҳаракати",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
               initiallyExpanded: true,
@@ -175,12 +175,27 @@ class _DrawerScreenState extends State<DrawerScreen> {
               //     title: const Text("Қайтарилди"),
               //   ),
             ],),
-
             /// Buyers Bloc
             ExpansionTile(title:  Text("Харидорлар",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
               initiallyExpanded: true,
               children: [
+                ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  selected: selected ==12?true:false,
+                  selectedColor: selected ==12?AppColors.white:AppColors.black,
+                  leading: const Icon(Icons.person),
+                  onTap: (){
+                    setState(() =>selected =12);
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return AgentScreen();
+                    }));
+                  },
+                  title: const Text("Агентлар"),
+                ),
                 ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
