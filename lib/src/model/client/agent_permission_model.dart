@@ -6,7 +6,7 @@ String agentPermissionModelToJson(AgentPermissionModel data) => json.encode(data
 
 class AgentPermissionModel {
   bool status;
-  List<Datum> data;
+  List<AgentPermissionResult> data;
 
   AgentPermissionModel({
     required this.status,
@@ -15,7 +15,7 @@ class AgentPermissionModel {
 
   factory AgentPermissionModel.fromJson(Map<String, dynamic> json) => AgentPermissionModel(
     status: json["status"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<AgentPermissionResult>.from(json["data"].map((x) => AgentPermissionResult.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -24,7 +24,7 @@ class AgentPermissionModel {
   };
 }
 
-class Datum {
+class AgentPermissionResult {
   int tp;
   int p1;
   int p2;
@@ -32,7 +32,7 @@ class Datum {
   int p4;
   int p5;
 
-  Datum({
+  AgentPermissionResult({
     required this.tp,
     required this.p1,
     required this.p2,
@@ -41,7 +41,7 @@ class Datum {
     required this.p5,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory AgentPermissionResult.fromJson(Map<String, dynamic> json) => AgentPermissionResult(
     tp: json["TP"],
     p1: json["P1"],
     p2: json["P2"],
