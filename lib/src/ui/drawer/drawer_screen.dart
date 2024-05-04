@@ -176,7 +176,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               //   ),
             ],),
             /// Buyers Bloc
-            ExpansionTile(title:  Text("Харидорлар",style: AppStyle.mediumBold(Colors.black),),
+            ExpansionTile(title:  Text("Ишчи-хизматчилар",style: AppStyle.mediumBold(Colors.black),),
               shape: Border.all(color: Colors.transparent),
               initiallyExpanded: true,
               children: [
