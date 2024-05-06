@@ -10,6 +10,7 @@ import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/ui/notification/notification_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
+import 'package:savdo_admin/src/utils/certificate.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -23,6 +24,7 @@ Future _firebaseBackgroundMessage(RemoteMessage message) async {
 }
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

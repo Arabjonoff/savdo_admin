@@ -5,17 +5,17 @@ import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
-import 'package:savdo_admin/src/ui/drawer/agent/agent_permission.dart';
+import 'package:savdo_admin/src/ui/drawer/staff/staff_permission.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
-class AgentScreen extends StatefulWidget {
-  const AgentScreen({super.key});
+class StaffScreen extends StatefulWidget {
+  const StaffScreen({super.key});
 
   @override
-  State<AgentScreen> createState() => _AgentScreenState();
+  State<StaffScreen> createState() => _StaffScreenState();
 }
 
-class _AgentScreenState extends State<AgentScreen> {
+class _StaffScreenState extends State<StaffScreen> {
   @override
   void initState() {
     agentsBloc.getAllAgents();
@@ -40,7 +40,7 @@ class _AgentScreenState extends State<AgentScreen> {
               return GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                    return AgentPermissionScreen(data: data[index],);
+                    return StaffPermissionScreen(data: data[index],);
                   }));
                 },
                 child: Container(

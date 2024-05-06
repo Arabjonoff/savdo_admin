@@ -5,15 +5,15 @@ import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 
-class AgentPermissionScreen extends StatefulWidget {
+class StaffPermissionScreen extends StatefulWidget {
   final AgentsResult data;
-  const AgentPermissionScreen({super.key, required this.data});
+  const StaffPermissionScreen({super.key, required this.data});
 
   @override
-  State<AgentPermissionScreen> createState() => _AgentPermissionScreenState();
+  State<StaffPermissionScreen> createState() => _StaffPermissionScreenState();
 }
 
-class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
+class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
   @override
   void initState() {
     agentPermission.getAllPermission(widget.data.id);
@@ -31,17 +31,12 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
         stream: agentPermission.getPermissionStream,
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return Column(
-              children: [
-                ExpansionTile(
-                  shape: const Border(),
-                  title: Text("Картатека",style: AppStyle.mediumBold(Colors.black),),
-                  children: [
-                    ListTile(title: Text("salomat"),)
-                  ],
-                )
-              ],
-            );
+            var data = snapshot.data!;
+            return ListView.builder(
+              itemCount: data.length,
+                itemBuilder: (ctx,index){
+              return Text(data[index].p1.toString());
+            });
           }
           return const Center(child: CircularProgressIndicator());
         }
