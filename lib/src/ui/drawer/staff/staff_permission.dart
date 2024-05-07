@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/agent_permission.dart';
 import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
 class StaffPermissionScreen extends StatefulWidget {
   final AgentsResult data;
@@ -23,8 +28,12 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
     agentPermission.getAllPermission(widget.data.id);
     super.initState();
   }
+  List<Map> permissionList = [
+
+  ];
   @override
   Widget build(BuildContext context) {
+    Repository repository = Repository();
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -36,11 +45,21 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
         builder: (context, snapshot) {
           if(snapshot.hasData){
             var data = snapshot.data!;
-          return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (ctx,index){
-              return lisTile(data[index],data[index].tp);
-            });
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (ctx,index){
+                    return lisTile(data[index],data[index].tp);
+                  }),
+              ),
+              ButtonWidget(onTap: ()async{
+                await repository.postStaffPermission(permissionList);
+              }, color: AppColors.green, text: "Рухсатларни сақлаш"),
+              SizedBox(height: 34.h,)
+            ],
+          );
           }
           return const Center(child: CircularProgressIndicator());
         }
@@ -66,8 +85,15 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                 trailing: TextButton(onPressed: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
+                    permissionList.add({
+                      "P1":0,
+                    });
                   }else{
                     data.p1 = 1;
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "P1":1,
+                    });
                   }
                   setState(() {});
                 },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),

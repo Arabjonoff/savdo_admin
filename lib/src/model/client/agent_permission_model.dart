@@ -26,6 +26,7 @@ class AgentPermissionModel {
 
 class AgentPermissionResult {
   int tp;
+  int id;
   int p1;
   int p2;
   int p3;
@@ -34,6 +35,7 @@ class AgentPermissionResult {
 
   AgentPermissionResult({
     required this.tp,
+    this.id = 0,
     required this.p1,
     required this.p2,
     required this.p3,
@@ -51,7 +53,7 @@ class AgentPermissionResult {
   );
 
   Map<String, dynamic> toJson() => {
-    "TP": tp,
+    "ID": id,
     "P1": p1,
     "P2": p2,
     "P3": p3,
