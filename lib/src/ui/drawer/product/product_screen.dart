@@ -17,6 +17,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/product_image.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_update.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -107,7 +108,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       child: Column(
                                         children: [
                                           SlidableAction(onPressed: (i) async {
-                                            CenterDialog.showDeleteDialog(context, ()async{
+                                            CacheService.getPermissionProduct4() == 0?const SizedBox(): CenterDialog.showDeleteDialog(context, ()async{
                                               HttpResult res = await _repository.deleteProduct(data[index].name, data[index].id);
                                               if (res.result["status"] == true) {
                                                 await _repository.deleteProductBase(data[index].id);
@@ -123,6 +124,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                           }, icon: Icons.delete, label: "Ўчириш",),
                                           SlidableAction(
                                             onPressed: (i) {
+                                              CacheService.getPermissionProduct3() == 0?const SizedBox():
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (ctx) {
                                                     return UpdateProductScreen(
@@ -234,7 +236,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
             )),
-            ButtonWidget(onTap: (){
+            CacheService.getPermissionProduct2() == 0?const SizedBox():ButtonWidget(onTap: (){
               Navigator.pushNamed(context, '/addProduct');
             }, color: AppColors.green, text: "Янги киритиш"),
             SizedBox(height: 34.h,)

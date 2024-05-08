@@ -101,7 +101,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 title: const Text("Омборлар"),
               ),
               /// Warehouse movement
-              ListTile(
+                CacheService.getPermissionWarehouseAction1()==0?const SizedBox(): ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -116,7 +116,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 title: const Text("Омбор ҳаракати"),
               ),
               /// Products
-              ListTile(
+                CacheService.getPermissionProduct1() == 0?const SizedBox():ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -131,7 +131,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Картотека"),
                 ),
               /// Product Income
-              ListTile(
+             CacheService.getPermissionWarehouseIncome1()==0?const SizedBox():ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -146,7 +146,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Киримлар"),
                 ),
               /// Product Outcome
-              ListTile(
+              CacheService.getPermissionWarehouseOutcome1()==0?const SizedBox(): ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -196,7 +196,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                   title: const Text("Ходимлар"),
                 ),
-                ListTile(
+                CacheService.getPermissionClientList1()==0? const SizedBox():ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -212,7 +212,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                   title: const Text("Харидорлар"),
                 ),
-                ListTile(
+                CacheService.getPermissionClientDebt1()==0? const SizedBox():ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -235,7 +235,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               initiallyExpanded: true,
               children: [
                 /// Income
-                ListTile(
+                CacheService.getPermissionPaymentIncome1()==0?const SizedBox():ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -250,7 +250,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Киримлар"),
                 ),
                 /// Outcome
-                ListTile(
+                CacheService.getPermissionPaymentOutcome1()==0?const SizedBox():ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),
