@@ -25,7 +25,6 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
     super.initState();
   }
   List<Map> permissionList = [
-    {"ID":1,"TP":1,"P1":0,"P2":0,"P3":0,"P4":0,"P5":0}
   ];
   @override
   Widget build(BuildContext context) {

@@ -60,7 +60,8 @@ class _StaffScreenState extends State<StaffScreen> {
                         backgroundColor: Colors.green.shade200,
                         child: Text(data[index].name[0]),),
                       SizedBox(width: 12.w,),
-                      Expanded(child: Text(data[index].name,style: AppStyle.medium(Colors.black),))
+                      Expanded(child: Text(data[index].name,style: AppStyle.medium(Colors.black),)),
+                      Text(data[index].tip.toString(),style: AppStyle.smallBold(Colors.green),),
                     ],
                   ),
                 ),
