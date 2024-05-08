@@ -73,6 +73,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   if(res.result["id_skl"] == -1){
                     CacheService.saveWareHouseName("Asosiy ombor");
                     CacheService.saveWareHouseId(1);
+                  }else if(res.result["id_skl"] == 1){
+                    CacheService.saveWareHouseName("Ko'shimcha ombor");
+                    CacheService.saveWareHouseId(2);
+                  }
+                  else if(res.result["id_skl"] == 2){
+                    CacheService.saveWareHouseName("Улгуржа савдо");
+                    CacheService.saveWareHouseId(3);
                   }
                   if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
                   if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);

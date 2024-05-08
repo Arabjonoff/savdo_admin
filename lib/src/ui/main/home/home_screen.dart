@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Text(CacheService.getName()[0].toUpperCase()),
                                         )),
                                   ),
-                                  // Text("Асосий омбор",style: AppStyle.mediumBold(Colors.white),),
+                                  Text(CacheService.getWareHouseName(),style: AppStyle.mediumBold(Colors.white),),
                                   IconButton(onPressed: ()async{
                                   Navigator.pushNamed(context, AppRouteName.message);
                                   }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
