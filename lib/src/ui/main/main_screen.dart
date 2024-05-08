@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:savdo_admin/src/bloc/client/agent_permission.dart';
 import 'package:savdo_admin/src/ui/main/home/home_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 final priceFormat = NumberFormat('#,##0',"ru");
 final priceFormatUsd = NumberFormat('#,##0.${"#" * 3}',"en");
 class MainScreen extends StatefulWidget {
@@ -9,6 +11,11 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    agentPermission.getAllPermission(CacheService.getIdAgent());
+    super.initState();
+  }
   int currentIndex = 0;
   List<Widget> screens = [
     const HomeScreen(),

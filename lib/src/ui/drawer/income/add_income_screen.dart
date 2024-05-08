@@ -173,7 +173,20 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           style: AppStyle.medium(Colors.black),
                           controller: _controllerCount,
-                          onChanged: (i){
+                          onChanged: (i)async{
+                            HttpResult res = await _repository.getIncomePrice(widget.data.id);
+                            if(res.result["status"] == true){
+                              _controllerDate.text = res.result['SANA'];
+                              _controllerDoc.text = res.result['NDOC'];
+                              _controllerIncomePriceUsd.text = res.result['narhi_s'].toString();
+                              _controllerIncomePriceUzs.text = res.result['narhi'].toString();
+                              _controllerSalePriceUzs1.text = res.result['snarhi'].toString();
+                              _controllerSalePriceUzs2.text = res.result['snarhi1'].toString();
+                              _controllerSalePriceUzs3.text = res.result['snarhi2'].toString();
+                              _controllerSalePriceUsd1.text = res.result['snarhi_s'].toString();
+                              _controllerSalePriceUsd2.text = res.result['snarhi1_s'].toString();
+                              _controllerSalePriceUsd3.text = res.result['snarhi2_s'].toString();
+                            }
                             if(_controllerIncomePriceUzs.text !='0'){
                               _controllerIncomePriceTotal.text = (int.parse(i)*int.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), ''))).toString();
                               _controllerIncomePrice1Total.text = (int.parse(i)*int.parse(_controllerSalePriceUzs1.text.replaceAll(RegExp('[^0-9]'), ''))).toString();

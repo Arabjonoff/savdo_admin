@@ -122,10 +122,10 @@ class IncomeProductBloc{
         await _repository.updateIncomeProductBase(incomeModel);
         await getAllIncomeProduct();
       }
-      else{
+      else {
         num d = (data[i].smS/summa*100);
         num s = (resUsd/100)*d;
-        num ds = s+data[i].smS;
+        num ds = s+=data[i].smS;
         IncomeAddModel incomeModel = IncomeAddModel(
           price: data[i].price,
           id: data[i].id,
