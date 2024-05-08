@@ -60,8 +60,21 @@ class _StaffScreenState extends State<StaffScreen> {
                         backgroundColor: Colors.green.shade200,
                         child: Text(data[index].name[0]),),
                       SizedBox(width: 12.w,),
-                      Expanded(child: Text(data[index].name,style: AppStyle.medium(Colors.black),)),
-                      Text(data[index].tip.toString(),style: AppStyle.smallBold(Colors.green),),
+                      Expanded(child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(data[index].name,style: AppStyle.medium(Colors.black),),
+                          Text(data[index].tel,style: AppStyle.small(Colors.black),),
+                        ],
+                      )),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: AppColors.green
+                          ),
+                          child: checkStaff(data[index].tip),
+                      )
                     ],
                   ),
                 ),
@@ -71,5 +84,20 @@ class _StaffScreenState extends State<StaffScreen> {
         }
       ),
     );
+  }
+  Widget checkStaff(tip){
+    switch(tip){
+      case 0:
+        return Text("Админ",style: AppStyle.small(Colors.white),);
+      case 1:
+        return Text("Агент",style: AppStyle.small(Colors.white),);
+      case 2:
+        return Text("Омборчи",style: AppStyle.small(Colors.white),);
+      case 3:
+        return Text("Кассир",style: AppStyle.small(Colors.white),);
+      case 4:
+        return Text("Ҳисобчи",style: AppStyle.small(Colors.white),);
+    }
+    return Text('');
   }
 }

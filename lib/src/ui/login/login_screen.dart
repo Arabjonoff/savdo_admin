@@ -70,12 +70,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   CacheService.tip(res.result['tip']);
                   CacheService.saveIdAgent(res.result['id']);
                   CacheService.saveDb(_controllerBase.text);
+                  if(res.result["id_skl"] == -1){
+                    CacheService.saveWareHouseName("Asosiy ombor");
+                    CacheService.saveWareHouseId(1);
+                  }
                   if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
                   if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
                 }
                 else{
                   if(context.mounted)Navigator.pop(context);
-                  if(context.mounted)CenterDialog.showErrorDialog(context, "Error");
+                  if(context.mounted)CenterDialog.showErrorDialog(context, "Киришга рухсат йўқ");
                 }
               }
               else{
