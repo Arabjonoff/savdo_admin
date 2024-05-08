@@ -33,7 +33,7 @@ class WareHouseScreen extends StatefulWidget {
 class _WareHouseScreenState extends State<WareHouseScreen> {
   final Repository _repository = Repository();
   int wareHouseId = 1,filterId = -1,idPrice=3;
-  String wareHouseName = 'Асосий омбор';
+  String wareHouseName = '';
   double percent = 0;
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   List<ProductTypeAllResult>? filterProduct=[ProductTypeAllResult(id: 0, name: '', st: 0)];
@@ -78,12 +78,12 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                         itemCount: wareHouse.length,
                           itemBuilder: (ctx,index){
                         return ListTile(
-                          onTap: (){
+                          onTap: () async {
                             wareHouseId = wareHouse[index].id;
                             wareHouseName = wareHouse[index].name;
                             CacheService.saveWareHouseId(wareHouse[index].id);
                             CacheService.saveWareHouseName(wareHouse[index].name);
-                            _repository.clearSkladBase();
+                            await _repository.clearSkladBase();
                             skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
                             setState(() {});
                             Navigator.pop(context);

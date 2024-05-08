@@ -14,6 +14,7 @@ import 'package:savdo_admin/src/bloc/statistics/balance/balance_bloc.dart';
 import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
@@ -116,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Text(CacheService.getName()[0].toUpperCase()),
                                         )),
                                   ),
+                                  // Text("Асосий омбор",style: AppStyle.mediumBold(Colors.white),),
                                   IconButton(onPressed: ()async{
                                   Navigator.pushNamed(context, AppRouteName.message);
                                   }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
