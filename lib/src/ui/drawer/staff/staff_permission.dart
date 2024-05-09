@@ -4,6 +4,7 @@ import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/permission.dart';
 import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
+import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
@@ -60,8 +61,12 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                       p5: data[i].p5,
                     ));
                 }
-                await repository.postStaffPermission(permissionList,widget.data.id);
-                permissionList.clear();
+                HttpResult res = await repository.postStaffPermission(permissionList,widget.data.id);
+                if(res.result["status"] == true){
+                  permissionList.clear();
+                }else{
+                  permissionList.clear();
+                }
               }, color: AppColors.green, text: "Рухсатларни сақлаш"),
               SizedBox(height: 34.h,)
             ],
