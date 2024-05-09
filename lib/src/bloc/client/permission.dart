@@ -4,14 +4,14 @@ import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 
-class AgentPermission{
+class StaffPermission{
   final Repository _repository = Repository();
-  final _fetchAgentPermissionInfo = PublishSubject<List<AgentPermissionResult>>();
-  Stream<List<AgentPermissionResult>> get getPermissionStream => _fetchAgentPermissionInfo.stream;
+  final _fetchStaffPermissionInfo = PublishSubject<List<StaffPermissionResult>>();
+  Stream<List<StaffPermissionResult>> get getStaffPermissionStream => _fetchStaffPermissionInfo.stream;
 
-  getAllPermission(id)async{
-    HttpResult result = await _repository.getAgentPermission(id);
-    var data = AgentPermissionModel.fromJson(result.result);
+  getAllStaffPermission(id)async{
+    HttpResult result = await _repository.getStaffPermission(id);
+    var data = StaffPermissionModel.fromJson(result.result);
     for(int i = 0; i<data.data.length;i++){
       if(data.data[i].tp == 1){
         CacheService.permissionProduct1(data.data[i].p1);
@@ -158,7 +158,19 @@ class AgentPermission{
         CacheService.permissionBooking4(data.data[i].p4);
       }
     }
-    _fetchAgentPermissionInfo.sink.add(data.data);
+    _fetchStaffPermissionInfo.sink.add(data.data);
   }
 }
-final agentPermission = AgentPermission();
+final staffPermission = StaffPermission();
+
+class AgentPermission{
+  final Repository _repository = Repository();
+  final _fetchAgentPermissionInfo = PublishSubject<AgentPermissionModel>();
+  Stream<AgentPermissionModel> get getAgentPermissionStream => _fetchAgentPermissionInfo.stream;
+
+  getAllAgentPermission(id)async{
+    HttpResult result = await _repository.getStaffPermission(id);
+    var data = StaffPermissionModel.fromJson(result.result);
+  }
+}
+final agentPermission = StaffPermission();

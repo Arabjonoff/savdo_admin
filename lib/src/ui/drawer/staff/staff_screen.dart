@@ -5,6 +5,7 @@ import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/drawer/staff/agent_permission.dart';
 import 'package:savdo_admin/src/ui/drawer/staff/staff_permission.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -39,9 +40,15 @@ class _StaffScreenState extends State<StaffScreen> {
               itemBuilder: (ctx,index){
               return GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                    return StaffPermissionScreen(data: data[index],);
-                  }));
+                  if(data[index].tip ==1){
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return AgentPermissionScreen(data: data[index],);
+                    }));
+                  }else{
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return StaffPermissionScreen(data: data[index],);
+                    }));
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,

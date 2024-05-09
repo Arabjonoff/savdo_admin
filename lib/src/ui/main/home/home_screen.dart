@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:savdo_admin/src/bloc/client/agent_permission.dart';
+import 'package:savdo_admin/src/bloc/client/permission.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/bloc/getDate/get_date_bloc.dart';
 import 'package:savdo_admin/src/bloc/product/product_barcode.dart';
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const DrawerScreen(),
       body: RefreshIndicator(
         onRefresh: ()async{
-          await agentPermission.getAllPermission(CacheService.getIdAgent());
+          await staffPermission.getAllStaffPermission(CacheService.getIdAgent());
           await balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
           await planBloc.getPlanAll();
         },
