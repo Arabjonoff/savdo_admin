@@ -169,8 +169,9 @@ class AgentPermission{
   Stream<AgentPermissionModel> get getAgentPermissionStream => _fetchAgentPermissionInfo.stream;
 
   getAllAgentPermission(id)async{
-    HttpResult result = await _repository.getStaffPermission(id);
-    var data = StaffPermissionModel.fromJson(result.result);
+    HttpResult result = await _repository.getAgentPermission(id);
+    var data = AgentPermissionModel.fromJson(result.result);
+    _fetchAgentPermissionInfo.sink.add(data);
   }
 }
-final agentPermission = StaffPermission();
+final agentPermission = AgentPermission();
