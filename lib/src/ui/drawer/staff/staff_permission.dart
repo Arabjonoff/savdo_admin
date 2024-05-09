@@ -19,13 +19,13 @@ class StaffPermissionScreen extends StatefulWidget {
 class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
   bool product = false,productAdd = false,productEdit = false,productDelete = false;
   int productId = 0,productAddId = 0,productEditId = 0,productDeleteId = 0;
+  List<StaffPermissionResult> permissionList = [];
+
   @override
   void initState() {
     staffPermission.getAllStaffPermission(widget.data.id);
     super.initState();
   }
-  List<Map> permissionList = [
-  ];
   @override
   Widget build(BuildContext context) {
     Repository repository = Repository();
@@ -50,250 +50,18 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }),
               ),
               ButtonWidget(onTap: ()async{
-                for(int i=0;i<data.length;i++){
-                  if(data[i].tp==1){
-                    permissionList.add({
-                      "ID":1,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==2){
-                    permissionList.add({
-                      "ID":2,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==3){
-                    permissionList.add({
-                      "ID":3,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==4){
-                    permissionList.add({
-                      "ID":4,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==5){
-                    permissionList.add({
-                      "ID":5,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==6){
-                    permissionList.add({
-                      "ID":6,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==7){
-                    permissionList.add({
-                      "ID":7,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==8){
-                    permissionList.add({
-                      "ID":8,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==9){
-                    permissionList.add({
-                      "ID":9,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==10){
-                    permissionList.add({
-                      "ID":10,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==11){
-                    permissionList.add({
-                      "ID":11,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==12){
-                    permissionList.add({
-                      "ID":12,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==13){
-                    permissionList.add({
-                      "ID":13,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==14){
-                    permissionList.add({
-                      "ID":14,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==15){
-                    permissionList.add({
-                      "ID":15,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==16){
-                    permissionList.add({
-                      "ID":16,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==17){
-                    permissionList.add({
-                      "ID":17,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==18){
-                    permissionList.add({
-                      "ID":18,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==19){
-                    permissionList.add({
-                      "ID":19,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==20){
-                    permissionList.add({
-                      "ID":20,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==21){
-                    permissionList.add({
-                      "ID":21,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else if(data[i].tp==22){
-                    permissionList.add({
-                      "ID":22,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-
-                    });
-                  }
-                  else if(data[i].tp==23){
-                    permissionList.add({
-                      "ID":23,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
-                  else{
-                    permissionList.add({
-                      "ID":1,
-                      "P1":data[i].p1,
-                      "P2":data[i].p2,
-                      "P3":data[i].p3,
-                      "P4":data[i].p4,
-                      "P5":data[i].p5,
-                    });
-                  }
+                for(int i =0;i<data.length;i++){
+                  permissionList.add(StaffPermissionResult(
+                      tp: data[i].tp,
+                      p1: data[i].p1,
+                      p2: data[i].p2,
+                      p3: data[i].p3,
+                      p4: data[i].p4,
+                      p5: data[i].p5,
+                    ));
                 }
                 await repository.postStaffPermission(permissionList,widget.data.id);
+                permissionList.clear();
               }, color: AppColors.green, text: "Рухсатларни сақлаш"),
               SizedBox(height: 34.h,)
             ],
@@ -320,54 +88,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
-                    permissionList.add({
-                      "P1":0,
-                    });
                   }else{
                     data.p1 = 1;
-                    permissionList.add({
-                      "ID":widget.data.id,
-                      "P1":1,
-                    });
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш ",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -386,58 +151,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш ",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим Нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -457,58 +227,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш ",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим Нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -527,58 +302,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш ",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим Нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -597,58 +377,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Фойда",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим Нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -667,47 +452,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -727,47 +516,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -787,47 +580,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -846,47 +643,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -906,47 +707,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -965,50 +770,53 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
-
           ),
         );
       case 12:
@@ -1025,47 +833,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -1085,50 +897,53 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
-
           ),
         );
       case 14:
@@ -1145,47 +960,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1204,58 +1023,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1274,47 +1098,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
 
@@ -1334,47 +1162,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1393,47 +1225,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1452,58 +1288,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1522,58 +1363,63 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Кирим нархи",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p5 ==1){
                     data.p5 = 0;
                   }else{
                     data.p5 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p5==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p5==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p5==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1592,47 +1438,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1651,47 +1501,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),
@@ -1710,47 +1564,51 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
             children: [
               ListTile(
                 title: Text("Куриш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p1 ==1){
                     data.p1 = 0;
                   }else{
                     data.p1 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p1==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p1==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p1==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Янги киритиш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p2 ==1){
                     data.p2 = 0;
                   }else{
                     data.p2 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p2==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p2==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p2==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Тахрирлаш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p3 ==1){
                     data.p3 = 0;
                   }else{
                     data.p3 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p3==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p3==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p3==1?Colors.green:Colors.grey,),
               ),
               ListTile(
                 title: Text("Ўчириш",style: AppStyle.medium(Colors.black),),
-                trailing: TextButton(onPressed: (){
+                onTap: (){
                   if(data.p4 ==1){
                     data.p4 = 0;
                   }else{
                     data.p4 = 1;
                   }
                   setState(() {});
-                },child: Text(data.p4==1?"Рухсат берилган":"Рухсат йўқ",style: AppStyle.small(data.p4==1?AppColors.green:Colors.red),),),
+                },
+                trailing: Icon(Icons.radio_button_checked,color: data.p4==1?Colors.green:Colors.grey,),
               ),
             ],
           ),

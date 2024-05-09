@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart'as http;
 import 'package:intl/intl.dart';
+import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/expense/expense_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
@@ -662,7 +663,7 @@ class ApiProvider {
     String url = "${_baseUrl}user-per.php/user_per0?DB=$db&ID=$id&JWT=$token";
     return await _getRequest(url);
   }
-  Future<HttpResult> postStaffPermission(List<Map> map,id)async{
+  Future<HttpResult> postStaffPermission(List<StaffPermissionResult> map,id)async{
     String url = "${_baseUrl}user-per.php/user_dost_upd?DB=$db&JWT=$token&ID=$id";
     return await _postRequest(url,json.encode(map));
   }

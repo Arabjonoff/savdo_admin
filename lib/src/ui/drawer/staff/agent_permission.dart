@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/permission.dart';
+import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
@@ -85,35 +87,51 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                             trailing:Icon(Icons.radio_button_checked,color: data.kurs ==1?Colors.green:Colors.grey,),
                           ),
                         ),
-                        ///
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey)
-                          ),
-                          child: ExpansionTile(
-                            shape: const Border(),
-                            title: Text("Омборга боғлаш",style: AppStyle.medium(Colors.black),),
-                            children: [
-                              ListTile(
-                                title:Text("1 - Сотиш нархи",style: AppStyle.smallBold(Colors.black),),
-                                onTap: (){},
-                                trailing:Icon(Icons.radio_button_checked,color: Colors.grey,),
-                              ),
-                              ListTile(
-                                title:Text("2 - Сотиш нархи",style: AppStyle.smallBold(Colors.black),),
-                                onTap: (){},
-                                trailing:Icon(Icons.radio_button_checked,color: Colors.grey,),
-                              ),
-                              ListTile(
-                                title:Text("3 - Сотиш нархи",style: AppStyle.smallBold(Colors.black),),
-                                onTap: (){},
-                                trailing:Icon(Icons.radio_button_checked,color: Colors.grey,),
-                              ),
-                            ],
-                          ),),
+                        GestureDetector(
+                          onTap: ()async{
+                            List<ProductTypeAllResult> wareHouse = await repository.getWareHouseBase();
+                            // ignore: use_build_context_synchronously
+                            showDialog(context: context, builder: (ctx){
+                              return Dialog(
+                                insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 250.h,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 16.w,top: 16.w),
+                                        child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
+                                      ),
+                                      Expanded(
+                                          child: ListView.builder(
+                                          itemCount: wareHouse.length,
+                                          itemBuilder: (ctx,index){
+                                            return ListTile(
+                                              onTap: () async {
+                                                setState(() {});
+                                                Navigator.pop(context);
+                                              },
+                                              title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                                              trailing:Icon(Icons.radio_button_checked,color: wareHouse[index].id == data.idSkl+1?Colors.green:Colors.grey,),
+                                            );
+                                          }))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.grey)
+                            ),
+                            child: ListTile()),
+                        ),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
                           decoration: BoxDecoration(
@@ -159,7 +177,6 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                               ),
                             ],
                           ),),
-                        ///
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
                           decoration: BoxDecoration(
@@ -503,6 +520,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                   ),
                 ),
                 ButtonWidget(onTap: ()async{
+                  CenterDialog.showLoadingDialog(context, '');
                   Map map = {
                     "SNARHI": data.snarhi,
                     "ID_NARH": data.idNarh,
@@ -539,12 +557,19 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                     "HARID": data.harid,
                   };
                   HttpResult res = await repository.postAgentPermission(map, widget.data.id);
+                  if(res.result['status']){
+                    if(context.mounted)Navigator.pop(context);
+                    CenterDialog.showSuccessDialog(context);
+                  }else{
+                    if(context.mounted)Navigator.pop(context);
+                    CenterDialog.showErrorDialog(context, res.result['message']);
+                  }
                 }, color: AppColors.green, text: "Рухсатларни сақлаш"),
                 SizedBox(height: 34.h,),
               ],
             );
           }else{
-            return const SizedBox();
+            return const Center(child: CircularProgressIndicator());
           }
         }
       ),
