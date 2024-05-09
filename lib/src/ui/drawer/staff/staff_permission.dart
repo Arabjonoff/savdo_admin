@@ -50,7 +50,263 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }),
               ),
               ButtonWidget(onTap: ()async{
-                await repository.postStaffPermission(permissionList);
+                for(int i=0;i<data.length;i++){
+                  if(data[i].tp==1){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==2){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==3){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==4){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==5){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==6){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==7){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==8){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==9){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==10){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==11){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==12){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==13){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==14){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==15){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==16){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==17){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==18){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==19){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==20){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==21){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else if(data[i].tp==22){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+
+                    });
+                  }
+                  else if(data[i].tp==23){
+                    permissionList.add({
+                      "ID":widget.data.id,
+                      "TP":data[i].tp,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                }
+                await repository.postStaffPermission(permissionList,widget.data.id);
               }, color: AppColors.green, text: "Рухсатларни сақлаш"),
               SizedBox(height: 34.h,)
             ],

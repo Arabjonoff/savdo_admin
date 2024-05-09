@@ -14,7 +14,6 @@ class DbClient {
     var res = dbClient.insert('client', item.toJson());
     return res;
   }
-
   Future<List<ClientResult>> getClient(obj) async {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];

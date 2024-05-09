@@ -234,5 +234,5 @@ class Repository{
   Future<HttpResult> getOldDebtClient(year,month) => _apiProvider.getOldDebtClient(year, month);
   Future<HttpResult> postNewDebtClient(year, month,data) => _apiProvider.postNewDebtClient(year, month,data);
   Future<HttpResult> getAgentPermission(id) => _apiProvider.getStaffPermission(id);
-  Future<HttpResult> postStaffPermission(map) => _apiProvider.postStaffPermission(map);
+  Future<HttpResult> postStaffPermission(map,id) => _apiProvider.postStaffPermission(map,id);
 }
