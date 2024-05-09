@@ -53,7 +53,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                 for(int i=0;i<data.length;i++){
                   if(data[i].tp==1){
                     permissionList.add({
-                      "TP":1,
+                      "ID":1,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -63,7 +63,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==2){
                     permissionList.add({
-                      "TP":2,
+                      "ID":2,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -73,7 +73,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==3){
                     permissionList.add({
-                      "TP":3,
+                      "ID":3,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -83,7 +83,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==4){
                     permissionList.add({
-                      "TP":4,
+                      "ID":4,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -93,7 +93,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==5){
                     permissionList.add({
-                      "TP":5,
+                      "ID":5,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -103,7 +103,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==6){
                     permissionList.add({
-                      "TP":6,
+                      "ID":6,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -113,7 +113,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==7){
                     permissionList.add({
-                      "TP":7,
+                      "ID":7,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -123,7 +123,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==8){
                     permissionList.add({
-                      "TP":8,
+                      "ID":8,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -133,7 +133,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==9){
                     permissionList.add({
-                      "TP":9,
+                      "ID":9,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -143,7 +143,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==10){
                     permissionList.add({
-                      "TP":10,
+                      "ID":10,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -153,7 +153,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==11){
                     permissionList.add({
-                      "TP":11,
+                      "ID":11,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -163,7 +163,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==12){
                     permissionList.add({
-                      "TP":12,
+                      "ID":12,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -173,7 +173,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==13){
                     permissionList.add({
-                      "TP":13,
+                      "ID":13,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -183,7 +183,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==14){
                     permissionList.add({
-                      "TP":14,
+                      "ID":14,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -193,7 +193,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==15){
                     permissionList.add({
-                      "TP":15,
+                      "ID":15,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -203,7 +203,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==16){
                     permissionList.add({
-                      "TP":16,
+                      "ID":16,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -213,7 +213,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==17){
                     permissionList.add({
-                      "TP":17,
+                      "ID":17,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -223,7 +223,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==18){
                     permissionList.add({
-                      "TP":18,
+                      "ID":18,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -233,7 +233,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==19){
                     permissionList.add({
-                      "TP":19,
+                      "ID":19,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -243,7 +243,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==20){
                     permissionList.add({
-                      "TP":20,
+                      "ID":20,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -253,7 +253,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==21){
                     permissionList.add({
-                      "TP":21,
+                      "ID":21,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -263,7 +263,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==22){
                     permissionList.add({
-                      "TP":22,
+                      "ID":22,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
@@ -274,7 +274,17 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }
                   else if(data[i].tp==23){
                     permissionList.add({
-                      "TP":23,
+                      "ID":23,
+                      "P1":data[i].p1,
+                      "P2":data[i].p2,
+                      "P3":data[i].p3,
+                      "P4":data[i].p4,
+                      "P5":data[i].p5,
+                    });
+                  }
+                  else{
+                    permissionList.add({
+                      "ID":1,
                       "P1":data[i].p1,
                       "P2":data[i].p2,
                       "P3":data[i].p3,
