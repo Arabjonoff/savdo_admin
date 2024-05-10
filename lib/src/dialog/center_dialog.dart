@@ -202,6 +202,14 @@ class CenterDialog{
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text("Агент:",style: AppStyle.medium(Colors.black),),
+                  Text(data.agentName,style: AppStyle.medium(Colors.black)),
+                ],
+              ),
+              SizedBox(height: 8.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Text("Манзил:",style: AppStyle.medium(Colors.black),),
                   Text(data.manzil,style: AppStyle.medium(Colors.black)),
                 ],

@@ -15,6 +15,7 @@ import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/rx_bus.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
@@ -463,10 +464,10 @@ class _UpdateClientScreenState extends State<UpdateClientScreen> {
                   "ID_NARH": idPrice,
                   "ID_FAOL": _controllerActivity.text,
                   "ID_KLASS": _controllerTerritory.text,
-                  "ID_AGENT": 'idAgent',
+                  "ID_AGENT": CacheService.getIdAgent(),
                   "SMS": 0,
                   "VAQT": DateTime.now().toString(),
-                  "ID_HODIMLAR": '',
+                  "ID_HODIMLAR": CacheService.getIdAgent(),
                   "NAQD": 0,
                   "PAS": _controllerPassword.text,
                   "D1": d1,
@@ -497,10 +498,10 @@ class _UpdateClientScreenState extends State<UpdateClientScreen> {
                     "ID_NARH": idPrice,
                     "ID_FAOL": int.parse(_controllerActivity.text),
                     "ID_KLASS": int.parse(_controllerTerritory.text),
-                    "ID_AGENT": 0,
+                    "ID_AGENT": CacheService.getIdAgent(),
                     "SMS": 0,
                     "VAQT": DateTime.now().toString(),
-                    "ID_HODIMLAR": 0,
+                    "ID_HODIMLAR": CacheService.getIdAgent(),
                     "NAQD": 0,
                     "PAS": _controllerPassword.text,
                     "D1": d1,
