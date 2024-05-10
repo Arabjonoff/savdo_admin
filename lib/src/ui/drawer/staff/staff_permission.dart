@@ -53,7 +53,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
               ButtonWidget(onTap: ()async{
                 for(int i =0;i<data.length;i++){
                   permissionList.add(StaffPermissionResult(
-                      id: i,
+                      id: i+1,
                       p1: data[i].p1,
                       p2: data[i].p2,
                       p3: data[i].p3,

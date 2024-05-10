@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
             HttpResult res = await _repository.login(_controllerName.text, _controllerPassword.text, _controllerBase.text);
             try{
               if(res.isSuccess){
-                if(res.result['tip'] == 0){
+                if(res.result['tip'] == 0 || res.result['tip'] == 2||res.result['tip'] == 3 ||res.result['tip'] == 4){
                   CacheService.saveToken(res.result['jwt']);
                   CacheService.savePassword(_controllerPassword.text);
                   CacheService.saveName(_controllerName.text);
