@@ -9,12 +9,14 @@ import 'package:savdo_admin/src/bloc/outcome/outcome_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/share/share_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/update_outcome/update_outcome_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -28,13 +30,19 @@ class OutcomeScreen extends StatefulWidget {
 class _OutcomeScreenState extends State<OutcomeScreen> {
    TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   final Repository _repository = Repository();
+   int wareHouseId = 1;
+   String wareHouseName = '';
   @override
   void initState() {
-  outcomeBloc.getAllOutcome(_controllerDate.text);
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
+  outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
   super.initState();
   }
   @override
   void dispose() {
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
     _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
     super.dispose();
   }
@@ -46,7 +54,46 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
         title: Column(
           children: [
             const Text("Савдо-сотиқ"),
-             Text(_controllerDate.text,style: AppStyle.smallBold(Colors.grey),),
+            GestureDetector(
+                onTap: ()async{
+                  List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
+                  showDialog(context: context, builder: (ctx){
+                    return Dialog(
+                      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250.h,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 16.w,top: 16.w),
+                              child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
+                            ),
+                            Expanded(child: ListView.builder(
+                                itemCount: wareHouse.length,
+                                itemBuilder: (ctx,index){
+                                  return ListTile(
+                                    onTap: () async {
+                                      wareHouseId = wareHouse[index].id;
+                                      wareHouseName = wareHouse[index].name;
+                                      CacheService.saveWareHouseId(wareHouse[index].id);
+                                      CacheService.saveWareHouseName(wareHouse[index].name);
+                                      await _repository.clearSkladBase();
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                                    trailing: Icon(Icons.radio_button_checked,color: wareHouseId == wareHouse[index].id?AppColors.green:Colors.grey,),
+                                  );
+                                }))
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+                child: Text(wareHouseName,style: AppStyle.small(Colors.grey),)),
           ],
         ),
         actions: [
@@ -58,7 +105,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
       backgroundColor: AppColors.background,
       body: RefreshIndicator(
         onRefresh: ()async{
-          await outcomeBloc.getAllOutcome(_controllerDate.text,);
+          await outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
         },
         child: Column(
           children: [
@@ -86,7 +133,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                           onPressed: (i) async {
                                             HttpResult res = await _repository.lockOutcome(data[index].id,1);
                                             if(res.result["status"] == true){
-                                              outcomeBloc.getAllOutcome(_controllerDate.text);
+                                              outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
                                             }else{
                                               if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
                                             }
@@ -97,7 +144,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                         onPressed: (i) async {
                                           HttpResult res = await _repository.lockOutcome(data[index].id,0);
                                           if(res.result["status"] == true){
-                                            outcomeBloc.getAllOutcome(_controllerDate.text);
+                                            outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
                                           }else{
                                             if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
                                           }
@@ -132,7 +179,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                           CenterDialog.showDeleteDialog(context, ()async{
                                             HttpResult res = await _repository.deleteOutcomeDoc(data[index].id);
                                             if(res.result['status'] == true){
-                                              outcomeBloc.getAllOutcome(_controllerDate.text);
+                                              outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
                                               Navigator.pop(context);
                                             }
                                             else{
@@ -294,7 +341,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
         );
         _controllerDate.text = DateFormat('yyyy-MM-dd').format(selectedDateTime);
         setState(() {});
-        outcomeBloc.getAllOutcome( _controllerDate.text);
+        outcomeBloc.getAllOutcome( _controllerDate.text,wareHouseId);
       }
     });
   }

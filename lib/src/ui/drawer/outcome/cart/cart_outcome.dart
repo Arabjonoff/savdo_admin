@@ -15,6 +15,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/payment/outcome_payment_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/outcome/outcome_update_dialog.dart';
@@ -174,7 +175,7 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                         else{
                           if(context.mounted)Navigator.pop(context);
                         }
-                        await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                        await outcomeBloc.getAllOutcome(DateFormat('yyyy-MM-dd').format(DateTime.now()),CacheService.getWareHouseId());
                         repository.clearOutcomeCart();
                       }, color: AppColors.green, text: "Сақлаш")),
                       FloatingActionButton(

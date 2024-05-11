@@ -174,7 +174,7 @@ class Repository{
 
   /// Api Outcome
   Future<HttpResult> getProductOutCome() => _apiProvider.getProductOutCome();
-  Future<HttpResult> getOutCome(date) => _apiProvider.getOutCome(date);
+  Future<HttpResult> getOutCome(date,idSkl) => _apiProvider.getOutCome(date,idSkl);
   Future<HttpResult> lockOutcome(id,prov) => _apiProvider.lockOutcome(id, prov);
   Future<HttpResult> addOutcomeSklRs(Map data) => _apiProvider.addOutcomeSklRs(data);
   Future<HttpResult> updateOutcomeSklRs(Map data) => _apiProvider.updateOutcomeSklRs(data);

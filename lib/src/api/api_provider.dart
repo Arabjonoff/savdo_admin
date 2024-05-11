@@ -585,7 +585,7 @@ class ApiProvider {
     String url = "${_baseUrl}sklad01?DB=$db&JWT=$token&YIL=$year&OY=$month&ID_SKL0=$idSkl";
     return await _getRequest(url,);
   }
-  Future<HttpResult> getOutCome(date)async{
+  Future<HttpResult> getOutCome(date,idSkl)async{
     // String url = "${_baseUrl}chikim_agent?DB=$db&DT=$date&ID_AGENT=$userId&ID_SKL=$idSkl&JWT=$token";
     String url = "${_baseUrl}chikim2?DB=$db&DT1=$date&DT2=$date&ID_SKL=$idSkl&JWT=$token";
     return await _getRequest(url,);

@@ -8,6 +8,7 @@ import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 
 class PlanBloc{
   final _fetchPieChartInfo = PublishSubject<PlanModel>();
@@ -22,7 +23,7 @@ class PlanBloc{
   final Repository _repository = Repository();
   getPlanAll()async{
     List<ClientResult> clientBase = await _repository.getClientBase('');
-    HttpResult result = await _repository.getOutCome(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+    HttpResult result = await _repository.getOutCome(DateFormat('yyyy-MM-dd').format(DateTime.now()),CacheService.getWareHouseId());
     if(result.isSuccess){
     taskDone = 0;
     taskGo = 0;

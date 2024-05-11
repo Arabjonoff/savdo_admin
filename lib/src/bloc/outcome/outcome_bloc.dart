@@ -11,12 +11,12 @@ class OutcomeBloc{
   final _fetchOutcomeInfo = PublishSubject<List<OutcomeResult>>();
   Stream<List<OutcomeResult>> get getOutcomeStream => _fetchOutcomeInfo.stream;
 
-  getAllOutcome(date)async{
+  getAllOutcome(date,idSkl)async{
     List<AgentsResult> agentBase  = await _repository.getAgentsBase();
     List<ClientResult> clientBase  = await _repository.getClientBase('');
     List<ProductTypeAllResult> warehouse  = await _repository.getWareHouseBase();
     // CenterDialog.showLoadingDialog(context, 'Бироз кутинг');
-    HttpResult result = await _repository.getOutCome(date);
+    HttpResult result = await _repository.getOutCome(date,idSkl);
     if(result.isSuccess){
       var data = OutcomeModel.fromJson(result.result);
       for(int i=0;i<data.outcomeResult.length;i++){
