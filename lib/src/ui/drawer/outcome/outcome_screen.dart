@@ -80,6 +80,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                       CacheService.saveWareHouseId(wareHouse[index].id);
                                       CacheService.saveWareHouseName(wareHouse[index].name);
                                       await _repository.clearSkladBase();
+                                      await outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
                                       setState(() {});
                                       Navigator.pop(context);
                                     },

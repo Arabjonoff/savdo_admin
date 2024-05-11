@@ -19,6 +19,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/cart/cart_outcome.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/outcome/outcome_dialog_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
@@ -37,7 +38,6 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
   num price = 0;
   num idPrice = 0;
   int priceUsd = 0;
-  String wareHouseName = 'Асосий омбор';
   double percent = 0;
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   List<ProductTypeAllResult>? filterProduct=[ProductTypeAllResult(id: 0, name: '', st: 0)];
@@ -46,6 +46,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    wareHouseId = CacheService.getWareHouseId();
     skladBloc.getAllSkladSearch(dateTime.year, dateTime.month,wareHouseId,'');
     super.initState();
   }

@@ -38,7 +38,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   @override
   void initState() {
     _controllerDocNumber = TextEditingController(text: widget.ndoc.toString());
-    skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,1);
+    skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,CacheService.getWareHouseId());
     _initBus();
     super.initState();
   }
@@ -103,7 +103,7 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                   "KURS": CacheService.getCurrency(),
                   "ID_FAOL": _controllerClientIdFaol.text,
                   "ID_KLASS": _controllerClientIdKlass.text,
-                  "ID_SKL": CacheService.getidSkl(),
+                  "ID_SKL": CacheService.getWareHouseId(),
                   "YIL": DateTime.now().year,
                   "OY":  DateTime.now().month
                 };
