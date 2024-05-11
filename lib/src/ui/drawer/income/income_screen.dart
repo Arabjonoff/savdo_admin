@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -10,11 +11,13 @@ import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_model.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/income/income_detail.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -33,14 +36,20 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   final _controller = ScrollController();
   bool scrollTop = false;
+  int wareHouseId = 1;
+  String wareHouseName = '';
   @override
   void initState() {
-    incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
+    incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
     super.initState();
   }
   @override
   void dispose() {
-    incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
+    incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
     super.dispose();
   }
   @override
@@ -52,7 +61,47 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
         title: Column(
           children: [
             const Text("Киримлар"),
-            Text(DateFormat('yyyy-MMM').format(dateTime),style: AppStyle.smallBold(Colors.grey),),
+            GestureDetector(
+              onTap: ()async{
+                List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
+                showDialog(context: context, builder: (ctx){
+                  return Dialog(
+                    insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 250.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 16.w,top: 16.w),
+                            child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
+                          ),
+                          Expanded(child: ListView.builder(
+                              itemCount: wareHouse.length,
+                              itemBuilder: (ctx,index){
+                                return ListTile(
+                                  onTap: () async {
+                                    wareHouseId = wareHouse[index].id;
+                                    wareHouseName = wareHouse[index].name;
+                                    CacheService.saveWareHouseId(wareHouse[index].id);
+                                    CacheService.saveWareHouseName(wareHouse[index].name);
+                                    await _repository.clearSkladBase();
+                                    incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                                  trailing: Icon(Icons.radio_button_checked,color: wareHouseId == wareHouse[index].id?AppColors.green:Colors.grey,),
+                                );
+                              }))
+                        ],
+                      ),
+                    ),
+                  );
+                });
+              },
+                child: Text(wareHouseName,style: AppStyle.small(Colors.grey),)),
           ],
         ),
         actions: [
@@ -70,7 +119,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                   dateTime = date;
                 });
                 _repository.clearSkladBase();
-                incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+                incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
               }
             });
           }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,))
@@ -78,7 +127,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
       ),
       body: RefreshIndicator(
         onRefresh: ()async{
-          await incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+          await incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
         },
         child: Column(
           children: [
@@ -110,7 +159,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                                               onPressed: (i) async {
                                                 HttpResult res = await _repository.lockIncome(data[index].id,1);
                                                 if(res.result['status'] == true){
-                                                  incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+                                                  incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                       SnackBar(content: Text(res.result['message']),backgroundColor: Colors.green,)
                                                   );
@@ -127,7 +176,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                                             onPressed: (i) async {
                                               HttpResult res = await _repository.lockIncome(data[index].id,0);
                                               if(res.result['status'] == true){
-                                                incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+                                                incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
                                                 ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(content: Text(res.result['message']),backgroundColor: Colors.green,)
                                                 );
@@ -169,7 +218,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                                               CenterDialog.showDeleteDialog(context, ()async{
                                                 HttpResult res = await _repository.deleteIncome(data[index].id);
                                                 if(res.result['status'] == true){
-                                                  incomeBloc.getAllIncome(dateTime.year,dateTime.month);
+                                                  incomeBloc.getAllIncome(dateTime.year,dateTime.month,wareHouseId);
                                                   Navigator.pop(context);
                                                 }
                                                 else{

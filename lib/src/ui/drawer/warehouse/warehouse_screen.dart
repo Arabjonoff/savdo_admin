@@ -42,6 +42,8 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
     skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
     super.initState();
   }
@@ -97,7 +99,6 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                 ),
               );
             });
-
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

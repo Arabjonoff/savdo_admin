@@ -28,11 +28,10 @@ class WareHouseFromScreen extends StatefulWidget {
 
 class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
   final Repository _repository = Repository();
-  int wareHouseId = 1,filterId = -1;
+  int filterId = -1;
   num price = 0;
   num idPrice = 0;
   int priceUsd = 0;
-  String wareHouseName = 'Асосий омбор';
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   List<ProductTypeAllResult> filterProduct=[ProductTypeAllResult(id: 0, name: '', st: 0)];
   var scaffoldKey = GlobalKey<ScaffoldState>();

@@ -13,6 +13,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/income/expense/income_expense_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/income/update_income/updateIncome_item.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
 class CartIncomeScreen extends StatefulWidget {
@@ -260,7 +261,7 @@ class _CartIncomeScreenState extends State<CartIncomeScreen> {
                                 }
                                 HttpResult res = await _repository.updateIncome2SklPr(body);
                                 if(res.result['status'] == true){
-                                  await incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
+                                  await incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month,CacheService.getWareHouseId());
                                   _repository.clearIncomeProductBase();
                                   if(context.mounted)Navigator.pop(context);
                                   if(context.mounted)Navigator.pop(context);

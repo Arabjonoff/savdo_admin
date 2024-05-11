@@ -91,11 +91,11 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
                   _controllerDate.text,
                   _controllerComment.text,
                   _controllerHodimID.text,
-                 CacheService.getidSkl());
+                  CacheService.getWareHouseId());
               if(res.result["status"] == true){
                 if(context.mounted)Navigator.pop(context);
                 if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
-                incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month);
+                incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month,CacheService.getWareHouseId());
               }
             }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
           ],
