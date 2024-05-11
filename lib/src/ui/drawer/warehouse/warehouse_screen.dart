@@ -42,6 +42,11 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    if(CacheService.getPermissionMainWarehouse5() ==1){
+      idPrice=3;
+    }else{
+      idPrice=0;
+    }
     wareHouseName = CacheService.getWareHouseName();
     wareHouseId = CacheService.getWareHouseId();
     skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
@@ -170,50 +175,55 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
               }
               /// Oydan oyga olib o'tish
               if (select == 1) {
-                if(context.mounted)CenterDialog.showLoadingDialog(context, "Маҳсулотларни ойдан-ойга олиб ўтилмоқда");
-                HttpResult result = await _repository.getSkladSkl2(dateTime.year, dateTime.month,wareHouseId);
-                if(result.isSuccess){
-                  var data = GetSkladPerModel.fromJson(result.result);
-                  for(int i =0; i<data.data.length;i++){
-                    sklad.add(data.data[i].idSkl2);
-                  }
-                }
-                if(sklad.isNotEmpty){
-                  int countLength = 0;
-                  for(int i = 0; i<sklad.length;i++){
-                    sendData.add({'ID_SKL2':sklad[i]});
-                    if(sendData.length==20){
-                      countLength+=20;
-                      await _repository.resetSkladSkl2(sendData, dateTime.year, dateTime.month, wareHouseId);
-                      sendData.clear();
+                if(CacheService.getPermissionMainWarehouse3() ==1){
+                  if(context.mounted)CenterDialog.showLoadingDialog(context, "Маҳсулотларни ойдан-ойга олиб ўтилмоқда");
+                  HttpResult result = await _repository.getSkladSkl2(dateTime.year, dateTime.month,wareHouseId);
+                  if(result.isSuccess){
+                    var data = GetSkladPerModel.fromJson(result.result);
+                    for(int i =0; i<data.data.length;i++){
+                      sklad.add(data.data[i].idSkl2);
                     }
                   }
-                  if(countLength==sklad.length){
-                    setState(() {
-                      if(context.mounted)Navigator.pop(context);
-                      sendData.clear();
-                      sklad.clear();
-                      _repository.clearSkladBase();
-                      skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
-                    });
-                  }else{
-                    sendData.clear();
-                    var resLength = sklad.length-countLength;
-                    for(int i = countLength; i<countLength+resLength;i++){
+                  if(sklad.isNotEmpty){
+                    int countLength = 0;
+                    for(int i = 0; i<sklad.length;i++){
                       sendData.add({'ID_SKL2':sklad[i]});
+                      if(sendData.length==20){
+                        countLength+=20;
+                        await _repository.resetSkladSkl2(sendData, dateTime.year, dateTime.month, wareHouseId);
+                        sendData.clear();
+                      }
                     }
-                    HttpResult result = await _repository.resetSkladSkl2(sendData,dateTime.year, dateTime.month, wareHouseId);
-                    if(result.result["status"] == true){
+                    if(countLength==sklad.length){
                       setState(() {
                         if(context.mounted)Navigator.pop(context);
                         sendData.clear();
                         sklad.clear();
                         _repository.clearSkladBase();
                         skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
-                        CenterDialog.showSuccessDialog(context,);
                       });
+                    }else{
+                      sendData.clear();
+                      var resLength = sklad.length-countLength;
+                      for(int i = countLength; i<countLength+resLength;i++){
+                        sendData.add({'ID_SKL2':sklad[i]});
+                      }
+                      HttpResult result = await _repository.resetSkladSkl2(sendData,dateTime.year, dateTime.month, wareHouseId);
+                      if(result.result["status"] == true){
+                        setState(() {
+                          if(context.mounted)Navigator.pop(context);
+                          sendData.clear();
+                          sklad.clear();
+                          _repository.clearSkladBase();
+                          skladBloc.getAllSklad(dateTime.year, dateTime.month,wareHouseId);
+                          CenterDialog.showSuccessDialog(context,);
+                        });
+                      }
                     }
                   }
+                }
+                else{
+                  CenterDialog.showErrorDialog(context, "Рухсат берилмаган");
                 }
               }
             },
@@ -625,7 +635,7 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                 color: Colors.white,
                 child: Text("Нархи бўйича",style: AppStyle.mediumBold(Colors.black),),
               ),
-              ListTile(
+              CacheService.getPermissionMainWarehouse5() ==0?const SizedBox():ListTile(
                 onTap: (){
                   setState(() => idPrice = 3);
                 },

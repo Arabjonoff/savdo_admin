@@ -126,11 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                               SizedBox(height: 40.spMax,),
-                              Padding(
+                              CacheService.getPermissionBalanceWindow1() ==0?const SizedBox():Padding(
                                 padding: EdgeInsets.only(left: 12.0.w),
                                 child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),
                               ),
-                              ListTile(
+                              CacheService.getPermissionBalanceWindow1() ==0?const SizedBox(): ListTile(
                                 title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
                                 onTap: (){
                                   BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
@@ -225,29 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             }return const SizedBox();
                           }
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-                        padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 16.w),
-                        alignment: Alignment.center,
-                        width: width,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.grey.shade400
-                              )
-                            ],
-                            color: AppColors.white,
-                            borderRadius:  BorderRadius.circular(10)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Валюта курси",style: AppStyle.smallBold(Colors.black),),
-                            Text("${priceFormat.format(CacheService.getCurrency())} сўм",style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
                       ),
                     ],
                   ),

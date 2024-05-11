@@ -267,20 +267,20 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                      ),
                    ],
                  ),
-                  SizedBox(
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox(): SizedBox(
                     height: 1,
                     width: MediaQuery.of(context).size.width,
                     child: const DashedRect(color: Colors.grey, strokeWidth: 2.0, gap: 3.0,),
                   ),
-                  SizedBox(height: 12.h,),
-                  Row(
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():SizedBox(height: 12.h,),
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():Row(
                     children: [
                       Expanded(child: Text("Нархи сўм:",style: AppStyle.small(Colors.black),)),
                       Expanded(child: Text("Нархи \$:",style: AppStyle.small(Colors.black),)),
                     ],
                   ),
-                  SizedBox(height: 8.h,),
-                  Row(
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():SizedBox(height: 8.h,),
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():Row(
                     children: [
                       Expanded(
                         child: Container(
@@ -345,8 +345,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
 
                     ],
                   ),
-                  SizedBox(height: 8.h,),
-                  Row(
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():SizedBox(height: 8.h,),
+                  CacheService.getPermissionWarehouseIncome5()==0?const SizedBox():Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Жами сумма:",style: AppStyle.mediumBold(Colors.black),),

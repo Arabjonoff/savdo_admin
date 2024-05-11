@@ -11,6 +11,7 @@ import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/client/update_client_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientScreen extends StatefulWidget{
@@ -60,7 +61,7 @@ class _ClientScreenState extends State<ClientScreen>{
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionClientDebt3()==0? const SizedBox():SlidableAction(
                                   onPressed: (i){
                                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
                                       return UpdateClientScreen(data: data[index],);
@@ -68,7 +69,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                   },icon: Icons.edit,
                                   backgroundColor: Colors.green,
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionClientDebt4()==0? const SizedBox():SlidableAction(
                                   onPressed: (i)async{
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       CenterDialog.showLoadingDialog(context, "Бир оз кутинг");

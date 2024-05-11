@@ -61,8 +61,7 @@ class _AddIncomePayScreenState extends State<AddIncomePayScreen> {
         acceptedSumma =num.parse(controllerSumma.text) / int.parse(controllerCurrency.text.replaceAll(RegExp('[^0-9]'), ""));
         controllerAcceptedSumma = TextEditingController(text: acceptedSumma.toStringAsFixed(2) );
       }
-      setState(() {
-      });
+      setState(() {});
     });
     controllerPercent.addListener(() {
       try{

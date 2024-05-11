@@ -198,7 +198,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                                     Expanded(
                                       child: Column(
                                         children: [
-                                          SlidableAction(
+                                          CacheService.getPermissionWarehouseIncome3()==0?const SizedBox():SlidableAction(
                                               label: 'Таҳрирлаш',
                                               onPressed: (i) async {
                                                 if(data[index].pr ==1){
@@ -212,7 +212,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                                                 }
                                               },
                                               icon: Icons.edit),
-                                          SlidableAction(
+                                          CacheService.getPermissionWarehouseIncome4()==0?const SizedBox():SlidableAction(
                                             label: "Ўчириш",
                                             onPressed: (i){
                                               CenterDialog.showDeleteDialog(context, ()async{
@@ -334,7 +334,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                 }
               ),
             ),
-            ButtonWidget(onTap: () async {
+            CacheService.getPermissionWarehouseIncome2()==0?const SizedBox():ButtonWidget(onTap: () async {
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
               HttpResult setDoc = await _repository.setDoc(1);
               if(setDoc.result['status'] == true){

@@ -86,7 +86,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               initiallyExpanded: true,
               children: [
               /// Warehouse
-              ListTile(
+              CacheService.getPermissionMainWarehouse1() ==0?const SizedBox():ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -146,7 +146,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Киримлар"),
                 ),
               /// Product Outcome
-              CacheService.getPermissionWarehouseOutcome1()==0?const SizedBox(): ListTile(
+              CacheService.getPermissionWarehouseOutcome1()==0?const SizedBox():ListTile(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                 ),
@@ -180,7 +180,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               shape: Border.all(color: Colors.transparent),
               initiallyExpanded: true,
               children: [
-                ListTile(
+                CacheService.getPermissionUserWindow1()==0?const SizedBox():ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -267,7 +267,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Чиқимлар"),
                 ),
                 /// Cost
-                ListTile(
+                CacheService.getPermissionPaymentExpense1()==0?const SizedBox(): ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   ),

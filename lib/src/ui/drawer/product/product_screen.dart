@@ -156,16 +156,20 @@ class _ProductScreenState extends State<ProductScreen> {
                                       child: Column(
                                         children: [
                                           SlidableAction(onPressed: (i) {
-                                            CenterDialog.showBarcodeDialog(context,
-                                                AddBarcodeScreen(idSkl2: data[index].id, name: data[index].name,));
+                                            if(CacheService.getPermissionProduct2() == 1){
+                                              CenterDialog.showBarcodeDialog(context,AddBarcodeScreen(idSkl2: data[index].id, name: data[index].name,));
+                                            }
+                                            else{
+
+                                            }
                                           },
                                             icon: Icons.qr_code_scanner,
                                             label: "SHTRIX рақам",),
                                           SlidableAction(
                                             onPressed: (i) {
-                                              CenterDialog.showProductTypeDialog(
-                                                  context, "Маҳсулот расми",
-                                                  ProductImageScreen(idSkl2: data[index].id.toString()));
+                                              if(CacheService.getPermissionProduct2() == 1){
+                                                CenterDialog.showProductTypeDialog(context, "Маҳсулот расми", ProductImageScreen(idSkl2: data[index].id.toString()));
+                                              }
                                             },
                                             icon: Icons.add_photo_alternate_outlined,
                                             label: "Расим қўшиш",),

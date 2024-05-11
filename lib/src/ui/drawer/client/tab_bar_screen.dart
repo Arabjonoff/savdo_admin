@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/ui/drawer/client/add_client_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/client/client_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 
 class TabBarScreen extends StatefulWidget {
   const TabBarScreen({super.key});
@@ -40,7 +41,7 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
             )
         ),
         actions: [
-          IconButton(onPressed: (){
+          CacheService.getPermissionClientDebt2()==0? const SizedBox(): IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (ctx){
               return const AddClientScreen();
             }));

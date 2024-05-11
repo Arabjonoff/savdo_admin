@@ -161,7 +161,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      SlidableAction(
+                                      CacheService.getPermissionWarehouseOutcome3()==0?const SizedBox():SlidableAction(
                                           label: 'Таҳрирлаш',
                                           onPressed: (i){
                                             if(data[index].pr==1){
@@ -174,7 +174,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                             }
                                           },
                                           icon: Icons.edit),
-                                      SlidableAction(
+                                      CacheService.getPermissionWarehouseOutcome4()==0?const SizedBox():SlidableAction(
                                         label: "Ўчириш",
                                         onPressed: (i){
                                           CenterDialog.showDeleteDialog(context, ()async{
@@ -289,7 +289,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
               }
             )
             ),
-            ButtonWidget(onTap: ()async{
+            CacheService.getPermissionWarehouseOutcome2()==0?const SizedBox():ButtonWidget(onTap: ()async{
               CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
               HttpResult res = await _repository.setDoc(2);
               if(res.isSuccess){

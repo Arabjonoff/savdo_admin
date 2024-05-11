@@ -279,13 +279,13 @@ class CacheService {
     preferences!.setInt("clientDebt1", data);
   }
   static void permissionClientDebt2(int data) {
-    preferences!.setInt("clientDebt1", data);
+    preferences!.setInt("clientDebt2", data);
   }
   static void permissionClientDebt3(int data) {
-    preferences!.setInt("clientDebt1", data);
+    preferences!.setInt("clientDebt3", data);
   }
   static void permissionClientDebt4(int data) {
-    preferences!.setInt("clientDebt1", data);
+    preferences!.setInt("clientDebt4", data);
   }
 
   static void permissionCourierDebt1(int data) {
