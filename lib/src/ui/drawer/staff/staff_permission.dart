@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/permission.dart';
+import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/agent_permission_model.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
 class StaffPermissionScreen extends StatefulWidget {
@@ -51,6 +53,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                   }),
               ),
               ButtonWidget(onTap: ()async{
+                CenterDialog.showLoadingDialog(context, "");
                 for(int i =0;i<data.length;i++){
                   permissionList.add(StaffPermissionResult(
                       id: i+1,
@@ -63,9 +66,12 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                 }
                 HttpResult res = await repository.postStaffPermission(permissionList,widget.data.id);
                 if(res.result["status"] == true){
+                  staffPermission.getAllStaffPermission(CacheService.getIdAgent());
                   permissionList.clear();
+                  Navigator.pop(context);
                 }else{
                   permissionList.clear();
+                  Navigator.pop(context);
                 }
               }, color: AppColors.green, text: "Рухсатларни сақлаш"),
               SizedBox(height: 34.h,)

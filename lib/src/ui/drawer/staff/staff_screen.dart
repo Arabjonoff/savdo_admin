@@ -72,7 +72,7 @@ class _StaffScreenState extends State<StaffScreen> {
                         Navigator.push(context, MaterialPageRoute(builder: (ctx){
                           return AgentPermissionScreen(data: data[index],);
                         }));
-                      }else if(data[index].tip==0){
+                      }else if(data[index].name=='Admin'){
                         CenterDialog.showErrorDialog(context, "${data[index].name} нинг рухсатларни ўзгартириш мумкин эмас");
                       }
                       else{
