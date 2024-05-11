@@ -8,6 +8,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/income_pay/add_inocme_apy.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/income_pay/income_pay_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 
 class IncomeTabBarScreen extends StatefulWidget {
   const IncomeTabBarScreen({super.key});
@@ -69,7 +70,7 @@ class _IncomeTabBarScreenState extends State<IncomeTabBarScreen> with SingleTick
             controller: _tabController,
             children: [
               IncomePayScreen(idAgent: idAgent,),
-              const AddIncomePayScreen(),
+              CacheService.getPermissionPaymentIncome2()==0?const Center(child: Text("Рухсат берилмаган")): const AddIncomePayScreen(),
             ],
           ),
           endDrawer: Drawer(

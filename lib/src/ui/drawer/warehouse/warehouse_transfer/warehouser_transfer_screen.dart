@@ -14,6 +14,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_transfer/warehouseDocument/warehouse_document_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_transfer/warehouse_detail_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -110,8 +111,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      SlidableAction(onPressed: (i)
-                                      async {
+                                      CacheService.getPermissionWarehouseAction4()==0?const SizedBox():SlidableAction(onPressed: (i) async {
                                         HttpResult res = await repository.deleteWarehouseTransfer(data[index].id);
                                         if(res.result['status'] == true){
                                           await wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
@@ -210,7 +210,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
               }
             ),
           ),
-          ButtonWidget(onTap: () async {
+          CacheService.getPermissionWarehouseAction2()==0?const SizedBox():ButtonWidget(onTap: () async {
             CenterDialog.showLoadingDialog(context, "Бироз кутинг");
             HttpResult setDoc = await repository.setDoc(5);
             if(setDoc.result['status'] == true){

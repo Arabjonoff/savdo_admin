@@ -12,6 +12,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/income_pay/update_inocme_pay.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
@@ -155,7 +156,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionPaymentIncome4()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.red,
                                   icon: Icons.delete,
                                   label: "Ўчириш",
@@ -173,7 +174,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                                     });
                                   },
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionPaymentIncome3()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.green,
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",
@@ -237,7 +238,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionPaymentIncome4()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.red,
                                   icon: Icons.delete,
                                   label: "Ўчириш",
@@ -255,7 +256,7 @@ class _IncomePayScreenState extends State<IncomePayScreen> with AutomaticKeepAli
                                     });
                                   },
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionPaymentIncome3()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.green,
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",

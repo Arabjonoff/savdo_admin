@@ -133,23 +133,20 @@ class StaffPermission{
         CacheService.permissionRemoteCashier4(data.data[i].p4);
       }
       else if(data.data[i].tp == 20){
-        CacheService.permissionRemoteCashier1(data.data[i].p1);
-        CacheService.permissionRemoteCashier2(data.data[i].p2);
-        CacheService.permissionRemoteCashier3(data.data[i].p3);
-        CacheService.permissionRemoteCashier4(data.data[i].p4);
-      }
-      else if(data.data[i].tp == 21){
         CacheService.permissionWarehouseReturn1(data.data[i].p1);
         CacheService.permissionWarehouseReturn2(data.data[i].p2);
         CacheService.permissionWarehouseReturn3(data.data[i].p3);
         CacheService.permissionWarehouseReturn4(data.data[i].p4);
         CacheService.permissionWarehouseReturn5(data.data[i].p5);
       }
-      else if(data.data[i].tp == 22){
+      else if(data.data[i].tp == 21){
         CacheService.permissionWarehouseAction1(data.data[i].p1);
         CacheService.permissionWarehouseAction2(data.data[i].p2);
         CacheService.permissionWarehouseAction3(data.data[i].p3);
         CacheService.permissionWarehouseAction4(data.data[i].p4);
+      }
+      else if(data.data[i].tp == 22){
+
       }
       else if(data.data[i].tp == 23){
         CacheService.permissionBooking1(data.data[i].p1);

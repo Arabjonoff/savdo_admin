@@ -61,7 +61,7 @@ class _ClientScreenState extends State<ClientScreen>{
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                CacheService.getPermissionClientDebt3()==0? const SizedBox():SlidableAction(
+                                CacheService.getPermissionClientList3()==0? const SizedBox():SlidableAction(
                                   onPressed: (i){
                                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
                                       return UpdateClientScreen(data: data[index],);
@@ -69,7 +69,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                   },icon: Icons.edit,
                                   backgroundColor: Colors.green,
                                 ),
-                                CacheService.getPermissionClientDebt4()==0? const SizedBox():SlidableAction(
+                                CacheService.getPermissionClientList4()==0? const SizedBox():SlidableAction(
                                   onPressed: (i)async{
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
@@ -140,11 +140,12 @@ class _ClientScreenState extends State<ClientScreen>{
                                 ),
                               ),
                             ),
-                          ):const SizedBox():data[index].tp == 1?Slidable(
+                          ):const SizedBox():data[index].tp == 1?
+                          Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionCourierList2()==0?const SizedBox():SlidableAction(
                                   onPressed: (i){
                                     Navigator.push(context, MaterialPageRoute(builder: (ctx){
                                       return UpdateClientScreen(data: data[index],);
@@ -152,7 +153,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                   },icon: Icons.edit,
                                   backgroundColor: Colors.green,
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionCourierList3()==0?const SizedBox():SlidableAction(
                                   onPressed: (i)async{
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       CenterDialog.showLoadingDialog(context, "Бир оз кутинг");

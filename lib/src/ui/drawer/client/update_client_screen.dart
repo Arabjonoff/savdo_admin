@@ -93,11 +93,11 @@ class _UpdateClientScreenState extends State<UpdateClientScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              CacheService.getPermissionCourierList2()==0?const SizedBox():Padding(
                 padding:  EdgeInsets.only(left: 16.0.w,bottom: 8.h,top: 12.h),
                 child: Text("Харидор тури",style: AppStyle.small(Colors.black),),
               ),
-              Row(
+              CacheService.getPermissionCourierList2()==0?const SizedBox():Row(
                 children: [
                   SizedBox(width: 16.w,),
                   Expanded(

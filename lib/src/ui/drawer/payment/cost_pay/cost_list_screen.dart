@@ -80,10 +80,21 @@ class _CostListScreenState extends State<CostListScreen> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return Slidable(
-                            startActionPane: ActionPane(
+                            endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionPaymentExpense3() == 0?const SizedBox():SlidableAction(
+                                  onPressed: (i){
+                                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                      return UpdateCostScreen(data: data[index]);
+                                    }));
+                                  },
+                                  backgroundColor: AppColors.green,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.edit,
+                                  label: ("Таҳрирлаш"),
+                                ),
+                                CacheService.getPermissionPaymentExpense4() == 0?const SizedBox():SlidableAction(
                                   onPressed: (i){
                                     CenterDialog.showDeleteDialog(context, ()async{
                                       HttpResult response = await repository.deleteExpense(data[index].id,CacheService.getDateId());
@@ -101,22 +112,7 @@ class _CostListScreenState extends State<CostListScreen> {
                                   icon: Icons.delete,
                                   label: ('Ўчириш'),
                                 ),
-                              ],
-                            ),
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (i){
-                                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                                      return UpdateCostScreen(data: data[index]);
-                                    }));
-                                  },
-                                  backgroundColor: AppColors.green,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.edit,
-                                  label: ("Таҳрирлаш"),
-                                ),
+
                               ],
                             ),
                             child: Container(
@@ -211,7 +207,7 @@ class _CostListScreenState extends State<CostListScreen> {
             }
             return const Center(child: CircularProgressIndicator.adaptive());
           }),
-      floatingActionButton: Padding(
+      floatingActionButton: CacheService.getPermissionPaymentExpense2() == 0?const SizedBox():Padding(
         padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin*3),
         child: FloatingActionButton(
           backgroundColor: AppColors.green,

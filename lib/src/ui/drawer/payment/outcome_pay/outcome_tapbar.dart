@@ -8,6 +8,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/add_outcome_pay.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_pay_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 
 class OutcomeTabBarScreen extends StatefulWidget {
   const OutcomeTabBarScreen({super.key});
@@ -69,7 +70,7 @@ class _OutcomeTabBarScreenState extends State<OutcomeTabBarScreen> with SingleTi
             controller: _tabController,
             children: [
               OutcomePayScreen(idAgent: idAgent,),
-              const AddOutcomePayScreen(),
+             CacheService.getPermissionPaymentOutcome2()==0?const Center(child: Text("Рухсат берилмаган")):const AddOutcomePayScreen(),
             ],
           ),
           endDrawer: Drawer(

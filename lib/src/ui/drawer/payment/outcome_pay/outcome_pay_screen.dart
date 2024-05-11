@@ -12,6 +12,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/update_outcome_pay.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
@@ -156,7 +157,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> with AutomaticKeepA
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionPaymentOutcome4()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.red,
                                   icon: Icons.delete,
                                   label: "Ўчириш",
@@ -174,7 +175,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> with AutomaticKeepA
                                     });
                                   },
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionPaymentOutcome3()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.green,
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",
@@ -238,7 +239,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> with AutomaticKeepA
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
-                                SlidableAction(
+                                CacheService.getPermissionPaymentOutcome4()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.red,
                                   icon: Icons.delete,
                                   label: "Ўчириш",
@@ -256,7 +257,7 @@ class _OutcomePayScreenState extends State<OutcomePayScreen> with AutomaticKeepA
                                     });
                                   },
                                 ),
-                                SlidableAction(
+                                CacheService.getPermissionPaymentOutcome3()==0?const SizedBox():SlidableAction(
                                   backgroundColor: AppColors.green,
                                   icon: Icons.edit,
                                   label: "Таҳрирлаш",

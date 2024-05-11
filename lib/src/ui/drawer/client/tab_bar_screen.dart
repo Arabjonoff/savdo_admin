@@ -41,7 +41,7 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
             )
         ),
         actions: [
-          CacheService.getPermissionClientDebt2()==0? const SizedBox(): IconButton(onPressed: (){
+          CacheService.getPermissionClientList2()==0? const SizedBox(): IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (ctx){
               return const AddClientScreen();
             }));
@@ -50,9 +50,9 @@ class _TabBarScreenState extends State<TabBarScreen>with SingleTickerProviderSta
       ),
       body: TabBarView(
         controller: _controller,
-        children:  const [
-          ClientScreen(clientType: 0,),
-          ClientScreen(clientType: 1,),
+        children:   [
+          const ClientScreen(clientType: 0,),
+          CacheService.getPermissionCourierList1()==0?const SizedBox():const ClientScreen(clientType: 1,),
         ],
       ),
     );
