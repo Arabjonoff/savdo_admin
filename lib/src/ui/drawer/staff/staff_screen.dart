@@ -33,9 +33,6 @@ class _StaffScreenState extends State<StaffScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         title: const Text("Ходимлар"),
-        actions: [
-          IconButton(onPressed: (){}, icon:  Icon(Icons.person_add_alt_1_rounded,size: 34.r,))
-        ],
       ),
       body: RefreshIndicator(
         onRefresh: ()async{

@@ -108,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Text("N-Savdo",style: AppStyle.mediumBold(Colors.white),),
                                   Padding(
                                     padding:EdgeInsets.only(left: 12.0.spMax),
                                     child: GestureDetector(
@@ -116,10 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Text(CacheService.getName()[0].toUpperCase()),
                                         )),
                                   ),
-                                  Text(CacheService.getWareHouseName(),style: AppStyle.mediumBold(Colors.white),),
-                                  IconButton(onPressed: ()async{
-                                  Navigator.pushNamed(context, AppRouteName.message);
-                                  }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
+                                  // IconButton(onPressed: ()async{
+                                  // Navigator.pushNamed(context, AppRouteName.message);
+                                  // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
                                 ],
                               ),
                               SizedBox(height: 40.spMax,),
