@@ -227,7 +227,7 @@ class _ShareScreenState extends State<ShareScreen> {
               final imagePath = await File('${directory.path}/image.png').create();
               await imagePath.writeAsBytes(image);
               /// Share Plugin
-              await Share.shareFiles([imagePath.path]);
+              await Share.shareXFiles([XFile(imagePath.path)], subject: widget.data.name);
             }
           });
         },

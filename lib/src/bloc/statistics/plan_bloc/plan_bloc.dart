@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
-import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/outcome/outcome_model.dart';

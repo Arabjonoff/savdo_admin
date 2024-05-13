@@ -17,8 +17,8 @@ import 'package:savdo_admin/src/ui/drawer/outcome/share/share_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/update_outcome/update_outcome_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
-import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
+import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class OutcomeScreen extends StatefulWidget {
   const OutcomeScreen({super.key});
@@ -108,205 +108,255 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
         onRefresh: ()async{
           await outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
         },
-        child: Column(
-          children: [
-            Expanded(child: StreamBuilder<List<OutcomeResult>>(
-              stream: outcomeBloc.getOutcomeStream,
-              builder: (context, snapshot) {
-                if(snapshot.hasData){
-                  var data = snapshot.data!;
-                  if(data.isEmpty){
-                    return const EmptyWidgetScreen();
+        child: SnappingSheet(
+          grabbingHeight: 75,
+          // TODO: Add your grabbing widget here,
+          grabbing: GestureDetector(
+            onTap: ()async{
+              if(CacheService.getPermissionWarehouseOutcome2()==1){
+                  CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
+                  HttpResult res = await _repository.setDoc(2);
+                  if(res.isSuccess){
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, AppRouteName.addDocumentOutcome,arguments: res.result['ndoc']);
+                  }else{
+                    Navigator.pop(context);
+                    CenterDialog.showErrorDialog(context, res.result['message']);
                   }
-                  else{
-                    return ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (ctx,index){
-                          return Slidable(
-                            startActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      SlidableAction(
-                                          label: 'Қулфлаш',
-                                          onPressed: (i) async {
-                                            HttpResult res = await _repository.lockOutcome(data[index].id,1);
-                                            if(res.result["status"] == true){
-                                              outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
-                                            }else{
-                                              if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
-                                            }
-                                          },
-                                          icon: Icons.lock),
-                                      SlidableAction(
-                                        label: 'Очиш',
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                color: AppColors.green,
+              ),
+              alignment: Alignment.center,
+              child: Text(CacheService.getPermissionWarehouseOutcome2()==1?"Янги ҳужжат очиш":"",style: AppStyle.mediumBold(Colors.white),),
+            ),
+          ),
+          snappingPositions: const [
+            SnappingPosition.factor(
+              positionFactor: 0.0,
+              snappingCurve: Curves.easeOutExpo,
+              snappingDuration: Duration(seconds: 1),
+              grabbingContentOffset: GrabbingContentOffset.top,
+            ),
+            SnappingPosition.pixels(
+              positionPixels: 400,
+              snappingCurve: Curves.elasticOut,
+              snappingDuration: Duration(milliseconds: 1750),
+            ),
+          ],
+          sheetBelow: SnappingSheetContent(
+            draggable: (details) => true,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              child: Column(
+                children: [
+
+                ],
+              ),
+            ),
+          ),
+          child: StreamBuilder<List<OutcomeResult>>(
+            stream: outcomeBloc.getOutcomeStream,
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                var data = snapshot.data!;
+                if(data.isEmpty){
+                  return const EmptyWidgetScreen();
+                }
+                else{
+                  return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (ctx,index){
+                        return Slidable(
+                          startActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    SlidableAction(
+                                        label: 'Қулфлаш',
                                         onPressed: (i) async {
-                                          HttpResult res = await _repository.lockOutcome(data[index].id,0);
+                                          HttpResult res = await _repository.lockOutcome(data[index].id,1);
                                           if(res.result["status"] == true){
                                             outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
                                           }else{
                                             if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
                                           }
-                                        }, icon: Icons.lock_open,),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      CacheService.getPermissionWarehouseOutcome3()==0?const SizedBox():SlidableAction(
-                                          label: 'Таҳрирлаш',
-                                          onPressed: (i){
-                                            if(data[index].pr==1){
-                                              CenterDialog.showErrorDialog(context, "Ҳужжат қулфланган");
-                                            }else{
-                                              data[index].sklRsTov.forEach((element) async{ await _repository.saveOutcomeCart(element);});
-                                              Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                                                return UpdateOutcomeScreen(ndocId: data[index].id,);
-                                              }));
-                                            }
-                                          },
-                                          icon: Icons.edit),
-                                      CacheService.getPermissionWarehouseOutcome4()==0?const SizedBox():SlidableAction(
-                                        label: "Ўчириш",
-                                        onPressed: (i){
-                                          CenterDialog.showDeleteDialog(context, ()async{
-                                            HttpResult res = await _repository.deleteOutcomeDoc(data[index].id);
-                                            if(res.result['status'] == true){
-                                              outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
-                                              Navigator.pop(context);
-                                            }
-                                            else{
-                                              Navigator.pop(context);
-                                              CenterDialog.showErrorDialog(context, res.result['message']);
-                                            }
-                                          });
-                                        }, icon: Icons.delete,),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            child: GestureDetector(
-                              onTap: () async {
-                                Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                                  return ShareScreen(data: data[index],);
-                                }));
-                                // Navigator.push(context, MaterialPageRoute(builder: (ctx){
-                                //   return DocumentOutComeScreen();
-                                // }));
-                                // var body = {
-                                //   "NAME": data[index].name,
-                                //   "ID_T": data[index].idT,
-                                //   "NDOC": data[index].ndoc,
-                                //   "SANA": data[index].sana.toString(),
-                                //   "IZOH": data[index].izoh,
-                                //   "ID_HODIM": data[index].idHodim,
-                                //   "ID_AGENT": data[index].idAgent,
-                                //   "ID_HARIDOR": data[index].idHaridor,
-                                //   "KURS": data[index].kurs,
-                                //   "ID_FAOL": data[index].idFaol,
-                                //   "ID_KLASS": data[index].idKlass,
-                                //   "ID_SKL": 1,
-                                //   "YIL": DateTime.now().year,
-                                //   "OY":  DateTime.now().month
-                                // };
-                                // HttpResult res = await _repository.updateDocOutcome(body);
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    color: AppColors.card,
-                                    border:  Border(bottom: BorderSide(color: Colors.grey.shade400)
-                                    )
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.green,
-                                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(5),bottomRight: Radius.circular(5))
-                                      ),
-                                      child: Text(data[index].idAgentName,style: AppStyle.smallBold(Colors.white),),
-                                    ),
-                                    SizedBox(height: 4.h,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 4.w),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: data[index].pr ==1?Colors.red:AppColors.green
-                                          ),
-                                            child: Text("№${data[index].ndoc}",style: AppStyle.medium(Colors.white),)),
-                                      ],
-                                    ),
-                                    Text(data[index].izoh,style: AppStyle.small(Colors.grey),),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Жами:",style: AppStyle.medium(Colors.black),),
-                                        Text("${priceFormat.format(data[index].sm)} сўм | ${priceFormatUsd.format(data[index].smS)} \$",style: AppStyle.medium(Colors.black),),
-                                      ],
-                                    ),
-                                    SizedBox(height: 4.h,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Тўлов:",style: AppStyle.small(Colors.black),),
-                                        paymentCheck(data[index])
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Вақти',style: AppStyle.small(Colors.black),),
-                                        Text(data[index].vaqt.toString().substring(10,19),style: AppStyle.small(Colors.black),),
-                                      ],
-                                    ),
-                                    SizedBox(height: 4.h,),
+                                        },
+                                        icon: Icons.lock),
+                                    SlidableAction(
+                                      label: 'Очиш',
+                                      onPressed: (i) async {
+                                        HttpResult res = await _repository.lockOutcome(data[index].id,0);
+                                        if(res.result["status"] == true){
+                                          outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
+                                        }else{
+                                          if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);
+                                        }
+                                      }, icon: Icons.lock_open,),
                                   ],
                                 ),
                               ),
+                            ],
+                          ),
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    CacheService.getPermissionWarehouseOutcome3()==0?const SizedBox():SlidableAction(
+                                        label: 'Таҳрирлаш',
+                                        onPressed: (i){
+                                          if(data[index].pr==1){
+                                            CenterDialog.showErrorDialog(context, "Ҳужжат қулфланган");
+                                          }else{
+                                            data[index].sklRsTov.forEach((element) async{ await _repository.saveOutcomeCart(element);});
+                                            Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                              return UpdateOutcomeScreen(ndocId: data[index].id,);
+                                            }));
+                                          }
+                                        },
+                                        icon: Icons.edit),
+                                    CacheService.getPermissionWarehouseOutcome4()==0?const SizedBox():SlidableAction(
+                                      label: "Ўчириш",
+                                      onPressed: (i){
+                                        CenterDialog.showDeleteDialog(context, ()async{
+                                          HttpResult res = await _repository.deleteOutcomeDoc(data[index].id);
+                                          if(res.result['status'] == true){
+                                            outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
+                                            Navigator.pop(context);
+                                          }
+                                          else{
+                                            Navigator.pop(context);
+                                            CenterDialog.showErrorDialog(context, res.result['message']);
+                                          }
+                                        });
+                                      }, icon: Icons.delete,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          child: GestureDetector(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                return ShareScreen(data: data[index],);
+                              }));
+                              // Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                              //   return DocumentOutComeScreen();
+                              // }));
+                              // var body = {
+                              //   "NAME": data[index].name,
+                              //   "ID_T": data[index].idT,
+                              //   "NDOC": data[index].ndoc,
+                              //   "SANA": data[index].sana.toString(),
+                              //   "IZOH": data[index].izoh,
+                              //   "ID_HODIM": data[index].idHodim,
+                              //   "ID_AGENT": data[index].idAgent,
+                              //   "ID_HARIDOR": data[index].idHaridor,
+                              //   "KURS": data[index].kurs,
+                              //   "ID_FAOL": data[index].idFaol,
+                              //   "ID_KLASS": data[index].idKlass,
+                              //   "ID_SKL": 1,
+                              //   "YIL": DateTime.now().year,
+                              //   "OY":  DateTime.now().month
+                              // };
+                              // HttpResult res = await _repository.updateDocOutcome(body);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  color: AppColors.card,
+                                  border:  Border(bottom: BorderSide(color: Colors.grey.shade400)
+                                  )
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.green,
+                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(5),bottomRight: Radius.circular(5))
+                                    ),
+                                    child: Text(data[index].idAgentName,style: AppStyle.smallBold(Colors.white),),
+                                  ),
+                                  SizedBox(height: 4.h,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: data[index].pr ==1?Colors.red:AppColors.green
+                                        ),
+                                          child: Text("№${data[index].ndoc}",style: AppStyle.medium(Colors.white),)),
+                                    ],
+                                  ),
+                                  Text(data[index].izoh,style: AppStyle.small(Colors.grey),),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Жами:",style: AppStyle.medium(Colors.black),),
+                                      Text("${priceFormat.format(data[index].sm)} сўм | ${priceFormatUsd.format(data[index].smS)} \$",style: AppStyle.medium(Colors.black),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4.h,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Тўлов:",style: AppStyle.small(Colors.black),),
+                                      paymentCheck(data[index])
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Вақти',style: AppStyle.small(Colors.black),),
+                                      Text(data[index].vaqt.toString().substring(10,19),style: AppStyle.small(Colors.black),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4.h,),
+                                ],
+                              ),
                             ),
-                          );
-                        });
-                  }
+                          ),
+                        );
+                      });
                 }
-                return const Center(child: CircularProgressIndicator());
               }
-            )
-            ),
-            CacheService.getPermissionWarehouseOutcome2()==0?const SizedBox():ButtonWidget(onTap: ()async{
-              CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
-              HttpResult res = await _repository.setDoc(2);
-              if(res.isSuccess){
-                Navigator.pop(context);
-                Navigator.pushNamed(context, AppRouteName.addDocumentOutcome,arguments: res.result['ndoc']);
-              }else{
-                Navigator.pop(context);
-                CenterDialog.showErrorDialog(context, res.result['message']);
-              }
-            }, color: AppColors.green, text: "Янги ҳужжат очиш"),
-            SizedBox(height: 24.h,)
-          ],
+              return const Center(child: CircularProgressIndicator());
+            }
+          ),
         ),
       ),
     );
   }
-  Widget paymentCheck(OutcomeResult data){
+   // CacheService.getPermissionWarehouseOutcome2()==0?const SizedBox():ButtonWidget(onTap: ()async{
+   //   CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
+   //   HttpResult res = await _repository.setDoc(2);
+   //   if(res.isSuccess){
+   //     Navigator.pop(context);
+   //     Navigator.pushNamed(context, AppRouteName.addDocumentOutcome,arguments: res.result['ndoc']);
+   //   }else{
+   //     Navigator.pop(context);
+   //     CenterDialog.showErrorDialog(context, res.result['message']);
+   //   }
+   // }, color: AppColors.green, text: "Янги ҳужжат очиш"),
+
+       Widget paymentCheck(OutcomeResult data){
     if(data.tlNaqd != 0){
       return Text("${priceFormat.format(data.tlNaqd)} сўм | ${priceFormatUsd.format(data.tlVal)} \$",style: AppStyle.smallBold(AppColors.green),);
     }

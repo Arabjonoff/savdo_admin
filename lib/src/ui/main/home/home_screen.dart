@@ -108,11 +108,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("N-Savdo",style: AppStyle.mediumBold(Colors.white),),
+                                  IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
                                   Padding(
                                     padding:EdgeInsets.only(left: 12.0.spMax),
                                     child: GestureDetector(
-                                      onTap: ()=>_scaffoldKey.currentState!.openDrawer(),
+                                      onTap: () {},
                                         child: CircleAvatar(
                                           child: Text(CacheService.getName()[0].toUpperCase()),
                                         )),
