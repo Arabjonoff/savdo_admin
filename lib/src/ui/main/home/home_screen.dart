@@ -14,7 +14,6 @@ import 'package:savdo_admin/src/bloc/statistics/plan_bloc/plan_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/model/balance/balance_model.dart';
 import 'package:savdo_admin/src/model/statistics/plan_model.dart';
-import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/drawer_screen.dart';
@@ -39,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
   @override
   void initState() {
+    staffPermission.getAllStaffPermission(CacheService.getIdAgent());
     productBloc.getAllProduct();
     getDateBloc.getDateId();
     barcodeProductBloc.getBarcodeAll();
