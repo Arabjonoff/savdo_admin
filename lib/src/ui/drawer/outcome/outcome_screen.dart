@@ -17,6 +17,7 @@ import 'package:savdo_admin/src/ui/drawer/outcome/share/share_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/update_outcome/update_outcome_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
+import 'package:savdo_admin/src/utils/utils.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
@@ -32,7 +33,9 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
   final Repository _repository = Repository();
    int wareHouseId = 1;
    String wareHouseName = '';
-  @override
+   num docItem = 0,totalUzs=0,totalUsd=0,totalWallet=0,totalBank=0,totalNaqd =0,totalVal=0;
+
+   @override
   void initState() {
     wareHouseName = CacheService.getWareHouseName();
     wareHouseId = CacheService.getWareHouseId();
@@ -108,70 +111,174 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
         onRefresh: ()async{
           await outcomeBloc.getAllOutcome(_controllerDate.text,wareHouseId);
         },
-        child: SnappingSheet(
-          grabbingHeight: 75,
-          // TODO: Add your grabbing widget here,
-          grabbing: GestureDetector(
-            onTap: ()async{
-              if(CacheService.getPermissionWarehouseOutcome2()==1){
-                  CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
-                  HttpResult res = await _repository.setDoc(2);
-                  if(res.isSuccess){
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, AppRouteName.addDocumentOutcome,arguments: res.result['ndoc']);
-                  }else{
-                    Navigator.pop(context);
-                    CenterDialog.showErrorDialog(context, res.result['message']);
-                  }
+        child: StreamBuilder<List<OutcomeResult>>(
+          stream: outcomeBloc.getOutcomeStream,
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+              var data = snapshot.data!;
+              totalUzs=0;
+              docItem = 0;
+              totalUsd=0;
+              totalWallet=0;
+              totalBank=0;
+              totalNaqd=0;
+              totalVal=0;
+              for(int i=0;i<data.length;i++){
+                  docItem += i;
+                  totalUzs += data[i].sm;
+                  totalUsd += data[i].smS;
+                  totalWallet += data[i].tlKarta;
+                  totalBank += data[i].tlBank;
+                  totalNaqd += data[i].tlNaqd;
+                  totalVal += data[i].tlVal;
               }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                ),
-                color: AppColors.green,
-              ),
-              alignment: Alignment.center,
-              child: Text(CacheService.getPermissionWarehouseOutcome2()==1?"Янги ҳужжат очиш":"",style: AppStyle.mediumBold(Colors.white),),
-            ),
-          ),
-          snappingPositions: const [
-            SnappingPosition.factor(
-              positionFactor: 0.0,
-              snappingCurve: Curves.easeOutExpo,
-              snappingDuration: Duration(seconds: 1),
-              grabbingContentOffset: GrabbingContentOffset.top,
-            ),
-            SnappingPosition.pixels(
-              positionPixels: 400,
-              snappingCurve: Curves.elasticOut,
-              snappingDuration: Duration(milliseconds: 1750),
-            ),
-          ],
-          sheetBelow: SnappingSheetContent(
-            draggable: (details) => true,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: Colors.white,
-              child: Column(
-                children: [
-
-                ],
-              ),
-            ),
-          ),
-          child: StreamBuilder<List<OutcomeResult>>(
-            stream: outcomeBloc.getOutcomeStream,
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
-                var data = snapshot.data!;
-                if(data.isEmpty){
-                  return const EmptyWidgetScreen();
-                }
-                else{
-                  return ListView.builder(
+                return SnappingSheet(
+                  grabbingHeight: 75,
+                  // TODO: Add your grabbing widget here,
+                  grabbing: GestureDetector(
+                    onTap: ()async{
+                      if(CacheService.getPermissionWarehouseOutcome2()==1){
+                        CenterDialog.showLoadingDialog(context, "Бироз кутинг!");
+                        HttpResult res = await _repository.setDoc(2);
+                        if(res.isSuccess){
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, AppRouteName.addDocumentOutcome,arguments: res.result['ndoc']);
+                        }else{
+                          Navigator.pop(context);
+                          CenterDialog.showErrorDialog(context, res.result['message']);
+                        }
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                        color: AppColors.green,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(CacheService.getPermissionWarehouseOutcome2()==1?"Янги ҳужжат очиш":"",style: AppStyle.mediumBold(Colors.white),),
+                    ),
+                  ),
+                  snappingPositions: const [
+                    SnappingPosition.factor(
+                      positionFactor: 0.0,
+                      snappingCurve: Curves.easeOutExpo,
+                      snappingDuration: Duration(seconds: 1),
+                      grabbingContentOffset: GrabbingContentOffset.top,
+                    ),
+                    SnappingPosition.pixels(
+                      positionPixels: 400,
+                      snappingCurve: Curves.elasticOut,
+                      snappingDuration: Duration(milliseconds: 1750),
+                    ),
+                  ],
+                  sheetBelow: SnappingSheetContent(
+                    draggable: (details) => true,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Ҳужжат сони",style: AppStyle.smallBold(Colors.black),),
+                              Text(docItem.toString()),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Савдо сўм",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormat.format(totalUzs)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Савдо валюта",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormatUsd.format(totalUsd)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Тўлов нақд",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormat.format(totalNaqd)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Тўлов валюта",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormat.format(totalVal)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Тўлов пластик",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormat.format(totalWallet)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Тўлов банк",style: AppStyle.smallBold(Colors.black),),
+                              Text(priceFormat.format(totalBank)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (ctx,index){
                         return Slidable(
@@ -334,12 +441,11 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                             ),
                           ),
                         );
-                      });
-                }
-              }
-              return const Center(child: CircularProgressIndicator());
+                      }),
+                );
             }
-          ),
+            return const Center(child: CircularProgressIndicator());
+          }
         ),
       ),
     );

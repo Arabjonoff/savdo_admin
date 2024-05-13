@@ -34,6 +34,26 @@ class _ShareScreenState extends State<ShareScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Чек чиқариш"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton(
+              onPressed: ()async{
+                await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
+                  if (image != null) {
+                    final directory = await getApplicationDocumentsDirectory();
+                    final imagePath = await File('${directory.path}/image.png').create();
+                    await imagePath.writeAsBytes(image);
+                    /// Share Plugin
+                    await Share.shareXFiles([XFile(imagePath.path,)], subject: widget.data.name);
+                  }
+                });
+              },
+              backgroundColor: AppColors.green,
+              child: const Icon(Icons.upload,color: Colors.white,),
+            ),
+          )
+        ],
       ),
       body: Screenshot(
         controller: screenshotController,
@@ -218,21 +238,6 @@ class _ShareScreenState extends State<ShareScreen> {
                     ),
                   )
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()async{
-          await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
-            if (image != null) {
-              final directory = await getApplicationDocumentsDirectory();
-              final imagePath = await File('${directory.path}/image.png').create();
-              await imagePath.writeAsBytes(image);
-              /// Share Plugin
-              await Share.shareXFiles([XFile(imagePath.path)], subject: widget.data.name);
-            }
-          });
-        },
-        backgroundColor: AppColors.green,
-        child: const Icon(Icons.upload,color: Colors.white,),
       ),
     );
   }

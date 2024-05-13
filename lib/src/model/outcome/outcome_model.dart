@@ -46,7 +46,7 @@ class OutcomeResult {
   num tlNaqd;
   num tlVal;
   num tlKarta;
-  num? tlBank;
+  num tlBank;
   int idFaol;
   int idKlass;
   List<SklRsTov> sklRsTov;
