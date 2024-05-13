@@ -18,7 +18,6 @@ import 'package:savdo_admin/src/ui/drawer/outcome/update_outcome/update_outcome_
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/utils.dart';
-import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class OutcomeScreen extends StatefulWidget {
@@ -133,7 +132,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                   totalVal += data[i].tlVal;
               }
                 return SnappingSheet(
-                  grabbingHeight: 75,
+                  grabbingHeight: 65.spMax,
                   // TODO: Add your grabbing widget here,
                   grabbing: GestureDetector(
                     onTap: ()async{
@@ -186,7 +185,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Ҳужжат сони",style: AppStyle.smallBold(Colors.black),),
+                              Text("Ҳужжат сони",style: AppStyle.smallBold(Colors.grey),),
                               Text(docItem.toString()),
                             ],
                           ),
@@ -200,7 +199,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Савдо сўм",style: AppStyle.smallBold(Colors.black),),
+                              Text("Савдо сўм",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormat.format(totalUzs)),
                             ],
                           ),
@@ -214,7 +213,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Савдо валюта",style: AppStyle.smallBold(Colors.black),),
+                              Text("Савдо валюта",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormatUsd.format(totalUsd)),
                             ],
                           ),
@@ -228,7 +227,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Тўлов нақд",style: AppStyle.smallBold(Colors.black),),
+                              Text("Тўлов нақд",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormat.format(totalNaqd)),
                             ],
                           ),
@@ -242,7 +241,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Тўлов валюта",style: AppStyle.smallBold(Colors.black),),
+                              Text("Тўлов валюта",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormat.format(totalVal)),
                             ],
                           ),
@@ -256,7 +255,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Тўлов пластик",style: AppStyle.smallBold(Colors.black),),
+                              Text("Тўлов пластик",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormat.format(totalWallet)),
                             ],
                           ),
@@ -270,7 +269,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Тўлов банк",style: AppStyle.smallBold(Colors.black),),
+                              Text("Тўлов банк",style: AppStyle.smallBold(Colors.grey),),
                               Text(priceFormat.format(totalBank)),
                             ],
                           ),

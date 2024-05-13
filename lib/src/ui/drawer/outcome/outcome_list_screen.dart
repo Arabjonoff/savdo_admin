@@ -137,8 +137,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
               grabbingContentOffset: GrabbingContentOffset.bottom,
             ),
           ],
-          grabbingHeight: 75,
-          // TODO: Add your grabbing widget here,
+          grabbingHeight: 65.r,
           grabbing: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
