@@ -21,6 +21,7 @@ import 'package:savdo_admin/src/ui/main/home/balance/balance_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../bloc/product/product_firma_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -36,6 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
   // void connectionChanged(dynamic hasConnection) {
   // }
+  final bool isDataLabelVisible = true,
+      isMarkerVisible = true,
+      isTooltipVisible = true;
+  double? lineWidth, markerWidth, markerHeight;
+  final List<SalesData> chartData = <SalesData>[
+    SalesData(DateTime(2005, 0, 1), 'India', 1.5, 21, 28, 680, 760),
+    SalesData(DateTime(2006, 0, 1), 'China', 2.2, 24, 44, 550, 880),
+    SalesData(DateTime(2007, 0, 1), 'USA', 3.32, 36, 48, 440, 788),
+    SalesData(DateTime(2008, 0, 1), 'Japan', 4.56, 38, 50, 350, 560),
+    SalesData(DateTime(2009, 0, 1), 'Russia', 5.87, 54, 66, 444, 566),
+    SalesData(DateTime(2010, 0, 1), 'France', 6.8, 57, 78, 780, 650),
+    SalesData(DateTime(2011, 0, 1), 'Germany', 8.5, 70, 84, 450, 800)
+  ];
   @override
   void initState() {
     staffPermission.getAllStaffPermission(CacheService.getIdAgent());
@@ -170,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: width,
                                   height: 150.w,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(16),
                                       color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
@@ -226,6 +240,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                Container(
+                  margin: EdgeInsets.only(top: 400.w,left: 12.w,right: 12.w),
+                  width: width,
+                  height: 250.spMax,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                        BoxShadow(
+                            blurRadius: 2,
+                            color: Colors.grey.shade400
+                        ),
+                      ],
+                    borderRadius: BorderRadius.circular(16)
+                  ),
+                  child: SfCartesianChart(
+                    title: ChartTitle(text: 'Кунлик Ҳисобот'),
+                    legend: Legend(isVisible: true),
+                    series: getDefaultData(),
+                  ),
+                )
               ],
             )
           ],
@@ -233,5 +267,90 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  static List<LineSeries<SalesData, num>> getDefaultData() {
+    const bool isMarkerVisible = true, isTooltipVisible = true;
+    double? lineWidth, markerWidth, markerHeight;
+    final List<SalesData> chartData = <SalesData> [
+      SalesData(DateTime(20205, 0, 1), 'India', 1.335, 21, 28, 680, 760),
+      SalesData(DateTime(2006, 0, 1), 'China', 2.2, 234, 44, 550, 880),
+      SalesData(DateTime(20037, 0, 1), 'USA', 3.32, 336, 48, 440, 788),
+      SalesData(DateTime(2008, 0, 1), 'Japan', 4.56, 338, 350, 3350, 560),
+      SalesData(DateTime(20309, 0, 1), 'Russia', 5.87, 524, 66, 444, 566),
+      SalesData(DateTime(20130, 0, 1), 'France', 6.8, 573, 78, 780, 650),
+      SalesData(DateTime(2011, 0, 1), 'Germany', 8.5, 730, 84, 450, 800)
+    ];
+    return <LineSeries<SalesData, num>>[
+      LineSeries<SalesData, num>(
+          enableTooltip: true,
+          name: 'Киримлар',
+          dataSource: chartData,
+          xValueMapper: (SalesData sales, _) => sales.sales,
+          yValueMapper: (SalesData sales, _) => sales.sales4,
+          width: lineWidth ?? 2,
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 4,
+              width: markerHeight ?? 4,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.red),
+      ),
+      LineSeries<SalesData, num>(
+          enableTooltip: isTooltipVisible,
+          dataSource: chartData,
+          name: 'Чиқимлар',
+          width: lineWidth ?? 2,
+          xValueMapper: (SalesData sales, _) => sales.sales,
+          yValueMapper: (SalesData sales, _) => sales.sales3,
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 4,
+              width: markerHeight ?? 4,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.black),
+      ),
+      LineSeries<SalesData, num>(
+          enableTooltip: isTooltipVisible,
+          dataSource: chartData,
+          name: 'Харажатлар',
+          width: lineWidth ?? 2,
+          xValueMapper: (SalesData sales, _) => sales.sales,
+          yValueMapper: (SalesData sales, _) => sales.sales2,
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 4,
+              width: markerHeight ?? 4,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.black),
+      ),
+      LineSeries<SalesData, num>(
+          enableTooltip: isTooltipVisible,
+          dataSource: chartData,
+          width: lineWidth ?? 2,
+          name: "Тўловлар",
+          xValueMapper: (SalesData sales, _) => sales.sales,
+          yValueMapper: (SalesData sales, _) => sales.sales2,
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 4,
+              width: markerHeight ?? 4,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.black),
+      ),
+    ];
+  }
+}
+class SalesData {
+  SalesData(this.year, this.name, this.sales, this.sales1, this.sales2, this.sales3, this.sales4);
+  final DateTime year;
+  final String name;
+  final double sales;
+  final double sales1;
+  final double sales2;
+  final double sales3;
+  final double sales4;
 }
 

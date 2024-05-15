@@ -58,8 +58,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   connectivity_plus: ^5.0.2
   google_fonts: ^6.2.1
-  fl_chart: ^0.67.0
   firebase_core: ^2.29.0
+  syncfusion_flutter_charts: ^25.2.4
   firebase_messaging: ^14.8.1
   flutter_local_notifications: ^17.0.0
   screenshot: ^2.3.0

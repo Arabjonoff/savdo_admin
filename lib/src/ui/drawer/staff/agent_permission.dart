@@ -98,7 +98,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                                   width: MediaQuery.of(context).size.width,
                                   height: 250.h,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(left: 16.w,top: 16.w),
@@ -110,13 +110,19 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                                           itemBuilder: (ctx,index){
                                             return ListTile(
                                               onTap: () async {
+                                                data.idSkl = wareHouse[index].id;
                                                 setState(() {});
                                                 Navigator.pop(context);
                                               },
                                               title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
-                                              trailing:Icon(Icons.radio_button_checked,color: wareHouse[index].id == data.idSkl+1?Colors.green:Colors.grey,),
+                                              trailing:Icon(Icons.radio_button_checked,color: wareHouse[index].id == data.idSkl?Colors.green:Colors.grey,),
                                             );
-                                          }))
+                                          })),
+                                      TextButton(onPressed: (){
+                                        data.skl = 0;
+                                        data.idSkl = -1;
+                                        setState(() {});
+                                      }, child: Text("Барча омборларни кўриш"))
                                     ],
                                   ),
                                 ),
@@ -130,7 +136,9 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: Colors.grey)
                             ),
-                            child: ListTile()),
+                            child: ListTile(
+                              trailing: const Icon(Icons.keyboard_arrow_down_rounded),
+                              title: Text("Омборга боғлаш",style: AppStyle.medium(Colors.black)),)),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),

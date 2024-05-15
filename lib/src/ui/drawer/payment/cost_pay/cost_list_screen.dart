@@ -25,7 +25,7 @@ class CostListScreen extends StatefulWidget {
 
 class _CostListScreenState extends State<CostListScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  final TextEditingController _controllerDate = TextEditingController();
+  final TextEditingController _controllerDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   List<AgentsResult> agents = [];
   int idAgent = 0;
   num card = 0, bank = 0, price = 0;
@@ -40,6 +40,7 @@ class _CostListScreenState extends State<CostListScreen> {
     double width = MediaQuery.of(context).size.width;
     Repository repository = Repository();
     return Scaffold(
+      key: _key,
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
