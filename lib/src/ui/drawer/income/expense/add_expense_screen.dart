@@ -63,12 +63,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Кимга:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: false,suffixIcon: IconButton(onPressed: ()=> CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentAgentScreen()),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
+                    TextFieldWidget(controller: _controllerClient, hintText: 'Кимга',readOnly: true,suffixIcon: IconButton(onPressed: ()=> CenterDialog.showProductTypeDialog(context, 'Харажат', const DocumentAgentScreen()),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Нима учун:",style: AppStyle.small(Colors.black),),
                     ),
-                    TextFieldWidget(controller: _controllerExpense, hintText: 'Нима учун',readOnly: false,suffixIcon: IconButton(onPressed: ()=>CenterDialog.showProductTypeDialog(context, 'Харажат тури', ExpenseTypeChoseScreen(idSklPr: widget.idSklPr,)),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
+                    TextFieldWidget(controller: _controllerExpense, hintText: 'Нима учун',readOnly: true,suffixIcon: IconButton(onPressed: ()=>CenterDialog.showProductTypeDialog(context, 'Харажат тури', ExpenseTypeChoseScreen(idSklPr: widget.idSklPr,)),icon: const Icon(Icons.arrow_drop_down_circle_outlined),),),
                     Padding(
                       padding: EdgeInsets.only(left: 16.w),
                       child: Text("Сумма:",style: AppStyle.small(Colors.black),),

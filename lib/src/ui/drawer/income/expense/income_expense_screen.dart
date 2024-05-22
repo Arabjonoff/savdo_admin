@@ -78,8 +78,13 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
                                      children: [
                                        SlidableAction(
                                          onPressed: (i){
-                                           CenterDialog.showDeleteDialog(context, () => ()async{
+                                           CenterDialog.showDeleteDialog(context, ()async{
+                                             print("object");
                                              HttpResult res = await repository.deleteExpense(data[index].id, data[index].idSana);
+                                             if(res.result["status"] == true){
+                                               await getExpenseBloc.getAllExpense(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                                               if(context.mounted)Navigator.pop(context);
+                                             }
                                            });
                                          },
                                          backgroundColor: Colors.red,
