@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -40,7 +41,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
       ),
       body: StreamBuilder<List<StaffPermissionResult>>(
         stream: staffPermission.getStaffPermissionStream,
-        builder: (context, snapshot) {
+        builder: (context, snapshot){
           if(snapshot.hasData){
             var data = snapshot.data!;
             return Column(
@@ -68,6 +69,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
                 if(res.result["status"] == true){
                   staffPermission.getAllStaffPermission(CacheService.getIdAgent());
                   permissionList.clear();
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 }else{
                   permissionList.clear();

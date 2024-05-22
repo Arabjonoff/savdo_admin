@@ -123,7 +123,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
               totalNaqd=0;
               totalVal=0;
               for(int i=0;i<data.length;i++){
-                  docItem += i;
+                  docItem = data.length;
                   totalUzs += data[i].sm;
                   totalUsd += data[i].smS;
                   totalWallet += data[i].tlKarta;
