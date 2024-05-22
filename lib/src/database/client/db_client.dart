@@ -18,7 +18,7 @@ class DbClient {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];
     List<Map> list = await dbClient.rawQuery(
-        "SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ? ORDER BY id DESC",
+        "SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ? ORDER BY TP DESC",
         ['%$obj%', '%$obj%', '%$obj%']);
     for (int i = 0; i < list.length; i++) {
       ClientResult clientResult = ClientResult(

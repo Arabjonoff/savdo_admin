@@ -47,15 +47,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
   final TextEditingController _controllerIncomePrice3Total = TextEditingController(text: '0');
   @override
   void initState() {
-    _controllerIncomePriceUzs.text = priceFormat.format(widget.data.narhi);
-    _controllerIncomePriceUsd.text = priceFormatUsd.format(widget.data.narhiS);
-    _controllerSalePriceUzs1.text = priceFormat.format(widget.data.snarhi);
-    _controllerSalePriceUsd1.text = priceFormatUsd.format(widget.data.snarhiS);
-    _controllerSalePriceUzs2.text = priceFormat.format(widget.data.snarhi1);
-    _controllerSalePriceUsd2.text = priceFormatUsd.format(widget.data.snarhiS1);
-    _controllerSalePriceUzs3.text = priceFormat.format(widget.data.snarhi2);
-    _controllerSalePriceUsd3.text = priceFormatUsd.format(widget.data.snarhiS2);
-      db = CacheService.getDb();
+    db = CacheService.getDb();
     _scrollController = ScrollController();
     _scrollController!.addListener(_scrollListener);
     super.initState();

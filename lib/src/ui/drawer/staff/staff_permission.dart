@@ -15,7 +15,6 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 class StaffPermissionScreen extends StatefulWidget {
   final AgentsResult data;
   const StaffPermissionScreen({super.key, required this.data});
-
   @override
   State<StaffPermissionScreen> createState() => _StaffPermissionScreenState();
 }
@@ -37,7 +36,7 @@ class _StaffPermissionScreenState extends State<StaffPermissionScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
-        title:  Text(widget.data.name),
+        title: Text(widget.data.name),
       ),
       body: StreamBuilder<List<StaffPermissionResult>>(
         stream: staffPermission.getStaffPermissionStream,

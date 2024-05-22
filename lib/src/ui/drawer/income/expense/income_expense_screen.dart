@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/expense/get_expense_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/expense/get_expense_model.dart';
+import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/income/expense/add_expense_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
-
-
 class IncomeExpenseScreen extends StatefulWidget {
   final dynamic idSklPr;
   const IncomeExpenseScreen({super.key, required this.idSklPr});
@@ -33,6 +33,7 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    Repository repository = Repository();
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -77,7 +78,8 @@ class _IncomeExpenseScreenState extends State<IncomeExpenseScreen> {
                                      children: [
                                        SlidableAction(
                                          onPressed: (i){
-                                           CenterDialog.showDeleteDialog(context, () => (){
+                                           CenterDialog.showDeleteDialog(context, () => ()async{
+                                             HttpResult res = await repository.deleteExpense(data[index].id, data[index].idSana);
                                            });
                                          },
                                          backgroundColor: Colors.red,
