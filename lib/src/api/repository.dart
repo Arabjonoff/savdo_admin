@@ -114,6 +114,14 @@ class Repository{
   Future<void>clearOutcomeCart() => _outcomeSkladBaseHelper.clearOutcomeCart();
 
 
+  /// Outcome cart base
+  Future<int> saveReturnedCart(item) => _outcomeSkladBaseHelper.saveOutcomeCart(item);
+  Future<List<SklRsTov>> getReturnedCart() => _outcomeSkladBaseHelper.getOutcomeCart();
+  Future<int> updateReturnedCart(item) => _outcomeSkladBaseHelper.updateOutcomeCart(item);
+  Future<int> deleteReturnedCart(item) => _outcomeSkladBaseHelper.deleteOutcomeCart(item);
+  Future<void>clearReturnedCart() => _outcomeSkladBaseHelper.clearOutcomeCart();
+
+
   /// Sklad base
   Future<int> saveSkladBase(item) => _skladBaseHelper.saveSklad(item);
   Future<List<SkladResult>> getSkladBase() => _skladBaseHelper.getSklad();
@@ -236,4 +244,13 @@ class Repository{
   Future<HttpResult> postStaffPermission(map,id) => _apiProvider.postStaffPermission(map,id);
   Future<HttpResult> postAgentPermission(map,id) => _apiProvider.postAgentPermission(map,id);
   Future<HttpResult> getAgentPermission(id) => _apiProvider.getAgentPermission(id);
+  Future<HttpResult> postReturnedDoc(Map data) => _apiProvider.postReturnedDoc(data);
+  Future<HttpResult> patchReturnedDoc(Map data) => _apiProvider.patchReturnedDoc(data);
+  Future<HttpResult> getReturned(year,month,idSkl) => _apiProvider.getReturned(year, month, idSkl);
+  Future<HttpResult> postReturned(Map data) => _apiProvider.postReturned(data);
+  Future<HttpResult> patchReturned(Map data) => _apiProvider.patchReturned(data);
+  Future<HttpResult> deleteReturned(idSklVz,idSkl2,id) => _apiProvider.deleteReturned(idSklVz,idSkl2,id);
+  Future<HttpResult> deleteReturnedDoc(id) => _apiProvider.deleteReturnedDoc(id);
+  Future<HttpResult> lockReturned(id,prov) => _apiProvider.lockReturned(id, prov);
+
 }

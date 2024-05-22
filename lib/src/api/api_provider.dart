@@ -671,4 +671,41 @@ class ApiProvider {
     String url = "${_baseUrl}user-per.php/user_dost0_upd?DB=$db&JWT=$token&ID=$id";
     return await _postRequest(url,json.encode(map));
   }
+  Future<HttpResult> postReturnedDoc(Map data)async{
+    String url = "${_baseUrl}voz0_ins?DB=$db";
+    return await _postRequest(url, json.encode(data));
+  }
+  Future<HttpResult> patchReturnedDoc(Map data)async{
+    String url = "${_baseUrl}voz0_upd?DB=$db";
+    return await _patchRequest(url, json.encode(data));
+  }
+  Future<HttpResult> deleteReturnedDoc(id)async{
+    String url = "${_baseUrl}voz0_del?DB=$db&ID=$id";
+    return await _deleteRequest(url,{});
+  }
+  Future<HttpResult> getReturned(year,month,idSkl)async{
+    String url = "${_baseUrl}voz?DB=$db&ID_SKL=$idSkl&JWT=$token&YIL=$year&OY=$month";
+    return await _getRequest(url);
+  }
+  Future<HttpResult> postReturned(Map data)async{
+    String url = "${_baseUrl}voz1_ins?DB=$db";
+    return await _postRequest(url,json.encode(data));
+  }
+  Future<HttpResult> patchReturned(Map data)async{
+    String url = "${_baseUrl}voz1_upd?DB=$db";
+    return await _patchRequest(url,json.encode(data));
+  }
+  Future<HttpResult> deleteReturned(idSklVz,idSkl2,id)async{
+    String url = "${_baseUrl}voz1_del?DB=$db&ID_SKL_VZ=$idSklVz&ID_SKL2=$idSkl2&ID=$id&JWT=$token";
+    return await _deleteRequest(url,{});
+  }
+  Future<HttpResult> lockReturned(id,prov)async{
+    String url = "${_baseUrl}voz0_prov?DB=$db&JWT=$token";
+    var data = {
+      "ID":id,
+      "PROV":prov
+    };
+    return await _patchRequest(url,json.encode(data));
+  }
+
 }

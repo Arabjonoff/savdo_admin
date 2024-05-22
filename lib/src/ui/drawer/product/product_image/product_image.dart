@@ -43,13 +43,13 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
           TextButton(onPressed: ()async{
             HttpResult  res = await _repository.postImage(_image.path, widget.idSkl2);
             if(res.result['status'] == true){
-              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.result['message'])));
             }
             else{
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res.result['message']),backgroundColor: Colors.red,));
             }
+            Navigator.pop(context);
           }, child: Text("Расмини сақлаш",style: AppStyle.medium(AppColors.green)))
         ],
       ),

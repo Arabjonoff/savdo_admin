@@ -21,7 +21,8 @@ class AddOutcomeWidgetDialog extends StatefulWidget {
   final  int priceUsd;
   final dynamic data,ndocId;
   final String typeName;
-  const AddOutcomeWidgetDialog({super.key, required this.data, required this.price, required this.priceUsd, this.ndocId, required this.typeName});
+  final bool isReturned;
+  const AddOutcomeWidgetDialog({super.key, required this.data, required this.price, required this.priceUsd, this.ndocId, required this.typeName,this.isReturned=false});
 
   @override
   State<AddOutcomeWidgetDialog> createState() => _AddOutcomeWidgetDialogState();
@@ -114,6 +115,7 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                         suffixText: widget.typeName.toLowerCase(),
                         keyboardType: true,
                         onChanged: (i){
+                        if(widget.isReturned == false){
                           try{
                             if(widget.data.osoni < num.parse(_controllerCount.text)){
                               Navigator.pop(context);
@@ -141,6 +143,24 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                               } catch (_) {}
                             }
                           }catch(_){}
+                        }
+                        else{
+                            try {
+                              if (priceType == 0 && widget.priceUsd == 0) {
+                                _controllerTotal.text = priceFormat.format(
+                                    num.parse(i) * num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')));
+                              } else if (priceType == 0 && widget.priceUsd == 1) {
+                                _controllerTotal.text = priceFormat.format(
+                                    num.parse(i) * num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')));
+                              } else if (priceType == 1 && widget.priceUsd == 1) {
+                                _controllerTotal.text = priceFormatUsd.format(
+                                    num.parse(i) * num.parse(_controllerPrice.text));
+                              } else if (priceType == 1 && widget.priceUsd == 0) {
+                                _controllerTotal.text = priceFormatUsd.format(
+                                    num.parse(i) * num.parse(_controllerPrice.text));
+                              }
+                            } catch (_) {}
+                        }
                         },
                       )),
                       /// price calculation
@@ -249,65 +269,129 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
             ),
             ButtonWidget(onTap: ()async{
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-                Map data = {
-                  "ID_SKL_RS": widget.ndocId,
-                  "NAME": widget.data.name,
-                  "ID_SKL2": widget.data.idSkl2.toString(),
-                  "SONI": num.parse(_controllerCount.text),
-                  "NARHI": widget.data.narhi,
-                  "NARHI_S": widget.data.narhiS,
-                  "SM": num.parse(_controllerCount.text) * widget.data.narhi,
-                  "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
-                  "ID_TIP": widget.data.idTip.toInt(),
-                  "ID_FIRMA": widget.data.idFirma.toInt(),
-                  "ID_EDIZ": widget.data.idEdiz.toInt(),
-                  "SNARHI": priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
-                  "SNARHI_S": priceType==1?num.parse(_controllerPrice.text):0,
-                  "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
-                  "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
-                  "FR": '0',
-                  "FR_S": priceType,
-                  "VZ": widget.data.vz,
-                  "SHTR": '',
-                };
-                HttpResult res = await _repository.addOutcomeSklRs(data);
-               try{
-                 if(res.result['status'] == true){
-                   planBloc.getPlanAll();
-                   SklRsTov sklRsTov = SklRsTov(
-                       id: int.parse(res.result['id']),
-                       name: widget.data.name,
-                       idSkl2: widget.data.idSkl2,
-                       soni: num.parse(_controllerCount.text),
-                       narhi: widget.data.narhi,
-                       narhiS: widget.data.narhiS,
-                       sm: num.parse(_controllerCount.text) * widget.data.narhi,
-                       smS: num.parse(_controllerCount.text) * widget.data.narhiS,
-                       idTip: widget.data.idTip,
-                       idFirma: widget.data.idFirma,
-                       idEdiz: widget.data.idEdiz,
-                       snarhi: priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
-                       snarhiS: priceType == 1?num.parse(_controllerPrice.text):0,
-                       ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
-                       ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
-                       fr: 0,
-                       frS: priceType,
-                       vz: widget.data.idEdizName,
-                       shtr: widget.data.photo
-                   );
-                   await _repository.saveOutcomeCart(sklRsTov);
-                   skladBloc.updateSklad(widget.data, res.result['osoni']);
-                   cartOutcomeBloc.getAllCartOutcome();
-                   if(context.mounted)Navigator.pop(context);
-                   if(context.mounted)Navigator.pop(context);
-                 }
-                 else{
-                   if(context.mounted)Navigator.pop(context);
-                   if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
-                 }
-               }catch(e){
-                 CenterDialog.showErrorDialog(context, e.toString());
-               }
+                if(widget.isReturned==false){
+                  Map data = {
+                    "ID_SKL_RS": widget.ndocId,
+                    "NAME": widget.data.name,
+                    "ID_SKL2": widget.data.idSkl2.toString(),
+                    "SONI": num.parse(_controllerCount.text),
+                    "NARHI": widget.data.narhi,
+                    "NARHI_S": widget.data.narhiS,
+                    "SM": num.parse(_controllerCount.text) * widget.data.narhi,
+                    "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
+                    "ID_TIP": widget.data.idTip.toInt(),
+                    "ID_FIRMA": widget.data.idFirma.toInt(),
+                    "ID_EDIZ": widget.data.idEdiz.toInt(),
+                    "SNARHI": priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
+                    "SNARHI_S": priceType==1?num.parse(_controllerPrice.text):0,
+                    "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
+                    "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
+                    "FR": '0',
+                    "FR_S": priceType,
+                    "VZ": widget.data.vz,
+                    "SHTR": '',
+                  };
+                  HttpResult res = await _repository.addOutcomeSklRs(data);
+                  try{
+                    if(res.result['status'] == true){
+                      planBloc.getPlanAll();
+                      SklRsTov sklRsTov = SklRsTov(
+                          id: int.parse(res.result['id']),
+                          name: widget.data.name,
+                          idSkl2: widget.data.idSkl2,
+                          soni: num.parse(_controllerCount.text),
+                          narhi: widget.data.narhi,
+                          narhiS: widget.data.narhiS,
+                          sm: num.parse(_controllerCount.text) * widget.data.narhi,
+                          smS: num.parse(_controllerCount.text) * widget.data.narhiS,
+                          idTip: widget.data.idTip,
+                          idFirma: widget.data.idFirma,
+                          idEdiz: widget.data.idEdiz,
+                          snarhi: priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
+                          snarhiS: priceType == 1?num.parse(_controllerPrice.text):0,
+                          ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
+                          ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
+                          fr: 0,
+                          frS: priceType,
+                          vz: widget.data.idEdizName,
+                          shtr: widget.data.photo
+                      );
+                      await _repository.saveOutcomeCart(sklRsTov);
+                      skladBloc.updateSklad(widget.data, res.result['osoni']);
+                      cartOutcomeBloc.getAllCartOutcome();
+                      if(context.mounted)Navigator.pop(context);
+                      if(context.mounted)Navigator.pop(context);
+                    }
+                    else{
+                      if(context.mounted)Navigator.pop(context);
+                      if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+                    }
+                  }catch(e){
+                    CenterDialog.showErrorDialog(context, e.toString());
+                  }
+                }else{
+                  Map data = {
+                    "ID_SKL_VZ": widget.ndocId,
+                    "NAME": widget.data.name,
+                    "ID_SKL2": widget.data.idSkl2.toString(),
+                    "SONI": num.parse(_controllerCount.text),
+                    "NARHI": widget.data.narhi,
+                    "NARHI_S": widget.data.narhiS,
+                    "SM": num.parse(_controllerCount.text) * widget.data.narhi,
+                    "SM_S": num.parse(_controllerCount.text) * widget.data.narhiS,
+                    "ID_TIP": widget.data.idTip.toInt(),
+                    "ID_FIRMA": widget.data.idFirma.toInt(),
+                    "ID_EDIZ": widget.data.idEdiz.toInt(),
+                    "SNARHI": priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
+                    "SNARHI_S": priceType==1?num.parse(_controllerPrice.text):0,
+                    "SSM": priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,
+                    "SSM_S": priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,
+                    "FR": '0',
+                    "FR_S": priceType,
+                    "VZ": widget.data.vz,
+                    "SHTR": '',
+                  };
+                  HttpResult res = await _repository.postReturned(data);
+                  try{
+                    if(res.result['status'] == true){
+                      planBloc.getPlanAll();
+                      SklRsTov sklRsTov = SklRsTov(
+                          id: int.parse(res.result['id']),
+                          name: widget.data.name,
+                          idSkl2: widget.data.idSkl2,
+                          soni: num.parse(_controllerCount.text),
+                          narhi: widget.data.narhi,
+                          narhiS: widget.data.narhiS,
+                          sm: num.parse(_controllerCount.text) * widget.data.narhi,
+                          smS: num.parse(_controllerCount.text) * widget.data.narhiS,
+                          idTip: widget.data.idTip,
+                          idFirma: widget.data.idFirma,
+                          idEdiz: widget.data.idEdiz,
+                          snarhi: priceType==0?num.parse(_controllerPrice.text.replaceAll(RegExp('[^0-9]'), '')):0,
+                          snarhiS: priceType == 1?num.parse(_controllerPrice.text):0,
+                          ssm: priceType == 0 ? num.parse(_controllerTotal.text.replaceAll(RegExp('[^0-9]'), '')) : 0,/// soni * snarhi
+                          ssmS: priceType == 1 ? num.parse(_controllerTotal.text.replaceAll(",", '')) : 0,/// soni * snarhis
+                          fr: 0,
+                          frS: priceType,
+                          vz: widget.data.idEdizName,
+                          shtr: widget.data.photo
+                      );
+                      await _repository.saveOutcomeCart(sklRsTov);
+                      skladBloc.updateSklad(widget.data, res.result['osoni']);
+                      cartOutcomeBloc.getAllCartOutcome();
+                      if(context.mounted)Navigator.pop(context);
+                    }
+                    else{
+                      if(context.mounted)Navigator.pop(context);
+                      if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
+                    }
+                  }catch(e){
+                    CenterDialog.showErrorDialog(context, e.toString());
+                  }
+                  if(res.result['status']){
+                    if(context.mounted)Navigator.pop(context);
+                  }
+                }
             }, color: AppColors.green, text: "Саватга қўшиш"),
             SizedBox(height: 32.h,)
           ],

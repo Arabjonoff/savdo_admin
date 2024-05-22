@@ -122,6 +122,7 @@ class _AgentPermissionScreenState extends State<AgentPermissionScreen> {
                                         data.skl = 0;
                                         data.idSkl = -1;
                                         setState(() {});
+                                        Navigator.pop(context);
                                       }, child: Text("Барча омборларни кўриш"))
                                     ],
                                   ),

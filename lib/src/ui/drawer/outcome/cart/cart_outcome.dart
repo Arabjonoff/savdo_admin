@@ -65,7 +65,7 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                               children: [
                                 SlidableAction(
                                   onPressed: (i){
-                                    cartOutcomeBloc.deleteCartOutcome(data[index].id,5224,data[index].idSkl2,widget.data,context);
+                                    cartOutcomeBloc.deleteCartOutcome(data[index].id,5224,data[index].idSkl2,widget.data,context,false);
                                   },
                                   backgroundColor: Colors.red,
                                   icon: Icons.delete,
@@ -75,7 +75,7 @@ class _CartOutcomeScreenState extends State<CartOutcomeScreen> {
                             ),
                             child: GestureDetector(
                               onTap: (){
-                                BottomDialog.showScreenDialog(context,UpdateOutcomeWidgetDialog(data: data[index], price: data[index].snarhi!=0?data[index].snarhi:data[index].snarhiS, priceUsd: data[index].frS.toInt(), typeName: data[index].vz,ndocId: widget.data, id: data[index].id,));
+                                BottomDialog.showScreenDialog(context,UpdateOutcomeWidgetDialog(data: data[index], price: data[index].snarhi!=0?data[index].snarhi:data[index].snarhiS, priceUsd: data[index].frS.toInt(), typeName: data[index].vz,ndocId: widget.data, id: data[index].id, count: data[index].soni,));
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),

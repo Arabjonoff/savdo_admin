@@ -10,6 +10,7 @@ import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/client/debtbook/debtbook_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/client/tab_bar_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_tapbar.dart';
+import 'package:savdo_admin/src/ui/drawer/returend/returned_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/staff/staff_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 
@@ -161,19 +162,35 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Савдо-сотиқ"),
                 ),
               /// Product Returned
-              // ListTile(
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10)
-              //   ),
-              //   selectedTileColor: AppColors.green,
-              //   selected: selected ==6?true:false,
-              //   selectedColor: selected ==6?AppColors.white:AppColors.black,
-              //     leading: const Icon(Icons.event_repeat_outlined),
-              //     onTap: (){
-              //       setState(() =>selected =6);
-              //     },
-              //     title: const Text("Қайтарилди"),
-              //   ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==6?true:false,
+                selectedColor: selected ==6?AppColors.white:AppColors.black,
+                  leading: const Icon(Icons.move_down_sharp),
+                  onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                    return const ReturnedScreen();
+                  }));
+                    setState(() => selected =6);
+                  },
+                  title: const Text("Қайтарилди"),
+                ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                selectedTileColor: AppColors.green,
+                selected: selected ==14?true:false,
+                selectedColor: selected ==14?AppColors.white:AppColors.black,
+                  leading: const Icon(Icons.recycling_outlined),
+                  onTap: (){
+                    setState(() => selected =14);
+                  },
+                  title: const Text("Ревизия"),
+                ),
             ],),
             /// Buyers Bloc
             ExpansionTile(title:  Text("Ишчи-хизматчилар",style: AppStyle.mediumBold(Colors.black),),

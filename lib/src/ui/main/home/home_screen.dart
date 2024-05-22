@@ -37,9 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
   // void connectionChanged(dynamic hasConnection) {
   // }
-  final bool isDataLabelVisible = true,
-      isMarkerVisible = true,
-      isTooltipVisible = true;
+  final bool isDataLabelVisible = true, isMarkerVisible = true, isTooltipVisible = true;
   double? lineWidth, markerWidth, markerHeight;
   final List<SalesData> chartData = <SalesData>[
     SalesData(DateTime(2005, 0, 1), 'India', 1.5, 21, 28, 680, 760),
@@ -156,7 +154,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       } return Container(
-                        color: AppColors.green,
+                        width: width,
+                        height: 250.h,
+                        child: Image.asset("assets/images/bg000.jpg",fit: BoxFit.cover,),
                       );
                     }
                 ),

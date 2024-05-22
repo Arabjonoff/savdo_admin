@@ -15,21 +15,22 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/outcome/cart/cart_outcome.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
+import 'package:savdo_admin/src/ui/drawer/returend/cart/cart_returned.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/outcome/outcome_dialog_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
-class UpdateOutcomeScreen extends StatefulWidget {
+class UpdateReturnedScreen extends StatefulWidget {
   final dynamic ndocId;
-  const UpdateOutcomeScreen({super.key, this.ndocId});
+  const UpdateReturnedScreen({super.key, this.ndocId});
 
   @override
-  State<UpdateOutcomeScreen> createState() => _UpdateOutcomeScreenState();
+  State<UpdateReturnedScreen> createState() => _UpdateReturnedScreenState();
 }
 
-class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
+class _UpdateReturnedScreenState extends State<UpdateReturnedScreen> {
   final Repository _repository = Repository();
   int wareHouseId = 1,filterId = -1;
   num price = 0;
@@ -135,7 +136,7 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
           ),
           sheetBelow: SnappingSheetContent(
             draggable: (details) => true,
-            child: CartOutcomeScreen(data: widget.ndocId,isNavigate: false,),
+            child: CardReturnedScreen(data: widget.ndocId,isNavigate: false,),
           ),
           child: RefreshIndicator(
             onRefresh: ()async{
@@ -157,10 +158,6 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                             if(data[index].idTip==filterId){
                               return GestureDetector(
                                 onTap: (){
-                                  if(data[index].osoni<=0){
-
-                                  }
-                                  else{
                                     price = 0;
                                     priceUsd = 0;
                                     if (idPrice == 0) {
@@ -184,97 +181,77 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                         price = data[index].snarhi2S;
                                         priceUsd = 1;
                                       }
-                                    }
-                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                   }
+                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,isReturned: true,));
                                 },
                                 child: SizedBox(
                                   width: width,
                                   height: 100.h,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
-                                        height: 100.h,
-                                        width: width,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey.shade300
-                                                )
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
+                                    height: 100.h,
+                                    width: width,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade300
                                             )
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            GestureDetector(
-                                              onTap:(){
-                                                CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
-                                              },
-                                              child: Container(
-                                                width: 80.r,
-                                                height: 80.r,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: Colors.white
-                                                ),
-                                                child: Hero(
-                                                  tag: data[index].id.toString(),
-                                                  child: CachedNetworkImage(
-                                                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                    errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
-                                                    imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
-                                                  ),
-                                                ),
+                                        )
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap:(){
+                                            CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
+                                          },
+                                          child: Container(
+                                            width: 80.r,
+                                            height: 80.r,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.white
+                                            ),
+                                            child: Hero(
+                                              tag: data[index].id.toString(),
+                                              child: CachedNetworkImage(
+                                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
+                                                imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
                                               ),
                                             ),
-                                            SizedBox(width: 8.w,),
-                                            Expanded(child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w,),
+                                        Expanded(child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
+                                            const Spacer(),
+                                            Row(
                                               children: [
-                                                Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
+                                                Text("Нархи: ",style: AppStyle.small(Colors.black54),),
                                                 const Spacer(),
-                                                Row(
-                                                  children: [
-                                                    Text("Нархи: ",style: AppStyle.small(Colors.black54),),
-                                                    const Spacer(),
-                                                    priceCheck(idPrice, data[index]),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
-                                                    Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black54),),
-                                                  ],
-                                                ),
+                                                priceCheck(idPrice, data[index]),
                                               ],
-                                            ))
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
+                                                Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black54),),
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ),
-                                      if (data[index].osoni<=0) Container(
-                                        width: width,
-                                        alignment: Alignment.center,
-                                        height: double.infinity,
-                                        decoration:  BoxDecoration(
-                                            color: Colors.grey.shade300.withOpacity(0.6)
-                                        ),
-                                        child: Text(
-                                            'Маҳсулот қолмаган !',
-                                            style: AppStyle.mediumBold(Colors.red)
-                                        ),) else const SizedBox()
-                                    ],
+                                        ))
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
                             }else if(filterId == -1){
                               return GestureDetector(
                                 onTap: (){
-                                  if(data[index].osoni<=0){
-
-                                  }
-                                  else{
                                     price = 0;
                                     priceUsd = 0;
                                     if (idPrice == 0) {
@@ -301,90 +278,74 @@ class _UpdateOutcomeScreenState extends State<UpdateOutcomeScreen> {
                                         price = data[index].snarhi2S;
                                         priceUsd = 1;
                                       }
-                                    }
-                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,));
                                   }
+                                    BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,isReturned: true,));
                                 },
                                 child: SizedBox(
                                   width: width,
                                   height: 100.h,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 4.h),
-                                        height: 100.h,
-                                        width: width,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey.shade300
-                                                )
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 4.h),
+                                    height: 100.h,
+                                    width: width,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade300
                                             )
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            GestureDetector(
-                                              onTap:(){
-                                                CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
-                                              },
-                                              child: Container(
-                                                width: 80.r,
-                                                height: 80.r,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: Colors.white
-                                                ),
-                                                child: Hero(
-                                                  tag: data[index].id.toString(),
-                                                  child: CachedNetworkImage(
-                                                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                    errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
-                                                    imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
-                                                  ),
-                                                ),
+                                        )
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap:(){
+                                            CenterDialog.showImageDialog(context, data[index].name, ImagePreview(photo: data[index].photo,));
+                                          },
+                                          child: Container(
+                                            width: 80.r,
+                                            height: 80.r,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.white
+                                            ),
+                                            child: Hero(
+                                              tag: data[index].id.toString(),
+                                              child: CachedNetworkImage(
+                                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                errorWidget: (context, url, error) =>  Icon(Icons.error_outline,size: 23.h,),
+                                                imageUrl: 'https://naqshsoft.site/images/$db/${data[index].photo}',
                                               ),
                                             ),
-                                            SizedBox(width: 8.w,),
-                                            Expanded(child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w,),
+                                        Expanded(child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
+                                            const Spacer(),
+                                            Row(
                                               children: [
-                                                Text(data[index].name,maxLines:1,style: AppStyle.mediumBold(Colors.black),),
+                                                Text("Нархи: ",style: AppStyle.small(Colors.black54),),
                                                 const Spacer(),
-                                                Row(
-                                                  children: [
-                                                    Text("Нархи: ",style: AppStyle.small(Colors.black54),),
-                                                    const Spacer(),
-                                                    priceCheck(idPrice, data[index]),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
-                                                    const Spacer(),
-                                                    Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
-                                                    SizedBox(width: 4.w,),
-                                                    Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
-                                                  ],
-                                                ),
+                                                priceCheck(idPrice, data[index]),
                                               ],
-                                            ))
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("Қолдиқ: ",style: AppStyle.small(Colors.black54),),
+                                                const Spacer(),
+                                                Text(priceFormatUsd.format(data[index].osoni),style: AppStyle.medium(Colors.black),),
+                                                SizedBox(width: 4.w,),
+                                                Text(data[index].idEdizName.toLowerCase(),style: AppStyle.medium(Colors.black),),
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ),
-                                      if (data[index].osoni<=0) Container(
-                                        width: width,
-                                        alignment: Alignment.center,
-                                        height: double.infinity,
-                                        decoration:  BoxDecoration(
-                                            color: Colors.grey.shade300.withOpacity(0.6)
-                                        ),
-                                        child: Text(
-                                            'Маҳсулот қолмаган !',
-                                            style: AppStyle.mediumBold(Colors.red)
-                                        ),) else const SizedBox()
-                                    ],
+                                        ))
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
