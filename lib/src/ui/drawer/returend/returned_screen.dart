@@ -16,6 +16,7 @@ import 'package:savdo_admin/src/ui/drawer/returend/doc_retured_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/returend/update_returned/update_returned_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
+import 'package:savdo_admin/src/utils/utils.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class ReturnedScreen extends StatefulWidget {
@@ -30,6 +31,8 @@ class _ReturnedScreenState extends State<ReturnedScreen> {
   String wareHouseName = '';
   final Repository _repository = Repository();
   DateTime dateTime = DateTime.now();
+  num docItem = 0,returnUzs=0,returnUsd=0,totalWallet=0,totalBank=0,totalNaqd =0,totalVal=0;
+
   @override
   void initState() {
     wareHouseName = CacheService.getWareHouseName();
@@ -117,6 +120,18 @@ class _ReturnedScreenState extends State<ReturnedScreen> {
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 var data = snapshot.data!;
+                returnUzs=0;
+                docItem = 0;
+                returnUsd=0;
+                totalWallet=0;
+                totalBank=0;
+                totalNaqd=0;
+                totalVal=0;
+                for(int i=0;i<data.length;i++){
+                  docItem = data.length;
+                  returnUzs += data[i].sm;
+                  returnUsd += data[i].smS;
+                }
                 return SnappingSheet(
                   grabbingHeight: 65.spMax,
                   // TODO: Add your grabbing widget here,
@@ -157,7 +172,7 @@ class _ReturnedScreenState extends State<ReturnedScreen> {
                       grabbingContentOffset: GrabbingContentOffset.top,
                     ),
                     SnappingPosition.pixels(
-                      positionPixels: 400,
+                      positionPixels: 200,
                       snappingCurve: Curves.elasticOut,
                       snappingDuration: Duration(milliseconds: 1750),
                     ),
@@ -165,9 +180,47 @@ class _ReturnedScreenState extends State<ReturnedScreen> {
                   sheetBelow: SnappingSheetContent(
                     draggable: (details) => true,
                     child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
                       color: Colors.white,
                       child: Column(
-                        children: [],
+                        children: [
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Ҳужжат сони",style: AppStyle.smallBold(Colors.grey),),
+                              Text(docItem.toString()),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Қайтарилди сўм",style: AppStyle.smallBold(Colors.grey),),
+                              Text(priceFormat.format(returnUzs)),
+                            ],
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(child: DashedRect(gap: 2.3,color: Colors.grey,)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Қайтарилди валюта",style: AppStyle.smallBold(Colors.grey),),
+                              Text(priceFormatUsd.format(returnUsd)),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
