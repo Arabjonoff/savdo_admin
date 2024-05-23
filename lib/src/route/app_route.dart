@@ -92,7 +92,7 @@ class AppRoute{
     /// Add Outcome Screen
       case AppRouteName.addOutcome: return MaterialPageRoute(builder: (BuildContext context) => const CartOutcomeScreen());
     /// Add Document Outcome Screen
-      case AppRouteName.addDocumentOutcome: return MaterialPageRoute(builder: (BuildContext context) =>  DocumentOutComeScreen(ndoc: args,));
+      case AppRouteName.addDocumentOutcome: return MaterialPageRoute(builder: (BuildContext context) =>  DocumentOutComeScreen(ndoc: args, map: const {},));
     /// Cost List Screen
       case AppRouteName.costList: return MaterialPageRoute(builder: (BuildContext context) => const CostListScreen());
     /// Add Cost Screen

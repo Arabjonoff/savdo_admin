@@ -269,7 +269,7 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                           Expanded(child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(data[index].osoni.toString(),maxLines:1,style: AppStyle.mediumBold(Colors.black),),
+                                              Text(data[index].name.toString(),maxLines:1,style: AppStyle.mediumBold(Colors.black),),
                                               const Spacer(),
                                               Row(
                                                 children: [
@@ -307,7 +307,8 @@ class _OutcomeListScreenState extends State<OutcomeListScreen> {
                                 ),
                               ),
                             );
-                          }else if(filterId == -1){
+                          }
+                          else if(filterId == -1){
                             return GestureDetector(
                               onTap: (){
                                 if(data[index].osoni<=0){

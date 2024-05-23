@@ -320,7 +320,7 @@ class _OutcomePaymentScreenState extends State<OutcomePaymentScreen> with Ticker
                                   controllerAcceptedSumma.text =i.replaceAll(RegExp('[^0-9]'), "");
                                   controllerAcceptedSumma = TextEditingController(text:i );
                                 }
-                                else if(idValyuta ==0&&paymentType==1){
+                                else if(idValyuta == 0&&paymentType==1){
                                   acceptedSumma = num.parse(i) * int.parse(controllerCurrency.text.replaceAll(RegExp('[^0-9]'), ""));
                                   controllerAcceptedSumma = TextEditingController(text: acceptedSumma.toStringAsFixed(0) );
                                 }
@@ -332,7 +332,22 @@ class _OutcomePaymentScreenState extends State<OutcomePaymentScreen> with Ticker
                                   acceptedSumma =int.parse(i.replaceAll(RegExp('[^0-9]'), "")) / int.parse(controllerCurrency.text.replaceAll(RegExp('[^0-9]'), ""));
                                   controllerAcceptedSumma = TextEditingController(text: acceptedSumma.toStringAsFixed(2) );
                                 }
-
+                                else if(idValyuta==1&&paymentType==2){
+                                  acceptedSumma =int.parse(i.replaceAll(RegExp('[^0-9]'), "")) / int.parse(controllerCurrency.text.replaceAll(RegExp('[^0-9]'), ""));
+                                  controllerAcceptedSumma = TextEditingController(text: acceptedSumma.toStringAsFixed(2) );
+                                }
+                                else if(idValyuta==1&&paymentType==3){
+                                  acceptedSumma =int.parse(i.replaceAll(RegExp('[^0-9]'), "")) / int.parse(controllerCurrency.text.replaceAll(RegExp('[^0-9]'), ""));
+                                  controllerAcceptedSumma = TextEditingController(text: acceptedSumma.toStringAsFixed(2) );
+                                }
+                                else if(idValyuta==0&&paymentType==2){
+                                  controllerAcceptedSumma.text =i.replaceAll(RegExp('[^0-9]'), "");
+                                  controllerAcceptedSumma = TextEditingController(text:i );
+                                }
+                                else if(idValyuta==0&&paymentType==3){
+                                  controllerAcceptedSumma.text =i.replaceAll(RegExp('[^0-9]'), "");
+                                  controllerAcceptedSumma = TextEditingController(text:i );
+                                }
                                 setState(() {});
                               },
                               hintText: "",

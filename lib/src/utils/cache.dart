@@ -7,6 +7,14 @@ class CacheService {
   }
 
 
+  static void saveNdoc(String data) {
+    preferences!.setString("saveNdoc", data);
+  }
+  static String getNdoc() {
+    String data = preferences!.getString("saveNdoc") ??'';
+    return data;
+  }
+
   static void saveExpenseSummaUzs(double data) {
     preferences!.setDouble("expenseSummaUzs", data);
   }

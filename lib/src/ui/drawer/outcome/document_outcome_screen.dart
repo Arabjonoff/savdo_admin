@@ -14,9 +14,9 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class DocumentOutComeScreen extends StatefulWidget {
-  final bool isUpdate;
   final dynamic ndoc;
-  const DocumentOutComeScreen({super.key, this.ndoc, this.isUpdate = false});
+  final Map map;
+  const DocumentOutComeScreen({super.key, this.ndoc, required this.map});
 
   @override
   State<DocumentOutComeScreen> createState() => _DocumentOutComeScreenState();
@@ -35,10 +35,21 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
   final TextEditingController _controllerClientIdKlass = TextEditingController();
   final TextEditingController _controllerComment = TextEditingController();
   bool disable = true;
+  bool isUpdate=false;
+  dynamic ndocId;
   @override
   void initState() {
     _controllerDocNumber = TextEditingController(text: widget.ndoc.toString());
     skladBloc.getAllSklad(DateTime.now().year, DateTime.now().month,CacheService.getWareHouseId());
+    if(widget.map.isEmpty){}else{
+      _controllerClient.text = widget.map["clientName"];
+      _controllerClientIdT.text = widget.map["clientId"];
+      _controllerClientIdAgent.text = widget.map["idAgent"];
+      _controllerClientHodim.text = widget.map["idHodimlar"];
+      _controllerClientIdFaol.text = widget.map["idFaol"];
+      _controllerClientIdKlass.text =  widget.map["idKlass"];
+      _controllerClientIdHaridor.text = widget.map["idHaridor"];
+    }
     _initBus();
     super.initState();
   }
@@ -90,25 +101,28 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
             ButtonWidget(
               onTap: () async {
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-              if(widget.isUpdate == false){
-                var body = {
-                  "NAME": _controllerClient.text,
-                  "ID_T": _controllerClientIdT.text,
-                  "NDOC": _controllerDocNumber.text,
-                  "SANA": DateTime.now().toString(),
-                  "IZOH": _controllerComment.text,
-                  "ID_HODIM": _controllerClientHodim.text,
-                  "ID_AGENT": _controllerClientIdAgent.text,
-                  "ID_HARIDOR": _controllerClientIdHaridor.text,
-                  "KURS": CacheService.getCurrency(),
-                  "ID_FAOL": _controllerClientIdFaol.text,
-                  "ID_KLASS": _controllerClientIdKlass.text,
-                  "ID_SKL": CacheService.getWareHouseId(),
-                  "YIL": DateTime.now().year,
-                  "OY":  DateTime.now().month
-                };
+              var body = {
+                "NAME": _controllerClient.text,
+                "ID_T": _controllerClientIdT.text,
+                "NDOC": _controllerDocNumber.text,
+                "SANA": DateTime.now().toString(),
+                "IZOH": _controllerComment.text.replaceAll("'", "`"),
+                "ID_HODIM": _controllerClientHodim.text,
+                "ID_AGENT": _controllerClientIdAgent.text,
+                "ID_HARIDOR": _controllerClientIdHaridor.text,
+                "KURS": CacheService.getCurrency(),
+                "ID_FAOL": _controllerClientIdFaol.text,
+                "ID_KLASS": _controllerClientIdKlass.text,
+                "ID_SKL": CacheService.getidSkl(),
+                "YIL": DateTime.now().year,
+                "OY":  DateTime.now().month
+              };
+              if(isUpdate ==false){
                 HttpResult addDocOutcome = await _repository.addDocOutcome(body);
                 if(addDocOutcome.result["status"] == true){
+                  isUpdate = true;
+                  ndocId = addDocOutcome.result["id"];
+                  CacheService.saveNdoc(addDocOutcome.result["id"]);
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)Navigator.push(context, MaterialPageRoute(builder: (ctx) => OutcomeListScreen(ndocId: addDocOutcome.result["id"],)));
                 }
@@ -117,9 +131,29 @@ class _DocumentOutComeScreenState extends State<DocumentOutComeScreen> {
                 }
               }
               else{
-
+                var bodyUpd = {
+                  "NAME": _controllerClient.text,
+                  "ID_T": _controllerClientIdT.text,
+                  "NDOC": _controllerDocNumber.text,
+                  "SANA": DateTime.now().toString(),
+                  "IZOH": _controllerComment.text.replaceAll("'", "`"),
+                  "ID_HODIM": _controllerClientHodim.text,
+                  "ID_AGENT": _controllerClientIdAgent.text,
+                  "ID_HARIDOR": _controllerClientIdHaridor.text,
+                  "KURS": CacheService.getCurrency(),
+                  "ID_FAOL": _controllerClientIdFaol.text,
+                  "ID_KLASS": _controllerClientIdKlass.text,
+                  "ID": CacheService.getNdoc(),
+                };
+                HttpResult addDocOutcome = await _repository.updateDocOutcome(bodyUpd);
+                if(addDocOutcome.result["status"] == true){
+                  if(context.mounted)Navigator.pop(context);
+                  if(context.mounted)Navigator.push(context, MaterialPageRoute(builder: (ctx) => OutcomeListScreen(ndocId: ndocId,)));
+                }
+                else{
+                  if(context.mounted)CenterDialog.showErrorDialog(context, addDocOutcome.result["message"]);
+                }
               }
-
             }, color: AppColors.green, text: "Ҳужжатни сақлаш",),
           ],
         ),
