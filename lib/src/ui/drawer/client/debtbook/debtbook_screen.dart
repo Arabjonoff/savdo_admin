@@ -306,7 +306,12 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
                                       Expanded(child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                          Row(
+                                            children: [
+                                              Text("${data[index].idToch} - ",style: AppStyle.mediumBold(Colors.black),),
+                                              Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                            ],
+                                          ),
                                           Row(
                                             children: [
                                               Text("${priceFormat.format(data[index].osK)} сўм",style: AppStyle.medium(data[index].osK.toString()[0] =='-'?Colors.red:Colors.green),),
@@ -365,7 +370,12 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
                                       Expanded(child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                          Row(
+                                            children: [
+                                              Text("${data[index].idToch} - ",style: AppStyle.mediumBold(Colors.black),),
+                                              Text(data[index].name,style: AppStyle.mediumBold(Colors.black),),
+                                            ],
+                                          ),
                                           Row(
                                             children: [
                                               Text("${priceFormat.format(data[index].osK)} сўм",style: AppStyle.medium(data[index].osK.toString()[0] =='-'?Colors.red:Colors.green),),

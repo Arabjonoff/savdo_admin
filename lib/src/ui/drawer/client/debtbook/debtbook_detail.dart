@@ -26,7 +26,7 @@ class _DebtBookDetailState extends State<DebtBookDetail> {
   @override
   void initState() {
     super.initState();
-    clientDebtBloc.getClientDebtDetail(year,month, widget.idT,1);
+    clientDebtBloc.getClientDebtDetail(year,month, widget.idT,widget.data.tp);
   }
   @override
   void dispose() {
