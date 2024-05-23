@@ -325,36 +325,13 @@ class ApiProvider {
     String url = "${_baseUrl}kirim?DB=$db&ID_SKL=$idSkl&YIL=$year&OY=$month&JWT=$token";
     return await _getRequest(url);
   }
-  Future<HttpResult> addIncome(name,idT,doc,date,comment,idHodim,idSkl,)async{
-    var body = {
-      "NAME": name,
-      "ID_T": idT,
-      "NDOC": doc,
-      "SANA": date,
-      "IZOH": comment,
-      "ID_HODIM": idHodim,
-      "ID_SKL": idSkl,
-      "YIL": year,
-      "OY": month
-    };
+  Future<HttpResult> addIncome(Map map,)async{
     String url = "${_baseUrl}kirim0_ins?DB=$db&JWT=$token";
-    return  await _postRequest(url,json.encode(body));
+    return  await _postRequest(url,json.encode(map));
   }
-  Future<HttpResult> updateIncome(id,name,idT,doc,date,comment,idHodim,idSkl,)async{
-    var body = {
-      "ID":id,
-      "NAME": name,
-      "ID_T": idT,
-      "NDOC": doc,
-      "SANA": date,
-      "IZOH": comment,
-      "ID_HODIM": idHodim,
-      "ID_SKL": idSkl,
-      "YIL": year,
-      "OY": month
-    };
+  Future<HttpResult> updateIncome(Map map)async{
     String url = "${_baseUrl}kirim0_upd?DB=$db&JWT=$token";
-    return await _patchRequest(url,json.encode(body));
+    return await _patchRequest(url,json.encode(map));
   }
   Future<HttpResult> deleteIncome(id)async{
     String url = "${_baseUrl}kirim0_del?ID=$id&DB=$db&JWT=$token";

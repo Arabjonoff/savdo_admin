@@ -170,8 +170,8 @@ class Repository{
   /// Api Income
   Future<HttpResult> getIncome(year,month,idSkl) => _apiProvider.getIncome(year,month,idSkl);
   Future<HttpResult> getIncomePrice(idSkl2) => _apiProvider.getIncomePrice(idSkl2);
-  Future<HttpResult> addIncome(name,idT,doc,date,comment,idHodim,idSkl,)=>_apiProvider.addIncome(name, idT, doc, date, comment, idHodim, idSkl);
-  Future<HttpResult> updateIncome(id,name,idT,doc,date,comment,idHodim,idSkl,)=>_apiProvider.updateIncome(id,name, idT, doc, date, comment, idHodim, idSkl);
+  Future<HttpResult> addIncome(Map map)=>_apiProvider.addIncome(map);
+  Future<HttpResult> updateIncome(Map map)=>_apiProvider.updateIncome(map);
   Future<HttpResult> deleteIncome(id)=>_apiProvider.deleteIncome(id);
   Future<HttpResult> lockIncome(id,prov)=>_apiProvider.lockIncome(id,prov);
 

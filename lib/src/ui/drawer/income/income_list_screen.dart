@@ -57,7 +57,9 @@ class _IncomeListScreenState extends State<IncomeListScreen> {
               if(barcodeBase[i].shtr == result.rawContent){
                 for(int j = 0; j<productBase.length;j++){
                   if(barcodeBase[i].idSkl2 == productBase[j].id){
-                    productBloc.searchProduct(productBase[j].name);
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      return AddIncomeScreen(data:productBase[j], id: widget.id, isUpdate: false,);
+                    }));
                   }
                 }
               }

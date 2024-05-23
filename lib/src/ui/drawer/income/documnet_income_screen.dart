@@ -16,8 +16,9 @@ import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
 class DocumentIncomeScreen extends StatefulWidget {
+  final Map map;
   final dynamic ndoc;
-  const DocumentIncomeScreen({super.key, this.ndoc});
+  const DocumentIncomeScreen({super.key, this.ndoc, required this.map});
 
   @override
   State<DocumentIncomeScreen> createState() => _DocumentIncomeScreenState();
@@ -31,9 +32,16 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
   final TextEditingController _controllerClientIdT = TextEditingController();
   final TextEditingController _controllerComment = TextEditingController();
   final TextEditingController _controllerHodimID = TextEditingController();
+  bool isUpdate=false;
+  dynamic ndocId;
   @override
   void initState() {
     _controllerDocNumber.text = widget.ndoc.toString();
+    if(widget.map.isEmpty){}else{
+      _controllerClient.text = widget.map["clientName"];
+      _controllerClientIdT.text = widget.map["clientId"];
+      _controllerHodimID.text = widget.map["idHodimlar"];
+    }
     _initBus();
     super.initState();
   }
@@ -84,18 +92,45 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
             ),
             ButtonWidget(onTap: () async {
               CenterDialog.showLoadingDialog(context, "Бир оз кутинг");
-              HttpResult res = await _repository.addIncome(
-                  _controllerClient.text,
-                  _controllerClientIdT.text,
-                  _controllerDocNumber.text,
-                  _controllerDate.text,
-                  _controllerComment.text,
-                  _controllerHodimID.text,
-                  CacheService.getWareHouseId());
-              if(res.result["status"] == true){
-                if(context.mounted)Navigator.pop(context);
-                if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
-                incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month,CacheService.getWareHouseId());
+              var body = {
+                "NAME": _controllerClient.text,
+                "ID_T": _controllerClientIdT.text,
+                "NDOC": widget.ndoc,
+                "SANA": _controllerDate.text,
+                "IZOH": _controllerComment.text,
+                "ID_HODIM": _controllerHodimID.text,
+                "ID_SKL": CacheService.getWareHouseId(),
+                "YIL": DateTime.now().year,
+                "OY": DateTime.now().month
+              };
+              if(isUpdate == false){
+                HttpResult res = await _repository.addIncome(body);
+                if(res.result["status"] == true){
+                  isUpdate = true;
+                  if(context.mounted)Navigator.pop(context);
+                  if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
+                  incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month,CacheService.getWareHouseId());
+                }
+              }else{
+                var bodyUpd = {
+                  "ID":CacheService.getNdoc(),
+                  "NAME": _controllerClient.text,
+                  "ID_T": _controllerClientIdT.text,
+                  "NDOC": widget.ndoc,
+                  "SANA": _controllerDate.text,
+                  "IZOH": _controllerComment.text,
+                  "ID_HODIM": _controllerHodimID.text,
+                  "ID_SKL": CacheService.getWareHouseId(),
+                  "YIL": DateTime.now().year,
+                  "OY": DateTime.now().month
+                };
+                HttpResult res = await _repository.updateIncome(bodyUpd);
+                if(res.result["status"] == true){
+                  isUpdate = true;
+                  if(context.mounted)Navigator.pop(context);
+                  if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
+                  incomeBloc.getAllIncome(DateTime.now().year,DateTime.now().month,CacheService.getWareHouseId());
+                }
               }
             }, color: AppColors.green, text: "Ҳужжатни сақлаш"),
           ],
