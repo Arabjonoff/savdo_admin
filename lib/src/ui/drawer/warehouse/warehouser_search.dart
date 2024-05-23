@@ -10,14 +10,12 @@ import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
-
 import '../../../bloc/sklad/sklad_bloc.dart';
 import '../../../theme/icons/app_fonts.dart';
 
 class WareHouseSearch extends StatefulWidget {
   final int idPrice;
   const WareHouseSearch({super.key, required this.idPrice});
-
   @override
   State<WareHouseSearch> createState() => _WareHouseSearchState();
 }

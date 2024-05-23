@@ -224,8 +224,8 @@ class DbClient {
   Future<List<DebtClientModel>> getClientSearchDebt(obj) async {
     var dbClient = await dbProvider.db;
     List<DebtClientModel> data = <DebtClientModel>[];
-    List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt WHERE name LIKE ? OR MANZIL LIKE ?",
-        ['%$obj%', '%$obj%',]);
+    List<Map> list = await dbClient.rawQuery("SELECT * FROM client_debt WHERE name LIKE ? OR MANZIL LIKE ? OR ID_TOCH LIKE ?",
+        ['%$obj%', '%$obj%','%$obj%',]);
     for (int i = 0; i < list.length; i++) {
       DebtClientModel debtClientModel = DebtClientModel(
         id: list[i]["ID"],

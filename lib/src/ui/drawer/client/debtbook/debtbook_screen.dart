@@ -30,7 +30,7 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
   List<AgentsResult> agents = [];
   int idAgent = -1;
   num allDebtUsd = 0,
-      allDebtUzs =0,
+      allDebtUzs = 0,
       allPaymentUzs = 0,
       allPaymentUsd = 0,
       allPaymentOutUzs = 0,
@@ -90,7 +90,7 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
           }, icon: const Icon(Icons.filter_list_alt,)),
         ],
       ),
-      body: RefreshIndicator(
+        body: RefreshIndicator(
         onRefresh: ()async{
           await repository.clearClientDebtBase();
           clientDebtBloc.getAllClientDebt(dateTime.year,dateTime.month);
@@ -402,7 +402,7 @@ class _DebtBookScreenState extends State<DebtBookScreen> {
           }
         ),
       ),
-      endDrawer: Drawer(
+        endDrawer: Drawer(
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

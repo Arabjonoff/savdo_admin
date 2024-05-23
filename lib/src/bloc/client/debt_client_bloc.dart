@@ -68,10 +68,43 @@ class ClientDebtBloc{
   }
   debtMonth(year, month,context)async{
     CenterDialog.showLoadingDialog(context, 'Бироз кутинг');
+    int oldMonth = 0;
+    int oldYear = 0;
+    switch(month){
+      case 1:
+        oldMonth = 12;
+      case 2:
+        oldMonth = 1;
+      case 3:
+        oldMonth = 2;
+      case 4:
+        oldMonth = 3;
+      case 5:
+        oldMonth = 4;
+      case 6:
+        oldMonth = 5;
+      case 7:
+        oldMonth = 6;
+      case 8:
+        oldMonth = 7;
+      case 9:
+        oldMonth = 8;
+      case 10:
+        oldMonth = 9;
+      case 11:
+        oldMonth = 10;
+      case 12:
+        oldMonth = 11;
+    }
+    if(month == 1){
+      oldYear = DateTime.now().year -1;
+    }else{
+      oldYear = DateTime.now().year;
+    }
     await _repository.clearClientDebtBase();
     List<Map> oldMonthDebtList = [];
     List<Map> newMonthDebtList = [];
-    HttpResult oldMonthDebt = await _repository.getOldDebtClient(year, month);
+    HttpResult oldMonthDebt = await _repository.getOldDebtClient(oldYear, oldMonth);
     if(oldMonthDebt.isSuccess){
       var data = debtMonthClientModelFromJson(json.encode(oldMonthDebt.result));
       for(int i=0; i<data.length;i++){
