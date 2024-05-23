@@ -149,7 +149,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
               expenseUzs += data[i].har;
             }
             return SnappingSheet(
-              grabbingHeight: 75.r,
+              grabbingHeight: 65.r,
               grabbing: GestureDetector(
                 onTap: ()async{
                   if(CacheService.getPermissionWarehouseIncome2()==0){
@@ -176,7 +176,7 @@ class _IncomeScreenState extends State<IncomeScreen> with SingleTickerProviderSt
                       color:AppColors.green,
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
                   ),
-                  child: Text("Янги ҳужжат очиш",style: AppStyle.large(Colors.white),),
+                  child: Text("Янги ҳужжат очиш",style: AppStyle.mediumBold(Colors.white),),
                 ),
               ),
               snappingPositions:  [

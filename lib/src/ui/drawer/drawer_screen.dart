@@ -178,19 +178,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                   title: const Text("Қайтарилди"),
                 ),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                selectedTileColor: AppColors.green,
-                selected: selected ==14?true:false,
-                selectedColor: selected ==14?AppColors.white:AppColors.black,
-                  leading: const Icon(Icons.recycling_outlined),
-                  onTap: (){
-                    setState(() => selected =14);
-                  },
-                  title: const Text("Ревизия"),
-                ),
+              /// Revision product
+              // ListTile(
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10)
+              //   ),
+              //   selectedTileColor: AppColors.green,
+              //   selected: selected ==14?true:false,
+              //   selectedColor: selected ==14?AppColors.white:AppColors.black,
+              //     leading: const Icon(Icons.recycling_outlined),
+              //     onTap: (){
+              //       setState(() => selected =14);
+              //     },
+              //     title: const Text("Ревизия"),
+              //   ),
             ],),
             /// Buyers Bloc
             ExpansionTile(title:  Text("Ишчи-хизматчилар",style: AppStyle.mediumBold(Colors.black),),
