@@ -1,5 +1,6 @@
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/database/client/db_client.dart';
+import 'package:savdo_admin/src/database/db_helper.dart';
 import 'package:savdo_admin/src/database/income_product/income_product.dart';
 import 'package:savdo_admin/src/database/outcome/outcome_base.dart';
 import 'package:savdo_admin/src/database/product/db_product.dart';
@@ -27,8 +28,10 @@ class Repository{
   final SkladBaseHelper _skladBaseHelper = SkladBaseHelper();
   final WareHouseBaseHelper _wareHouseBaseHelper = WareHouseBaseHelper();
   final OutcomeSkladBaseHelper _outcomeSkladBaseHelper = OutcomeSkladBaseHelper();
+  final DatabaseHelper databaseHelper = DatabaseHelper();
 
 
+  Future<void> deleteBase() async => await databaseHelper.deleteDatabase();
   /// Product save get delete base
   Future<int> saveProductBase(item) => _product.saveProduct(item);
   Future<List<Skl2Result>> getProductBase() => _product.getProduct();

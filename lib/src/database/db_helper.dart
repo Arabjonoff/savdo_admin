@@ -24,7 +24,6 @@ class DatabaseHelper{
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
-
   void _onCreate(Database db, int newVersion) async {
 
     /// Product Type Base
@@ -331,4 +330,9 @@ class DatabaseHelper{
 
   }
 
+  Future<void> deleteDatabase()async{
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'n_savdo');
+    return databaseFactory.deleteDatabase(path);
+  }
 }

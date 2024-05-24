@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
@@ -299,6 +300,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     Navigator.pushNamed(context, AppRouteName.costList);
                   },
                   title: const Text("Харажат"),
+                ),
+                ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  selectedTileColor: AppColors.green,
+                  leading: const Icon(Icons.logout),
+                  onTap: () async {
+                    Repository repo = Repository();
+                    await repo.deleteBase();
+                    await CacheService.clear();
+                  },
+                  title: const Text("Log Out"),
                 ),
               ],),
           ],

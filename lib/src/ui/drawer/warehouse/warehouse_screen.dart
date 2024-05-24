@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -19,6 +20,7 @@ import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.da
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouser_search.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
+import 'package:savdo_admin/src/utils/utils.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
@@ -393,12 +395,22 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                               Text("$productCountType Хил",style: AppStyle.mediumBold(AppColors.black),),
                             ],
                           ),
+                          const Row(
+                            children: [
+                              Expanded(child: DashedRect())
+                            ],
+                          ),
                           SizedBox(height: 8.h,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Tовар миқдори:",style: AppStyle.medium(AppColors.black),),
                               Text(priceFormatUsd.format(productCount),style: AppStyle.mediumBold(AppColors.black),),
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Expanded(child: DashedRect())
                             ],
                           ),
                           SizedBox(height: 8.h,),
@@ -409,12 +421,22 @@ class _WareHouseScreenState extends State<WareHouseScreen> {
                               Text("${priceFormat.format(productUzs)} сўм",style: AppStyle.mediumBold(Colors.black),),
                             ],
                           ),
+                          const Row(
+                            children: [
+                              Expanded(child: DashedRect())
+                            ],
+                          ),
                           SizedBox(height: 8.h,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Товар валюта:",style: AppStyle.medium(Colors.black),),
                               Text("${priceFormat.format(productUsd)} \$",style: AppStyle.mediumBold(Colors.black),),
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Expanded(child: DashedRect())
                             ],
                           ),
                         ],
