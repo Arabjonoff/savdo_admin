@@ -51,14 +51,14 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: ()async{
-                filterProduct = await _repository.getProductTypeBase();
-                scaffoldKey.currentState!.openEndDrawer();
-                setState(() {});
-              }, icon: const Icon(Icons.filter_list)),
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: ()async{
+        //         filterProduct = await _repository.getProductTypeBase();
+        //         scaffoldKey.currentState!.openEndDrawer();
+        //         setState(() {});
+        //       }, icon: const Icon(Icons.filter_list)),
+        // ],
         title: Text(widget.data['warehouseFromName']),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kTextTabBarHeight),
@@ -359,36 +359,36 @@ class _WareHouseFromScreenState extends State<WareHouseFromScreen> {
           ),
         ),
       ),
-      endDrawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text("Филтрлаш",style: AppStyle.large(Colors.grey),),
-              ),
-              Expanded(child: ListView.builder(
-                  itemCount: filterProduct.length,
-                  itemBuilder: (ctx,index){
-                    return ListTile(
-                      selected: filterProduct[index].id==filterId?true:false,
-                      selectedColor: AppColors.white,
-                      selectedTileColor: Colors.green.shade500,
-                      title: Text(filterProduct[index].name),
-                      onTap: (){
-                        filterId=filterProduct[index].id;
-                        setState(() {});
-                      },
-                    );
-                  })),
-              TextButton(onPressed: (){
-                filterId = -1;
-                setState(() {});
-              }, child: Text("Фильтрни тозалаш",style: AppStyle.medium(Colors.red),))
-            ],
-          ),
-        ),
-      ),
+      // endDrawer: Drawer(
+      //   child: SafeArea(
+      //     child: Column(
+      //       children: [
+      //         Padding(
+      //           padding: const EdgeInsets.only(left: 16.0),
+      //           child: Text("Филтрлаш",style: AppStyle.large(Colors.grey),),
+      //         ),
+      //         Expanded(child: ListView.builder(
+      //             itemCount: filterProduct.length,
+      //             itemBuilder: (ctx,index){
+      //               return ListTile(
+      //                 selected: filterProduct[index].id==filterId?true:false,
+      //                 selectedColor: AppColors.white,
+      //                 selectedTileColor: Colors.green.shade500,
+      //                 title: Text(filterProduct[index].name),
+      //                 onTap: (){
+      //                   filterId=filterProduct[index].id;
+      //                   setState(() {});
+      //                 },
+      //               );
+      //             })),
+      //         TextButton(onPressed: (){
+      //           filterId = -1;
+      //           setState(() {});
+      //         }, child: Text("Фильтрни тозалаш",style: AppStyle.medium(Colors.red),))
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
