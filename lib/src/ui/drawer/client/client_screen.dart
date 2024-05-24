@@ -10,6 +10,7 @@ import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/drawer/client/client_search.dart';
 import 'package:savdo_admin/src/ui/drawer/client/update_client_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,7 +27,6 @@ class _ClientScreenState extends State<ClientScreen>{
   final Repository _repository = Repository();
   @override
   void initState() {
-    clientBloc.getAllClientSearch('');
     clientBloc.getAllClient();
     super.initState();
   }
@@ -36,6 +36,7 @@ class _ClientScreenState extends State<ClientScreen>{
       body: RefreshIndicator(
         onRefresh: ()async{
           await _repository.clearClient();
+          await clientBloc.getAllClient();
         },
         child: Column(
           children: [
@@ -43,13 +44,15 @@ class _ClientScreenState extends State<ClientScreen>{
               padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4),
               child: CupertinoSearchTextField(
                 placeholder: "Излаш",
-                onChanged: (i){
-                  clientBloc.getAllClientSearch(i);
+                onTap: ()async{
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                    return ClientSearchScreen(clientType: widget.clientType);
+                  }));
                 },
               ),
             ),
             Expanded(child: StreamBuilder<List<ClientResult>>(
-                stream: clientBloc.getClientSearchStream,
+                stream: clientBloc.getClientStream,
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     var data = snapshot.data!;
@@ -227,7 +230,8 @@ class _ClientScreenState extends State<ClientScreen>{
                             ),
                           ):const SizedBox();
                         }
-                    );}
+                    );
+                  }
                   return const Center(child: CircularProgressIndicator());
                 }
             ),),

@@ -61,6 +61,7 @@ class Repository{
   /// Client save get delete base
   Future<int> saveClientBase(item) => _dbClient.saveClient(item);
   Future<List<ClientResult>> getClientBase() => _dbClient.getClient();
+  Future<List<ClientResult>> getClientSearch(obj) => _dbClient.getClientSearch(obj);
   Future<int> updateClientBase(item) => _dbClient.updateClient(item);
   Future<int> deleteClientBase(id) => _dbClient.deleteClient(id);
   Future<void> clearClient() => _dbClient.clearClient();

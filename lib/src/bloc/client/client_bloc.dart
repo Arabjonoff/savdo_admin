@@ -25,10 +25,7 @@ class ClientBloc{
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     /// Client Class Base
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
-
     List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
-
-
     for(int i = 0; i < clientBase.length;i++){
       for(int a = 0;a<agentBase.length;a++){
         if(clientBase[i].idAgent == agentBase[a].id){
@@ -94,7 +91,7 @@ class ClientBloc{
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
-    List<ClientResult> clientBase = await _repository.getClientBase();
+    List<ClientResult> clientBase = await _repository.getClientSearch(obj);
     for(int i=0; i<clientBase.length;i++){
       for(int a = 0;a<agentBase.length;a++){
         if(clientBase[i].idAgent == agentBase[a].id){
