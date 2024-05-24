@@ -26,6 +26,13 @@ class CacheService {
   static void saveidSkl(int data) {
     preferences!.setInt("idSkl", data);
   }
+  static void savePermissionSkl(int data) {
+    preferences!.setInt("skl", data);
+  }
+  static int getPermissionSkl() {
+    int data = preferences!.getInt("skl") ??0;
+    return data;
+  }
 
   /// Get Permission
   static int getidSkl() {

@@ -27,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if(response.result['status'] == true){
         Future.delayed(const Duration(seconds: 2)).then((value) {
           CacheService.saveToken(response.result['jwt']);
+          CacheService.savePermissionSkl(response.result['skl']);
           if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
           if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.home);
         });
