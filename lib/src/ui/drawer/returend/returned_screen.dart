@@ -13,6 +13,7 @@ import 'package:savdo_admin/src/model/returned/returned_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/returend/doc_retured_screen.dart';
+import 'package:savdo_admin/src/ui/drawer/returend/share/share_returned.dart';
 import 'package:savdo_admin/src/ui/drawer/returend/update_returned/update_returned_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
@@ -301,6 +302,9 @@ class _ReturnedScreenState extends State<ReturnedScreen> {
                           ),
                           child: GestureDetector(
                             onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                                return ShareReturnedScreen(data: data[index]);
+                              }));
                               // Navigator.push(context, MaterialPageRoute(builder: (ctx){
                               //   return ShareScreen(data: data[index],);
                               // }));

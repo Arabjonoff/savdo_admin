@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:rxdart/rxdart.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
+import 'package:savdo_admin/src/model/client/clientdebt_model.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
 
@@ -23,6 +26,9 @@ class ClientBloc{
     /// Client Class Base
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
 
+    List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
+
+
     for(int i = 0; i < clientBase.length;i++){
       for(int a = 0;a<agentBase.length;a++){
         if(clientBase[i].idAgent == agentBase[a].id){
@@ -40,12 +46,12 @@ class ClientBloc{
           clientBase[i].idKlassName = clientClassBase[n].name;
         }
       }
-      // for(int k =0; k<clientDebtBase.length;k++){
-      //   if(clientBase[i].idT == clientDebtBase[k].idToch){
-      //     clientBase[i].osK = clientDebtBase[k].osK;
-      //     clientBase[i].osKS = clientDebtBase[k].osKS;
-      //   }
-      // }
+      for(int k =0; k<clientDebtBase.length;k++){
+        if(clientBase[i].idT == clientDebtBase[k].idToch){
+          clientBase[i].osK = clientDebtBase[k].osK;
+          clientBase[i].osKS = clientDebtBase[k].osKS;
+        }
+      }
     }
     _fetchClientInfo.sink.add(clientBase);
     if(clientBase.isEmpty){
@@ -63,27 +69,28 @@ class ClientBloc{
                 data.data[i].idKlassName = clientClassBase[n].name;
               }
             }
-            // for(int k =0; k<clientDebtBase.length;k++){
-            //   if(data.data[i].idT == clientDebtBase[k].idToch){
-            //     data.data[i].osK = clientDebtBase[k].osK;
-            //     data.data[i].osKS = clientDebtBase[k].osKS;
-            //   }
-            // }
+            for(int k =0; k<clientDebtBase.length;k++){
+              if(data.data[i].idT == clientDebtBase[k].idToch){
+                data.data[i].osK = clientDebtBase[k].osK;
+                data.data[i].osKS = clientDebtBase[k].osKS;
+              }
+            }
             _repository.saveClientBase(data.data[i]);
         }
         _fetchClientInfo.sink.add(data.data);
       }
     }
-    // if(clientDebtBase.isEmpty){
-    //   HttpResult debtResult = await _repository.clientDebt();
-    //   var dataDebt = debtClientModelFromJson(json.encode(debtResult.result));
-    //   for(int i =0; i<dataDebt.length;i++){
-    //     await _repository.saveClientDebtBase(dataDebt[i]);
-    //   }
-    // }
+    if(clientDebtBase.isEmpty){
+      HttpResult debtResult = await _repository.clientDebt(DateTime.now().year,DateTime.now().month);
+      var dataDebt = debtClientModelFromJson(json.encode(debtResult.result));
+      for(int i =0; i<dataDebt.length;i++){
+        await _repository.saveClientDebtBase(dataDebt[i]);
+      }
+    }
   }
   getAllClientSearch(obj)async{
     /// Agent Base
+    List<DebtClientModel> clientDebtBase = await _repository.getClientDebtBase();
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
@@ -105,12 +112,12 @@ class ClientBloc{
           clientBase[i].idKlassName = clientClassBase[n].name;
         }
       }
-      // for(int k =0; k<clientDebtBase.length;k++){
-      //   if(clientBase[i].idT == clientDebtBase[k].idToch){
-      //     clientBase[i].osK = clientDebtBase[k].osK;
-      //     clientBase[i].osKS = clientDebtBase[k].osKS;
-      //   }
-      // }
+      for(int k =0; k<clientDebtBase.length;k++){
+        if(clientBase[i].idT == clientDebtBase[k].idToch){
+          clientBase[i].osK = clientDebtBase[k].osK;
+          clientBase[i].osKS = clientDebtBase[k].osKS;
+        }
+      }
     }
     _fetchClientInfoSearch.sink.add(clientBase);
   }

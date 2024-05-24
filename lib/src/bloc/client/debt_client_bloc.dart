@@ -9,7 +9,7 @@ import 'package:savdo_admin/src/model/client/debt_detail_model.dart';
 import 'package:savdo_admin/src/model/client/debt_moth_client.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
 
-class ClientDebtBloc{
+class ClientDebtBloc {
   final Repository _repository = Repository();
   final _fetchClientDebtInfo = PublishSubject<List<DebtClientModel>>();
   final _fetchClientDebtSearchInfo = PublishSubject<List<DebtClientModel>>();

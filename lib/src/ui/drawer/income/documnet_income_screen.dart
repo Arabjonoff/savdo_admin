@@ -204,8 +204,8 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
                                   RxBus.post(data[index].idFaol.toString(),tag: 'idFaol');
                                   RxBus.post(data[index].idKlass.toString(),tag: 'idKlass');
                                   RxBus.post(data[index].id.toString(),tag: 'idHaridor');
-                                  RxBus.post(data[index].osK.toString(),tag: 'clientDebtUsd');
-                                  RxBus.post(data[index].osKS.toString(),tag: 'clientDebtUzs');
+                                  RxBus.post(data[index].osK.toString(),tag: 'clientDebtUzs');
+                                  RxBus.post(data[index].osKS.toString(),tag: 'clientDebtUsd');
                                   Navigator.pop(context);
                                 },
                                 title: Text("${data[index].idT}-${data[index].name}",style: AppStyle.medium(Colors.black),),
