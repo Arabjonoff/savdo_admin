@@ -14,12 +14,11 @@ class DbClient {
     var res = dbClient.insert('client', item.toJson());
     return res;
   }
-  Future<List<ClientResult>> getClient(obj) async {
+  Future<List<ClientResult>> getClient() async {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];
     List<Map> list = await dbClient.rawQuery(
-        "SELECT * FROM client WHERE name LIKE ? OR id_t LIKE ? OR tel LIKE ? ORDER BY TP DESC",
-        ['%$obj%', '%$obj%', '%$obj%']);
+        "SELECT * FROM client ORDER BY TP DESC",);
     for (int i = 0; i < list.length; i++) {
       ClientResult clientResult = ClientResult(
           id: list[i]["ID"],

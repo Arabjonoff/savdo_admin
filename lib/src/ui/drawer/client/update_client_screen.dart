@@ -522,8 +522,7 @@ class _UpdateClientScreenState extends State<UpdateClientScreen> {
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)Navigator.pop(context);
                   CenterDialog.showSuccessDialog(context,);
-                  await clientBloc.getAllClient('');
-                  clientBloc.getAllClient('');
+                  await clientBloc.getAllClient();
                 }else{
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)CenterDialog.showErrorDialog(context, res.result["message"]);

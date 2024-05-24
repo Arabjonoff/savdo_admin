@@ -27,7 +27,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   void initState() {
     agentsBloc.getAllAgents();
-    clientBloc.getAllClient('');
+    clientBloc.getAllClient();
     super.initState();
   }
 

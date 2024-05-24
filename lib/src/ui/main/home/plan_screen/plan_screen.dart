@@ -20,7 +20,7 @@ class _PlanScreenState extends State<PlanScreen> {
   int idAgent = -1;
   @override
   void initState() {
-    clientBloc.getAllClient('');
+    clientBloc.getAllClient();
     super.initState();
   }
 

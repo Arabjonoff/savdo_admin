@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     productBloc.getAllProduct();
     getDateBloc.getDateId();
     barcodeProductBloc.getBarcodeAll();
-    clientBloc.getAllClient('');
+    clientBloc.getAllClient();
     wareHouseBloc.getAllWareHouse();
     clientBloc.getAllClientSearch('');
     productTypeBloc.getProductTypeAll();

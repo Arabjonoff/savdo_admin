@@ -16,11 +16,11 @@ class ClientBloc{
   Stream<List<ClientResult>> get getClientSearchStream => _fetchClientInfoSearch.stream;
 
 
-  getAllClient(obj)async{
+  getAllClient()async{
     /// Agent Base
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
     /// Client Base
-    List<ClientResult> clientBase = await _repository.getClientBase(obj);
+    List<ClientResult> clientBase = await _repository.getClientBase();
     /// Client Type Base
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     /// Client Class Base
@@ -94,7 +94,7 @@ class ClientBloc{
     List<AgentsResult> agentBase = await _repository.getAgentsBase();
     List<ProductTypeAllResult> clientTypeBase = await _repository.getClientTypeBase();
     List<ProductTypeAllResult> clientClassBase = await _repository.getClientClassTypeBase();
-    List<ClientResult> clientBase = await _repository.getClientBase(obj);
+    List<ClientResult> clientBase = await _repository.getClientBase();
     for(int i=0; i<clientBase.length;i++){
       for(int a = 0;a<agentBase.length;a++){
         if(clientBase[i].idAgent == agentBase[a].id){

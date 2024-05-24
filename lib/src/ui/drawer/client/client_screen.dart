@@ -27,6 +27,7 @@ class _ClientScreenState extends State<ClientScreen>{
   @override
   void initState() {
     clientBloc.getAllClientSearch('');
+    clientBloc.getAllClient();
     super.initState();
   }
   @override
@@ -35,7 +36,6 @@ class _ClientScreenState extends State<ClientScreen>{
       body: RefreshIndicator(
         onRefresh: ()async{
           await _repository.clearClient();
-          await clientBloc.getAllClient('');
         },
         child: Column(
           children: [
@@ -77,7 +77,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                       if(res.result['status'] == true){
                                         if(context.mounted)Navigator.pop(context);
                                         await _repository.deleteClientBase(data[index].id);
-                                        clientBloc.getAllClient('');
+                                        clientBloc.getAllClient();
                                         if(context.mounted)Navigator.pop(context);
                                       }
                                       else{
@@ -161,7 +161,7 @@ class _ClientScreenState extends State<ClientScreen>{
                                       if(res.result['status'] == true){
                                         if(context.mounted)Navigator.pop(context);
                                         await _repository.deleteClientBase(data[index].id);
-                                        clientBloc.getAllClient('');
+                                        clientBloc.getAllClient();
                                         if(context.mounted)Navigator.pop(context);
                                         CenterDialog.showSuccessDialog(context,);
                                       }

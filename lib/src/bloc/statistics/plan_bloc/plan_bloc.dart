@@ -20,7 +20,7 @@ class PlanBloc{
   final Repository _repository = Repository();
   getPlanAll()async{
     weekday = DateTime.now().weekday;
-    List<ClientResult> clientBase = await _repository.getClientBase('');
+    List<ClientResult> clientBase = await _repository.getClientBase();
     HttpResult result = await _repository.getOutCome(DateFormat('yyyy-MM-dd').format(DateTime.now()),CacheService.getWareHouseId());
     if(result.isSuccess){
       taskDone = 0;taskGo = 0;taskOut= 0;percent = 0.0; f = 0;

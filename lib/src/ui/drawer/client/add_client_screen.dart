@@ -463,7 +463,7 @@ class _AddClientScreenState extends State<AddClientScreen> {
                   HttpResult res = await _repository.addClient(addClient);
                   if(res.result["status"] == true){
                     planBloc.getPlanAll();
-                    clientBloc.getAllClient('');
+                    clientBloc.getAllClient();
                     Map<String,dynamic> saveBaseClient = {
                       "ID": res.result["id"],
                       "NAME": _controllerName.text,
@@ -500,7 +500,7 @@ class _AddClientScreenState extends State<AddClientScreen> {
                     _repository.saveClientBase(ClientResult.fromJson(saveBaseClient));
                     if(context.mounted)Navigator.pop(context);
                     if(context.mounted)Navigator.pop(context);
-                    clientBloc.getAllClient('');
+                    clientBloc.getAllClient();
                     CenterDialog.showSuccessDialog(context,);
                   }else{
                     if(context.mounted)Navigator.pop(context);

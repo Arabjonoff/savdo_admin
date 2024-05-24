@@ -13,7 +13,7 @@ class OutcomeBloc{
 
   getAllOutcome(date,idSkl)async{
     List<AgentsResult> agentBase  = await _repository.getAgentsBase();
-    List<ClientResult> clientBase  = await _repository.getClientBase('');
+    List<ClientResult> clientBase  = await _repository.getClientBase();
     List<ProductTypeAllResult> warehouse  = await _repository.getWareHouseBase();
     // CenterDialog.showLoadingDialog(context, 'Бироз кутинг');
     HttpResult result = await _repository.getOutCome(date,idSkl);

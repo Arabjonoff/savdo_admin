@@ -165,7 +165,7 @@ class _DocumentClientScreenState extends State<DocumentClientScreen> {
   @override
   void initState() {
     clientBloc.getAllClientSearch('');
-    clientBloc.getAllClient('');
+    clientBloc.getAllClient();
     super.initState();
   }
   @override

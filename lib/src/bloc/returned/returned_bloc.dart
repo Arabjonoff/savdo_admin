@@ -13,7 +13,7 @@ class ReturnBloc{
 
   getReturnedAll(year, month, idSkl) async {
     List<AgentsResult> agentBase  = await _repository.getAgentsBase();
-    List<ClientResult> clientBase  = await _repository.getClientBase('');
+    List<ClientResult> clientBase  = await _repository.getClientBase();
     List<ProductTypeAllResult> warehouse  = await _repository.getWareHouseBase();
     HttpResult result = await _repository.getReturned(year, month, idSkl);
       var data = ReturnedModel.fromJson(result.result);
