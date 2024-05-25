@@ -34,6 +34,19 @@ class _RevisionScreenState extends State<RevisionScreen> {
           if(snapshot.hasData){
             var data = snapshot.data!;
             return SnappingSheet(
+              snappingPositions: const [
+                SnappingPosition.factor(
+                  positionFactor: 0.0,
+                  snappingCurve: Curves.easeOutExpo,
+                  snappingDuration: Duration(seconds: 1),
+                  grabbingContentOffset: GrabbingContentOffset.top,
+                ),
+                SnappingPosition.pixels(
+                  positionPixels: 200,
+                  snappingCurve: Curves.elasticOut,
+                  snappingDuration: Duration(milliseconds: 1750),
+                ),
+              ],
               grabbingHeight: 65.spMax,
               grabbing: GestureDetector(
                 onTap: ()async{
@@ -51,6 +64,10 @@ class _RevisionScreenState extends State<RevisionScreen> {
                   child: Text("Янги киритиш",style: AppStyle.large(Colors.white),),
                 ),
               ),
+              sheetBelow: SnappingSheetContent(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,),),
               child: ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (ctx,index){

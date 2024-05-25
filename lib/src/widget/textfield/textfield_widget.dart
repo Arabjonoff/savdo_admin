@@ -8,12 +8,12 @@ class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final int? maxLength;
-  bool enabled,keyboardType,readOnly,textAlign;
+  bool enabled,keyboardType,readOnly,textAlign,autofocus;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final String? suffixText;
   final Widget? suffixIcon,prefixIcon;
-  TextFieldWidget({super.key, required this.controller,required this.hintText,this.enabled = true,this.keyboardType = false, this.onChanged, this.onSubmitted, this.suffixText,this.readOnly=false, this.suffixIcon, this.prefixIcon,this.textAlign=false, this.maxLength});
+  TextFieldWidget({super.key, required this.controller,required this.hintText,this.enabled = true,this.keyboardType = false, this.onChanged, this.onSubmitted, this.suffixText,this.readOnly=false, this.suffixIcon, this.prefixIcon,this.textAlign=false, this.maxLength,this.autofocus =false});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class TextFieldWidget extends StatelessWidget {
         onChanged: onChanged,
         onSubmitted: onSubmitted,
         enabled: enabled,
+        autofocus: autofocus,
         controller: controller,
         maxLength: maxLength,
         keyboardType: keyboardType?const TextInputType.numberWithOptions(decimal: true,):TextInputType.text,

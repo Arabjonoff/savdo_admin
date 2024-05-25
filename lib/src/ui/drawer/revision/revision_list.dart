@@ -154,7 +154,10 @@ class _RevisionListScreenState extends State<RevisionListScreen> {
         ),
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
-          child: Container(),
+          child: Container(
+            width: width,
+            color: Colors.white,
+          ),
         ),
         child: RefreshIndicator(
           onRefresh: ()async{

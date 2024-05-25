@@ -5,6 +5,7 @@ import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/textfield/textfield_widget.dart';
 
@@ -19,6 +20,8 @@ class AddRevisionScreen extends StatefulWidget {
 }
 
 class _AddRevisionScreenState extends State<AddRevisionScreen> {
+  TextEditingController controllerNewCount = TextEditingController();
+  TextEditingController controllerTotal = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -68,54 +71,59 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
                       Expanded(child: TextFieldWidget(
                         hintText: "1",
                         keyboardType: true,
-                        controller: TextEditingController(),
+                        readOnly: true,
+                        controller: TextEditingController(text: priceFormatUsd.format(widget.data.osoni)),
                       )),
                       /// price calculation
                       Expanded(child: TextFieldWidget(
-                        controller: TextEditingController(),
+                        autofocus: true,
+                        controller: controllerNewCount,
                         hintText: "",
+                        onChanged: (i){
+                          if(widget.data.snarhi==0){
+                            controllerTotal.text = priceFormatUsd.format(num.parse(i)*widget.data.snarhiS);
+                          }else{
+                            controllerTotal.text = priceFormat.format(num.parse(i)*widget.data.snarhi);
+                          }
+                        },
                       )),
                     ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 16.0.w),
-                    child: Text("Валюта курс",style: AppStyle.smallBold(Colors.black),),
+                    child: Text("Нархи",style: AppStyle.smallBold(Colors.black),),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: MediaQuery.of(context).size.width/2),
-                    child: TextFieldWidget(controller: TextEditingController(), hintText: "",keyboardType: true,readOnly: true,suffixText: "Сўм",),
-                  ),
-                  SizedBox(height: 8.w,),
-                  Row(
-                    children: [
-                      SizedBox(width: 16.w,),
-                      GestureDetector(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.w,),
-                      GestureDetector(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 10.h),
-                        ),
-                      ),
-                    ],
+                  TextFieldWidget(
+                    controller: TextEditingController(text: widget.data.snarhi != 0?priceFormat.format(widget.data.snarhi):priceFormatUsd.format(widget.data.snarhiS)), hintText: "",keyboardType: true,readOnly: true,suffixText: widget.data.snarhi!=0?"Сўм":"\$",
                   ),
                   SizedBox(height: 8.w,),
                   Padding(
                     padding: EdgeInsets.only(left: 16.0.w),
                     child: Text("Жами",style: AppStyle.smallBold(Colors.black),),
                   ),
+                  TextFieldWidget(controller: controllerTotal, hintText: "",keyboardType: true,readOnly: true,suffixText: "Сўм",),
                 ],
               ),
             ),
             ButtonWidget(onTap: ()async{
               CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-            }, color: AppColors.green, text: "Саватга қўшиш"),
+              Map data = {
+              "ID": widget.data.id,
+              "NAME": widget.data.name,
+              "ID_SKL2": widget.data.idSkl2,
+              "SONI": widget.data.osoni,
+              "N_SONI": controllerNewCount.text,
+              "F_SONI": num.parse(controllerNewCount.text)-widget.data.osoni,
+              "NARHI": widget.data.narhi,
+              "NARHI_S": widget.data.narhiS,
+              "SNARHI": widget.data.snarhi,
+              "SNARHI_S": widget.data.snarhiS,
+              "SNARHI1": widget.data.snarhi1,
+              "SNARHI1_S": widget.data.snarhi1S,
+              "SNARHI2": widget.data.snarhi2,
+              "SNARHI2_S": widget.data.snarhi2S,
+            };
+              }, color: AppColors.green, text: "Саватга қўшиш"),
             SizedBox(height: 32.h,)
           ],
         ),
