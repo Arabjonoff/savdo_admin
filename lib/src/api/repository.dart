@@ -256,5 +256,7 @@ class Repository{
   Future<HttpResult> deleteReturned(idSklVz,idSkl2,id) => _apiProvider.deleteReturned(idSklVz,idSkl2,id);
   Future<HttpResult> deleteReturnedDoc(id) => _apiProvider.deleteReturnedDoc(id);
   Future<HttpResult> lockReturned(id,prov) => _apiProvider.lockReturned(id, prov);
-
+  Future<HttpResult> getRevision() => _apiProvider.getRevision();
+  Future<HttpResult> postRevision(map) => _apiProvider.postRevision(map);
+  Future<HttpResult> deleteRevision(id) => _apiProvider.deleteRevision(id);
 }

@@ -17,6 +17,7 @@ import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/add_outcome_pay.da
 import 'package:savdo_admin/src/ui/drawer/payment/outcome_pay/outcome_pay_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/product/add_product.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_screen.dart';
+import 'package:savdo_admin/src/ui/drawer/revision/revision_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_transfer/warehouser_transfer_screen.dart';
 import 'package:savdo_admin/src/ui/login/login_screen.dart';
@@ -54,6 +55,7 @@ abstract class AppRouteName {
   static const outComePay = '/outComePay';
   static const incomeTabBar = '/incomeTabBar';
   static const message = '/message';
+  static const revision = '/revision';
 }
 class AppRoute{
   static Route routes(RouteSettings settings){
@@ -109,6 +111,8 @@ class AppRoute{
       case AppRouteName.incomeTabBar: return MaterialPageRoute(builder: (BuildContext context) => const IncomeTabBarScreen());
     /// Message Screen
       case AppRouteName.message: return MaterialPageRoute(builder: (BuildContext context) => const MessageScreen());
+    /// Revision Screen
+      case AppRouteName.revision: return MaterialPageRoute(builder: (BuildContext context) => const RevisionScreen());
       default:
         return MaterialPageRoute(builder: (_) => const Scaffold());
     }

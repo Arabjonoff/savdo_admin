@@ -685,4 +685,17 @@ class ApiProvider {
     return await _patchRequest(url,json.encode(data));
   }
 
+  Future<HttpResult> getRevision()async{
+    String url = "${_baseUrl}rev?DB=$db&YIL=$year&OY=$month&ID_SKL=1";
+    return await _getRequest(url);
+  }
+  Future<HttpResult> postRevision(Map map)async{
+    String url = "${_baseUrl}omb_rev_m?DB=$db&YIL=$year&OY=$month&ID_SKL=1";
+    return await _postRequest(url,json.encode(map));
+  }
+  Future<HttpResult> deleteRevision(id)async{
+    String url = "${_baseUrl}rev0_del?DB=$db&ID=$id";
+    var data = {"ID":id};
+    return await _deleteRequest(url,json.encode(data));
+  }
 }
