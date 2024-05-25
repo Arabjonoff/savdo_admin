@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/sklad/sklad_bloc.dart';
+import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/product/barcode_model.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
@@ -13,6 +14,7 @@ import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
+import 'package:savdo_admin/src/ui/drawer/revision/add_revision.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
@@ -198,7 +200,7 @@ class _RevisionListScreenState extends State<RevisionListScreen> {
                                     priceUsd = 1;
                                   }
                                 }
-                                // BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,isReturned: true));
+                                BottomDialog.showScreenDialog(context, AddRevisionScreen(price: price, priceUsd: priceUsd,data: data[index],));
                               },
                               child: SizedBox(
                                 width: width,
@@ -299,7 +301,7 @@ class _RevisionListScreenState extends State<RevisionListScreen> {
                                     priceUsd = 1;
                                   }
                                 }
-                                // BottomDialog.showScreenDialog(context, AddOutcomeWidgetDialog(data: data[index], price: price, priceUsd: priceUsd,ndocId: widget.ndocId, typeName: data[index].idEdizName,isReturned: true));
+                                BottomDialog.showScreenDialog(context, AddRevisionScreen(price: price, priceUsd: priceUsd,data: data[index],));
                               },
                               child: SizedBox(
                                 width: width,
