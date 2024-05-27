@@ -117,23 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
-                                  Padding(
-                                    padding:EdgeInsets.only(left: 12.0.spMax),
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                        child: CircleAvatar(
-                                          child: Text(CacheService.getName()[0].toUpperCase()),
-                                        )),
-                                  ),
-                                  // IconButton(onPressed: ()async{
-                                  // Navigator.pushNamed(context, AppRouteName.message);
-                                  // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
-                                ],
-                              ),
                               SizedBox(height: 40.spMax,),
                               CacheService.getPermissionBalanceWindow1() ==0?const SizedBox():Padding(
                                 padding: EdgeInsets.only(left: 12.0.w),
@@ -259,7 +242,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     legend: Legend(isVisible: true),
                     series: getDefaultData(),
                   ),
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 52.spMax,left: 16.w,right: 16.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
+                      Padding(
+                        padding:EdgeInsets.only(left: 12.0.spMax),
+                        child: GestureDetector(
+                            onTap: () {},
+                            child: CircleAvatar(
+                              child: Text(CacheService.getName()[0].toUpperCase()),
+                            )),
+                      ),
+                      // IconButton(onPressed: ()async{
+                      // Navigator.pushNamed(context, AppRouteName.message);
+                      // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
+                    ],
+                  ),
+                ),
               ],
             )
           ],
