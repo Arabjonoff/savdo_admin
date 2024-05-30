@@ -293,7 +293,8 @@ class _UpdateOutcomeWidgetDialogState extends State<UpdateOutcomeWidgetDialog> {
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
                 }
-              }else{
+              }
+              else{
                 Map data = {
                   "ID": widget.id,
                   "ID_SKL_VZ": widget.ndocId,

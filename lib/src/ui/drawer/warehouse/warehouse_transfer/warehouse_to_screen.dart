@@ -11,6 +11,7 @@ import 'package:savdo_admin/src/model/http_result.dart';
 import 'package:savdo_admin/src/model/income/income_add_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 
@@ -124,7 +125,7 @@ class _WareHouseToScreenState extends State<WareHouseToScreen> {
                 Text("${priceFormat.format(allPriceUzs)} сўм | ${priceFormatUsd.format(allPriceUsd)} \$",style: AppStyle.large(AppColors.green),),
                 SizedBox(height: 10.h,),
                 ButtonWidget(onTap: ()async{
-                  wareHouseTransferBloc.getAllWareHouseTransfer(DateTime.now().year, DateTime.now().month);
+                  wareHouseTransferBloc.getAllWareHouseTransfer(DateTime.now().year, DateTime.now().month,CacheService.getWareHouseId());
                   Navigator.pop(context);
                   Navigator.pop(context);
                 }, color: AppColors.green, text: "Сақлаш"),

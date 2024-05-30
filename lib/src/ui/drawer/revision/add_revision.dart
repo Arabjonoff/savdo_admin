@@ -123,7 +123,7 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
               "SNARHI2": widget.data.snarhi2,
               "SNARHI2_S": widget.data.snarhi2S,
             };
-              }, color: AppColors.green, text: "Саватга қўшиш"),
+          }, color: AppColors.green, text: "Саватга қўшиш"),
             SizedBox(height: 32.h,)
           ],
         ),

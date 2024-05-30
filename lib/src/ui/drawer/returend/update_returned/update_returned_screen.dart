@@ -13,7 +13,6 @@ import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/sklad/sklad_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
-import 'package:savdo_admin/src/ui/drawer/outcome/cart/cart_outcome.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/drawer/returend/cart/cart_returned.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';

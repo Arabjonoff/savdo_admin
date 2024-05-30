@@ -9,9 +9,9 @@ class WareHouseTransferBloc{
   final _fetchWareHouseTransferInfo = PublishSubject<List<WareHouseResult>>();
   Stream<List<WareHouseResult>> get getWarehouseTransferStream => _fetchWareHouseTransferInfo.stream;
 
-  getAllWareHouseTransfer(year, month)async{
+  getAllWareHouseTransfer(year, month,idSkl)async{
     List<ProductTypeAllResult> wareHouseBase = await _repository.getWareHouseBase();
-    HttpResult result = await _repository.getWarehouseTransfer(year, month);
+    HttpResult result = await _repository.getWarehouseTransfer(year, month,idSkl);
     if(result.isSuccess){
       var data = WareHouseTransferModel.fromJson(result.result);
       for(int i = 0; i<data.data.length; i++){

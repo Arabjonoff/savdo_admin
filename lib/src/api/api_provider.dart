@@ -592,7 +592,7 @@ class ApiProvider {
     String url = "${_baseUrl}per1_del?DB=$db&ID=$id&ID_SKL_PER=$idSklPer&ID_SKL2=$idSkl2&JWT=$token";
     return await _deleteRequest(url,{});
   }
-  Future<HttpResult> getWarehouseTransfer(year,month)async{
+  Future<HttpResult> getWarehouseTransfer(year,month,idSkl)async{
     String url = "${_baseUrl}per?DB=$db&ID_SKL=$idSkl&YIL=$year&OY=$month&JWT=$token";
     return await _getRequest(url);
   }
@@ -619,7 +619,6 @@ class ApiProvider {
     String url = "${_baseUrl}get_blns?DB=$db&YIL=$year&OY=$month&SANA=$date";
     return await _getRequest(url);
   }
-
   Future<HttpResult> getIncomePrice(idSkl2)async{
     String url = "${_baseUrl}kirim_narh?ID_SKL2=$idSkl2&DB=$db&JWT=$token";
     return await _getRequest(url);

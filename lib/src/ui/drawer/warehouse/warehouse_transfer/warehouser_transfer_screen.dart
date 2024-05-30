@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/warehousetransfer/warehouse_transfer_bloc.dart';
 import 'package:savdo_admin/src/dialog/bottom_dialog.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/model/http_result.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/warehousetransfer/warehouse_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -27,11 +26,16 @@ class WareHouseTransferScreen extends StatefulWidget {
 }
 
 class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
+  final Repository _repository = Repository();
   DateTime dateTime = DateTime(DateTime.now().year,DateTime.now().month);
   num docItem = 0,totalUzs = 0,totalUsd = 0;
+  int wareHouseId = 1;
+  String wareHouseName = '';
   @override
   void initState() {
-    wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
+    wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
     super.initState();
   }
   @override
@@ -44,7 +48,47 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
         title: Column(
           children: [
             const Text("Омбор ҳаракатлари"),
-            Text(DateFormat('yyyy-MMM').format(dateTime),style: AppStyle.smallBold(Colors.grey),),
+            GestureDetector(
+                onTap: ()async{
+                  List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
+                  showDialog(context: context, builder: (ctx){
+                    return Dialog(
+                      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250.h,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 16.w,top: 16.w),
+                              child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
+                            ),
+                            Expanded(child: ListView.builder(
+                                itemCount: wareHouse.length,
+                                itemBuilder: (ctx,index){
+                                  return ListTile(
+                                    onTap: () async {
+                                      wareHouseId = wareHouse[index].id;
+                                      wareHouseName = wareHouse[index].name;
+                                      CacheService.saveWareHouseId(wareHouse[index].id);
+                                      CacheService.saveWareHouseName(wareHouse[index].name);
+                                      await _repository.clearSkladBase();
+                                      wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                                    trailing: Icon(Icons.radio_button_checked,color: wareHouseId == wareHouse[index].id?AppColors.green:Colors.grey,),
+                                  );
+                                }))
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+                child: Text(wareHouseName,style: AppStyle.small(Colors.grey),)),
           ],
         ),
         actions: [
@@ -61,7 +105,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                 setState(() {
                   dateTime = date;
                 });
-                wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+                wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
               }
             });
           }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,))
@@ -190,7 +234,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                   if(res.result['status'] == false){
                                     if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
                                   }
-                                  wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+                                  wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
                                 },
                                   icon: Icons.lock,
                                   label: "Қулфлаш",
@@ -200,7 +244,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                   if(res.result['status'] == false){
                                     if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);
                                   }
-                                  wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+                                  wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
                                 },
                                   label: "Очиш",
                                   icon: Icons.lock_open,),
@@ -217,7 +261,7 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                   CacheService.getPermissionWarehouseAction4()==0?const SizedBox():SlidableAction(onPressed: (i) async {
                                     HttpResult res = await repository.deleteWarehouseTransfer(data[index].id);
                                     if(res.result['status'] == true){
-                                      await wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month);
+                                      await wareHouseTransferBloc.getAllWareHouseTransfer(dateTime.year, dateTime.month,wareHouseId);
                                     }
                                     else{
                                       if(context.mounted)CenterDialog.showErrorDialog(context, res.result['message']);

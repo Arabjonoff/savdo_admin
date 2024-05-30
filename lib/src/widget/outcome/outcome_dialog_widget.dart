@@ -329,7 +329,8 @@ class _AddOutcomeWidgetDialogState extends State<AddOutcomeWidgetDialog> {
                   }catch(e){
                     CenterDialog.showErrorDialog(context, e.toString());
                   }
-                }else{
+                }
+                else{
                   Map data = {
                     "ID_SKL_VZ": widget.ndocId,
                     "NAME": widget.data.name,
