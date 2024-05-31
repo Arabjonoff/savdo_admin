@@ -631,7 +631,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     try{
                       IncomeAddModel addIncome = IncomeAddModel(
                         price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
-                        idSklPr: widget.id,
+                        idSklPr: CacheService.getNdoc(),
                         idSkl2: widget.data.id,
                         name: widget.data.name,
                         idTip: widget.data.idTip,
@@ -659,7 +659,7 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                         IncomeAddModel addIncomeBase = IncomeAddModel(
                           id: int.parse(res.result['id']),
                           price: _controllerIncomePriceUzs.text=='0'?num.parse(_controllerIncomePriceUsd.text.replaceAll(',', '.')):num.parse(_controllerIncomePriceUzs.text.replaceAll(RegExp('[^0-9]'), '')),
-                          idSklPr: widget.id,
+                          idSklPr: CacheService.getNdoc(),
                           idSkl2: widget.data.id,
                           name: widget.data.name,
                           idTip: widget.data.idTip,

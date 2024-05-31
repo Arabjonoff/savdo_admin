@@ -106,6 +106,7 @@ class _DocumentIncomeScreenState extends State<DocumentIncomeScreen> {
               if(isUpdate == false){
                 HttpResult res = await _repository.addIncome(body);
                 if(res.result["status"] == true){
+                  CacheService.saveNdoc(res.result["id"]);
                   isUpdate = true;
                   if(context.mounted)Navigator.pop(context);
                   if(context.mounted)Navigator.pushNamed(context, AppRouteName.addIncome,arguments: res.result["id"]);
