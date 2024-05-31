@@ -62,7 +62,7 @@ class ClientDebtBloc {
     HttpResult result = await _repository.clientDetail(year,month, idT,tp);
     if(result.isSuccess){
       var data = debtClientDetailFromJson(json.encode(result.result));
-      data.sort((a, b) => a.pn.compareTo(b.pn));
+      data.sort((a, b) => a.pn.compareTo(b.id));
       _fetchClientDebtDetailInfo.sink.add(data);
     }
   }
