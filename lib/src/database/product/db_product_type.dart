@@ -19,8 +19,7 @@ class DbProductType {
   }
   Future<List<ProductTypeAllResult>> getProductType() async {
     final dbClient = await dbProvider.db;
-    List<Map> list =
-        await dbClient.rawQuery('SELECT * FROM product_type ORDER BY id DESC');
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM product_type ORDER BY id DESC');
     List<ProductTypeAllResult> productType = <ProductTypeAllResult>[];
     for (int i = 0; i < list.length; i++) {
       ProductTypeAllResult data = ProductTypeAllResult(

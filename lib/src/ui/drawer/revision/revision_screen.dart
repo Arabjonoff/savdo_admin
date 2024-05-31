@@ -102,7 +102,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: 1 ==1?Colors.red:AppColors.green
+                                    color: data[index].pr==1?Colors.red:AppColors.green
                                 ),
                                 child: Text("№: ${data[index].ndoc}",style: AppStyle.medium(Colors.white),)),
                           ],
@@ -112,6 +112,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Жами:",style: AppStyle.medium(Colors.black),),
+                            Text(priceFormat.format(data[index].sm),style: AppStyle.medium(Colors.black),),
                           ],
                         ),
                         SizedBox(height: 4.h,),
@@ -119,7 +120,7 @@ class _RevisionScreenState extends State<RevisionScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Вақти',style: AppStyle.small(Colors.black),),
-                            Text("data[index].vaqt.toString().substring(10,19)",style: AppStyle.small(Colors.black),),
+                            Text(data[index].vaqt.toString().substring(10,19),style: AppStyle.small(Colors.black),),
                           ],
                         ),
                         SizedBox(height: 4.h,),
