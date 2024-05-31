@@ -39,15 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
   final bool isDataLabelVisible = true, isMarkerVisible = true, isTooltipVisible = true;
   double? lineWidth, markerWidth, markerHeight;
-  final List<SalesData> chartData = <SalesData>[
-    SalesData(DateTime(2005, 0, 1), 'India', 1.5, 21, 28, 680, 760),
-    SalesData(DateTime(2006, 0, 1), 'China', 2.2, 24, 44, 550, 880),
-    SalesData(DateTime(2007, 0, 1), 'USA', 3.32, 36, 48, 440, 788),
-    SalesData(DateTime(2008, 0, 1), 'Japan', 4.56, 38, 50, 350, 560),
-    SalesData(DateTime(2009, 0, 1), 'Russia', 5.87, 54, 66, 444, 566),
-    SalesData(DateTime(2010, 0, 1), 'France', 6.8, 57, 78, 780, 650),
-    SalesData(DateTime(2011, 0, 1), 'Germany', 8.5, 70, 84, 450, 800)
-  ];
   @override
   void initState() {
     staffPermission.getAllStaffPermission(CacheService.getIdAgent());
@@ -62,9 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
     productQuantityTypeBloc.getQuantityBaseTypeAll();
     balanceBloc.getAllBalance(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     planBloc.getPlanAll();
-    // ConnectionUtil connectionStatus = ConnectionUtil.getInstance();
-    // connectionStatus.initialize();
-    // connectionStatus.connectionChange.listen(connectionChanged);
     super.initState();
   }
   @override
@@ -249,14 +237,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
-                      Padding(
-                        padding:EdgeInsets.only(left: 12.0.spMax),
-                        child: GestureDetector(
-                            onTap: () {},
-                            child: CircleAvatar(
-                              child: Text(CacheService.getName()[0].toUpperCase()),
-                            )),
-                      ),
+                      // Padding(
+                      //   padding:EdgeInsets.only(left: 12.0.spMax),
+                      //   child: GestureDetector(
+                      //       onTap: () {},
+                      //       child: CircleAvatar(
+                      //         child: Text(CacheService.getName()[0].toUpperCase()),
+                      //       )),
+                      // ),
                       // IconButton(onPressed: ()async{
                       // Navigator.pushNamed(context, AppRouteName.message);
                       // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
@@ -346,6 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
   }
 }
+
 class SalesData {
   SalesData(this.year, this.name, this.sales, this.sales1, this.sales2, this.sales3, this.sales4);
   final DateTime year;

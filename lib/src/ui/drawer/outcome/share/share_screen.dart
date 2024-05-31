@@ -56,193 +56,10 @@ class _ShareScreenState extends State<ShareScreen> {
           )
         ],
       ),
-      body: PageView(
-        children: [
-          Screenshot(
-            controller: screenshotController,
-            child: Container(
-                alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(8.r),
-                margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 10.h),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                ),
-                child: SingleChildScrollView(
-                  child: RepaintBoundary(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("№: ${widget.data.ndoc}",style: AppStyle.mediumBold(Colors.black),),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Сана",style: AppStyle.smallBold(Colors.black),),
-                            Text(DateFormat('yyyy-MM-dd | kk:mm:ss').format(widget.data.vaqt),style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Харидор",style: AppStyle.smallBold(Colors.black),),
-                            Text("${widget.data.idT} - ${widget.data.name}",style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Тел",style: AppStyle.smallBold(Colors.black),),
-                            Text(widget.data.clientPhone,style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Манзил",style: AppStyle.smallBold(Colors.black),),
-                            Text(widget.data.clientTarget,style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Мўлжал",style: AppStyle.smallBold(Colors.black),),
-                            Text(widget.data.clientAddress,style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Агент",style: AppStyle.smallBold(Colors.black),),
-                            Text(widget.data.idAgentName,style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        const Row(
-                          children: [
-                            Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Омбор номи",style: AppStyle.smallBold(Colors.black),),
-                            Text(widget.data.sklName,style: AppStyle.smallBold(Colors.black),),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("Маҳсулотлар",style: AppStyle.mediumBold(Colors.black),),
-                        ),
-                        /// Header
-                        createTable(widget.data.sklRsTov),
-                        Table(
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          border: const TableBorder(
-                              verticalInside: BorderSide(width: 1,color: Colors.grey, style: BorderStyle.solid)
-                          ),
-                          children: [
-                            TableRow(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey,width: 0.5),
-                              ),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Text("Жами",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                                ),
-                                Text("${priceFormat.format(widget.data.sm)} ${"сўм"}",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                                Text("${priceFormatUsd.format(widget.data.smS)} \$",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                              ],),
-                          ],
-                        ),
-                        /// Footer
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("Тўловлар",style: AppStyle.mediumBold(AppColors.green),),
-                        ),
-                        Table(
-                          border: const TableBorder(
-                              verticalInside: BorderSide(width: 1,color: Colors.grey, style: BorderStyle.solid)
-                          ),
-                          children: [
-                            TableRow(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey,width: 0.5),
-                              ),
-                              children: [
-                                Text("Тўлов сўм",style: AppStyle.small(Colors.black),),
-                                Text("${priceFormat.format(widget.data.tlNaqd)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end,),
-                              ],),
-                            TableRow(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey,width: 0.5)
-                              ),
-                              children: [
-                                Text("Тўлов валюта",style: AppStyle.small(Colors.black),),
-                                Text("${priceFormat.format(widget.data.tlVal)} \$",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
-                              ],),
-                            TableRow(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey,width: 0.5)
-                              ),
-                              children: [
-                                Text("Тўлов банк",style: AppStyle.small(Colors.black),),
-                                Text("${priceFormat.format(widget.data.tlBank)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
-                              ],),
-                            TableRow(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey,width: 0.5)
-                              ),
-                              children: [
-                                Text("Тўлов карта",style: AppStyle.small(Colors.black),),
-                                Text("${priceFormat.format(widget.data.tlKarta)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
-                              ],),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )
-            ),
-          ),
-          Container(
+      body: Screenshot(
+        controller: screenshotController,
+        child: Container(
+            alignment: Alignment.topCenter,
             padding: EdgeInsets.all(8.r),
             margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 10.h),
             width: MediaQuery.of(context).size.width,
@@ -250,33 +67,178 @@ class _ShareScreenState extends State<ShareScreen> {
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
             ),
-            child:Column(
-              children: [
-                createTable2(widget.data.sklRsTov),
-                Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  border: const TableBorder(
-                      verticalInside: BorderSide(width: 1,color: Colors.grey, style: BorderStyle.solid)
-                  ),
+            child: SingleChildScrollView(
+              child: RepaintBoundary(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TableRow(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey,width: 0.5),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text("№: ${widget.data.ndoc}",style: AppStyle.mediumBold(Colors.black),),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Сана",style: AppStyle.smallBold(Colors.black),),
+                        Text(DateFormat('yyyy-MM-dd | kk:mm:ss').format(widget.data.vaqt),style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Харидор",style: AppStyle.smallBold(Colors.black),),
+                        Text("${widget.data.idT} - ${widget.data.name}",style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Тел",style: AppStyle.smallBold(Colors.black),),
+                        Text(widget.data.clientPhone,style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Манзил",style: AppStyle.smallBold(Colors.black),),
+                        Text(widget.data.clientTarget,style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Мўлжал",style: AppStyle.smallBold(Colors.black),),
+                        Text(widget.data.clientAddress,style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Агент",style: AppStyle.smallBold(Colors.black),),
+                        Text(widget.data.idAgentName,style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    const Row(
+                      children: [
+                        Expanded(child: DashedRect(color: Colors.grey,gap: 4,)),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Омбор номи",style: AppStyle.smallBold(Colors.black),),
+                        Text(widget.data.sklName,style: AppStyle.smallBold(Colors.black),),
+                      ],
+                    ),
+                    SizedBox(height: 4.h,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text("Маҳсулотлар",style: AppStyle.mediumBold(Colors.black),),
+                    ),
+                    /// Header
+                    createTable(widget.data.sklRsTov),
+                    Table(
+                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                      border: const TableBorder(
+                          verticalInside: BorderSide(width: 1,color: Colors.grey, style: BorderStyle.solid)
                       ),
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: Text("Жами",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                        ),
-                        Text("${priceFormat.format(widget.data.sm)} ${"сўм"}",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                        Text("${priceFormatUsd.format(widget.data.smS)} \$",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
-                      ],),
+                        TableRow(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey,width: 0.5),
+                          ),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Text("Жами",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+                            ),
+                            Text("${priceFormat.format(widget.data.sm)} ${"сўм"}",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+                            Text("${priceFormatUsd.format(widget.data.smS)} \$",style: AppStyle.smallBold(Colors.black),textAlign: TextAlign.center,),
+                          ],),
+                      ],
+                    ),
+                    /// Footer
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text("Тўловлар",style: AppStyle.mediumBold(AppColors.green),),
+                    ),
+                    Table(
+                      border: const TableBorder(
+                          verticalInside: BorderSide(width: 1,color: Colors.grey, style: BorderStyle.solid)
+                      ),
+                      children: [
+                        TableRow(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey,width: 0.5),
+                          ),
+                          children: [
+                            Text("Тўлов сўм",style: AppStyle.small(Colors.black),),
+                            Text("${priceFormat.format(widget.data.tlNaqd)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end,),
+                          ],),
+                        TableRow(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey,width: 0.5)
+                          ),
+                          children: [
+                            Text("Тўлов валюта",style: AppStyle.small(Colors.black),),
+                            Text("${priceFormat.format(widget.data.tlVal)} \$",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
+                          ],),
+                        TableRow(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey,width: 0.5)
+                          ),
+                          children: [
+                            Text("Тўлов банк",style: AppStyle.small(Colors.black),),
+                            Text("${priceFormat.format(widget.data.tlBank)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
+                          ],),
+                        TableRow(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey,width: 0.5)
+                          ),
+                          children: [
+                            Text("Тўлов карта",style: AppStyle.small(Colors.black),),
+                            Text("${priceFormat.format(widget.data.tlKarta)} ${"сўм"}",style: AppStyle.smallBold(AppColors.green),textAlign: TextAlign.end),
+                          ],),
+                      ],
+                    )
                   ],
                 ),
-              ],
-            ),
-          )
-        ],
+              ),
+            )
+        ),
       )
     );
   }

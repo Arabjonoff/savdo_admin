@@ -343,6 +343,16 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                                     ],
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 4.h),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Вақти:",style: AppStyle.smallBold(Colors.grey),),
+                                      Text(data[index].vaqt.toString().substring(0,16),style: AppStyle.smallBold(Colors.grey),),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
