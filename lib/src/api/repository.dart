@@ -101,7 +101,8 @@ class Repository{
 
   /// Revision base
   Future<int> saveRevisionBase(item) => _dbRevision.saveRevision(item);
-  Future<void> clearRevisionBase(item) => _dbRevision.clearRevision();
+  Future<void> clearRevisionBase() => _dbRevision.clearRevision();
+  Future<int> deleteRevisionBase(id) => _dbRevision.deleteRevision(id);
   Future<List<Map<String,Object>>> getRevisionBase() => _dbRevision.getRevision();
 
   /// Expense Type base

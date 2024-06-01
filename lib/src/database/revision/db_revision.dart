@@ -36,4 +36,8 @@ class DbRevision{
     final dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM revision");
   }
+  Future<int> deleteRevision(id) async {
+    final dbClient = await dbProvider.db;
+    return await dbClient.delete("revision",where: 'id',whereArgs: [id]);
+  }
 }
