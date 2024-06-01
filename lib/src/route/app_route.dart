@@ -22,7 +22,6 @@ import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_transfer/warehouser_transfer_screen.dart';
 import 'package:savdo_admin/src/ui/login/login_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/home_screen.dart';
-import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/ui/notification/message.dart';
 import 'package:savdo_admin/src/ui/spalsh/spalsh_screen.dart';
 
@@ -65,8 +64,6 @@ class AppRoute{
       case AppRouteName.splash: return MaterialPageRoute(builder: (BuildContext context) =>  const SplashScreen());
     /// Login Screen
       case AppRouteName.login: return MaterialPageRoute(builder: (BuildContext context) =>  const LoginScreen());
-    /// Splash Screen
-      case AppRouteName.main: return MaterialPageRoute(builder: (BuildContext context) =>  const MainScreen());
     /// Splash Screen
       case AppRouteName.home: return MaterialPageRoute(builder: (BuildContext context) =>  const HomeScreen());
     /// Product Screen
