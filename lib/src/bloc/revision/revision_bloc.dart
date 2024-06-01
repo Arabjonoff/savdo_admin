@@ -11,11 +11,11 @@ class RevisionBloc{
   final _fetchRevisionInfo = PublishSubject<List<RevisionResult>>();
   Stream<List<RevisionResult>> get getRevisionStream => _fetchRevisionInfo.stream;
 
-  getAllRevision()async{
+  getAllRevision(year,month,idSkl)async{
     List<AgentsResult> agentBase  = await _repository.getAgentsBase();
     List<ClientResult> clientBase  = await _repository.getClientBase();
     List<ProductTypeAllResult> warehouse  = await _repository.getWareHouseBase();
-    HttpResult result = await _repository.getRevision();
+    HttpResult result = await _repository.getRevision(year,month,idSkl);
     var data = RevisionModel.fromJson(result.result);
     for(int i=0; i<data.data.length;i++){
       for(int j =0; j<agentBase.length;j++){

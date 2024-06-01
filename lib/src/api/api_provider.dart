@@ -684,8 +684,8 @@ class ApiProvider {
     return await _patchRequest(url,json.encode(data));
   }
 
-  Future<HttpResult> getRevision()async{
-    String url = "${_baseUrl}rev?DB=$db&YIL=$year&OY=$month&ID_SKL=1";
+  Future<HttpResult> getRevision(year,month,idSkl)async{
+    String url = "${_baseUrl}rev?DB=$db&YIL=$year&OY=$month&ID_SKL=$idSkl";
     return await _getRequest(url);
   }
   Future<HttpResult> postRevision(Map map)async{

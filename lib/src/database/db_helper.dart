@@ -24,6 +24,7 @@ class DatabaseHelper{
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
+
   void _onCreate(Database db, int newVersion) async {
 
     /// Product Type Base
@@ -329,20 +330,20 @@ class DatabaseHelper{
     /// Revision Product
     await db.execute('''
       CREATE TABLE revision(
-        "ID":INTEGER,
-        "NAME":TEXT,
-        "ID_SKL2":INTEGER,
-        "SONI":REAL,
-        "N_SONI":REAL,
-        "F_SONI":REAL,
-        "NARHI":REAL,
-        "NARHI_S":REAL,
-        "SNARHI":REAL,
-        "SNARHI_S":REAL,
-        "SNARHI1":REAL,
-        "SNARHI1_S":REAL,
-        "SNARHI2":REAL,
-        "SNARHI2_S":REAL
+        "ID" INTEGER,
+        "NAME" TEXT,
+        "ID_SKL2" INTEGER,
+        "SONI" REAL,
+        "N_SONI" REAL,
+        "F_SONI" REAL,
+        "NARHI" REAL,
+        "NARHI_S" REAL,
+        "SNARHI" REAL,
+        "SNARHI_S" REAL,
+        "SNARHI1" REAL,
+        "SNARHI1_S" REAL,
+        "SNARHI2" REAL,
+        "SNARHI2_S" REAL
       )
     ''');
   }

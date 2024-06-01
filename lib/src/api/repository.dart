@@ -5,6 +5,7 @@ import 'package:savdo_admin/src/database/income_product/income_product.dart';
 import 'package:savdo_admin/src/database/outcome/outcome_base.dart';
 import 'package:savdo_admin/src/database/product/db_product.dart';
 import 'package:savdo_admin/src/database/product/db_product_type.dart';
+import 'package:savdo_admin/src/database/revision/db_revision.dart';
 import 'package:savdo_admin/src/database/sklad/sklad_base.dart';
 import 'package:savdo_admin/src/database/sklad/warehouse_base.dart';
 import 'package:savdo_admin/src/model/client/agents_model.dart';
@@ -29,6 +30,7 @@ class Repository{
   final WareHouseBaseHelper _wareHouseBaseHelper = WareHouseBaseHelper();
   final OutcomeSkladBaseHelper _outcomeSkladBaseHelper = OutcomeSkladBaseHelper();
   final DatabaseHelper databaseHelper = DatabaseHelper();
+  final DbRevision _dbRevision = DbRevision();
 
 
   Future<void> deleteBase() async => await databaseHelper.deleteDatabase();
@@ -97,6 +99,10 @@ class Repository{
   Future<List<AgentsResult>> getAgentsBase() => _dbClient.getAgents();
   Future<void> clearAgents() => _dbClient.clearAgents();
 
+  /// Revision base
+  Future<int> saveRevisionBase(item) => _dbRevision.saveRevision(item);
+  Future<void> clearRevisionBase(item) => _dbRevision.clearRevision();
+  Future<List<Map<String,dynamic>>> getRevisionBase() => _dbRevision.getRevision();
 
   /// Expense Type base
   Future<int> saveExpenseBase(item) => _productType.saveExpense(item);
@@ -256,7 +262,7 @@ class Repository{
   Future<HttpResult> deleteReturned(idSklVz,idSkl2,id) => _apiProvider.deleteReturned(idSklVz,idSkl2,id);
   Future<HttpResult> deleteReturnedDoc(id) => _apiProvider.deleteReturnedDoc(id);
   Future<HttpResult> lockReturned(id,prov) => _apiProvider.lockReturned(id, prov);
-  Future<HttpResult> getRevision() => _apiProvider.getRevision();
+  Future<HttpResult> getRevision(year,month,idSkl) => _apiProvider.getRevision(year,month,idSkl);
   Future<HttpResult> postRevision(map) => _apiProvider.postRevision(map);
   Future<HttpResult> deleteRevision(id) => _apiProvider.deleteRevision(id);
 }

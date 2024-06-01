@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/revision/revision_bloc.dart';
+import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/model/revision/revision_model.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
-import 'package:savdo_admin/src/ui/drawer/returend/returned_list_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/revision/revision_list.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
+
+import '../../../utils/cache.dart';
 
 class RevisionScreen extends StatefulWidget {
   const RevisionScreen({super.key});
@@ -17,16 +21,87 @@ class RevisionScreen extends StatefulWidget {
 }
 
 class _RevisionScreenState extends State<RevisionScreen> {
+  int wareHouseId = 1;
+  String wareHouseName = '';
+  final Repository _repository = Repository();
+  DateTime dateTime = DateTime.now();
   @override
   void initState() {
-    revisionBloc.getAllRevision();
+    wareHouseName = CacheService.getWareHouseName();
+    wareHouseId = CacheService.getWareHouseId();
+    revisionBloc.getAllRevision(dateTime.year,dateTime.month,wareHouseId);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ревизия"),
+        title: Column(
+          children: [
+            const Text("Ревизия"),
+            GestureDetector(
+                onTap: ()async{
+                  List<ProductTypeAllResult> wareHouse = await _repository.getWareHouseBase();
+                  showDialog(context: context, builder: (ctx){
+                    return Dialog(
+                      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250.h,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 16.w,top: 16.w),
+                              child: Text("Омборлар рўйхати",style: AppStyle.mediumBold(Colors.black),),
+                            ),
+                            Expanded(child: ListView.builder(
+                                itemCount: wareHouse.length,
+                                itemBuilder: (ctx,index){
+                                  return ListTile(
+                                    onTap: () async {
+                                      wareHouseId = wareHouse[index].id;
+                                      wareHouseName = wareHouse[index].name;
+                                      CacheService.saveWareHouseId(wareHouse[index].id);
+                                      CacheService.saveWareHouseName(wareHouse[index].name);
+                                      await _repository.clearSkladBase();
+                                      revisionBloc.getAllRevision(dateTime.year, dateTime.month, wareHouseId);
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    title: Text(wareHouse[index].name,style: AppStyle.medium(Colors.black),),
+                                    trailing: Icon(Icons.radio_button_checked,color: wareHouseId == wareHouse[index].id?AppColors.green:Colors.grey,),
+                                  );
+                                }))
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+                child: Text(wareHouseName,style: AppStyle.small(Colors.grey),)),
+          ],
+        ),
+        actions: [
+          IconButton(onPressed: (){
+            showMonthPicker(
+                roundedCornersRadius: 25,
+                headerColor: AppColors.green,
+                selectedMonthBackgroundColor: AppColors.green.withOpacity(0.7),
+                context: context,
+                initialDate: dateTime,
+                lastDate: DateTime.now()
+            ).then((date) {
+              if (date != null) {
+                setState(() {
+                  dateTime = date;
+                });
+                _repository.clearSkladBase();
+                revisionBloc.getAllRevision(dateTime.year, dateTime.month, wareHouseId);
+              }
+            });
+          }, icon: Icon(Icons.calendar_month_sharp,color: AppColors.green,))
+        ],
       ),
       body: StreamBuilder<List<RevisionResult>>(
         stream: revisionBloc.getRevisionStream,
