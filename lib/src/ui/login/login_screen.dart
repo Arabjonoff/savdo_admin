@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     CacheService.saveWareHouseId(3);
                   }
                   if(context.mounted)Navigator.popUntil(context, (route) => route.isFirst);
-                  if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.main);
+                  if(context.mounted)Navigator.pushReplacementNamed(context, AppRouteName.splash);
                 }
                 else{
                   if(context.mounted)Navigator.pop(context);

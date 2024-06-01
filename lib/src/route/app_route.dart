@@ -26,7 +26,6 @@ import 'package:savdo_admin/src/ui/notification/message.dart';
 import 'package:savdo_admin/src/ui/spalsh/spalsh_screen.dart';
 
 abstract class AppRouteName {
-  static const main = 'main';
   static const splash = '/splash';
   static const login = '/login';
   static const home = 'home';
