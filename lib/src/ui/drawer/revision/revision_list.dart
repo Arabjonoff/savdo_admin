@@ -15,6 +15,7 @@ import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
 import 'package:savdo_admin/src/ui/drawer/product/product_image/image_preview.dart';
 import 'package:savdo_admin/src/ui/drawer/revision/add_revision.dart';
+import 'package:savdo_admin/src/ui/drawer/revision/cart/cart_revision.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
@@ -155,10 +156,7 @@ class _RevisionListScreenState extends State<RevisionListScreen> {
         ),
         sheetBelow: SnappingSheetContent(
           draggable: (details) => true,
-          child: Container(
-            width: width,
-            color: Colors.white,
-          ),
+          child: CartRevisionScreen()
         ),
         child: RefreshIndicator(
           onRefresh: ()async{

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
+import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -24,6 +25,7 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
   TextEditingController controllerTotal = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    Repository repository = Repository();
     return GestureDetector(
       onTap: (){
         FocusScope.of(context).unfocus();
@@ -106,8 +108,7 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
               ),
             ),
             ButtonWidget(onTap: ()async{
-              CenterDialog.showLoadingDialog(context, "Бироз кутинг");
-              Map data = {
+              Map<String,Object> data = {
               "ID": widget.data.id,
               "NAME": widget.data.name,
               "ID_SKL2": widget.data.idSkl2,
@@ -123,6 +124,10 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
               "SNARHI2": widget.data.snarhi2,
               "SNARHI2_S": widget.data.snarhi2S,
             };
+              var res = await repository.saveRevisionBase(data);
+              if(res >=0 ){
+                if(context.mounted)Navigator.pop(context);
+              }
           }, color: AppColors.green, text: "Саватга қўшиш"),
             SizedBox(height: 32.h,)
           ],

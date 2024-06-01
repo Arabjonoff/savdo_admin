@@ -2,17 +2,17 @@ import 'package:savdo_admin/src/database/db_helper.dart';
 
 class DbRevision{
   final dbProvider = DatabaseHelper.instance;
-  Future<int> saveRevision(Map<String,dynamic> item) async {
+  Future<int> saveRevision(Map<String,Object> item) async {
     final dbClient = await dbProvider.db;
     var result = await dbClient.insert('revision',item,);
     return result;
   }
-  Future<List<Map<String,dynamic>>> getRevision()async{
+  Future<List<Map<String,Object>>> getRevision()async{
     final dbClient = await dbProvider.db;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM revision ORDER BY id DESC');
-    List<Map<String,dynamic>> data = [];
+    List<Map<String,Object>> data = [];
     for(int i =0; i<list.length;i++){
-      Map<String,dynamic> s = {
+      Map<String,Object> s = {
         "ID":list[i]["ID"],
         "NAME":list[i]["NAME"],
         "ID_SKL2":list[i]["ID_SKL2"],

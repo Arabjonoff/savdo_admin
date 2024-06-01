@@ -102,7 +102,7 @@ class Repository{
   /// Revision base
   Future<int> saveRevisionBase(item) => _dbRevision.saveRevision(item);
   Future<void> clearRevisionBase(item) => _dbRevision.clearRevision();
-  Future<List<Map<String,dynamic>>> getRevisionBase() => _dbRevision.getRevision();
+  Future<List<Map<String,Object>>> getRevisionBase() => _dbRevision.getRevision();
 
   /// Expense Type base
   Future<int> saveExpenseBase(item) => _productType.saveExpense(item);
