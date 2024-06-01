@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
 import 'package:savdo_admin/src/api/repository.dart';
+import 'package:savdo_admin/src/bloc/revision/cart/cart_revision_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -126,6 +127,7 @@ class _AddRevisionScreenState extends State<AddRevisionScreen> {
             };
               var res = await repository.saveRevisionBase(data);
               if(res >=0 ){
+                await cartRevision.getAllRevisionCart();
                 if(context.mounted)Navigator.pop(context);
               }
           }, color: AppColors.green, text: "Саватга қўшиш"),

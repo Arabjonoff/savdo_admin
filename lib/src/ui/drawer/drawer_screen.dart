@@ -1,5 +1,8 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:savdo_admin/src/api/repository.dart';
@@ -180,20 +183,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   title: const Text("Қайтарилди"),
                 ),
               /// Revision product
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                selectedTileColor: AppColors.green,
-                selected: selected ==14?true:false,
-                selectedColor: selected ==14?AppColors.white:AppColors.black,
-                  leading: const Icon(Icons.recycling_outlined),
-                  onTap: (){
-                    setState(() => selected =14);
-                    Navigator.pushNamed(context, '/revision');
-                  },
-                  title: const Text("Ревизия"),
-                ),
+              // ListTile(
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10)
+              //   ),
+              //   selectedTileColor: AppColors.green,
+              //   selected: selected ==14?true:false,
+              //   selectedColor: selected ==14?AppColors.white:AppColors.black,
+              //     leading: const Icon(Icons.recycling_outlined),
+              //     onTap: (){
+              //       setState(() => selected =14);
+              //       Navigator.pushNamed(context, '/revision');
+              //     },
+              //     title: const Text("Ревизия"),
+              //   ),
             ],),
             /// Buyers Bloc
             ExpansionTile(
@@ -312,6 +315,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     Repository repo = Repository();
                     await repo.deleteBase();
                     await CacheService.clear();
+                    SystemNavigator.pop();
+                    exit(0);
                   },
                   title: const Text("Log Out"),
                 ),

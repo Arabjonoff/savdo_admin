@@ -169,7 +169,6 @@ class ApiProvider {
     }
   }
 
-
   Future<HttpResult> login(name,password,base)async{
     String url = "${_baseUrl}login-api.php?DB=$base";
     var data = {
@@ -498,10 +497,7 @@ class ApiProvider {
     String url = "${_baseUrl}tl1_del?DB=$db&JWT=$token&ID=$id&ID_SANA=$idSana";
     return await _deleteRequest(url,{});
   }
-
-
-  ///
-
+  /// ///////////////////////////// ////////////////////////////
   Future<HttpResult> getTypeExpense()async{
     String url = "${_baseUrl}s_har?DB=$db&JWT=$token";
     return await _getRequest(url);
@@ -557,7 +553,6 @@ class ApiProvider {
     String url = "${_baseUrl}s_skl?DB=$db&JWT=$token";
     return await _getRequest(url,);
   }
-
   Future<HttpResult> getProductOutCome()async{
     String url = "${_baseUrl}sklad01?DB=$db&JWT=$token&YIL=$year&OY=$month&ID_SKL0=$idSkl";
     return await _getRequest(url,);
@@ -683,12 +678,11 @@ class ApiProvider {
     };
     return await _patchRequest(url,json.encode(data));
   }
-
   Future<HttpResult> getRevision(year,month,idSkl)async{
     String url = "${_baseUrl}rev?DB=$db&YIL=$year&OY=$month&ID_SKL=$idSkl";
     return await _getRequest(url);
   }
-  Future<HttpResult> postRevision(Map map)async{
+  Future<HttpResult> postRevision(List<Map> map)async{
     String url = "${_baseUrl}omb_rev_m?DB=$db&YIL=$year&OY=$month&ID_SKL=1";
     return await _postRequest(url,json.encode(map));
   }
