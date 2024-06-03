@@ -82,267 +82,217 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            Stack(
+            StreamBuilder<BalanceModel>(
+                stream: balanceBloc.getBalanceStream,
+                builder: (context, snapshot) {
+                  if(snapshot.hasData){
+                    var data = snapshot.data!;
+                    return Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      width: width,
+                      height: 220.h,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
+                        color: AppColors.green,
+                        image:  const DecorationImage(
+                          image:  ExactAssetImage('assets/images/bg000.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 24.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
+                              // Padding(
+                              //   padding:EdgeInsets.only(left: 12.0.spMax),
+                              //   child: GestureDetector(
+                              //       onTap: () {},
+                              //       child: CircleAvatar(
+                              //         child: Text(CacheService.getName()[0].toUpperCase()),
+                              //       )),
+                              // ),
+                              // IconButton(onPressed: ()async{
+                              // Navigator.pushNamed(context, AppRouteName.message);
+                              // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
+                            ],
+                          ),
+                          SizedBox(height: 24.h,),
+                          CacheService.getPermissionBalanceWindow1() ==0?const SizedBox():Padding(
+                            padding: EdgeInsets.only(left: 12.0.w),
+                            child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),
+                          ),
+                          CacheService.getPermissionBalanceWindow1() ==0?const SizedBox(): ListTile(
+                            title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
+                            onTap: (){
+                              BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
+                            },
+                            trailing: IconButton(onPressed: (){
+                              setState(() {
+                                balance = !balance;
+                              });
+                            },icon: const Icon(Icons.repeat,color: Colors.white,),),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                  return Container(
+                    padding: const EdgeInsets.only(top: 74,left: 16),
+                    alignment: Alignment.topLeft,
+                    width: width,
+                    height: 220.h,
+                    decoration:  BoxDecoration(
+                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
+                      color: AppColors.green,
+                      image:  const DecorationImage(
+                        image:  ExactAssetImage('assets/images/bg000.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
+                  );
+                }
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StreamBuilder<BalanceModel>(
-                    stream: balanceBloc.getBalanceStream,
+                StreamBuilder<PlanModel>(
+                    stream: planBloc.getPlanStream,
                     builder: (context, snapshot) {
                       if(snapshot.hasData){
                         var data = snapshot.data!;
-                        return Container(
-                          alignment: Alignment.topRight,
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          width: width,
-                          height: 250.h,
-                          decoration:  BoxDecoration(
-                            color: AppColors.green,
-                              image:  const DecorationImage(
-                                image:  ExactAssetImage('assets/images/bg000.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        var d = data.taskGo.toDouble()-data.taskDone.toDouble();
+                        if(d<0){
+                          d=0;
+                        }
+                        return GestureDetector(
+                          onTap: (){
+                            BottomDialog.showScreenDialog(context, const PlanScreen());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 4.h),
+                            margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                            width: width,
+                            height: 150.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      color: Colors.grey.shade400
+                                  ),
+                                ]
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: CircularPercentIndicator(
+                                    radius: 60.0.r,
+                                    lineWidth: 13.0,
+                                    percent: snapshot.data!.percent,
+                                    animation: true,
+                                    circularStrokeCap: CircularStrokeCap.round,
+                                    center: snapshot.data!.f.isNaN?Text('0%',style: AppStyle.medium(AppColors.black)):Text("${snapshot.data!.f.toInt()}%",
+                                      style: AppStyle.medium(Colors.black),
+                                    ),
+                                    progressColor: Colors.green,
+                                  ),
+                                ),
+                                Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 40.spMax,),
-                              CacheService.getPermissionBalanceWindow1() ==0?const SizedBox():Padding(
-                                padding: EdgeInsets.only(left: 12.0.w),
-                                child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("Режа бўйича: ${snapshot.data!.taskGo}",style: AppStyle.smallBold(Colors.black),),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("Бажарилган: ${snapshot.data!.taskDone}",style: AppStyle.smallBold(Colors.black),),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("Режадан ташқари: ${snapshot.data!.taskOut}",style: AppStyle.smallBold(Colors.black),),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              CacheService.getPermissionBalanceWindow1() ==0?const SizedBox(): ListTile(
-                                title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
-                                onTap: (){
-                                  BottomDialog.showScreenDialog(context, BalanceScreen(data: data,));
-                                },
-                                trailing: IconButton(onPressed: (){
-                                  setState(() {
-                                    balance = !balance;
-                                  });
-                                },icon: const Icon(Icons.repeat,color: Colors.white,),),
-                              )
-                            ],
+                                SizedBox(width: 16.w,)
+                              ],
+                            ),
                           ),
                         );
-                      } return Container(
+                      }return Container(
+                        padding: EdgeInsets.symmetric(vertical: 4.h),
+                        margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
                         width: width,
-                        height: 250.h,
-                        child: Image.asset("assets/images/bg000.jpg",fit: BoxFit.cover,),
+                        height: 150.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 2,
+                                  color: Colors.grey.shade400
+                              ),
+                            ]
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CircularPercentIndicator(
+                                radius: 60.0.r,
+                                lineWidth: 13.0,
+                                percent: 0,
+                                animation: true,
+                                circularStrokeCap: CircularStrokeCap.round,
+                                center: Text('0%',style: AppStyle.medium(Colors.black),),
+                                progressColor: Colors.green,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("Режа бўйича: 0",style: AppStyle.smallBold(Colors.black),),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Бажарилган: 0",style: AppStyle.smallBold(Colors.black),),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Режадан ташқари: 0",style: AppStyle.smallBold(Colors.black),),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 16.w,)
+                          ],
+                        ),
                       );
                     }
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 210.spMax),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StreamBuilder<PlanModel>(
-                          stream: planBloc.getPlanStream,
-                          builder: (context, snapshot) {
-                            if(snapshot.hasData){
-                              var data = snapshot.data!;
-                              var d = data.taskGo.toDouble()-data.taskDone.toDouble();
-                              if(d<0){
-                                d=0;
-                              }
-                              return GestureDetector(
-                                onTap: (){
-                                  BottomDialog.showScreenDialog(context, const PlanScreen());
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 4.h),
-                                  margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-                                  width: width,
-                                  height: 150.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            blurRadius: 2,
-                                            color: Colors.grey.shade400
-                                        ),
-                                      ]
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: CircularPercentIndicator(
-                                          radius: 60.0.r,
-                                          lineWidth: 13.0,
-                                          percent: snapshot.data!.percent,
-                                          animation: true,
-                                          circularStrokeCap: CircularStrokeCap.round,
-                                          center: snapshot.data!.f.isNaN?Text('0%',style: AppStyle.medium(AppColors.black)):Text("${snapshot.data!.f.toInt()}%",
-                                            style: AppStyle.medium(Colors.black),
-                                          ),
-                                          progressColor: Colors.green,
-                                        ),
-                                      ),
-                                      Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text("Режа бўйича: ${snapshot.data!.taskGo}",style: AppStyle.smallBold(Colors.black),),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("Бажарилган: ${snapshot.data!.taskDone}",style: AppStyle.smallBold(Colors.black),),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("Режадан ташқари: ${snapshot.data!.taskOut}",style: AppStyle.smallBold(Colors.black),),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                      SizedBox(width: 16.w,)
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }return const SizedBox();
-                          }
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 400.w,left: 12.w,right: 12.w),
-                  width: width,
-                  height: 250.spMax,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                        BoxShadow(
-                            blurRadius: 2,
-                            color: Colors.grey.shade400
-                        ),
-                      ],
-                    borderRadius: BorderRadius.circular(16)
-                  ),
-                  child: SfCartesianChart(
-                    title: ChartTitle(text: 'Кунлик Ҳисобот'),
-                    legend: Legend(isVisible: true),
-                    series: getDefaultData(),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 52.spMax,left: 16.w,right: 16.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(onPressed: () =>_scaffoldKey.currentState!.openDrawer(), icon: const Icon(Icons.menu_outlined,color: Colors.white,)),
-                      // Padding(
-                      //   padding:EdgeInsets.only(left: 12.0.spMax),
-                      //   child: GestureDetector(
-                      //       onTap: () {},
-                      //       child: CircleAvatar(
-                      //         child: Text(CacheService.getName()[0].toUpperCase()),
-                      //       )),
-                      // ),
-                      // IconButton(onPressed: ()async{
-                      // Navigator.pushNamed(context, AppRouteName.message);
-                      // }, icon: const Icon(Icons.notifications_active,color: Colors.white,))
-                    ],
-                  ),
-                ),
               ],
-            )
+            ),
           ],
         ),
       ),
     );
   }
-  static List<LineSeries<SalesData, num>> getDefaultData() {
-    const bool isMarkerVisible = true, isTooltipVisible = true;
-    double? lineWidth, markerWidth, markerHeight;
-    final List<SalesData> chartData = <SalesData> [
-      SalesData(DateTime(20205, 0, 1), 'India', 1.335, 21, 28, 680, 760),
-      SalesData(DateTime(2006, 0, 1), 'China', 2.2, 234, 44, 550, 880),
-      SalesData(DateTime(20037, 0, 1), 'USA', 3.32, 336, 48, 440, 788),
-      SalesData(DateTime(2008, 0, 1), 'Japan', 4.56, 338, 350, 3350, 560),
-      SalesData(DateTime(20309, 0, 1), 'Russia', 5.87, 524, 66, 444, 566),
-      SalesData(DateTime(20130, 0, 1), 'France', 6.8, 573, 78, 780, 650),
-      SalesData(DateTime(2011, 0, 1), 'Germany', 8.5, 730, 84, 450, 800)
-    ];
-    return <LineSeries<SalesData, num>>[
-      LineSeries<SalesData, num>(
-          enableTooltip: true,
-          name: 'Киримлар',
-          dataSource: chartData,
-          xValueMapper: (SalesData sales, _) => sales.sales,
-          yValueMapper: (SalesData sales, _) => sales.sales4,
-          width: lineWidth ?? 2,
-          markerSettings: MarkerSettings(
-              isVisible: isMarkerVisible,
-              height: markerWidth ?? 4,
-              width: markerHeight ?? 4,
-              shape: DataMarkerType.circle,
-              borderWidth: 3,
-              borderColor: Colors.red),
-      ),
-      LineSeries<SalesData, num>(
-          enableTooltip: isTooltipVisible,
-          dataSource: chartData,
-          name: 'Чиқимлар',
-          width: lineWidth ?? 2,
-          xValueMapper: (SalesData sales, _) => sales.sales,
-          yValueMapper: (SalesData sales, _) => sales.sales3,
-          markerSettings: MarkerSettings(
-              isVisible: isMarkerVisible,
-              height: markerWidth ?? 4,
-              width: markerHeight ?? 4,
-              shape: DataMarkerType.circle,
-              borderWidth: 3,
-              borderColor: Colors.black),
-      ),
-      LineSeries<SalesData, num>(
-          enableTooltip: isTooltipVisible,
-          dataSource: chartData,
-          name: 'Харажатлар',
-          width: lineWidth ?? 2,
-          xValueMapper: (SalesData sales, _) => sales.sales,
-          yValueMapper: (SalesData sales, _) => sales.sales2,
-          markerSettings: MarkerSettings(
-              isVisible: isMarkerVisible,
-              height: markerWidth ?? 4,
-              width: markerHeight ?? 4,
-              shape: DataMarkerType.circle,
-              borderWidth: 3,
-              borderColor: Colors.black),
-      ),
-      LineSeries<SalesData, num>(
-          enableTooltip: isTooltipVisible,
-          dataSource: chartData,
-          width: lineWidth ?? 2,
-          name: "Тўловлар",
-          xValueMapper: (SalesData sales, _) => sales.sales,
-          yValueMapper: (SalesData sales, _) => sales.sales2,
-          markerSettings: MarkerSettings(
-              isVisible: isMarkerVisible,
-              height: markerWidth ?? 4,
-              width: markerHeight ?? 4,
-              shape: DataMarkerType.circle,
-              borderWidth: 3,
-              borderColor: Colors.black),
-      ),
-    ];
-  }
 }
 
-class SalesData {
-  SalesData(this.year, this.name, this.sales, this.sales1, this.sales2, this.sales3, this.sales4);
-  final DateTime year;
-  final String name;
-  final double sales;
-  final double sales1;
-  final double sales2;
-  final double sales3;
-  final double sales4;
-}
 
