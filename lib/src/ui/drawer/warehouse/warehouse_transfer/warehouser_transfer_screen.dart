@@ -16,7 +16,6 @@ import 'package:savdo_admin/src/ui/drawer/warehouse/warehouse_transfer/warehouse
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/utils.dart';
-import 'package:savdo_admin/src/widget/empty/empty_widget.dart';
 import 'package:snapping_sheet_2/snapping_sheet.dart';
 
 class WareHouseTransferScreen extends StatefulWidget {
@@ -141,7 +140,6 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                 grabbing: GestureDetector(
                   onTap: ()async{
                     if(CacheService.getPermissionWarehouseAction2()==0){
-
                     }else{
                       CenterDialog.showLoadingDialog(context, "Бироз кутинг");
                       HttpResult setDoc = await repository.setDoc(5);
