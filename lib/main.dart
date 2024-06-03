@@ -67,7 +67,7 @@ void main()async {
       navigatorKey.currentState!.pushNamed("/message", arguments: message);
     });
   }
-  runApp( MyApp(token: token,));
+  runApp(MyApp(token: token,));
 }
 
 class MyApp extends StatelessWidget {
