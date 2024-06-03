@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
+import 'package:savdo_admin/src/dialog/center_dialog.dart';
 import 'package:savdo_admin/src/route/app_route.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -312,11 +313,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   selectedTileColor: AppColors.green,
                   leading: const Icon(Icons.logout),
                   onTap: () async {
-                    Repository repo = Repository();
-                    await repo.deleteBase();
-                    await CacheService.clear();
-                    SystemNavigator.pop();
-                    exit(0);
+                    CenterDialog.showLogOutDialog(context, "Дастурдан чиқмоқчимиз?");
                   },
                   title: const Text("Log Out"),
                 ),

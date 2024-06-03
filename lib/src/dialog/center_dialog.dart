@@ -2,13 +2,17 @@
 
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/model/client/client_model.dart';
 import 'package:savdo_admin/src/model/product/product_all_type.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
+import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/rx_bus.dart';
 import 'package:savdo_admin/src/widget/button/button_widget.dart';
 
@@ -152,6 +156,40 @@ class CenterDialog{
               Center(child: Text(text,textAlign:TextAlign.center,style: AppStyle.mediumBold(AppColors.textBoldLight),)),
               const Spacer(),
               TextButton(onPressed: (){Navigator.pop(context);}, child: Text("Тушунарли")),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  static void showLogOutDialog(BuildContext context,text){
+    showDialog(context: context, builder: (ctx){
+      return AlertDialog(
+        title:  Text("Чиқиш!",style: AppStyle.medium(Colors.black),),
+        content: SizedBox(
+          height: 200.h,
+          child: Column(
+            children: [
+              Text("❗",style: TextStyle(fontSize: 60),),
+              SizedBox(height: 12.h,),
+              Center(child: Text(text,textAlign:TextAlign.center,style: AppStyle.mediumBold(AppColors.textBoldLight),)),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: (){
+                   Navigator.pop(context);
+                  }, child: Text("Йўқ")),
+                  TextButton(onPressed: ()async{
+                    Repository repo = Repository();
+                    await repo.deleteBase();
+                    await CacheService.clear();
+                    SystemNavigator.pop();
+                    exit(0);
+                  }, child: Text("Ҳа чиқаман")),
+                ],
+              ),
             ],
           ),
         ),

@@ -127,8 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: 24.h,),
                           CacheService.getPermissionBalanceWindow1() ==0?const SizedBox():Padding(
                             padding: EdgeInsets.only(left: 12.0.w),
-                            child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),
-                          ),
+                            child: Text("Баланс",style: AppStyle.mediumBold(Colors.white),),),
                           CacheService.getPermissionBalanceWindow1() ==0?const SizedBox(): ListTile(
                             title: balance?Text("${priceFormatUsd.format(data.balanceUsd)} \$",style: AppStyle.large(Colors.white),):Text("${priceFormat.format(data.balance)} Сўм",style: AppStyle.large(Colors.white),),
                             onTap: (){
@@ -361,5 +360,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
