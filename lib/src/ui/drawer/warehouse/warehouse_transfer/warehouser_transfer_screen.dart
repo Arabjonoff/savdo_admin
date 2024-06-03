@@ -124,7 +124,6 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
               totalUsd += data[i].smS;
               totalUzs += data[i].sm;
             }
-            if(data.isNotEmpty){
               return SnappingSheet(
                 snappingPositions: const [
                   SnappingPosition.factor(
@@ -360,9 +359,6 @@ class _WareHouseTransferScreenState extends State<WareHouseTransferScreen> {
                       );
                     }),
               );
-            }else{
-              return const EmptyWidgetScreen();
-            }
           }
           return const Center(child: CircularProgressIndicator.adaptive());
         }

@@ -16,11 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 final navigatorKeyMessage = GlobalKey<NavigatorState>();
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
-  if (message.notification != null) {
-    // print("Some notification Received");
-  }else{
-    // print("Some notification Received");
-  }
+  if (message.notification != null){}else{}
 }
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
