@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
   final bool isDataLabelVisible = true, isMarkerVisible = true, isTooltipVisible = true;
   double? lineWidth, markerWidth, markerHeight;
+  double dayCashUzs = 0,dayCommerceUzs = 0,dayCashUsd = 0,dayCommerceUsd = 0;
   @override
   void initState() {
     staffPermission.getAllStaffPermission(CacheService.getIdAgent());
@@ -285,6 +287,71 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      left: 12.w,
+                      right: 4.w,
+                      top: 8.h,
+                      bottom: 24.h,
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                    height: 120.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 2,
+                              color: Colors.grey.shade400
+                          ),
+                        ]
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Савдодаги сумма",style: AppStyle.small(Colors.black),),
+                        Text(priceFormat.format(dayCashUzs),style: AppStyle.mediumBold(Colors.black),),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      left: 12.w,
+                      right: 4.w,
+                      top: 8.h,
+                      bottom: 24.h,
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                    width: width,
+                    height: 120.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 2,
+                              color: Colors.grey.shade400
+                          ),
+                        ]
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Кассадаги сумма",style: AppStyle.small(Colors.black),),
+                        Text("109 382 990 сум",style: AppStyle.mediumBold(Colors.black),),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

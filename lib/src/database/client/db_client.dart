@@ -14,6 +14,7 @@ class DbClient {
     var res = dbClient.insert('client', item.toJson());
     return res;
   }
+
   Future<List<ClientResult>> getClient() async {
     var dbClient = await dbProvider.db;
     List<ClientResult> data = <ClientResult>[];
@@ -220,6 +221,7 @@ class DbClient {
     }
     return data;
   }
+
   Future<List<DebtClientModel>> getClientSearchDebt(obj) async {
     var dbClient = await dbProvider.db;
     List<DebtClientModel> data = <DebtClientModel>[];
@@ -261,7 +263,6 @@ class DbClient {
     return data;
   }
 
-
   Future<int> updateClientDebt(DebtClientModel item) async {
     var dbClient = await dbProvider.db;
     return dbClient.update("client_debt", item.toJson(),
@@ -272,7 +273,6 @@ class DbClient {
     var dbClient = await dbProvider.db;
     await dbClient.rawQuery("DELETE FROM client_debt");
   }
-
   /// Agents base
   Future<int> saveAgents(AgentsResult item) async {
     var dbClient = await dbProvider.db;
