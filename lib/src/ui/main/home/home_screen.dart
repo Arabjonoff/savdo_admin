@@ -289,70 +289,149 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: 12.w,
-                      right: 4.w,
-                      top: 8.h,
-                      bottom: 24.h,
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-                    height: 120.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 2,
-                              color: Colors.grey.shade400
-                          ),
-                        ]
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Савдодаги сумма",style: AppStyle.small(Colors.black),),
-                        Text(priceFormat.format(dayCashUzs),style: AppStyle.mediumBold(Colors.black),),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: 12.w,
-                      right: 4.w,
-                      top: 8.h,
-                      bottom: 24.h,
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
-                    width: width,
-                    height: 120.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 2,
-                              color: Colors.grey.shade400
-                          ),
-                        ]
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Кассадаги сумма",style: AppStyle.small(Colors.black),),
-                        Text("109 382 990 сум",style: AppStyle.mediumBold(Colors.black),),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            StreamBuilder<BalanceModel>(
+              stream: balanceBloc.getBalanceStream,
+              builder: (context, snapshot) {
+               if(snapshot.hasData){
+                 var data = snapshot.data!;
+                 return Column(
+                   children: [
+                     Row(
+                       children: [
+                         Expanded(
+                           child: Container(
+                             padding: EdgeInsets.only(
+                               left: 12.w,
+                               right: 4.w,
+                               top: 8.h,
+                               bottom: 24.h,
+                             ),
+                             margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                             height: 120.h,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(16),
+                                 color: Colors.white,
+                                 boxShadow: [
+                                   BoxShadow(
+                                       blurRadius: 2,
+                                       color: Colors.grey.shade400
+                                   ),
+                                 ]
+                             ),
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Text("Савдодаги сумма",style: AppStyle.small(Colors.black),),
+                                 Text(balance?"${priceFormatUsd.format(data.savdoS)} \$":"${priceFormat.format(data.savdo)} сўм",style: AppStyle.mediumBold(Colors.black),),
+                               ],
+                             ),
+                           ),
+                         ),
+                         Expanded(
+                           child: Container(
+                             padding: EdgeInsets.only(
+                               left: 12.w,
+                               right: 4.w,
+                               top: 8.h,
+                               bottom: 24.h,
+                             ),
+                             margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                             width: width,
+                             height: 120.h,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(16),
+                                 color: Colors.white,
+                                 boxShadow: [
+                                   BoxShadow(
+                                       blurRadius: 2,
+                                       color: Colors.grey.shade400
+                                   ),
+                                 ]
+                             ),
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Text("Кассадаги сумма",style: AppStyle.small(Colors.black),),
+                                 Text(balance?"${priceFormatUsd.format(data.tlSmS)} \$":"${priceFormat.format(data.tlSm)} сўм",style: AppStyle.mediumBold(Colors.black),),
+                               ],
+                             ),
+                           ),
+                         ),
+                       ],
+                     ),
+                     Row(
+                       children: [
+                         Expanded(
+                           child: Container(
+                             padding: EdgeInsets.only(
+                               left: 12.w,
+                               right: 4.w,
+                               top: 8.h,
+                               bottom: 24.h,
+                             ),
+                             margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                             height: 120.h,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(16),
+                                 color: Colors.white,
+                                 boxShadow: [
+                                   BoxShadow(
+                                       blurRadius: 2,
+                                       color: Colors.grey.shade400
+                                   ),
+                                 ]
+                             ),
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Text("Харидорлар қарзи",style: AppStyle.small(Colors.black),),
+                                 Text(balance?"${priceFormatUsd.format(data.kzSmS)} \$":"${priceFormat.format(data.kzSm)} сўм",style: AppStyle.mediumBold(Colors.black),),
+                               ],
+                             ),
+                           ),
+                         ),
+                         Expanded(
+                           child: Container(
+                             padding: EdgeInsets.only(
+                               left: 12.w,
+                               right: 4.w,
+                               top: 8.h,
+                               bottom: 24.h,
+                             ),
+                             margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 8.h),
+                             width: width,
+                             height: 120.h,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(16),
+                                 color: Colors.white,
+                                 boxShadow: [
+                                   BoxShadow(
+                                       blurRadius: 2,
+                                       color: Colors.grey.shade400
+                                   ),
+                                 ]
+                             ),
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Text("Мол етказиб берувчилар",style: AppStyle.small(Colors.black),),
+                                 Text(balance?"${priceFormatUsd.format(data.psSmS)} \$":"${priceFormat.format(data.psSm)} сўм",style: AppStyle.mediumBold(Colors.black),),
+                               ],
+                             ),
+                           ),
+                         ),
+                       ],
+                     ),
+                   ],
+                 );
+               }else{
+                 return SizedBox();
+               }
+              }
             ),
           ],
         ),
