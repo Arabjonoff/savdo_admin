@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CacheService.saveToken(res.result['jwt']);
                   CacheService.savePassword(_controllerPassword.text);
                   CacheService.saveName(_controllerName.text);
-                  CacheService.tip(res.result['tip']);
+                  CacheService.tip(res.result['tip'].toString());
                   CacheService.saveIdAgent(res.result['id']);
                   CacheService.saveDb(_controllerBase.text);
                   if(res.result["id_skl"] == -1){

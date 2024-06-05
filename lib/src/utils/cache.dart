@@ -55,8 +55,8 @@ class CacheService {
   }
 
   /// tip
-  static void tip(int data) {
-    preferences!.setInt("tip", data);
+  static void tip(String data) {
+    preferences!.setString("tip", data);
   }
 
   /// Save DataBase

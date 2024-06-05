@@ -14,7 +14,6 @@ import 'package:savdo_admin/src/ui/drawer/returend/returned_screen.dart';
 import 'package:savdo_admin/src/ui/drawer/staff/staff_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
 
-
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
 
@@ -30,7 +29,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
     clientBloc.getAllClient();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -72,7 +70,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(CacheService.getName(),style: AppStyle.large(Colors.white),),
-                            checkTip('0')
+                            checkTip(CacheService.getTip())
                           ],
                         )
                       ],
@@ -321,7 +319,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Widget checkTip(String id){
     switch(id){
       case '0':
-        return const Text("Админ");
+        return  Text("Админ",style: AppStyle.small(Colors.white),);
       case '1':
         return const Text("Кассир");
       case '2':
