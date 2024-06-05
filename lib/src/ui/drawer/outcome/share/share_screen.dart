@@ -242,6 +242,7 @@ class _ShareScreenState extends State<ShareScreen> {
       )
     );
   }
+
   Widget createTable(List<SklRsTov> data,) {
     List<TableRow> rows = [
       TableRow(

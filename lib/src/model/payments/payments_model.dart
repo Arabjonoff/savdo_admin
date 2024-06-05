@@ -180,7 +180,7 @@ class Tolov1 {
   DateTime sana;
   String idToch;
   String name;
-  int sm;
+  num sm;
   int tp;
   int foiz;
   num sm0;

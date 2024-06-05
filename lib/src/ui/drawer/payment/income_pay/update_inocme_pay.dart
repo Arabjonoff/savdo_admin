@@ -513,7 +513,7 @@ class _UpdateIncomePayScreenState extends State<UpdateIncomePayScreen> {
                     "SANA": DateFormat('yyyy-MM-dd').format(DateTime.now()),
                     "ID_TOCH": controllerClientIdT.text,
                     "NAME": _controllerClient.text,
-                    "SM":controllerSumma.text.replaceAll(RegExp('[^0-9]'), ''),
+                    "SM":controllerSumma.text,
                     "TP": paymentType,
                     "FOIZ":controllerPercent.text,
                     "SM0":idValyuta ==1?controllerAcceptedSumma.text:controllerAcceptedSumma.text.replaceAll(RegExp('[^0-9]'), ''),

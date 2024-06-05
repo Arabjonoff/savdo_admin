@@ -1,11 +1,6 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/client/agents_bloc.dart';
 import 'package:savdo_admin/src/bloc/client/client_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';
@@ -77,7 +72,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(CacheService.getName(),style: AppStyle.large(Colors.white),),
-                            Text("Admin",style: AppStyle.small(Colors.white),),
+                            checkTip('0')
                           ],
                         )
                       ],
@@ -322,5 +317,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
         ),
       ),
     );
+  }
+  Widget checkTip(String id){
+    switch(id){
+      case '0':
+        return const Text("Админ");
+      case '1':
+        return const Text("Кассир");
+      case '2':
+        return const Text("Омборчи");
+    }
+    return const Text("Админ");
   }
 }
