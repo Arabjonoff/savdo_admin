@@ -16,15 +16,16 @@ import 'package:savdo_admin/src/utils/cache.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
-
   @override
   State<DrawerScreen> createState() => _DrawerScreenState();
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
   int selected = 0;
+  bool isValue = false;
   @override
   void initState() {
+    isValue = CacheService.getLogin();
     agentsBloc.getAllAgents();
     clientBloc.getAllClient();
     super.initState();
@@ -310,6 +311,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                   title: const Text("Log Out"),
                 ),
+                ListTile(
+                    title: Text("Парол сақланмасин"),
+                    trailing: Checkbox(value: isValue,onChanged: (bool? value){
+                      isValue = value!;
+                      CacheService.saveLogin(isValue);
+                      setState(() {});
+                    },)
+                ),
+                SizedBox(height: 12.h,)
               ],),
           ],
         ),

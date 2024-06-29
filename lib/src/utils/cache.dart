@@ -150,7 +150,7 @@ class CacheService {
     return data;
   }
   static String getDb() {
-    String data = preferences!.getString("saveDB") ?? '002';
+    String data = preferences!.getString("saveDB") ?? '';
     return data;
   }
 
@@ -159,12 +159,12 @@ class CacheService {
     return data;
   }
   /// login
-  static void saveLogin(String data) {
-    preferences!.setString("user_login", data);
+  static void saveLogin(bool data) {
+    preferences!.setBool("user_login", data);
   }
 
-  static String getLogin() {
-    String data = preferences!.getString("user_login") ?? "";
+  static bool getLogin() {
+    bool data = preferences!.getBool("user_login") ?? true;
     return data;
   }
   static int getFilterId() {

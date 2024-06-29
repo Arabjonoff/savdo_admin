@@ -77,7 +77,6 @@ class Repository{
   Future<void>clearClientClassTypeBase() => _dbClient.clearClientClassType();
   Future<int>deleteClientClassBase(id) => _dbClient.deleteClientClass(id);
 
-
   /// Client Type save get delete base
   Future<int> saveClientTypeBase(item) => _dbClient.saveClientType(item);
   Future<List<ProductTypeAllResult>> getClientTypeBase() => _dbClient.getClientType();
@@ -91,7 +90,6 @@ class Repository{
   Future<List<DebtClientModel>> getClientDebtBase() => _dbClient.getClientDebt();
   Future<List<DebtClientModel>> getClientDebtSearchBase(obj) => _dbClient.getClientSearchDebt(obj);
   Future<void> clearClientDebtBase() => _dbClient.clearClientDebt();
-
 
   /// Agents Base
   Future<int> saveAgentsBase(item) => _dbClient.saveAgents(item);
@@ -124,7 +122,6 @@ class Repository{
   Future<int> deleteOutcomeCart(item) => _outcomeSkladBaseHelper.deleteOutcomeCart(item);
   Future<void>clearOutcomeCart() => _outcomeSkladBaseHelper.clearOutcomeCart();
 
-
   /// Outcome cart base
   Future<int> saveReturnedCart(item) => _outcomeSkladBaseHelper.saveOutcomeCart(item);
   Future<List<SklRsTov>> getReturnedCart() => _outcomeSkladBaseHelper.getOutcomeCart();
@@ -132,14 +129,12 @@ class Repository{
   Future<int> deleteReturnedCart(item) => _outcomeSkladBaseHelper.deleteOutcomeCart(item);
   Future<void>clearReturnedCart() => _outcomeSkladBaseHelper.clearOutcomeCart();
 
-
   /// Sklad base
   Future<int> saveSkladBase(item) => _skladBaseHelper.saveSklad(item);
   Future<List<SkladResult>> getSkladBase() => _skladBaseHelper.getSklad();
   Future<List<SkladResult>> getSkladSearchBase(obj) => _skladBaseHelper.getSkladSearch(obj);
   Future<int> updateSkladBase(item) => _skladBaseHelper.updateSklad(item);
   Future<void>clearSkladBase() => _skladBaseHelper.clearSklad();
-
 
   /// WareHouse Base
   Future<int> saveWareHouseBase(item) => _wareHouseBaseHelper.saveWareHouse(item);
@@ -150,7 +145,7 @@ class Repository{
   final ApiProvider _apiProvider = ApiProvider();
 
   /// Api product
-  Future<HttpResult>  getProduct() => _apiProvider.getProduct();
+  Future<HttpResult> getProduct() => _apiProvider.getProduct();
   Future<HttpResult> postProduct(name, idTip, idQuantity, idFirma, vz, minCount, st) => _apiProvider.postProduct(name, idTip, idQuantity, idFirma, vz, minCount, st);
   Future<HttpResult> updateProduct(id,name, idTip, idQuantity, idFirma, vz, minCount, st) => _apiProvider.updateProduct(id,name, idTip, idQuantity, idFirma, vz, minCount, st);
   Future<HttpResult> deleteProduct(name, id) => _apiProvider.deleteProduct(name, id);
@@ -175,7 +170,6 @@ class Repository{
   Future<HttpResult> getBarcodeDetail(id) => _apiProvider.getBarcodeDetail(id);
   Future<HttpResult> postBarcode(name, barcode, idSkl2) => _apiProvider.postBarcode(name, barcode, idSkl2);
   Future<HttpResult> deleteBarcode(name, id) => _apiProvider.deleteBarcode(name, id);
-
   Future<HttpResult> postImage(image, idSkl2) => _apiProvider.postImage(image, idSkl2);
 
   /// Api Income
@@ -203,10 +197,6 @@ class Repository{
   Future<HttpResult> addIncomePayment(Map payment) => _apiProvider.addIncomePayment(payment);
   Future<HttpResult> deleteIncomePayment(id,idSana) => _apiProvider.deleteIncomePayment(id,idSana);
   Future<HttpResult> updateIncomePayment(Map payment) => _apiProvider.updateIncomePayment(payment);
-
-
-
-
   Future<HttpResult> getDoc(int st) => _apiProvider.getDoc(st);
   Future<HttpResult> setDoc(int st) => _apiProvider.setDoc(st);
   Future<HttpResult> addIncomeSklPr(IncomeAddModel body) => _apiProvider.addIncomeSklPr(body);

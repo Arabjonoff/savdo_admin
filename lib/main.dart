@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           onGenerateRoute: AppRoute.routes,
-          initialRoute: token.isEmpty?AppRouteName.login:AppRouteName.splash,
+          initialRoute: CacheService.getLogin()?AppRouteName.login:AppRouteName.splash,
           debugShowCheckedModeBanner: false,
           builder: (BuildContext context, Widget? child,) {
             return MediaQuery(

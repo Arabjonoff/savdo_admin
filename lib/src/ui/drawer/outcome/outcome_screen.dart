@@ -424,7 +424,7 @@ class _OutcomeScreenState extends State<OutcomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("Тўлов:",style: AppStyle.small(Colors.black),),
-                                      paymentCheck(data[index])
+                                      paymentCheck(data[index]),
                                     ],
                                   ),
                                   Row(

@@ -19,11 +19,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // NotificationService notificationService = NotificationService();
   final Repository _repository = Repository();
-  final TextEditingController _controllerName = TextEditingController(text: "");
+   TextEditingController _controllerName = TextEditingController(text: "");
   final TextEditingController _controllerPassword = TextEditingController(text: "");
-  final TextEditingController _controllerBase = TextEditingController(text: "");
+   TextEditingController _controllerBase = TextEditingController(text: "");
 @override
   void initState() {
+    _controllerName = TextEditingController(text: CacheService.getName());
+    _controllerBase = TextEditingController(text: CacheService.getDb());
   // notificationService.requestNotificationPermission();
   // notificationService.firebaseInit();
     super.initState();
