@@ -67,7 +67,6 @@ class ApiProvider {
       );
     }
   }
-  /// API Post Request
   static Future<HttpResult> _postRequest(String url, body,) async {
     print(url);
     print(body);

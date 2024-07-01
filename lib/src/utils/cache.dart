@@ -14,14 +14,12 @@ class CacheService {
     String data = preferences!.getString("saveNdoc") ??'';
     return data;
   }
-
   static void saveExpenseSummaUzs(double data) {
     preferences!.setDouble("expenseSummaUzs", data);
   }
   static void saveExpenseSummaUsd(double data) {
     preferences!.setDouble("expenseSummaUsd", data);
   }
-
   /// Save Permissions
   static void saveidSkl(int data) {
     preferences!.setInt("idSkl", data);
@@ -39,7 +37,6 @@ class CacheService {
     int data = preferences!.getInt("idSkl") ??1;
     return data;
   }
-
   static Future<bool> clear() async {
     return await preferences!.clear();
   }
