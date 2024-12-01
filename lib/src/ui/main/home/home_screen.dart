@@ -22,7 +22,6 @@ import 'package:savdo_admin/src/ui/main/home/balance/balance_screen.dart';
 import 'package:savdo_admin/src/ui/main/home/plan_screen/plan_screen.dart';
 import 'package:savdo_admin/src/ui/main/main_screen.dart';
 import 'package:savdo_admin/src/utils/cache.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../bloc/product/product_firma_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 

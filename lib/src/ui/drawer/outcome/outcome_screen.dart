@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/outcome/outcome_bloc.dart';
 import 'package:savdo_admin/src/dialog/center_dialog.dart';

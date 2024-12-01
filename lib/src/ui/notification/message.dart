@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/theme/colors/app_colors.dart';
 import 'package:savdo_admin/src/theme/icons/app_fonts.dart';
@@ -21,9 +20,6 @@ class _MessageScreenState extends State<MessageScreen> {
     final data = ModalRoute.of(context)!.settings.arguments;
     if (data is RemoteMessage) {
       payload = data.data;
-    }
-    if (data is NotificationResponse) {
-      payload = json.decode(data.payload!);
     }
     return Scaffold(
       backgroundColor: AppColors.background,

@@ -2,7 +2,6 @@
 
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:savdo_admin/src/api/api_provider.dart';
@@ -189,11 +188,11 @@ class _BaseCardWidgetState extends State<BaseCardWidget> {
   Widget priceCheck(int idPrice){
     switch(idPrice){
       case 0:
-        return widget.data.snarhi == 0?Text("${priceFormatUsd.format(widget.data.snarhiS)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi)} ${('uzs').tr()}",style: AppStyle.medium(AppColors.green),);
+        return widget.data.snarhi == 0?Text("${priceFormatUsd.format(widget.data.snarhiS)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi)} ${('uzs').trim()}",style: AppStyle.medium(AppColors.green),);
       case 1:
-        return widget.data.snarhi1 == 0?Text("${priceFormatUsd.format(widget.data.snarhi1S)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi1)} ${('uzs').tr()}",style: AppStyle.medium(AppColors.green),);
+        return widget.data.snarhi1 == 0?Text("${priceFormatUsd.format(widget.data.snarhi1S)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi1)} ${('uzs').trim()}",style: AppStyle.medium(AppColors.green),);
       case 2:
-        return widget.data.snarhi2 == 0?Text("${priceFormatUsd.format(widget.data.snarhi2S)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi2)} ${('uzs').tr()}",style: AppStyle.medium(AppColors.green),);
+        return widget.data.snarhi2 == 0?Text("${priceFormatUsd.format(widget.data.snarhi2S)} \$",style: AppStyle.medium(AppColors.green),):Text("${priceFormat.format(widget.data.snarhi2)} ${('uzs').trim()}",style: AppStyle.medium(AppColors.green),);
       default:
         return const Text("");
     }

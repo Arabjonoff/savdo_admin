@@ -119,7 +119,7 @@ class ClientResult {
     vaqt: json["VAQT"] == null?DateTime.now():DateTime.parse(json["VAQT"]),
     idHodimlar: json["ID_HODIMLAR"]??0,
     naqd: json["NAQD"]??0,
-    pas: json["PAS"]??0,
+    pas: json["PAS"]??'0',
     d1: json["D1"]??0,
     d2: json["D2"]??0,
     d3: json["D3"]??0,

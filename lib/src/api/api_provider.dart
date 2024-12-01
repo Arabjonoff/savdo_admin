@@ -17,7 +17,7 @@ class ApiProvider {
   var date = DateTime.now();
   var year = DateTime.now().year;
   var month = DateTime.now().month;
-  final String _baseUrl = "https://naqshsoft.site/";
+  final String _baseUrl = CacheService.getBaseUrl();
   static const _duration = Duration(seconds: 60);
   static Future<HttpResult> _patchRequest(String url, body,) async {
     print(url);

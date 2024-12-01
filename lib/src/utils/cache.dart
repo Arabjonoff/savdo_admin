@@ -20,6 +20,13 @@ class CacheService {
   static void saveExpenseSummaUsd(double data) {
     preferences!.setDouble("expenseSummaUsd", data);
   }
+  static void saveBaseUrl(String data) {
+    preferences!.setString("baseUrl", data);
+  }
+  static String getBaseUrl() {
+    String data = preferences!.getString("baseUrl") ??'https://ndastur.site/';
+    return data;
+  }
   /// Save Permissions
   static void saveidSkl(int data) {
     preferences!.setInt("idSkl", data);

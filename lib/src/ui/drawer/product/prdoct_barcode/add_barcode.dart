@@ -2,9 +2,9 @@
 
 // import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:savdo_admin/src/api/repository.dart';
 import 'package:savdo_admin/src/bloc/product/product_barcode.dart';
 import 'package:savdo_admin/src/model/http_result.dart';

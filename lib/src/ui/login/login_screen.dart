@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
    TextEditingController _controllerName = TextEditingController(text: "");
   final TextEditingController _controllerPassword = TextEditingController(text: "");
    TextEditingController _controllerBase = TextEditingController(text: "");
+   int index =0;
 @override
   void initState() {
     _controllerName = TextEditingController(text: CacheService.getName());
@@ -59,6 +60,50 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
+          Row(
+            children: [
+              SizedBox(width: 16.w,),
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    index = 0;
+                    setState(() {});
+                    CacheService.saveBaseUrl("https://naqshsoft.site/");
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 44.r,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: index==0?AppColors.green:Colors.grey
+                    ),
+                    child: Text("Asosiy server",style: AppStyle.medium(Colors.black),),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16.w,),
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    index = 1;
+                    setState(() {});
+                    CacheService.saveBaseUrl("https://ndastur.site/");
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 44.r,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: index==1?AppColors.green:Colors.grey
+                    ),
+                    child: Text("Qo'shimcha server",style: AppStyle.medium(Colors.black),),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16.w,),
+            ],
+          ),
+          SizedBox(height: 32.h,),
           ButtonWidget(onTap: ()async{
             CenterDialog.showLoadingDialog(context, "Бироз кутинг");
             HttpResult res = await _repository.login(_controllerName.text, _controllerPassword.text, _controllerBase.text);

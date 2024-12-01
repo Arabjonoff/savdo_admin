@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -13,22 +12,7 @@ class InternetCheckWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Center(
-        child: EmptyWidget(
-          hideBackgroundAnimation: true,
-          image: null,
-          packageImage: PackageImage.Image_2,
-          title: 'Интернет йўқ',
-          subTitle: 'Интернет билан боғланишда муаммо бор',
-          titleTextStyle: const TextStyle(
-            fontSize: 22,
-            color: Color(0xff9da9c7),
-            fontWeight: FontWeight.w500,
-          ),
-          subtitleTextStyle: const TextStyle(
-            fontSize: 12,
-            color: Color(0xffabb8d6),
-          ),
-        ),
+        child: Text("Интернет йўқ"),
       ),
     );
   }

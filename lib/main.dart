@@ -13,11 +13,14 @@ import 'package:savdo_admin/src/utils/cache.dart';
 import 'package:savdo_admin/src/utils/certificate.dart';
 import 'package:savdo_admin/src/widget/internet/internet_check_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 final navigatorKey = GlobalKey<NavigatorState>();
 final navigatorKeyMessage = GlobalKey<NavigatorState>();
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null){}else{}
 }
+
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
@@ -38,20 +41,20 @@ void main()async {
     }
   });
 
-  PushNotifications.init();
-  PushNotifications.localNotiInit();
+  // PushNotifications.init();
+  // PushNotifications.localNotiInit();
   // Listen to background notifications
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
   // to handle foreground notifications
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    String payloadData = json.encode(message.data);
-    if (message.notification != null) {
-      PushNotifications.showSimpleNotification(
-          title: message.notification!.title!,
-          body: message.notification!.body!,
-          payload: payloadData);
-    }
-  });
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   String payloadData = json.encode(message.data);
+  //   if (message.notification != null) {
+  //     PushNotifications.showSimpleNotification(
+  //         title: message.notification!.title!,
+  //         body: message.notification!.body!,
+  //         payload: payloadData);
+  //   }
+  // });
 
   // for handling in terminated state
   final RemoteMessage? message =
@@ -101,6 +104,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
 updateConnectivity(dynamic hasConnection, ConnectionStatusListener connectionStatus,) {
   if (!hasConnection) {
     connectionStatus.hasShownNoInternet = true;
@@ -111,6 +116,7 @@ updateConnectivity(dynamic hasConnection, ConnectionStatusListener connectionSta
     }
   }
 }
+
 initNoInternetListener() async {
   var connectionStatus = ConnectionStatusListener.getInstance();
   await connectionStatus.initialize();
